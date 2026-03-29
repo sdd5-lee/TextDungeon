@@ -16,12 +16,12 @@ public class BattleLayout extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.battle_activity);
     }
-    public void Battle_moveMain(View v){
+    public void battleMoveMain(View v){
         Intent intent = new Intent(BattleLayout.this, MainActivity.class);
         startActivity(intent);
         finish();
     }
-    public void Battle_moveEvent(View v){
+    public void battleMoveEvent(View v){
         Intent intent = new Intent(BattleLayout.this, EventLayout.class);
         startActivity(intent);
         finish();

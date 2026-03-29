@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="Event_moveMain"
+            android:onClick="eventMoveMain"
             android:text="메인으로 이동" />
 
         <Button
@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="Event_moveBattle"
+            android:onClick="eventMoveBattle"
             android:text="전투로 이동" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

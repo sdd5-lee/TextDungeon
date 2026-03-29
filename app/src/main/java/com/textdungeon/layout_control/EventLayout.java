@@ -16,13 +16,12 @@ public class EventLayout extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_layout);
     }
-    public void Event_moveMain(View v){
+    public void eventMoveMain(View v){
         Intent intent = new Intent(EventLayout.this, MainActivity.class);
         startActivity(intent);
         finish();
     }
-    public void Event_moveBattle(View v){
-        android.widget.Toast.makeText(this, "전투 화면으로 이동 시도!", android.widget.Toast.LENGTH_SHORT).show();
+    public void eventMoveBattle(View v){
         Intent intent = new Intent(EventLayout.this, BattleLayout.class);
         startActivity(intent);
         finish();

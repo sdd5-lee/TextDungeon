@@ -26,12 +26,12 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
     }
-    public void Main_moveEvent(View v){
+    public void mainMoveEvent(View v){
         Intent intent = new Intent(MainActivity.this, EventLayout.class);
         startActivity(intent);
         finish();
     }
-    public void Main_moveBattle(View v){
+    public void mainMoveBattle(View v){
         Intent intent = new Intent(MainActivity.this, BattleLayout.class);
         startActivity(intent);
         finish();
