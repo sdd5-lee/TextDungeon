@@ -1,5 +1,8 @@
 package com.textdungeon.player;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Player {
     private String name;
     private int level;
@@ -7,9 +10,19 @@ public class Player {
     private int strength = 5,agility = 5,health = 5,wisdom = 5;//힘,민첩,체력,지혜
     private int magic_count;
     private int critical_rate = 0;
+    private List<String> inventory;
+    private static final int MAX_INV = 30;
     public Player(String name){
         this.name = name;
         this.level = 0;
+        this.inventory = new ArrayList<>();
+    }
+    public boolean pickUpItem(String item) {
+        if (inventory.size() < MAX_INV) {
+            inventory.add(item);
+            return true;
+        }
+        return false;
     }
 
     public void setName(String name) {
@@ -69,7 +82,7 @@ public class Player {
     public int getCritical_rate() {
         return critical_rate;
     }
-
+    public List<String> getInventory() { return inventory; }
     public void addLevel(int level) {
         this.level += level;
     }
