@@ -19,7 +19,6 @@ public class Stat {
         maxhp = health;
         hp = maxhp;
         critical_rate = agility;
-
     }
 
     public void setHp(int hp) {this.hp = hp;}

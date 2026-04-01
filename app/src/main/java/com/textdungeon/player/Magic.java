@@ -6,7 +6,7 @@ public class Magic {
 
     public Magic(int magic_count,int wisdom){
         this.magic_count = magic_count;
-        this.magicDamage = magic_count * 10;
+        this.magicDamage = wisdom * 10;
     }
 
 
