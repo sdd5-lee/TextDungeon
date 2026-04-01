@@ -12,10 +12,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.textdungeon.MainActivity;
 import com.example.textdungeon.R;
 import com.textdungeon.player.Player;
+import com.textdungeon.player.Job;
 import com.textdungeon.system.GameSave;
 
 public class BattleLayout extends AppCompatActivity {
-    GameSave gameSave = new GameSave(1,new Player("테스트용"));
+    GameSave gameSave = new GameSave(1,new Player("테스트용", Job.WARRIOR));
     Player player = gameSave.getPlayer();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
