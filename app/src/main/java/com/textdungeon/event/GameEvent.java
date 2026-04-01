@@ -1,5 +1,7 @@
 package com.textdungeon.event;
 
+import com.textdungeon.player.Player;
+
 public class GameEvent {
     int stage;
     int id;
@@ -15,10 +17,10 @@ public class GameEvent {
     void nextStage(){
 
     }
-    void viewText(){
+    void multipleChoice(boolean choice){
 
     }
-    void multipleChoice(boolean choice){
+    void reWord(Player player){
 
     }
 }
