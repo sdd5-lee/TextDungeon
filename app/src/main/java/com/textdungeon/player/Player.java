@@ -46,7 +46,6 @@ public class Player {
     }
 
     public int attack(){
-
         return 0;
     }
 

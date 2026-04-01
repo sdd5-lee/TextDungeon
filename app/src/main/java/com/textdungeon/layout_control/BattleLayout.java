@@ -32,6 +32,7 @@ public class BattleLayout extends AppCompatActivity {
                 for (String s : player.getInventory()) {
                     if (player.getInventory().isEmpty()) {
                         textView.setText("인벤토리 : "+s);
+                        continue;
                     }
                     textView.setText(textView.getText()+","+s);
                 }
@@ -59,6 +60,7 @@ public class BattleLayout extends AppCompatActivity {
                 for (String s : player.getInventory()) {
                     if (player.getInventory().isEmpty()) {
                         textView.setText("인벤토리 : "+s);
+                        continue;
                     }
                     textView.setText(textView.getText()+","+s);
                 }

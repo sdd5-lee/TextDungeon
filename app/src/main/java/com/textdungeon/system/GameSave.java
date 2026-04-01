@@ -4,12 +4,9 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.textdungeon.player.Player;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
 public class GameSave {
     private int slotNum;

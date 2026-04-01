@@ -1,14 +1,14 @@
 package com.textdungeon.system;
 
+import com.textdungeon.model.Monster;
 import com.textdungeon.player.Player;
-import com.textdungeon.event.GameEvent;
 
 import java.util.Random;
 
 public class BattleSystem {
 
     private Player player;
-    private GameEvent event;
+    private Monster monster;
 
     // 적 정보 (이벤트에서 가져옴)
     private String enemyName;
@@ -20,14 +20,14 @@ public class BattleSystem {
 
     private Random random = new Random();
 
-    public BattleSystem(Player player, GameEvent event) {
+    public BattleSystem(Player player, Monster monster) {
         this.player = player;
-        this.event = event;
+        this.monster = monster;
 
         // 이벤트에서 적 정보 가져오기
-        this.enemyName = event.getEnemyName();
-        this.enemyHp = event.getEnemyHp();
-        this.enemyAttack = event.getEnemyAttack();
+        this.enemyName = monster.getName();
+        this.enemyHp = monster.getHp();
+        this.enemyAttack = monster.getAttack();
     }
 
     // =========================

@@ -1,0 +1,11 @@
+[
+  {
+    "id" : "baseitem1",
+    "name" : "검"
+  },
+
+  {
+    "id" : "baseitem2",
+    "name" : "포션"
+  }
+]
