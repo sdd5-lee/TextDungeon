@@ -34,6 +34,7 @@ public class GameSystem {
         return currentEvent.getChoices();
     }
     public GameEvent getRandomEvent() {
-        return new GameEvent(//게임이벤트에 들어갈 생성자 값 ...);
+        //return new GameEvent();//게임이벤트에 들어갈 생성자 값 ...
+        return null;
     }
 }

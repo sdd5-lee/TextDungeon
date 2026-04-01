@@ -23,4 +23,28 @@ public class GameEvent {
     void reWord(Player player){
 
     }
+
+    public String getEnemyName() {
+        return "";
+    }
+
+    public String[] getChoices() {
+        return null;
+    }
+
+    public int getEnemyAttack() {
+        return 0;
+    }
+
+    public int getEnemyHp() {
+        return 0;
+    }
+
+    public String execute(Player player, int choice) {
+        return "";
+    }
+
+    public String getDescription() {
+        return "";
+    }
 }

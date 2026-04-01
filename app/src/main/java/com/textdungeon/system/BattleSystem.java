@@ -1,4 +1,4 @@
-package com.textdungeon.battle;
+package com.textdungeon.system;
 
 import com.textdungeon.player.Player;
 import com.textdungeon.event.GameEvent;
@@ -40,7 +40,7 @@ public class BattleSystem {
 
         String log = "";
 
-        int playerDamage = player.getStrength() + random.nextInt(5);
+        int playerDamage = player.getStat().getStrength() + random.nextInt(5);
 
         switch (choice) {
 
@@ -88,7 +88,7 @@ public class BattleSystem {
 
         String log = enemyName + " 공격! -" + damage + " HP";
 
-        if (player.getHp() <= 0) {
+        if (player.getStat().getHp() <= 0) {
             isBattleOver = true;
             log += "\n플레이어 사망...";
         }

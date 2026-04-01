@@ -6,9 +6,9 @@ import java.util.List;
 public class Player {
     private String name;
     private int level;
-    Stat stat;
-    Job job;
-    Magic magic;
+    private Stat stat;
+    private Job job;
+    private Magic magic;
     private List<String> inventory;
     private static final int MAX_INV = 30;
     public Player(String name, Job job){
@@ -32,6 +32,18 @@ public class Player {
     public List<String> getInventory() { return inventory; }
     public void LevelUp(int level) { this.level += level; }
 
+    public int getLevel() {
+        return level;
+    }
+    public Job getJob() {
+        return job;
+    }
+    public Magic getMagic() {
+        return magic;
+    }
+    public Stat getStat() {
+        return stat;
+    }
 
     public int attack(){
 
