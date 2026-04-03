@@ -10,12 +10,12 @@ import java.io.InputStreamReader;
 
 public class GameSave {
     private int score;
-    private int currentFloor; // 현재 층수
+    private int currentFloor;
     private Player player;
     public GameSave(Player player) {
         this.player = player;
         this.score = 0;
-        this.currentFloor = 1; // 기본 1층 시작
+        this.currentFloor = 1;
     }
 
     public void save(Context context) {

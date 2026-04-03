@@ -1,80 +1,103 @@
 package com.textdungeon.layout_control;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.textdungeon.MainActivity;
 import com.example.textdungeon.R;
+import com.textdungeon.data.DataControlTower;
+import com.textdungeon.event.BattleEvent;
+import com.textdungeon.model.Item;
+import com.textdungeon.model.Stat;
 import com.textdungeon.player.Player;
-import com.textdungeon.player.Job;
 import com.textdungeon.system.GameSave;
 
 public class BattleLayout extends AppCompatActivity {
-    GameSave gameSave = new GameSave(new Player("테스트용", Job.WARRIOR));
-    Player player = gameSave.getPlayer();
+    private DataControlTower dt; // 싱글톤 인스턴스 저장용
+    private Player player;
+    private GameSave gameSave;
+
+    private TextView logView, statusView, detailStatView, invView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.battle_activity);
 
-        TextView textView = findViewById(R.id.inv);
-        Button testbutton = findViewById(R.id.test);
-        testbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                player.pickUpItem("임시아이템");
-                for (String s : player.getInventory()) {
-                    if (player.getInventory().isEmpty()) {
-                        textView.setText("인벤토리 : "+s);
-                        continue;
-                    }
-                    textView.setText(textView.getText()+","+s);
-                }
-            }
+        dt = DataControlTower.getInstance(this);
+        player = dt.player;
+
+        if (player == null) {
+            Toast.makeText(this, "에러 발생", Toast.LENGTH_SHORT).show();
+            finish(); return;
+        }
+
+        gameSave = new GameSave(player);
+
+        logView = findViewById(R.id.battle_log);
+        statusView = findViewById(R.id.status_display);
+        detailStatView = findViewById(R.id.stat_detail_text);
+        invView = findViewById(R.id.inv_text);
+
+        // 버튼 클릭 리스너 설정
+        findViewById(R.id.btn_event).setOnClickListener(v -> triggerEvent());
+        findViewById(R.id.btn_exp).setOnClickListener(v -> gainExp());
+        findViewById(R.id.savebutton).setOnClickListener(v -> {
+            gameSave.save(this);
+            Toast.makeText(this, "저장 완료", Toast.LENGTH_SHORT).show();
         });
 
+        updateUI();
+    }
 
-        Button save = findViewById(R.id.savebutton);
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(BattleLayout.this, "저장되었습니다 ", Toast.LENGTH_SHORT).show();
-                gameSave.save(BattleLayout.this);
-            }
-        });
-        Button load = findViewById(R.id.loadbutton);
-        load.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(BattleLayout.this, "게임을 불러왔습니다", Toast.LENGTH_SHORT).show();
-                gameSave = GameSave.load(BattleLayout.this, 1);
-                if (gameSave != null) {
-                    player = gameSave.getPlayer(); // 플레이어 객체도 동기화
-                }
-                for (String s : player.getInventory()) {
-                    if (player.getInventory().isEmpty()) {
-                        textView.setText("인벤토리 : "+s);
-                        continue;
-                    }
-                    textView.setText(textView.getText()+","+s);
-                }
-            }
-        });
+    @Override
+    protected void onResume() { // 돌아올 때마다 갱신
+        super.onResume();
+        updateUI();
     }
-    public void battleMoveMain(View v){
-        Intent intent = new Intent(BattleLayout.this, MainActivity.class);
-        startActivity(intent);
-        finish();
+
+    private void triggerEvent() {
+        // JSON 파일에 "event_1" 혹은 실제 있는 ID를 써야 합니다.
+        BattleEvent event = dt.eventManager.spawn("event_1");
+
+        if (event != null) {
+            addLog("\n[이벤트] " + event.getName());
+            addLog(event.getDescription());
+
+            String result = event.execute(player, 0,dt.itemManager);
+            addLog("결과: " + result);
+            updateUI();
+        } else {
+            addLog("시스템: 이벤트를 찾을 수 없습니다.");
+        }
     }
-    public void battleMoveEvent(View v){
-        Intent intent = new Intent(BattleLayout.this, EventLayout.class);
-        startActivity(intent);
+
+    private void gainExp() {
+        player.getStat().gainStat("경험치", 50);
+        player.levelUp();
+        addLog("경험치 50 획득!");
+        updateUI();
+    }
+
+    private void updateUI() {
+        Stat s = player.getStat();
+        statusView.setText(String.format("Lv: %d | HP: %d/%d | EXP: %d/%d",
+                player.getLevel(), s.getHp(), s.getMaxHp(), s.getExp(), s.getMaxExp()));
+
+        detailStatView.setText(String.format("힘:%d | 민첩:%d | 체력:%d | 지혜:%d\n(포인트:%d)",
+                s.getStrength(), s.getAgility(), s.getHealth(), s.getWisdom(), s.getStatpoint()));
+
+        StringBuilder sb = new StringBuilder("인벤토리: ");
+        for (Item i : player.getInventory()) {
+            if (i != null) sb.append(i.getName()).append(", ");
+        }
+        invView.setText(sb.toString());
+    }
+
+    private void addLog(String msg) {
+        logView.append(msg + "\n");
+    }
+    public void battleMoveMain(android.view.View v) {
         finish();
     }
 }
