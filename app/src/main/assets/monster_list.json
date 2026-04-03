@@ -3,13 +3,13 @@
     "id" : "basemonster",
     "name" : "슬",
     "hp" :  10,
-    "attck" : 20
+    "attack" : 20
   },
 
   {
     "id" : "basemonster2",
     "name" : "고블",
     "hp" :  20,
-    "attck" : 40
+    "attack" : 40
   }
 ]

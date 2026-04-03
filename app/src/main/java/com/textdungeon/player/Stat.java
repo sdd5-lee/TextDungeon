@@ -1,7 +1,7 @@
 package com.textdungeon.player;
 
 public class Stat {
-    private int atk, dfe;//공격력 방어력
+    private int atk;//공격력
     private int strength,agility,health,wisdom;//힘,민첩,체력,지혜
     private int hp,maxhp;//체력, 최대체력
     private int critical_rate;//크리티컬 확률
@@ -15,7 +15,6 @@ public class Stat {
 
     public void updateBattleStat() {
         atk = strength;
-        dfe = health;
         maxhp = health;
         hp = maxhp;
         critical_rate = agility;
@@ -63,9 +62,5 @@ public class Stat {
             case "체력": this.health += value; break;
             case "지혜": this.wisdom += value; break;
         }
-    }
-    public void addCritical_rate(int critical_rate) {
-        this.critical_rate = (int) (critical_rate*0.5);
-        if(this.critical_rate > 101) this.critical_rate = 100;
     }
 }
