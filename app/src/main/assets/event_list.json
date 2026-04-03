@@ -1,0 +1,87 @@
+[
+  {
+    "id": "event_0",
+    "name": "치유의 샘",
+    "description": "숲 한복판에서 맑은 샘물을 발견했습니다. 물을 마시겠습니까?",
+    "floor": 1,
+    "choices": [
+      "물을 마신다",
+      "그냥 지나간다"
+    ],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "온몸에 활력이 돕니다! (체력 +15)",
+        "statRewards": [
+          { "type": "체력", "value": 15 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "조심해서 나쁠 건 없죠.",
+        "statRewards": []
+      }
+    ]
+  },
+  {
+    "id": "event_1",
+    "name": "고블린",
+    "description": "길을 지나던 중 몽둥이를 든 고블린과 마주쳤습니다!",
+    "floor": 1,
+    "enemyId": "monster_1",
+    "choices": [
+      "싸운다",
+      "겁을 주어 쫓아낸다"
+    ],
+    "rewards": [
+      {
+        "itemId": "item_5",
+        "description": "고블린을 물리치고 전리품을 챙겼습니다.",
+        "statRewards": [
+          { "type": "경험치", "value": 20 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "빠르게 위협해서 고블린을 쫓아냈습니다.",
+        "statRewards": [
+          { "type": "민첩", "value": 1 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "event_3",
+    "name": "버려진 도서관",
+    "description": "먼지 쌓인 책들 중 두 권이 유독 빛나고 있습니다. 그리고 수상한 돌이 있습니다",
+    "floor": 2,
+    "choices": [
+      "'힘와 체력'의 책을 읽는다",
+      "'지혜와 민첩'의 책을 읽는다",
+      "수상한 돌을 챙긴다"
+    ],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "",
+        "statRewards": [
+          { "type": "힘", "value": 5 },
+          { "type": "체력", "value": 5 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "낡은 책 한 권을 인벤토리에 넣었습니다.",
+        "statRewards": [
+          { "type": "지혜", "value": 5 },
+          { "type": "민첩", "value": 5 }
+        ]
+      },
+      {
+        "itemId": "item_6",
+        "description": "수상한돌을 챙기고 당신은 다음 층으로 넘어갔습니다.",
+        "statRewards": []
+      }
+    ]
+  }
+]

@@ -4,29 +4,24 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.textdungeon.player.Player;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
 public class GameSave {
-    private int slotNum;
     private int score;
-    private int currentFloor; // 현재 층수
+    private int currentFloor;
     private Player player;
-    public GameSave(int slotNum, Player player) {
-        this.slotNum = slotNum;
+    public GameSave(Player player) {
         this.player = player;
         this.score = 0;
-        this.currentFloor = 1; // 기본 1층 시작
+        this.currentFloor = 1;
     }
 
     public void save(Context context) {
         Gson gson = new Gson();
         String json = gson.toJson(this);
-        String fileName = "save_slot_" + slotNum + ".json";
+        String fileName = "save.json";
 
         try (FileOutputStream fos = context.openFileOutput(fileName, Context.MODE_PRIVATE)) {
             fos.write(json.getBytes());
@@ -36,7 +31,7 @@ public class GameSave {
     }
 
     public static GameSave load(Context context, int slotNum) {
-        String fileName = "save_slot_" + slotNum + ".json";
+        String fileName = "save.json";
         try (FileInputStream fis = context.openFileInput(fileName);
              InputStreamReader isr = new InputStreamReader(fis)) {
             return new Gson().fromJson(isr, GameSave.class);

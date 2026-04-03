@@ -1,0 +1,15 @@
+[
+  {
+    "id" : "monster_1",
+    "name" : "슬라임",
+    "hp" :  10,
+    "attack" : 20
+  },
+
+  {
+    "id" : "monster_2",
+    "name" : "고블린",
+    "hp" :  20,
+    "attack" : 40
+  }
+]

@@ -1,0 +1,38 @@
+
+[
+  {
+    "id" : "item_1",
+    "name" : "검",
+    "type" : "weapon"
+  },
+  {
+    "id" : "item_2",
+    "name" : "갑옷",
+    "type" : "armor"
+  },
+  {
+    "id" : "item_3",
+    "name" : "포션",
+    "type" : "consumables"
+  },
+  {
+    "id" : "item_4",
+    "name" : "낡은 책",
+    "type" : "weapon"
+  },
+  {
+    "id" : "item_5",
+    "name" : "고블린의 몽둥이",
+    "type" : "weapon"
+  },
+  {
+    "id" : "item_6",
+    "name" : "수상한 돌",
+    "type" : "artifact"
+  },
+  {
+    "id" : "item_7",
+    "name" : "마나 포션",
+    "type" : "consumables"
+  }
+]

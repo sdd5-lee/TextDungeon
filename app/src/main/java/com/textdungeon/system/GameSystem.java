@@ -1,5 +1,7 @@
 package com.textdungeon.system;
 
+import com.textdungeon.data.DataControl;
+import com.textdungeon.model.Item;
 import com.textdungeon.player.Player;
 import com.textdungeon.event.GameEvent;
 
@@ -26,14 +28,15 @@ public class GameSystem {
     }
 
     // 선택 실행
-    public String choose(int choice) {
-        return currentEvent.execute(player, choice);
+    public String choose(int choice, DataControl<Item> itemManager) {
+        return currentEvent.execute(player, choice, itemManager);
     }
 
     public String[] getChoices() {
         return currentEvent.getChoices();
     }
     public GameEvent getRandomEvent() {
-        return new GameEvent(//게임이벤트에 들어갈 생성자 값 ...);
+        //return new GameEvent();//게임이벤트에 들어갈 생성자 값 ...
+        return null;
     }
 }
