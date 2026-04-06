@@ -13,7 +13,7 @@ import com.textdungeon.player.Player;
 import com.textdungeon.system.GameSave;
 
 public class BattleLayout extends AppCompatActivity {
-    private DataControlTower dt; // 싱글톤 인스턴스 저장용
+    private DataControlTower dt;
     private Player player;
     private GameSave gameSave;
 
@@ -85,11 +85,12 @@ public class BattleLayout extends AppCompatActivity {
                 player.getLevel(), s.getHp(), s.getMaxHp(), s.getExp(), s.getMaxExp()));
 
         detailStatView.setText(String.format("힘:%d | 민첩:%d | 체력:%d | 지혜:%d\n(포인트:%d)",
-                s.getStrength(), s.getAgility(), s.getHealth(), s.getWisdom(), s.getStatpoint()));
+                s.getStrength(), s.getAgility(), s.getHealth(), s.getWisdom(), s.getStatPoint()));
 
         StringBuilder sb = new StringBuilder("인벤토리: ");
-        for (Item i : player.getInventory()) {
-            if (i != null) sb.append(i.getName()).append(", ");
+        for (String k : player.getInventory().keySet()) {
+            int item = player.getInventory().get(k);
+            sb.append(k).append("(").append(item).append("개)");
         }
         invView.setText(sb.toString());
     }
