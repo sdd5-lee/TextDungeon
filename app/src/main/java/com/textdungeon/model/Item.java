@@ -31,20 +31,14 @@ public class Item {
         return type;
     }
 
-    //타입은 소모품 consumables, 특별한 아이템 artifact, 무기 weapon,갑옷 armor
-    public void itemUse(Player player) {
-        switch (type) {
-            case "consumables":
-                break;
-            case "artifact":
-                break;
-            case "weapon":
-                break;
-            case "armor":
-                break;
+
+    public Boolean itemUse(Player player) {
+        if (!"consumables".equals(this.type)){
+            return false;
         }
-        if (this.hp > 0 && this.isConsumable) {
+        if (this.hp > 0) {
             player.heal(this.hp);
         }
+        return true;
     }
 }

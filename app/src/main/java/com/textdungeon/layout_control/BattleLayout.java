@@ -1,9 +1,15 @@
 package com.textdungeon.layout_control;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ImageSpan;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import com.example.textdungeon.R;
 import com.textdungeon.data.DataControlTower;
 import com.textdungeon.event.BattleEvent;
@@ -13,6 +19,8 @@ import com.textdungeon.player.Player;
 import com.textdungeon.system.GameSave;
 
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class BattleLayout extends AppCompatActivity {
     private DataControlTower dt;
@@ -122,9 +130,8 @@ public class BattleLayout extends AppCompatActivity {
         }
         invView.setText(sb.toString());
     }
-
     private void addLog(String msg) {
-        logView.append(msg + "\n");
+        logView.append(GameUI.parseRichText(this, msg, logView.getTextSize()));
     }
     public void battleMoveMain(android.view.View v) {
         finish();
