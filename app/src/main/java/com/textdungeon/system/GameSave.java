@@ -30,7 +30,7 @@ public class GameSave {
         }
     }
 
-    public static GameSave load(Context context, int slotNum) {
+    public static GameSave load(Context context) {
         String fileName = "save.json";
         try (FileInputStream fis = context.openFileInput(fileName);
              InputStreamReader isr = new InputStreamReader(fis)) {
