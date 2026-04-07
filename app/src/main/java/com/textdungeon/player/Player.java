@@ -4,36 +4,23 @@ package com.textdungeon.player;
 import com.textdungeon.model.Item;
 import com.textdungeon.model.Stat;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Player {
     private String name;
     private int level;
     private Stat stat;
     private Job job;
     private Magic magic;
-    private List<Item> inventory;
-    private static final int MAX_INV = 30;
+    private Inventory inventory;
+    private Equipment equipment;
     public Player(String name, Job job){
         this.name = name;
         this.level = 0;
-        this.inventory = new ArrayList<>();
+        this.inventory = new Inventory();
+        this.equipment = new Equipment();
         this.job = job;
         this.stat = new Stat(job.strength, job.agility, job.health,job.wisdom );
         magic = new Magic(job.magic_count, stat.getWisdom());
     }
-    public boolean pickUpItem(Item item) {
-        if (inventory.size() < MAX_INV) {
-            inventory.add(item);
-            return true;
-        }
-        return false;
-    }
-
-    public void setName(String name) {this.name = name;}
-    public String getName() {return name;}
-    public List<Item> getInventory() { return inventory; }
     public void levelUp() {
         while (stat.getExp() >= stat.getMaxExp()){
             int exp = stat.getExp();
@@ -41,10 +28,53 @@ public class Player {
             this.level++;
             stat.setExp(exp - maxexp);
             stat.setMaxExp((exp/2) + maxexp);
-            stat.addStatpoint(5);
+            stat.addStatPoint(5);
+        }
+    }
+    public void pickUpItem(Item item) {
+        inventory.addItem(item);
+    }
+    public void equipWeapon(Item item) {
+        inventory.removeItem(item.getName());
+        Item old = equipment.swapWeapon(item);
+        if (old != null) inventory.addItem(old);
+    }
+    public void equipArmor(Item item) {
+        inventory.removeItem(item.getName());
+        Item old = equipment.swapArmor(item);
+        if (old != null) inventory.addItem(old);
+    }
+    public void equipConsumables(Item item) {
+        inventory.removeItem(item.getName());
+        Item old = equipment.swapConsumables(item);
+        if (old != null) inventory.addItem(old);
+    }
+    public void equipArtifact(int index, Item item) {
+        inventory.removeItem(item.getName());
+        Item old = equipment.swapArtifact(item,index);
+        if (old != null) inventory.addItem(old);
+    }
+    public int getFinalAtk(){
+        return stat.getAtk() + equipment.getTotalAtk();
+    }
+    public int getFinalHp(){
+        return stat.getMaxHp() + equipment.getTotalHp();
+    }
+
+    public void useItem(Item item){
+        if(item == null) {return;}
+        String itemName = item.getName();
+        if (inventory.getItemMap().containsKey(itemName)){
+            item.itemUse(this);
         }
     }
 
+
+    public String getName() {return name;}
+    public Inventory getInventory() { return inventory; }
+    public Equipment getEquipment() {
+        return equipment;
+    }
     public int getLevel() {
         return level;
     }
@@ -58,6 +88,8 @@ public class Player {
         return stat;
     }
 
+
+    public void setName(String name) {this.name = name;}
     public int attack(){
         return stat.getAtk();
     }

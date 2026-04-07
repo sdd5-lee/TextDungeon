@@ -76,7 +76,7 @@ public class Stat {
         return maxexp;
     }
 
-    public int getStatpoint() {
+    public int getStatPoint() {
         return statpoint;
     }
 
@@ -96,10 +96,10 @@ public class Stat {
         this.wisdom = wisdom;
     }
 
-    public void setStatpoint(int statpoint) {
+    public void setStatPoint(int statpoint) {
         this.statpoint = statpoint;
     }
-    public void addStatpoint(int statpoint) {
+    public void addStatPoint(int statpoint) {
         this.statpoint += statpoint;
     }
 

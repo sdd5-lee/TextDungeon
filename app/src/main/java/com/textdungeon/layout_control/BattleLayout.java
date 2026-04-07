@@ -12,8 +12,10 @@ import com.textdungeon.model.Stat;
 import com.textdungeon.player.Player;
 import com.textdungeon.system.GameSave;
 
+import java.util.Map;
+
 public class BattleLayout extends AppCompatActivity {
-    private DataControlTower dt; // 싱글톤 인스턴스 저장용
+    private DataControlTower dt;
     private Player player;
     private GameSave gameSave;
 
@@ -45,6 +47,28 @@ public class BattleLayout extends AppCompatActivity {
         findViewById(R.id.savebutton).setOnClickListener(v -> {
             gameSave.save(this);
             Toast.makeText(this, "저장 완료", Toast.LENGTH_SHORT).show();
+        });
+        findViewById(R.id.loadbutton).setOnClickListener(v -> {
+            GameSave loadedSave = GameSave.load(this);
+
+            if (loadedSave != null && loadedSave.getPlayer() != null) {
+                // 1. 불러온 플레이어 객체 추출
+                Player loadedPlayer = loadedSave.getPlayer();
+
+                // 2. 싱글톤 및 현재 화면의 플레이어 데이터 교체
+                dt.player = loadedPlayer;
+                this.player = loadedPlayer;
+
+                // 3. [중요] 현재 액티비티의 gameSave 객체도 새 플레이어를 참조하도록 갱신
+                // 이 과정이 없으면 로드 후 저장 시 데이터가 꼬이거나 초기화된 것처럼 보입니다.
+                this.gameSave = new GameSave(this.player);
+
+                updateUI();
+                addLog("시스템: 데이터를 성공적으로 불러왔습니다.");
+                Toast.makeText(this, "로드 완료!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "저장된 데이터를 찾을 수 없습니다.", Toast.LENGTH_SHORT).show();
+            }
         });
 
         updateUI();
@@ -85,11 +109,16 @@ public class BattleLayout extends AppCompatActivity {
                 player.getLevel(), s.getHp(), s.getMaxHp(), s.getExp(), s.getMaxExp()));
 
         detailStatView.setText(String.format("힘:%d | 민첩:%d | 체력:%d | 지혜:%d\n(포인트:%d)",
-                s.getStrength(), s.getAgility(), s.getHealth(), s.getWisdom(), s.getStatpoint()));
+                s.getStrength(), s.getAgility(), s.getHealth(), s.getWisdom(), s.getStatPoint()));
 
         StringBuilder sb = new StringBuilder("인벤토리: ");
-        for (Item i : player.getInventory()) {
-            if (i != null) sb.append(i.getName()).append(", ");
+        Map<String,Integer> itemMap =  player.getInventory().getItemMap();
+        for (Map.Entry<String, Integer> entry : itemMap.entrySet()) {
+            String itemName = entry.getKey();
+            Integer count = entry.getValue();
+            if (count != null) {
+                sb.append(itemName).append("(").append(count).append("개) ");
+            }
         }
         invView.setText(sb.toString());
     }
