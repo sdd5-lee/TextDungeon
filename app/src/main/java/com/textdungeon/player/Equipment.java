@@ -29,26 +29,22 @@ public class Equipment {
     public Item swapWeapon(Item newWeapon){
         Item item = this.weapon;
         this.weapon = newWeapon;
-        newWeapon = item;
-        return newWeapon;
+        return item;
     }
     public Item swapArmor(Item newArmor){
         Item item = this.armor;
         this.armor = newArmor;
-        newArmor = item;
-        return newArmor;
+        return item;
     }
     public Item swapConsumables(Item newConsumables){
         Item item = this.consumables;
         this.consumables = newConsumables;
-        newConsumables = item;
-        return newConsumables;
+        return item;
     }
     public Item swapArtifact(Item newArtifact, int slot){
         Item item = this.artifact[slot];
         this.artifact[slot] = newArtifact;
-        newArtifact = item;
-        return newArtifact;
+        return item;
     }
     public int getTotalAtk(){
         int totalAtk= 0;
@@ -79,7 +75,7 @@ public class Equipment {
             }
         }
 
-        return 0;
+        return totalHp;
     }
     public Item getArmor() {
         return armor;

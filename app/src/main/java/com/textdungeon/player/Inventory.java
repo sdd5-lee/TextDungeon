@@ -8,6 +8,9 @@ import java.util.Map;
 public class Inventory {
     private Map<String,Integer> itemMap;
     private static final int MAX_INV = 30;
+    public Inventory(){
+        itemMap = new HashMap<>();
+    }
     public Map<String, Integer> getItemMap() {
         return itemMap;
     }

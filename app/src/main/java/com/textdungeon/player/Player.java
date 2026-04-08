@@ -24,10 +24,10 @@ public class Player {
     public void levelUp() {
         while (stat.getExp() >= stat.getMaxExp()){
             int exp = stat.getExp();
-            int maxexp = stat.getMaxExp();
+            int maxExp = stat.getMaxExp();
             this.level++;
-            stat.setExp(exp - maxexp);
-            stat.setMaxExp((exp/2) + maxexp);
+            stat.setExp(exp - maxExp);
+            stat.setMaxExp((exp/2) + maxExp);
             stat.addStatPoint(5);
         }
     }
@@ -62,10 +62,12 @@ public class Player {
     }
 
     public void useItem(Item item){
-        if(item == null) {return;}
-        String itemName = item.getName();
-        if (inventory.getItemMap().containsKey(itemName)){
-            item.itemUse(this);
+        if (item == null){return;}
+        if (inventory.getItemMap().containsKey(item.getName())){
+            boolean isUse = item.itemUse(this);
+            if (isUse){
+                inventory.removeItem(item.getName());
+            }
         }
     }
 
@@ -95,7 +97,7 @@ public class Player {
     }
 
     public void takeDamage(int damage) {
-        stat.setHp(-damage);
+        stat.subHp(-damage);
         if (stat.getHp() < 0) stat.setHp(0);
     }
     public void heal(int heal) {
