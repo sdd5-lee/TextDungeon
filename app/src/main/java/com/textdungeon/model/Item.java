@@ -9,7 +9,6 @@ public class Item {
     private String type;
     private int hp;
     private int atk;
-    private boolean isConsumable;
 
     private Item() {}
     public static Item createFromJson(String json) {
@@ -30,15 +29,7 @@ public class Item {
     public String getType() {
         return type;
     }
-
-
-    public Boolean itemUse(Player player) {
-        if (!"consumables".equals(this.type)){
-            return false;
-        }
-        if (this.hp > 0) {
-            player.heal(this.hp);
-        }
-        return true;
+    public Boolean itemUse() {
+        return "consumables".equals(this.type);
     }
 }

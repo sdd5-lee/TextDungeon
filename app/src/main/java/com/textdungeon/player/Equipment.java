@@ -1,6 +1,7 @@
 package com.textdungeon.player;
 
 import com.textdungeon.model.Item;
+import com.textdungeon.model.Monster;
 
 public class Equipment {
     private Item weapon;
@@ -9,72 +10,56 @@ public class Equipment {
     private Item[] artifact = new Item[2];
 
 
+    public Item equip(Item newItem, int slot) {
+        if (newItem == null) return null;
 
-    public Item equipWeapon(Item item){
-        return swapWeapon(item);
-    }
-    public Item equipArmor(Item item){
-        return swapArmor(item);
-    }
-    public Item equipConsumables(Item item){
-        return swapConsumables(item);
-    }
-    public Item equipArtifact(Item item,int slot){
-        if (slot < 0 || slot >= artifact.length) {
-            return item;
+        Item oldItem = null;
+
+        switch (newItem.getType()) {
+            case "weapon":
+                oldItem = this.weapon;
+                this.weapon = newItem;
+                break;
+
+            case "armor":
+                oldItem = this.armor;
+                this.armor = newItem;
+                break;
+
+            case "consumables":
+                oldItem = this.consumables;
+                this.consumables = newItem;
+                break;
+
+            case "artifact":
+                if (slot >= 0 && slot < artifact.length) {
+                    oldItem = this.artifact[slot];
+                    this.artifact[slot] = newItem;
+                } else {
+                    return newItem;
+                }
+                break;
         }
-        return swapArtifact(item, slot);
-    }
-
-    public Item swapWeapon(Item newWeapon){
-        Item item = this.weapon;
-        this.weapon = newWeapon;
-        return item;
-    }
-    public Item swapArmor(Item newArmor){
-        Item item = this.armor;
-        this.armor = newArmor;
-        return item;
-    }
-    public Item swapConsumables(Item newConsumables){
-        Item item = this.consumables;
-        this.consumables = newConsumables;
-        return item;
-    }
-    public Item swapArtifact(Item newArtifact, int slot){
-        Item item = this.artifact[slot];
-        this.artifact[slot] = newArtifact;
-        return item;
+        return oldItem;
     }
     public int getTotalAtk(){
         int totalAtk= 0;
-        if (weapon != null){
-            totalAtk+=weapon.getAtk();
-        }
-        if (armor != null){
-            totalAtk+=armor.getAtk();
-        }
-        for (Item i:artifact) {
-            if (i !=null){
+        Item [] items = {weapon,armor,artifact[0],artifact[1]};
+        for (Item i: items) {
+            if (i != null) {
                 totalAtk += i.getAtk();
             }
         }
         return totalAtk;
     }
     public int getTotalHp(){
-        int totalHp = 0;
-        if (weapon != null){
-            totalHp +=weapon.getHp();
-        }
-        if (armor != null){
-            totalHp +=armor.getHp();
-        }
-        for (Item i:artifact) {
-            if (i !=null){
+        int totalHp= 0;
+        Item [] items = {weapon,armor,artifact[0],artifact[1]};
+        for (Item i: items) {
+            if (i != null) {
                 totalHp += i.getHp();
             }
         }
-
         return totalHp;
     }
     public Item getArmor() {

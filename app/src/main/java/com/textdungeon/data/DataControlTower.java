@@ -6,6 +6,7 @@ import com.textdungeon.event.BattleEvent;
 import com.textdungeon.model.Item;
 import com.textdungeon.model.Monster;
 import com.textdungeon.player.Job;
+import com.textdungeon.model.Magic;
 import com.textdungeon.player.Player;
 
 public class DataControlTower {
@@ -13,6 +14,7 @@ public class DataControlTower {
     public DataControl<Monster> monsterManager;
     public DataControl<Item> itemManager;
     public DataControl<BattleEvent> eventManager;
+    public DataControl<Magic> magicManager;
     public Player player;
 
     private DataControlTower(Context context){
@@ -34,6 +36,9 @@ public class DataControlTower {
 
         eventManager = new DataControl<>(BattleEvent.class);
         eventManager.init(context, "event_list.json");
+
+        magicManager = new DataControl<>(Magic.class);
+        magicManager.init(context, "magic_list.json");
     }
     public void initPlayer(String name, Job job){
         if (player == null) {

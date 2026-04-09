@@ -77,8 +77,27 @@
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/inv_text">
 
-        <Button android:id="@+id/btn_event" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="이벤트" />
+        <Button
+            android:id="@+id/btn_event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이벤트" />
+
         <Button android:id="@+id/btn_exp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="EXP+50" />
+
+        <Button
+            android:id="@+id/btn_swap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="무기변경" />
+
+        <Button
+            android:id="@+id/btn_cast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="마법" />
 
     </LinearLayout>
 
@@ -91,6 +110,22 @@
 
         <Button android:id="@+id/savebutton" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="저장" />
         <Button android:id="@+id/loadbutton" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="불러오기" />
+
+        <Button
+            android:id="@+id/btn_learn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="배운마법"
+            android:textSize="10sp" />
+
+        <Button
+            android:id="@+id/btn_forget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="마법제거"
+            android:textSize="10sp" />
 
     </LinearLayout>
 

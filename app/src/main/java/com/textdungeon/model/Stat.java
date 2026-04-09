@@ -7,14 +7,14 @@ public class Stat {
     private int critical_rate;//크리티컬 확률
     private int exp;
     private int maxExp;
-    private int statpoint;
+    private int statPoint;
 
     public Stat(int strength, int agility, int health, int wisdom) {
         this.strength = strength;
         this.agility = agility;
         this.health = health;
         this.wisdom = wisdom;
-        statpoint = 0;
+        statPoint = 0;
         exp = 0 ;
         maxExp = 100;
         updateBattleStat();
@@ -77,7 +77,7 @@ public class Stat {
     }
 
     public int getStatPoint() {
-        return statpoint;
+        return statPoint;
     }
 
     public void setStrength(int strength) {
@@ -97,10 +97,10 @@ public class Stat {
     }
 
     public void setStatPoint(int statpoint) {
-        this.statpoint = statpoint;
+        this.statPoint = statpoint;
     }
     public void addStatPoint(int statpoint) {
-        this.statpoint += statpoint;
+        this.statPoint += statpoint;
     }
     public void subHp(int damage){
         hp -= damage;
