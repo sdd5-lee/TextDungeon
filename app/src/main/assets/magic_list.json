@@ -1,0 +1,16 @@
+[
+  {
+    "id": "mag_1",
+    "name": "매직 미사일",
+    "count": 5,
+    "maxCount": 5,
+    "magicDamage": 10
+  },
+  {
+    "id": "mag_2",
+    "name": "화염구",
+    "count": 3,
+    "maxCount": 3,
+    "magicDamage": 25
+  }
+]

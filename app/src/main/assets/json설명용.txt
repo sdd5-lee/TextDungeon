@@ -1,41 +1,8 @@
-이벤트 리스트
 
-  {
-    "id": "event_battle_goblin",
-    "name": "고블린",
-    "description": "길을 지나던 중 몽둥이를 든 고블린과 마주쳤습니다!",
-    "floor": 1,
-    "enemyId": "monster_1",
-    "choices": [
-      "싸운다",
-      "겁을 주어 쫓아낸다"
-    ],
-    "rewards": [
-      {
-        "itemId": "item_5",
-        "description": "고블린을 물리치고 전리품을 챙겼습니다.",
-        "statRewards": [
-          { "type": "경험치", "value": 20 }
-        ]
-      },
-      {
-        "itemId": null,
-        "description": "빠르게 위협해서 고블린을 쫓아냈습니다.",
-        "statRewards": [
-          { "type": "민첩", "value": 1 }
-        ]
-      }
-    ]
-  },
 
 rewards : 아이템 id는 item_list.json 참고
 statRewards: statType은 스탯 타입 4가지와 경험치 1가지 해서 총 5가지 중에서 보상 선택 여러 종류의 스텟 보상을 줄 수 있다.
+설명 중간에 [이미지이름] 을넣으면 이미지가 나오는 이벤트를 만들 수 있다.
+!!!!! 그리고 반드시 이미지 앞뒤로 \n을 넣어서 줄바꿈 시켜줘야한다. !!!
 
-w
-
-  {
-    "id" : "item_7",
-    "name" : "마나 포션",
-    "type" : "consumables"
-  }
 type : 타입은 소모품 consumables, 특별한 아이템 artifact, 무기 weapon,갑옷 armor 

@@ -3,27 +3,27 @@ package com.textdungeon.model;
 public class Stat {
     private int atk;//공격력
     private int strength, agility, health, wisdom;//힘,민첩,체력,지혜
-    private int hp, maxhp;//체력, 최대체력
+    private int hp, maxHp;//체력, 최대체력
     private int critical_rate;//크리티컬 확률
     private int exp;
-    private int maxexp;
-    private int statpoint;
+    private int maxExp;
+    private int statPoint;
 
     public Stat(int strength, int agility, int health, int wisdom) {
         this.strength = strength;
         this.agility = agility;
         this.health = health;
         this.wisdom = wisdom;
-        statpoint = 0;
+        statPoint = 0;
         exp = 0 ;
-        maxexp = 100;
+        maxExp = 100;
         updateBattleStat();
     }
 
     public void updateBattleStat() {
         atk = strength;
-        maxhp = health;
-        hp = maxhp;
+        maxHp = health;
+        hp = maxHp;
         critical_rate = agility;
     }
 
@@ -32,7 +32,7 @@ public class Stat {
     }
 
     public void setMaxHp(int maxhp) {
-        this.maxhp = maxhp;
+        this.maxHp = maxhp;
         this.hp = maxhp;
     }
 
@@ -57,7 +57,7 @@ public class Stat {
     }
 
     public int getMaxHp() {
-        return maxhp;
+        return maxHp;
     }
 
     public int getCritical_rate() {
@@ -73,11 +73,11 @@ public class Stat {
     }
 
     public int getMaxExp() {
-        return maxexp;
+        return maxExp;
     }
 
     public int getStatPoint() {
-        return statpoint;
+        return statPoint;
     }
 
     public void setStrength(int strength) {
@@ -97,10 +97,13 @@ public class Stat {
     }
 
     public void setStatPoint(int statpoint) {
-        this.statpoint = statpoint;
+        this.statPoint = statpoint;
     }
     public void addStatPoint(int statpoint) {
-        this.statpoint += statpoint;
+        this.statPoint += statpoint;
+    }
+    public void subHp(int damage){
+        hp -= damage;
     }
 
     public void gainStat(String type, int value) {
@@ -121,12 +124,13 @@ public class Stat {
                 this.exp += value;
                 break;
         }
+        updateBattleStat();
     }
 
     public void setExp(int exp) {
         this.exp = exp;
     }
-    public void setMaxExp(int maxexp) {
-        this.maxexp = maxexp;
+    public void setMaxExp(int maxExp) {
+        this.maxExp = maxExp;
     }
 }
