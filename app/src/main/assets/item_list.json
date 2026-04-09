@@ -1,38 +1,51 @@
-
 [
   {
-    "id" : "item_1",
-    "name" : "검",
-    "type" : "weapon"
+    "id": "item_1",
+    "name": "검",
+    "type": "weapon",
+    "hp": 0,
+    "atk": 10
   },
   {
-    "id" : "item_2",
-    "name" : "갑옷",
-    "type" : "armor"
+    "id": "item_2",
+    "name": "갑옷",
+    "type": "armor",
+    "hp": 50,
+    "atk": 0
   },
   {
-    "id" : "item_3",
-    "name" : "포션",
-    "type" : "consumables"
+    "id": "item_3",
+    "name": "포션",
+    "type": "consumables",
+    "hp": 20,
+    "atk": 0
   },
   {
-    "id" : "item_4",
-    "name" : "낡은 책",
-    "type" : "weapon"
+    "id": "item_4",
+    "name": "낡은 책",
+    "type": "weapon",
+    "hp": 5,
+    "atk": 2
   },
   {
-    "id" : "item_5",
-    "name" : "고블린의 몽둥이",
-    "type" : "weapon"
+    "id": "item_5",
+    "name": "고블린의 몽둥이",
+    "type": "weapon",
+    "hp": 0,
+    "atk": 5
   },
   {
-    "id" : "item_6",
-    "name" : "수상한 돌",
-    "type" : "artifact"
+    "id": "item_6",
+    "name": "수상한 돌",
+    "type": "artifact",
+    "hp": 10,
+    "atk": 5
   },
   {
-    "id" : "item_7",
-    "name" : "마나 포션",
-    "type" : "consumables"
+    "id": "item_7",
+    "name": "마나 포션",
+    "type": "consumables",
+    "hp": 0,
+    "atk": 0
   }
 ]

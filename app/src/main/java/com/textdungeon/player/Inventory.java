@@ -32,4 +32,14 @@ public class Inventory {
             itemMap.put(itemName,1);
         }
     }
+    public boolean useItem(Item item){
+        if (item == null){return false;}
+        if (itemMap.containsKey(item.getName())){
+            boolean isUse = item.itemUse();
+            if (isUse){
+                removeItem(item.getName());
+            }
+        }
+        return true;
+    }
 }

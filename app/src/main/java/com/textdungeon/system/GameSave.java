@@ -9,13 +9,13 @@ import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 
 public class GameSave {
-    private int score;
     private int currentFloor;
     private Player player;
-    public GameSave(Player player) {
+    private UserRecord recode;
+    public GameSave(Player player, UserRecord userRecord) {
         this.player = player;
-        this.score = 0;
         this.currentFloor = 1;
+        this.recode = userRecord;
     }
 
     public void save(Context context) {
@@ -42,10 +42,12 @@ public class GameSave {
 
     public int getCurrentFloor() { return currentFloor; }
     public void setCurrentFloor(int floor) { this.currentFloor = floor; }
-    public int getScore() { return score; }
-    public void setScore(int score) { this.score = score; }
 
     public Player getPlayer() {
         return player;
+    }
+
+    public UserRecord getUserRecord() {
+        return recode;
     }
 }
