@@ -7,7 +7,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import com.textdungeon.data.DataControlTower;
 import com.textdungeon.layout_control.BattleLayout;
-import com.textdungeon.player.Job;
+import com.textdungeon.model.Job;
 
 public class MainActivity extends AppCompatActivity {
     @Override

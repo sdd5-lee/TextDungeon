@@ -5,11 +5,10 @@ import android.content.Context;
 
 import com.textdungeon.data.DataControlTower;
 import com.textdungeon.model.Item;
+import com.textdungeon.model.Job;
 import com.textdungeon.model.LearnedMagic;
 import com.textdungeon.model.Magic;
 import com.textdungeon.model.Stat;
-
-import java.time.temporal.ChronoUnit;
 
 public class Player {
     private String name;
@@ -115,7 +114,7 @@ public class Player {
         LearnedMagic lm = magicScroll.getMagic(magicId);
 
         if (lm != null && lm.use()) {
-            Magic magic = DataControlTower.getInstance(context).magicManager.spawn(magicId);
+            Magic magic = DataControlTower.getInstance(context).getMagicManager().spawn(magicId);
 
             return magic.getMagicDamage(stat.getWisdom());
         }

@@ -27,7 +27,6 @@ import java.util.regex.Pattern;
 public class BattleLayout extends AppCompatActivity {
     private DataControlTower dt;
     private Player player;
-    private GameSave gameSave;
 
     private TextView logView, statusView, detailStatView, invView;
 
@@ -38,14 +37,13 @@ public class BattleLayout extends AppCompatActivity {
         setContentView(R.layout.battle_activity);
 
         dt = DataControlTower.getInstance(this);
-        player = dt.player;
+        player = dt.getPlayer();
 
         if (player == null) {
             Toast.makeText(this, "에러 발생", Toast.LENGTH_SHORT).show();
             finish(); return;
         }
 
-        gameSave = new GameSave(player);
 
         logView = findViewById(R.id.battle_log);
         statusView = findViewById(R.id.status_display);
@@ -56,17 +54,19 @@ public class BattleLayout extends AppCompatActivity {
         findViewById(R.id.btn_event).setOnClickListener(v -> triggerEvent());
         findViewById(R.id.btn_exp).setOnClickListener(v -> gainExp());
         findViewById(R.id.savebutton).setOnClickListener(v -> {
-            gameSave.save(this);
+            dt.saveGame();
             Toast.makeText(this, "저장 완료", Toast.LENGTH_SHORT).show();
         });
         findViewById(R.id.loadbutton).setOnClickListener(v -> {
             GameSave loadedSave = GameSave.load(this);
 
             if (loadedSave != null && loadedSave.getPlayer() != null) {
-                Player loadedPlayer = loadedSave.getPlayer();
-                dt.player = loadedPlayer;
-                this.player = loadedPlayer;
-                this.gameSave = new GameSave(this.player);
+                dt.setPlayer(loadedSave.getPlayer());
+                if (loadedSave.getUserRecord() != null) {
+                    dt.setUserRecord(loadedSave.getUserRecord());
+                }
+
+                this.player = dt.getPlayer();
 
                 updateUI();
                 addLog("시스템: 데이터를 성공적으로 불러왔습니다.");
@@ -93,13 +93,13 @@ public class BattleLayout extends AppCompatActivity {
 
     private void triggerEvent() {
         // JSON 파일에 "event_1" 혹은 실제 있는 ID를 써야 합니다.
-        BattleEvent event = dt.eventManager.spawn("event_1");
+        BattleEvent event = dt.getEventManager().spawn("event_1");
 
         if (event != null) {
             addLog("\n[이벤트] " + event.getName());
             addLog(event.getDescription());
 
-            String result = event.execute(player, 0,dt.itemManager);
+            String result = event.execute(player, 0,dt.getItemManager());
             addLog("결과: " + result);
             updateUI();
         } else {
@@ -116,7 +116,7 @@ public class BattleLayout extends AppCompatActivity {
     private void swapWeapon() {
         // isWeaponA가 true면 item_1(검), false면 item_4(낡은 책) 생성
         String targetId = isWeaponA ? "item_1" : "item_4";
-        Item newItem = dt.itemManager.spawn(targetId);
+        Item newItem = dt.getItemManager().spawn(targetId);
 
         if (newItem != null) {
             player.equipItem(newItem);
@@ -140,8 +140,8 @@ public class BattleLayout extends AppCompatActivity {
     private void learnMagic() {
         String magicId = "mag_1";
         String magicId2 = "mag_2";
-        Magic masterData = dt.magicManager.spawn(magicId);
-        Magic masterData2 = dt.magicManager.spawn(magicId2);
+        Magic masterData = dt.getMagicManager().spawn(magicId);
+        Magic masterData2 = dt.getMagicManager().spawn(magicId2);
 
         if (masterData != null) {
             // MagicScroll에 새로 추가된 hasMagic과 addMagic 메서드 활용!
@@ -163,7 +163,7 @@ public class BattleLayout extends AppCompatActivity {
 
         if (player.getMagicScroll().hasMagic(magicId)) {
             // 1. 이름을 알아내기 위해 타워에서 마스터 데이터를 잠시 빌려옵니다.
-            Magic masterData = dt.magicManager.spawn(magicId);
+            Magic masterData = dt.getMagicManager().spawn(magicId);
 
             // 안전장치: 혹시라도 데이터가 없으면 그냥 ID를 출력하고, 있으면 진짜 이름을 씁니다.
             String magicName = (masterData != null) ? masterData.getName() : magicId;
