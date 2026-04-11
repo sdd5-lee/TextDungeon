@@ -7,7 +7,6 @@ import com.textdungeon.model.Monster;
 import com.textdungeon.player.Player;
 import com.textdungeon.system.BattleSystem;
 public class BattleEvent extends GameEvent {
-    private String enemyId;
     public BattleEvent() {
         super();
     }

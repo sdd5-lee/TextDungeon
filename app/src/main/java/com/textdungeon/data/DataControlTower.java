@@ -39,6 +39,17 @@ public class DataControlTower {
 
         magicManager = new DataControl<>(Magic.class);
         magicManager.init(context, "magic_list.json");
+
+        // 무결성 검사
+        boolean valid = DataValidator.validateAll(
+                monsterManager.getAll(),
+                itemManager.getAll(),
+                eventManager.getAll()
+        );
+
+        if (!valid) {
+            throw new IllegalStateException("게임 데이터 무결성 검사 실패");
+        }
     }
     public void initPlayer(String name, Job job){
         if (player == null) {

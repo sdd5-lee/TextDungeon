@@ -1,6 +1,5 @@
 package com.textdungeon.player;
 
-
 import android.content.Context;
 
 import com.textdungeon.data.DataControlTower;
@@ -8,8 +7,6 @@ import com.textdungeon.model.Item;
 import com.textdungeon.model.LearnedMagic;
 import com.textdungeon.model.Magic;
 import com.textdungeon.model.Stat;
-
-import java.time.temporal.ChronoUnit;
 
 public class Player {
     private String name;
@@ -28,18 +25,28 @@ public class Player {
         this.magicScroll = new MagicScroll();
         this.job = job;
         this.stat = new Stat(job.strength, job.agility, job.health,job.wisdom );
+
+        stat.updateBattleStat(level);
     }
+
     public void levelUp() {
         while (stat.getExp() >= stat.getMaxExp()){
             int exp = stat.getExp();
             int maxExp = stat.getMaxExp();
+
             this.level++;
+
             stat.setExp(exp - maxExp);
             stat.setMaxExp(maxExp + maxExp/2);
             stat.addStatPoint(5);
+
+            //레벨 반영
+            stat.updateBattleStat(level);
+
             magicScroll.updateCounts(stat.getWisdom());
         }
     }
+
 
     // ****************** 인벤토리 ******************
     public void pickUpItem(Item item) {

@@ -17,14 +17,20 @@ public class Stat {
         statPoint = 0;
         exp = 0 ;
         maxExp = 100;
-        updateBattleStat();
+        updateBattleStat(0);
+        hp = maxHp;
     }
 
-    public void updateBattleStat() {
-        atk = strength;
-        maxHp = health;
-        hp = maxHp;
-        critical_rate = agility;
+    public void updateBattleStat(int level) {
+        int baseAtk = strength * 2;
+        int baseMaxHp = health * 10;
+        int baseCrit = agility;
+
+        atk = baseAtk + level;
+        maxHp = baseMaxHp + level * 5;
+        critical_rate = Math.min(baseCrit + level, 100);
+
+        if (hp > maxHp) hp = maxHp;
     }
 
     public void setHp(int hp) {
@@ -124,7 +130,7 @@ public class Stat {
                 this.exp += value;
                 break;
         }
-        updateBattleStat();
+        updateBattleStat(1);
     }
 
     public void setExp(int exp) {

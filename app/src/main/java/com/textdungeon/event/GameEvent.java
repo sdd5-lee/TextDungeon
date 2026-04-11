@@ -14,6 +14,10 @@ public class GameEvent {
     protected int floor;
     protected List<Reward> rewards;
 
+    //json에 있는 choices랑 enemyId
+    protected List<String> choices;
+    protected String enemyId;
+
     public GameEvent() {}
 
     // 기본 Getter들
@@ -21,6 +25,19 @@ public class GameEvent {
     public String getName() { return name; }
     public String getDescription() { return description; }
     public int getFloor() { return floor; }
+
+    //추가
+    public List<String> getChoices() {
+        return choices;
+    }
+
+    public List<Reward> getRewards() {
+        return rewards;
+    }
+
+    public String getEnemyId() {
+        return enemyId;
+    }
 
     public String execute(Player player, int choice, DataControl<Item> itemManager) {
         if (rewards == null || rewards.isEmpty() || choice >= rewards.size()) {
@@ -30,7 +47,5 @@ public class GameEvent {
         reward.apply(player, itemManager);
         return reward.getDescription();
     }
-    public String[] getChoices() {
-        return null;
-    }
+
 }
