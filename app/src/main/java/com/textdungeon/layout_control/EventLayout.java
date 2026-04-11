@@ -22,7 +22,7 @@ public class EventLayout extends AppCompatActivity {
         finish();
     }
     public void eventMoveBattle(View v){
-        Intent intent = new Intent(EventLayout.this, BattleLayout.class);
+        Intent intent = new Intent(EventLayout.this, TestLayout.class);
         startActivity(intent);
         finish();
     }

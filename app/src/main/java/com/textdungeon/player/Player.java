@@ -18,15 +18,17 @@ public class Player {
     private Inventory inventory;
     private MagicScroll magicScroll;
     private Equipment equipment;
+    private int money;
 
     public Player(String name, Job job){
         this.name = name;
-        this.level = 0;
-        this.inventory = new Inventory();
-        this.equipment = new Equipment();
-        this.magicScroll = new MagicScroll();
+        level = 0;
+        money = 0;
+        inventory = new Inventory();
+        equipment = new Equipment();
+        magicScroll = new MagicScroll();
         this.job = job;
-        this.stat = new Stat(job.strength, job.agility, job.health,job.wisdom );
+        stat = new Stat(job.strength, job.agility, job.health,job.wisdom );
     }
     public void levelUp() {
         while (stat.getExp() >= stat.getMaxExp()){

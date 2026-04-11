@@ -38,8 +38,8 @@ public class UserRecord {
         upgradeLevels.put(upgradeId, currentLevel + 1);
     }
     public int getScore() { return score; }
-    public void deductScore(int amount) { this.score -= amount; }
-    public void addScore(int amount) { this.score += amount; }
+    public void deductScore(int score) { this.score -= score; }
+    public void addScore(int score) { this.score += score; }
 
     public Set<String> getUnlockJobName() {
         return unlockJobName;

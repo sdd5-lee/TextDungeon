@@ -8,7 +8,8 @@ public enum ShopUpgrade {
     INIT_STAT_AGILITY("초기 민첩 스탯 추가", 10, 100, 300),
     INIT_STAT_HEALTH("초기 체력 스탯 추가", 10, 100, 300),
     INIT_STAT_WISDOM("초기 지혜 스탯 추가", 10, 100, 300),
-    INIT_GOLD_BONUS("초기 소지 골드 증가", 10, 300, 100);
+    INIT_GOLD_BONUS("초기 소지 골드 증가", 10, 300, 100),
+    INIT_DICE_LIMIT("혼돈의 주사위 사용횟수", 3, 1000, 500);
 
     public final String name;
     public final int maxLevel;
