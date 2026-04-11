@@ -17,24 +17,24 @@ public class Equipment {
 
         switch (newItem.getType()) {
             case "weapon":
-                oldItem = this.weapon;
-                this.weapon = newItem;
+                oldItem = weapon;
+                weapon = newItem;
                 break;
 
             case "armor":
-                oldItem = this.armor;
-                this.armor = newItem;
+                oldItem = armor;
+                armor = newItem;
                 break;
 
             case "consumables":
-                oldItem = this.consumables;
-                this.consumables = newItem;
+                oldItem = consumables;
+                consumables = newItem;
                 break;
 
             case "artifact":
                 if (slot >= 0 && slot < artifact.length) {
-                    oldItem = this.artifact[slot];
-                    this.artifact[slot] = newItem;
+                    oldItem = artifact[slot];
+                    artifact[slot] = newItem;
                 } else {
                     return newItem;
                 }

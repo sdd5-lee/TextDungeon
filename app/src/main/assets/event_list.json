@@ -85,26 +85,26 @@
     ]
   },
   {
-  "id": "event_3",
-  "name": "수상한 상인",
-  "description": "어두운 길목에서 상인을 만났습니다.",
-  "floor": 1,
-  "choices": [
-    "물건을 산다",
-    "무시한다"
-  ],
-  "rewards": [
-    {
-      "itemId": "item_3",
-      "description": "포션을 구매했습니다.",
-      "statRewards": []
-    },
-    {
-      "itemId": null,
-      "description": "아무 일도 일어나지 않았습니다.",
-      "statRewards": []
-    }
-   ]
+    "id": "event_3",
+    "name": "수상한 상인",
+    "description": "어두운 길목에서 상인을 만났습니다.",
+    "floor": 1,
+    "choices": [
+      "물건을 산다",
+      "무시한다"
+    ],
+    "rewards": [
+      {
+        "itemId": "item_3",
+        "description": "포션을 구매했습니다.",
+        "statRewards": []
+      },
+      {
+        "itemId": null,
+        "description": "아무 일도 일어나지 않았습니다.",
+        "statRewards": []
+      }
+    ]
   },
   {
     "id": "event_4",

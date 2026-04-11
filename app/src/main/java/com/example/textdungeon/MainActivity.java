@@ -6,8 +6,8 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.textdungeon.data.DataControlTower;
-import com.textdungeon.layout_control.BattleLayout;
-import com.textdungeon.player.Job;
+import com.textdungeon.layout_control.TestLayout;
+import com.textdungeon.model.Job;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         dt.initPlayer("player", Job.WARRIOR);
     }
     public void battleMoveMain(View v) {
-        Intent intent = new Intent(this, BattleLayout.class);
+        Intent intent = new Intent(this, TestLayout.class);
         startActivity(intent);
     }
 }

@@ -1,4 +1,4 @@
-package com.textdungeon.player;
+package com.textdungeon.model;
 
 public enum Job {
     //스텟 총량은 30으로 설정 매직 카운트는 지혜 / 2

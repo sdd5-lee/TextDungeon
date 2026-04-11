@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.textdungeon.data.DataControlTower;
 import com.textdungeon.model.Item;
+import com.textdungeon.model.Job;
 import com.textdungeon.model.LearnedMagic;
 import com.textdungeon.model.Magic;
 import com.textdungeon.model.Stat;
@@ -16,13 +17,15 @@ public class Player {
     private Inventory inventory;
     private MagicScroll magicScroll;
     private Equipment equipment;
+    private int money;
 
     public Player(String name, Job job){
         this.name = name;
-        this.level = 0;
-        this.inventory = new Inventory();
-        this.equipment = new Equipment();
-        this.magicScroll = new MagicScroll();
+        level = 0;
+        money = 0;
+        inventory = new Inventory();
+        equipment = new Equipment();
+        magicScroll = new MagicScroll();
         this.job = job;
         this.stat = new Stat(job.strength, job.agility, job.health,job.wisdom );
 
@@ -122,7 +125,7 @@ public class Player {
         LearnedMagic lm = magicScroll.getMagic(magicId);
 
         if (lm != null && lm.use()) {
-            Magic magic = DataControlTower.getInstance(context).magicManager.spawn(magicId);
+            Magic magic = DataControlTower.getInstance(context).getMagicManager().spawn(magicId);
 
             return magic.getMagicDamage(stat.getWisdom());
         }
