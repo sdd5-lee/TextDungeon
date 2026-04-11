@@ -1,51 +1,162 @@
 [
   {
     "id": "item_1",
-    "name": "검",
+    "name": "나무검",
     "type": "weapon",
     "hp": 0,
-    "atk": 10
+    "atk": 10,
+    "isConsumable": false
   },
   {
     "id": "item_2",
-    "name": "갑옷",
+    "name": "천갑옷",
     "type": "armor",
-    "hp": 50,
-    "atk": 0
+    "hp": 10,
+    "atk": 0,
+    "isConsumable": false
   },
   {
     "id": "item_3",
-    "name": "포션",
+    "name": "하급 포션",
     "type": "consumables",
     "hp": 20,
-    "atk": 0
+    "atk": 0,
+    "isConsumable": true
   },
   {
     "id": "item_4",
     "name": "낡은 책",
     "type": "weapon",
-    "hp": 5,
-    "atk": 2
+    "hp": 0,
+    "atk": 10,
+    "isConsumable": false
   },
   {
     "id": "item_5",
     "name": "고블린의 몽둥이",
     "type": "weapon",
     "hp": 0,
-    "atk": 5
+    "atk": 15,
+    "isConsumable": false
   },
   {
     "id": "item_6",
     "name": "수상한 돌",
     "type": "artifact",
     "hp": 10,
-    "atk": 5
+    "atk": 10,
+    "isConsumable": false
   },
   {
     "id": "item_7",
-    "name": "마나 포션",
-    "type": "consumables",
+    "name": "단검",
+    "type": "weapon",
     "hp": 0,
-    "atk": 0
+    "atk": 8,
+    "isConsumable": false
+  },
+  {
+    "id": "item_8",
+    "name": "가죽 갑옷",
+    "type": "armor",
+    "hp": 15,
+    "atk": 0,
+    "isConsumable": false
+  },
+  {
+    "id": "item_9",
+    "name": "중급 포션",
+    "type": "consumables",
+    "hp": 40,
+    "atk": 0,
+    "isConsumable": true
+  },
+  {
+    "id": "item_10",
+    "name": "철검",
+    "type": "weapon",
+    "hp": 0,
+    "atk": 20,
+    "isConsumable": false
+  },
+  {
+    "id": "item_11",
+    "name": "철갑옷",
+    "type": "armor",
+    "hp": 25,
+    "atk": 0,
+    "isConsumable": false
+  },
+  {
+    "id": "item_12",
+    "name": "상급 포션",
+    "type": "consumables",
+    "hp": 60,
+    "atk": 0,
+    "isConsumable": true
+  },
+  {
+    "id": "item_13",
+    "name": "마법 지팡이",
+    "type": "weapon",
+    "hp": 0,
+    "atk": 25,
+    "isConsumable": false
+  },
+  {
+    "id": "item_14",
+    "name": "사슬 갑옷",
+    "type": "armor",
+    "hp": 35,
+    "atk": 0,
+    "isConsumable": false
+  },
+  {
+    "id": "item_15",
+    "name": "오크의 도끼",
+    "type": "weapon",
+    "hp": 0,
+    "atk": 30,
+    "isConsumable": false
+  },
+  {
+    "id": "item_16",
+    "name": "오크의 부적",
+    "type": "artifact",
+    "hp": 15,
+    "atk": 15,
+    "isConsumable": false
+  },
+  {
+    "id": "item_17",
+    "name": "최상급 포션",
+    "type": "consumables",
+    "hp": 100,
+    "atk": 0,
+    "isConsumable": true
+  },
+  {
+    "id": "item_18",
+    "name": "기사의 검",
+    "type": "weapon",
+    "hp": 0,
+    "atk": 40,
+    "isConsumable": false
+  },
+  {
+    "id": "item_19",
+    "name": "기사의 갑옷",
+    "type": "armor",
+    "hp": 40,
+    "atk": 0,
+    "isConsumable": false
+  },
+  {
+    "id": "item_20",
+    "name": "고대의 ???",
+    "type": "artifact",
+    "hp": 20,
+    "atk": 20,
+    "isConsumable": false
   }
 ]

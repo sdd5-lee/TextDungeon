@@ -3,6 +3,7 @@
     "id" : "monster_1",
     "name" : "슬라임",
     "hp" :  10,
+    "maxHp" : 10,
     "attack" : 20
   },
 
@@ -10,6 +11,86 @@
     "id" : "monster_2",
     "name" : "고블린",
     "hp" :  20,
+    "maxHp" : 20,
     "attack" : 40
+  },
+  {
+    "id" : "monster_3",
+    "name" : "늑대",
+    "hp" :  15,
+    "maxHp" : 15,
+    "attack" : 50
+  },
+
+  {
+    "id" : "monster_4",
+    "name" : "해골 전사",
+    "hp" :  40,
+    "maxHp" : 40,
+    "attack" : 55
+  },
+
+  {
+    "id" : "monster_5",
+    "name" : "해골 궁수",
+    "hp" :  30,
+    "maxHp" : 30,
+    "attack" : 60
+  },
+
+  {
+    "id" : "monster_6",
+    "name" : "해골 기사",
+    "hp" :  60,
+    "maxHp" : 60,
+    "attack" : 80
+  },
+
+  {
+    "id" : "monster_7",
+    "name" : "오크 전사",
+    "hp" :  70,
+    "maxHp" : 70,
+    "attack" : 70
+  },
+
+  {
+    "id" : "monster_8",
+    "name" : "오크 마법사",
+    "hp" :  65,
+    "maxHp" : 65,
+    "attack" : 85
+  },
+
+  {
+    "id" : "monster_9",
+    "name" : "트롤",
+    "hp" :  80,
+    "maxHp" : 80,
+    "attack" : 95
+  },
+
+  {
+    "id" : "monster_10",
+    "name" : "와이번",
+    "hp" :  100,
+    "maxHp" : 100,
+    "attack" : 120
+  },
+
+  {
+    "id" : "monster_11",
+    "name" : "리치",
+    "hp" :  120,
+    "maxHp" : 120,
+    "attack" : 140
+  },
+
+  {
+    "id" : "monster_12",
+    "name" : "마왕",
+    "hp" :  150,
+    "maxHp" : 150,
+    "attack" : 170
   }
 ]
