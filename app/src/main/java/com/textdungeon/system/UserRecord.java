@@ -28,6 +28,7 @@ public class UserRecord {
     public boolean isUnlockJob(String jobName){
         return unlockJobName.contains(jobName);
     }
+
     public int getUpgradeLevel(String upgradeId) {
         return upgradeLevels.getOrDefault(upgradeId, 0);
     }
