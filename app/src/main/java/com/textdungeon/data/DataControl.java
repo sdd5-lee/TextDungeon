@@ -10,7 +10,9 @@ import com.google.gson.JsonParser;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DataControl<D> {
@@ -21,14 +23,17 @@ public class DataControl<D> {
     public DataControl(Class<D> clazz) {
         this.clazz = clazz;
     }
-    public void init(Context context,String fileName) {
 
-        try (BufferedReader bf= new BufferedReader(new InputStreamReader(context.getAssets().open(fileName)))) {
+    public void init(Context context, String fileName) {
+        try (BufferedReader bf = new BufferedReader(
+                new InputStreamReader(context.getAssets().open(fileName)))) {
+
             StringBuilder sb = new StringBuilder();
             String line;
-            while ((line = bf.readLine()) != null){
+            while ((line = bf.readLine()) != null) {
                 sb.append(line);
             }
+
             JsonArray array = JsonParser.parseString(sb.toString()).getAsJsonArray();
             for (JsonElement element : array) {
                 JsonObject obj = element.getAsJsonObject();
@@ -39,9 +44,21 @@ public class DataControl<D> {
             e.printStackTrace();
         }
     }
+
     public D spawn(String id) {
         String json = dataList.get(id);
         if (json == null) return null;
         return gson.fromJson(json, clazz);
+    }
+
+    public List<D> getAll() {
+        List<D> result = new ArrayList<>();
+
+        for (String json : dataList.values()) {
+            D obj = gson.fromJson(json, clazz);
+            result.add(obj);
+        }
+
+        return result;
     }
 }
