@@ -2,7 +2,7 @@
   {
     "id": "event_0",
     "name": "치유의 샘",
-    "description": "숲 한복판에서 맑은 샘물을 발견했습니다. 물을 마시겠습니까?\n",
+    "description": "숲 한복판에서 맑은 샘물을 발견했습니다. 물을 마시겠습니까?",
     "floor": 1,
     "choices": [
       "물을 마신다",
@@ -11,14 +11,14 @@
     "rewards": [
       {
         "itemId": null,
-        "description": "온몸에 활력이 돕니다! (체력 +15)\n",
+        "description": "온몸에 활력이 돕니다! (체력 +15)",
         "statRewards": [
           { "type": "체력", "value": 15 }
         ]
       },
       {
         "itemId": null,
-        "description": "조심해서 나쁠 건 없죠.\n",
+        "description": "조심해서 나쁠 건 없죠.",
         "statRewards": []
       }
     ]
@@ -26,9 +26,9 @@
   {
     "id": "event_1",
     "name": "고블린",
-    "description": "길을 지나던 중 몽둥이를 든 \n[mon_goblin]\n 고블린과 마주쳤습니다!\n",
+    "description": "길을 지나던 중 몽둥이를 든 \n[mon_goblin]\n 고블린과 마주쳤습니다!",
     "floor": 1,
-    "enemyId": "monster_1",
+    "enemyId": "monster_2",
     "choices": [
       "싸운다",
       "겁을 주어 쫓아낸다"
@@ -36,14 +36,14 @@
     "rewards": [
       {
         "itemId": "item_5",
-        "description": "고블린을 물리치고 전리품을 챙겼습니다.\n",
+        "description": "고블린을 물리치고 전리품을 챙겼습니다.",
         "statRewards": [
           { "type": "경험치", "value": 20 }
         ]
       },
       {
         "itemId": null,
-        "description": "빠르게 위협해서 고블린을 쫓아냈습니다.\n",
+        "description": "빠르게 위협해서 고블린을 쫓아냈습니다.",
         "statRewards": [
           { "type": "민첩", "value": 1 }
         ]
@@ -51,19 +51,19 @@
     ]
   },
   {
-    "id": "event_3",
+    "id": "event_2",
     "name": "버려진 도서관",
-    "description": "먼지 쌓인 책들 중 두 권이 유독 빛나고 있습니다. 그리고 수상한 돌이 있습니다\n",
+    "description": "먼지 쌓인 책들 중 두 권이 유독 빛나고 있습니다. 그리고 수상한 돌이 있습니다",
     "floor": 2,
     "choices": [
-      "'힘와 체력'의 책을 읽는다",
+      "'힘과 체력'의 책을 읽는다",
       "'지혜와 민첩'의 책을 읽는다",
       "수상한 돌을 챙긴다"
     ],
     "rewards": [
       {
         "itemId": null,
-        "description": "",
+        "description": "책을 읽으니 몸이 건강해지는 기분이 듭니다.",
         "statRewards": [
           { "type": "힘", "value": 5 },
           { "type": "체력", "value": 5 }
@@ -71,7 +71,7 @@
       },
       {
         "itemId": null,
-        "description": "낡은 책 한 권을 인벤토리에 넣었습니다.\n",
+        "description": "책의 지식이 머릿속으로 흘러 들어옵니다.",
         "statRewards": [
           { "type": "지혜", "value": 5 },
           { "type": "민첩", "value": 5 }
@@ -79,7 +79,129 @@
       },
       {
         "itemId": "item_6",
-        "description": "수상한돌을 챙기고 당신은 다음 층으로 넘어갔습니다.\n",
+        "description": "수상한 돌을 챙기고 당신은 다음 층으로 넘어갔습니다.",
+        "statRewards": []
+      }
+    ]
+  },
+  {
+    "id": "event_3",
+    "name": "수상한 상인",
+    "description": "어두운 길목에서 상인을 만났습니다.",
+    "floor": 1,
+    "choices": [
+      "물건을 산다",
+      "무시한다"
+    ],
+    "rewards": [
+      {
+        "itemId": "item_3",
+        "description": "포션을 구매했습니다.",
+        "statRewards": []
+      },
+      {
+        "itemId": null,
+        "description": "아무 일도 일어나지 않았습니다.",
+        "statRewards": []
+      }
+    ]
+  },
+  {
+    "id": "event_4",
+    "name": "늑대의 습격",
+    "description": "굶주린 늑대가 당신을 노립니다.",
+    "floor": 1,
+    "enemyId": "monster_3",
+    "choices": [
+      "싸운다",
+      "도망친다"
+    ],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "늑대를 물리쳤습니다.",
+        "statRewards": [
+          { "type": "경험치", "value": 25 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "겨우 도망쳤습니다.",
+        "statRewards": [
+          { "type": "민첩", "value": 1 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "event_5",
+    "name": "함정",
+    "description": "바닥에 숨겨진 함정을 밟았습니다.",
+    "floor": 1,
+    "choices": [
+      "해체한다",
+      "빠르게 회피한다"
+    ],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "해체에 실패해 피해를 입습니다.",
+        "statRewards": [
+          { "type": "체력", "value": -10 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "재빠르게 피했습니다.",
+        "statRewards": [
+          { "type": "민첩", "value": 2 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "event_6",
+    "name": "해골 전사",
+    "description": "갑옷을 입은 해골이 공격해옵니다.",
+    "floor": 1,
+    "enemyId": "monster_4",
+    "choices": [
+      "싸운다",
+      "회피한다"
+    ],
+    "rewards": [
+      {
+        "itemId": "item_11",
+        "description": "철갑옷을 획득했습니다.",
+        "statRewards": [
+          { "type": "경험치", "value": 40 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "위험을 피했습니다.",
+        "statRewards": []
+      }
+    ]
+  },
+  {
+    "id": "event_7",
+    "name": "숨겨진 보물",
+    "description": "벽 뒤에서 숨겨진 방을 발견했습니다.",
+    "floor": 3,
+    "choices": [
+      "탐색한다",
+      "나간다"
+    ],
+    "rewards": [
+      {
+        "itemId": "item_17",
+        "description": "대형 포션을 얻었습니다.",
+        "statRewards": []
+      },
+      {
+        "itemId": null,
+        "description": "그냥 지나갔습니다.",
         "statRewards": []
       }
     ]
