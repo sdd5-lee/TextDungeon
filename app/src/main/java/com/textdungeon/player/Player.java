@@ -143,6 +143,17 @@ public class Player {
     }
 
     //******************게터들******************
+
+    public int getMoney() {
+        return money;
+    }
+    public void addMoney(int money){
+        this.money += money;
+    }
+    public void setMoney(int money) {
+        this.money = money;
+    }
+
     public String getName() {return name;}
     public Inventory getInventory() { return inventory; }
     public Equipment getEquipment() {
