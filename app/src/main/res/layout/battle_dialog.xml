@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_rounded_background"
+    android:orientation="vertical"
+    android:padding="4dp">
+
+    <!-- Status Header: Player & Monster -->
+    <LinearLayout
+        android:id="@+id/status_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:baselineAligned="false">
+
+        <!-- 플레이어 정보 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#1C1B1B"
+            android:orientation="vertical"
+            android:padding="12dp"
+            android:layout_marginEnd="2dp">
+
+            <TextView
+                android:id="@+id/player_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="PLAYER"
+                android:textColor="#E5E2E1"
+                android:textSize="10sp"
+                android:letterSpacing="0.1"
+                android:fontFamily="serif"
+                android:textStyle="bold"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_marginTop="6dp"
+                android:background="#0E0E0E"
+                android:orientation="horizontal"
+                android:weightSum="1">
+                <View
+                    android:id="@+id/player_hp_bar"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#901418" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/player_hp_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="#E0BFBA"
+                android:textSize="9sp"
+                tools:text="HP: 84 / 120" />
+        </LinearLayout>
+
+        <!-- 몹 정보 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#1C1B1B"
+            android:orientation="vertical"
+            android:padding="12dp"
+            android:gravity="end"
+            android:layout_marginStart="2dp">
+
+            <TextView
+                android:id="@+id/monster_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="고블린"
+                android:textColor="#E9C176"
+                android:textSize="10sp"
+                android:letterSpacing="0.1"
+                android:fontFamily="serif"
+                android:textStyle="bold"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_marginTop="6dp"
+                android:background="#0E0E0E"
+                android:orientation="horizontal"
+                android:gravity="end"
+                android:weightSum="1">
+                <View
+                    android:id="@+id/monster_hp_bar"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#901418" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/monster_hp_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="#E0BFBA"
+                android:textSize="9sp"
+                tools:text="150 / 150" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- 몹 이미지 -->
+    <FrameLayout
+        android:id="@+id/monster_image_area"
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:layout_marginTop="4dp"
+        android:background="#0E0E0E">
+
+        <ImageView
+            android:id="@+id/battle_monster_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:alpha="0.7"
+            tools:src="@android:drawable/ic_menu_report_image"/>
+
+    </FrameLayout>
+
+    <!-- 배틀 로그 -->
+    <LinearLayout
+        android:id="@+id/log_area"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="4dp"
+        android:background="#1C1B1B"
+        android:padding="12dp"
+        android:gravity="center_vertical">
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <!-- 로그 출력 부분 -->
+            <TextView
+                android:id="@+id/battle_log_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="The Bone-Stalker shrieks in the darkness.\nYou hit for 12 damage with Quick Strike."
+                android:textColor="#E0BFBA"
+                android:textSize="12sp"
+                android:fontFamily="serif"
+                android:textStyle="italic"
+                android:lineSpacingExtra="2dp"/>
+        </ScrollView>
+        <!-- 전체 로그 버튼   -->
+        <FrameLayout
+            android:id="@+id/btn_all_log"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="8dp"
+            android:background="#2A2A2A"
+            android:clickable="true"
+            android:focusable="true">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="log"
+                android:textColor="#E5E2E1"
+                android:textSize="12sp"
+                android:fontFamily="serif"
+                android:textStyle="italic" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <!-- Combat Actions -->
+    <LinearLayout
+        android:id="@+id/actions_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:orientation="vertical"
+        android:animateLayoutChanges="true">
+
+        <!-- Category Selectors (Top Row) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/battle_btn_attack"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#1C1B1B"
+                android:gravity="center"
+                android:text="ATTACK"
+                android:textColor="#58413E"
+                android:textSize="12sp"
+                android:letterSpacing="0.1"
+                android:layout_marginEnd="1dp"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <TextView
+                android:id="@+id/battle_btn_guard"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#1C1B1B"
+                android:gravity="center"
+                android:text="GUARD"
+                android:textColor="#58413E"
+                android:textSize="12sp"
+                android:letterSpacing="0.1"
+                android:layout_marginHorizontal="1dp"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <TextView
+                android:id="@+id/battle_btn_escape"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#1C1B1B"
+                android:gravity="center"
+                android:text="ESCAPE"
+                android:textColor="#58413E"
+                android:textSize="12sp"
+                android:letterSpacing="0.1"
+                android:layout_marginStart="1dp"
+                android:clickable="true"
+                android:focusable="true"/>
+        </LinearLayout>
+
+        <!-- 마법(스킬) 목록 -->
+        <ScrollView
+            android:id="@+id/magic_scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_marginTop="4dp"
+            android:fillViewport="true"
+            android:visibility="gone">
+
+            <GridLayout
+                android:id="@+id/magic_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#1C1B1B"
+                android:columnCount="2"
+                android:padding="8dp">
+
+            </GridLayout>
+        </ScrollView>
+
+        <!-- 가방(아이템) 목록 -->
+        <ScrollView
+            android:id="@+id/items_scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_marginTop="4dp"
+            android:fillViewport="true"
+            android:visibility="gone">
+
+            <GridLayout
+                android:id="@+id/item_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#1C1B1B"
+                android:columnCount="2"
+                android:padding="8dp">
+
+            </GridLayout>
+        </ScrollView>
+
+        <!-- 하단바 마법, 가방 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/battle_btn_magic"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#1C1B1B"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_marginEnd="1dp"
+                android:clickable="true"
+                android:focusable="true">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@android:drawable/ic_menu_compass"
+                    app:tint="#448AFF" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="마법"
+                    android:textColor="#448AFF"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/battle_btn_items"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#1C1B1B"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_marginStart="1dp"
+                android:clickable="true"
+                android:focusable="true">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@android:drawable/ic_menu_save"
+                    app:tint="#E9C176" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="가방"
+                    android:textColor="#E9C176"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.1" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
