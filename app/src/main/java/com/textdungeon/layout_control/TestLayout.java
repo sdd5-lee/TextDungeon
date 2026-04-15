@@ -1,15 +1,10 @@
 package com.textdungeon.layout_control;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.style.ImageSpan;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import com.example.textdungeon.R;
 import com.textdungeon.data.DataControlTower;
@@ -21,10 +16,8 @@ import com.textdungeon.player.Player;
 import com.textdungeon.system.GameSave;
 
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public class BattleLayout extends AppCompatActivity {
+public class TestLayout extends AppCompatActivity {
     private DataControlTower dt;
     private Player player;
 
@@ -34,7 +27,7 @@ public class BattleLayout extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.battle_activity);
+        setContentView(R.layout.test_activity);
 
         dt = DataControlTower.getInstance(this);
         player = dt.getPlayer();

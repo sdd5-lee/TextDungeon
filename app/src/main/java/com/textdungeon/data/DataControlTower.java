@@ -50,15 +50,15 @@ public class DataControlTower {
     private void loadGameData() {
         GameSave save = GameSave.load(appContext);
         if (save != null) {
-            this.player = save.getPlayer();
+            player = save.getPlayer();
 
             if (save.getUserRecord() != null) {
-                this.userRecord = save.getUserRecord();
+                userRecord = save.getUserRecord();
             } else {
-                this.userRecord = new UserRecord();
+                userRecord = new UserRecord();
             }
         } else {
-            this.userRecord = new UserRecord();
+            userRecord = new UserRecord();
         }
     }
     public void saveGame() {

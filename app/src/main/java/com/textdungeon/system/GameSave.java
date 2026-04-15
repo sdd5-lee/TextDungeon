@@ -41,13 +41,13 @@ public class GameSave {
     }
 
     public int getCurrentFloor() { return currentFloor; }
-    public void setCurrentFloor(int floor) { this.currentFloor = floor; }
+    public void setCurrentFloor(int floor) { currentFloor = floor; }
 
     public Player getPlayer() {
         return player;
     }
 
     public UserRecord getUserRecord() {
-        return recode;
+        return this.recode;
     }
 }

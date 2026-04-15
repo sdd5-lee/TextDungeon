@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.textdungeon.layout_control.EventLayout" />
-        <activity android:name="com.textdungeon.layout_control.BattleLayout" />
+        <activity android:name="com.textdungeon.layout_control.TestLayout" />
     </application>
 
 </manifest>
