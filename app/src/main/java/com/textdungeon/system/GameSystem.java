@@ -32,7 +32,7 @@ public class GameSystem {
         return currentEvent.execute(player, choice, itemManager);
     }
 
-    public String[] getChoices() {
+    public List<String> getChoices() {
         return currentEvent.getChoices();
     }
     public GameEvent getRandomEvent() {

@@ -2,12 +2,10 @@ package com.textdungeon.event;
 
 import com.google.gson.Gson;
 import com.textdungeon.data.DataControl;
-import com.textdungeon.data.DataControlTower;
 import com.textdungeon.model.Monster;
 import com.textdungeon.player.Player;
 import com.textdungeon.system.BattleSystem;
 public class BattleEvent extends GameEvent {
-    private String enemyId;
     public BattleEvent() {
         super();
     }
