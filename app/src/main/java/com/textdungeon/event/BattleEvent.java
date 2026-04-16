@@ -1,5 +1,7 @@
 package com.textdungeon.event;
 
+import android.content.Context;
+
 import com.google.gson.Gson;
 import com.textdungeon.data.DataControl;
 import com.textdungeon.model.Monster;
@@ -13,11 +15,11 @@ public class BattleEvent extends GameEvent {
         return new Gson().fromJson(json, BattleEvent.class);
     }
 
-    public BattleSystem startBattle(Player player,DataControl<Monster> monsterManager) {
+    public BattleSystem startBattle(Player player, DataControl<Monster> monsterManager, Context context) {
         Monster enemy = spawnEnemy(monsterManager);
         if (enemy == null) return null;
 
-        return new BattleSystem(player, enemy);
+        return new BattleSystem(player, enemy,context);
     }
 
     public Monster spawnEnemy(DataControl<Monster> monsterManager) {

@@ -205,5 +205,32 @@
         "statRewards": []
       }
     ]
+  },
+  {
+    "id": "test_event",
+    "name": "전투력 테스트용 허수아비",
+    "description": "테스트용 이벤트다",
+    "enemyId": "test_monster",
+    "floor": 0,
+    "choices": [
+      "탐색한다",
+      "나간다"
+    ],
+    "rewards": [
+      {
+        "itemId": "item_1",
+        "description": "...",
+        "statRewards": [
+          { "type": "경험치", "value": 0 }
+        ]
+      },
+      {
+        "itemId": "item_2",
+        "description": "...",
+        "statRewards": [
+          { "type": "경험치", "value": 0 }
+        ]
+      }
+    ]
   }
 ]

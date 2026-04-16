@@ -13,29 +13,29 @@
         android:id="@+id/status_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:baselineAligned="false">
+        android:baselineAligned="false"
+        android:orientation="horizontal">
 
         <!-- 플레이어 정보 -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
             android:layout_weight="1"
             android:background="#1C1B1B"
             android:orientation="vertical"
-            android:padding="12dp"
-            android:layout_marginEnd="2dp">
+            android:padding="12dp">
 
             <TextView
                 android:id="@+id/player_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="PLAYER"
+                android:fontFamily="serif"
+                android:letterSpacing="0.1"
                 android:textColor="#E5E2E1"
                 android:textSize="10sp"
-                android:letterSpacing="0.1"
-                android:fontFamily="serif"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                tools:text="PLAYER" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -44,6 +44,7 @@
                 android:background="#0E0E0E"
                 android:orientation="horizontal"
                 android:weightSum="1">
+
                 <View
                     android:id="@+id/player_hp_bar"
                     android:layout_width="0dp"
@@ -66,32 +67,33 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
             android:layout_weight="1"
             android:background="#1C1B1B"
-            android:orientation="vertical"
-            android:padding="12dp"
             android:gravity="end"
-            android:layout_marginStart="2dp">
+            android:orientation="vertical"
+            android:padding="12dp">
 
             <TextView
                 android:id="@+id/monster_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="고블린"
+                android:fontFamily="serif"
+                android:letterSpacing="0.1"
                 android:textColor="#E9C176"
                 android:textSize="10sp"
-                android:letterSpacing="0.1"
-                android:fontFamily="serif"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                tools:text="고블린" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="8dp"
                 android:layout_marginTop="6dp"
                 android:background="#0E0E0E"
-                android:orientation="horizontal"
                 android:gravity="end"
+                android:orientation="horizontal"
                 android:weightSum="1">
+
                 <View
                     android:id="@+id/monster_hp_bar"
                     android:layout_width="0dp"
@@ -123,9 +125,9 @@
             android:id="@+id/battle_monster_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
             android:alpha="0.7"
-            tools:src="@android:drawable/ic_menu_report_image"/>
+            android:scaleType="centerCrop"
+            tools:src="@android:drawable/ic_menu_report_image" />
 
     </FrameLayout>
 
@@ -136,8 +138,8 @@
         android:layout_height="70dp"
         android:layout_marginTop="4dp"
         android:background="#1C1B1B"
-        android:padding="12dp"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:padding="12dp">
 
         <ScrollView
             android:layout_width="0dp"
@@ -148,12 +150,12 @@
                 android:id="@+id/battle_log_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="The Bone-Stalker shrieks in the darkness.\nYou hit for 12 damage with Quick Strike."
+                android:fontFamily="serif"
+                android:lineSpacingExtra="2dp"
                 android:textColor="#E0BFBA"
                 android:textSize="12sp"
-                android:fontFamily="serif"
                 android:textStyle="italic"
-                android:lineSpacingExtra="2dp"/>
+                tools:text="The Bone-Stalker shrieks in the darkness.\nYou hit for 12 damage with Quick Strike." />
         </ScrollView>
         <!-- 전체 로그 버튼   -->
         <FrameLayout
@@ -164,14 +166,15 @@
             android:background="#2A2A2A"
             android:clickable="true"
             android:focusable="true">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:fontFamily="serif"
                 android:text="log"
                 android:textColor="#E5E2E1"
                 android:textSize="12sp"
-                android:fontFamily="serif"
                 android:textStyle="italic" />
         </FrameLayout>
     </LinearLayout>
@@ -194,46 +197,46 @@
                 android:id="@+id/battle_btn_attack"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginEnd="1dp"
                 android:layout_weight="1"
                 android:background="#1C1B1B"
+                android:clickable="true"
+                android:focusable="true"
                 android:gravity="center"
+                android:letterSpacing="0.2"
                 android:text="ATTACK"
                 android:textColor="#58413E"
-                android:textSize="13sp"
-                android:letterSpacing="0.2"
-                android:layout_marginEnd="1dp"
-                android:clickable="true"
-                android:focusable="true"/>
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/battle_btn_magic"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginHorizontal="1dp"
                 android:layout_weight="1"
                 android:background="#1C1B1B"
+                android:clickable="true"
+                android:focusable="true"
                 android:gravity="center"
+                android:letterSpacing="0.2"
                 android:text="MAGIC"
                 android:textColor="#58413E"
-                android:textSize="13sp"
-                android:letterSpacing="0.2"
-                android:layout_marginHorizontal="1dp"
-                android:clickable="true"
-                android:focusable="true"/>
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/battle_btn_items"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginStart="1dp"
                 android:layout_weight="1"
                 android:background="#1C1B1B"
+                android:clickable="true"
+                android:focusable="true"
                 android:gravity="center"
+                android:letterSpacing="0.2"
                 android:text="ITEMS"
                 android:textColor="#58413E"
-                android:textSize="13sp"
-                android:letterSpacing="0.2"
-                android:layout_marginStart="1dp"
-                android:clickable="true"
-                android:focusable="true"/>
+                android:textSize="13sp" />
         </LinearLayout>
 
         <!-- 마법 목록 -->
@@ -258,20 +261,23 @@
                     android:layout_columnWeight="1"
                     android:layout_margin="2dp"
                     android:background="#2A2A2A"
-                    android:gravity="center_vertical"
-                    android:padding="12dp"
                     android:clickable="true"
-                    android:focusable="true">
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:padding="12dp">
+
                     <ImageView
                         android:layout_width="18dp"
                         android:layout_height="18dp"
                         android:src="@android:drawable/ic_menu_gallery"
                         app:tint="#FF5722" />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:orientation="vertical">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -279,6 +285,7 @@
                             android:textColor="#E5E2E1"
                             android:textSize="10sp"
                             android:textStyle="bold" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -294,20 +301,23 @@
                     android:layout_columnWeight="1"
                     android:layout_margin="2dp"
                     android:background="#2A2A2A"
-                    android:gravity="center_vertical"
-                    android:padding="12dp"
                     android:clickable="true"
-                    android:focusable="true">
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:padding="12dp">
+
                     <ImageView
                         android:layout_width="18dp"
                         android:layout_height="18dp"
                         android:src="@android:drawable/ic_input_add"
                         app:tint="#4CAF50" />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:orientation="vertical">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -315,6 +325,7 @@
                             android:textColor="#E5E2E1"
                             android:textSize="10sp"
                             android:textStyle="bold" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -348,20 +359,23 @@
                     android:layout_columnWeight="1"
                     android:layout_margin="2dp"
                     android:background="#2A2A2A"
-                    android:gravity="center_vertical"
-                    android:padding="12dp"
                     android:clickable="true"
-                    android:focusable="true">
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:padding="12dp">
+
                     <ImageView
                         android:layout_width="18dp"
                         android:layout_height="18dp"
                         android:src="@android:drawable/ic_menu_edit"
                         app:tint="#FF5252" />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:orientation="vertical">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -369,6 +383,7 @@
                             android:textColor="#E5E2E1"
                             android:textSize="10sp"
                             android:textStyle="bold" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -384,20 +399,23 @@
                     android:layout_columnWeight="1"
                     android:layout_margin="2dp"
                     android:background="#2A2A2A"
-                    android:gravity="center_vertical"
-                    android:padding="12dp"
                     android:clickable="true"
-                    android:focusable="true">
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:padding="12dp">
+
                     <ImageView
                         android:layout_width="18dp"
                         android:layout_height="18dp"
                         android:src="@android:drawable/ic_menu_send"
                         app:tint="#448AFF" />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:orientation="vertical">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -405,6 +423,7 @@
                             android:textColor="#E5E2E1"
                             android:textSize="10sp"
                             android:textStyle="bold" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

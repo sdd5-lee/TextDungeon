@@ -92,5 +92,13 @@
     "hp" :  150,
     "maxHp" : 150,
     "attack" : 170
+  },
+
+  {
+    "id" : "test_monster",
+    "name" : "테스트용 허수아비",
+    "hp" :  20000000,
+    "maxHp" : 20000000,
+    "attack" : 1
   }
 ]

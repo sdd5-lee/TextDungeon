@@ -40,4 +40,8 @@ public class MagicScroll {
             lm.setMaxCount(addCount);
         }
     }
+
+    public List<LearnedMagic> getLearnedMagics() {
+        return learnedMagicList;
+    }
 }
