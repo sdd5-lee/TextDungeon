@@ -9,15 +9,24 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 import android.view.Window;
+import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.textdungeon.R; // R 패키지 경로는 프로젝트에 맞게 수정
+import com.textdungeon.buttons.BattleButton;
+import com.textdungeon.data.DataControlTower;
+import com.textdungeon.model.Item;
+import com.textdungeon.model.LearnedMagic;
+import com.textdungeon.model.Magic;
 import com.textdungeon.model.Monster;
+import com.textdungeon.player.MagicScroll;
 import com.textdungeon.player.Player;
 import com.textdungeon.system.BattleSystem;
+
+import java.util.Map;
+import java.util.Objects;
 
 public class BattleDialog extends Dialog {
 
@@ -102,7 +111,7 @@ public class BattleDialog extends Dialog {
         itemsScrollView = findViewById(R.id.items_scroll_view);
 
         // 이름 세팅
-        playerName.setText("PLAYER"); // 혹은 player.getName()
+        playerName.setText(player.getName()); // 혹은 player.getName()
         monsterName.setText(battleSystem.getEnemyName());
     }
 
@@ -112,6 +121,18 @@ public class BattleDialog extends Dialog {
             magicScrollView.setVisibility(View.GONE);
             itemsScrollView.setVisibility(View.GONE);
             executeAction(1, null);
+        });
+        // [GUARD] 버튼
+        findViewById(R.id.battle_btn_guard).setOnClickListener(v -> {
+            magicScrollView.setVisibility(View.GONE);
+            itemsScrollView.setVisibility(View.GONE);
+            executeAction(2, null);
+        });
+        // [ESCAPE] 버튼
+        findViewById(R.id.battle_btn_escape).setOnClickListener(v -> {
+            magicScrollView.setVisibility(View.GONE);
+            itemsScrollView.setVisibility(View.GONE);
+            executeAction(3, null);
         });
 
         // [MAGIC] 탭 토글
@@ -123,7 +144,6 @@ public class BattleDialog extends Dialog {
                 magicScrollView.setVisibility(View.VISIBLE);
             }
         });
-
         // [ITEMS] 탭 토글
         findViewById(R.id.battle_btn_items).setOnClickListener(v -> {
             magicScrollView.setVisibility(View.GONE);
@@ -133,11 +153,75 @@ public class BattleDialog extends Dialog {
                 itemsScrollView.setVisibility(View.VISIBLE);
             }
         });
-
+        addMagic();
+        addItem();
         // (임시) 마법 탭 안의 FIREBALL 레이아웃을 클릭했을 때 처리
         // 실제로는 RecyclerView나 동적 생성 코드가 들어가야 합니다.
         // XML 구조상 FIREBALL 텍스트가 있는 첫 번째 LinearLayout에 ID를 부여해야 정확하지만,
         // 테스트를 위해 직접 접근합니다.
+    }
+    private void addMagic(){
+        GridLayout magicContainer = findViewById(R.id.magic_container);
+        magicContainer.removeAllViews();
+
+        MagicScroll magicScroll = player.getMagicScroll();
+        DataControlTower dt = DataControlTower.getInstance(getContext());
+
+        for (LearnedMagic ma : magicScroll.getLearnedMagics()) {
+            Magic magic = dt.getMagicManager().spawn(ma.getMagicId());
+            if (magic == null){{
+                continue;
+            }}
+            BattleButton button = new BattleButton(getContext(),"test_magic_img",magic.getName(),magic.getCount(),"시전하기");
+            button.setOnClickListener(v -> {
+                // BattleSystem으로 마법 시전 명령을 보냅니다 (이전에 만든 executeAction 메서드 활용)
+                executeAction(4, ma.getMagicId());
+            });
+            magicContainer.addView(button);
+        }
+    }
+    private void addItem() {
+        GridLayout itemContainer = findViewById(R.id.item_container);
+        itemContainer.removeAllViews();
+
+        DataControlTower dt = DataControlTower.getInstance(getContext());
+        Map<String, Integer> inventory = player.getInventory().getItemMap();
+
+        for (Map.Entry<String, Integer> entry : inventory.entrySet()) {
+            String itemId = entry.getKey();
+            int count = entry.getValue();
+
+            if (count <= 0) {
+                continue;
+            }
+
+            // 1. 타워에서 아이템 원본 데이터를 가져옵니다.
+            Item itemData = dt.getItemManager().spawn(itemId);
+            if (itemData == null || !Objects.equals(itemData.getType(), "consumables")) {
+                continue;
+            }
+
+            // 2. 버튼 생성
+            BattleButton button = new BattleButton(getContext(), "test_item_img", itemData.getName(), count, "사용하기");
+
+            // 3. 눌렀을 때의 동작 설정 (여기가 핵심적으로 바뀐 부분입니다!)
+            button.setOnClickListener(v -> {
+
+                // ① 가방(Inventory)에서 아이템 1개를 성공적으로 차감했다면
+                if (player.getInventory().consumeItem(itemId)) {
+                    // ② 아이템아, 플레이어(player)에게 너의 효과를 발동해라!
+                    itemData.itemUse(player);
+                    appendLog("\n[" + itemData.getName() + "]을(를) 사용했습니다!");
+                    updateUI(); // 체력바 갱신 (효과가 적용되었으므로)
+                    addItem();  // 수량이 깎였으니 가방 목록 새로고침
+                } else {
+                    appendLog("아이템이 부족합니다.");
+                }
+            });
+
+            // 4. 쟁반(GridLayout)에 부착!
+            itemContainer.addView(button);
+        }
     }
 
     // 전투 액션 실행 및 화면 갱신

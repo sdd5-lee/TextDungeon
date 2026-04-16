@@ -15,31 +15,32 @@ public class Inventory {
         return itemMap;
     }
 
-    public void removeItem(String itemName) {
-        if (itemMap.containsKey(itemName)) {
-            int count = itemMap.get(itemName);
-            if (count > 1) itemMap.put(itemName, count - 1);
-            else itemMap.remove(itemName);
-        }
+    public void removeItem(String itemId) {
+        consumeItem(itemId);
     }
     public void addItem(Item item) {
         if(item == null) {return;}
-        String itemName = item.getName();
-        if (itemMap.containsKey(itemName)){
-            itemMap.put(itemName, itemMap.get(itemName)+1);
+        String itemId = item.getId();
+        if (itemMap.containsKey(itemId)){
+            itemMap.put(itemId, itemMap.get(itemId)+1);
         }
         else if (itemMap.size() < MAX_INV) {
-            itemMap.put(itemName,1);
+            itemMap.put(itemId,1);
         }
     }
-    public boolean useItem(Item item){
-        if (item == null){return false;}
-        if (itemMap.containsKey(item.getName())){
-            boolean isUse = item.itemUse();
-            if (isUse){
-                removeItem(item.getName());
+    public boolean isItem(String itemId) {
+        return getItemMap().containsKey(itemId);
+    }
+    public boolean consumeItem(String itemId) {
+        if (itemMap.containsKey(itemId)) {
+            int count = itemMap.get(itemId);
+            if (count > 1) {
+                itemMap.put(itemId, count - 1);
+            } else {
+                itemMap.remove(itemId);
             }
+            return true;
         }
-        return true;
+        return false;
     }
 }

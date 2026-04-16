@@ -21,7 +21,7 @@ public class Player {
 
     public Player(String name, Job job){
         this.name = name;
-        level = 0;
+        level = 1;
         money = 0;
         inventory = new Inventory();
         equipment = new Equipment();
@@ -56,20 +56,20 @@ public class Player {
         inventory.addItem(item);
     }
 
+    // Player.java 내부
     public void consumablesItem(Item item){
-        if(inventory.useItem(item)){
-            if (item.getName().equals("힐링포션")){
-                heal(item.getHp());
-            }
+        // 인벤토리에서 차감 성공했다면
+        if(inventory.consumeItem(item.getId())){
+            // 아이템아, 나(this)한테 너의 효과를 발동시켜라!
+            item.itemUse(this);
         }
     }
-
 
     // ****************** 장비창 ******************
     public void equipItem(Item item) {
         int oldEquipHp = equipment.getTotalHp();
 
-        inventory.removeItem(item.getName());
+        inventory.consumeItem(item.getId());
         Item old = equipment.equip(item,0);
         if (old != null) inventory.addItem(old);
 
@@ -81,7 +81,7 @@ public class Player {
     public void equipArtifact(int index, Item item) {
         int oldEquipHp = equipment.getTotalHp();
 
-        inventory.removeItem(item.getName());
+        inventory.consumeItem(item.getId());
         Item old = equipment.equip(item,index);
         if (old != null) inventory.addItem(old);
 
@@ -104,9 +104,6 @@ public class Player {
     }
 
     // ******************배틀 이벤트에서 사용******************
-    public int attack(){
-        return getFinalAtk();
-    }
     public void takeDamage(int damage) {
         int newHp = Math.max(0, stat.getHp() - damage);
         stat.setHp(newHp);

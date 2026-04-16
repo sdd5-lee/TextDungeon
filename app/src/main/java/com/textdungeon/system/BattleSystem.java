@@ -70,7 +70,7 @@ public class BattleSystem {
                     if (magicDamage > 0) {
                         enemyHp -= magicDamage;
                         log += "🔥 마법 발동! " + enemyName + "에게 " + magicDamage + "의 광역 데미지!\n";
-                    } else {
+                    } else{
                         log += "❌ 마법 사용 횟수가 부족하거나 마법을 찾을 수 없습니다!\n";
                         return log; // 턴을 소비하지 않음
                     }

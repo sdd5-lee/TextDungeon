@@ -29,7 +29,16 @@ public class Item {
     public String getType() {
         return type;
     }
-    public Boolean itemUse() {
-        return "consumables".equals(this.type);
+    public Boolean itemUse(Player player) {
+        if ("consumables".equals(this.type)) {
+
+            if (this.id.equals("item_3")) {
+                player.heal(this.hp);
+            }
+            //else if (this.id.equals("item_02")) {
+            //}
+            return true;
+        }
+        return false;
     }
 }

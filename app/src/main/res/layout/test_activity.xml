@@ -102,14 +102,25 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/test_buttons">
+        app:layout_constraintTop_toBottomOf="@+id/test_buttons"
+        tools:layout_editor_absoluteX="16dp">
 
-        <Button android:id="@+id/savebutton" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="저장" />
-        <Button android:id="@+id/loadbutton" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="불러오기" />
+        <Button
+            android:id="@+id/savebutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="저장" />
+
+        <Button
+            android:id="@+id/loadbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="불러오기" />
 
         <Button
             android:id="@+id/btn_learn"
@@ -129,6 +140,44 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        tools:layout_editor_absoluteX="16dp">
+
+        <Button
+            android:id="@+id/rebone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="부활하기"
+            android:textSize="10sp" />
+        <Button
+            android:id="@+id/restart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="다시하기"
+            android:textSize="10sp" />
+        <Button
+            android:id="@+id/die"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="죽기"
+            android:textSize="10sp" />
+
+        <Button
+            android:id="@+id/add_item_potion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="포션추가" />
+    </LinearLayout>
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"

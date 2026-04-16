@@ -40,7 +40,9 @@ public class MagicScroll {
             lm.setMaxCount(addCount);
         }
     }
-
+    public void removeMagic(String magicId){
+        learnedMagicList.removeIf(l -> l.getMagicId().equals(magicId));
+    }
     public List<LearnedMagic> getLearnedMagics() {
         return learnedMagicList;
     }
