@@ -29,17 +29,16 @@ public class Stat {
         atk = baseAtk + level;
         maxHp = baseMaxHp + level * 5;
         critical_rate = Math.min(baseCrit + level, 100);
-
-        if (hp > maxHp) hp = maxHp;
+        if (hp < maxHp) hp = maxHp;
     }
 
     public void setHp(int hp) {
         this.hp = hp;
     }
 
-    public void setMaxHp(int maxhp) {
-        this.maxHp = maxhp;
-        this.hp = maxhp;
+    public void setMaxHp(int maxHp) {
+        this.maxHp = maxHp;
+        this.hp = maxHp;
     }
 
     public int getStrength() {
@@ -130,7 +129,6 @@ public class Stat {
                 this.exp += value;
                 break;
         }
-        updateBattleStat(1);
     }
 
     public void setExp(int exp) {
