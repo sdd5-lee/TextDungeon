@@ -12,9 +12,13 @@ public class GameSave {
     private int currentFloor;
     private Player player;
     private UserRecord recode;
-    public GameSave(Player player, UserRecord userRecord) {
+    public GameSave(Player player, int currentFloor,UserRecord userRecord) {
         this.player = player;
-        this.currentFloor = 1;
+        this.currentFloor = currentFloor;
+        this.recode = userRecord;
+    }
+    public GameSave(Player player,UserRecord userRecord) {
+        this.player = player;
         this.recode = userRecord;
     }
 

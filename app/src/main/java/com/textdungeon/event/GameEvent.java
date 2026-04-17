@@ -11,7 +11,9 @@ public class GameEvent {
     protected String id;
     protected String name;
     protected String description;
-    protected int floor;
+    protected String imgId;
+    protected int minFloor;
+    protected int maxFloor;
     protected List<Reward> rewards;
 
     //json에 있는 choices랑 enemyId
@@ -24,7 +26,14 @@ public class GameEvent {
     public String getId() { return id; }
     public String getName() { return name; }
     public String getDescription() { return description; }
-    public int getFloor() { return floor; }
+
+    public int getMaxFloor() {
+        return maxFloor;
+    }
+
+    public int getMinFloor() {
+        return minFloor;
+    }
 
     //추가
     public List<String> getChoices() {
@@ -37,6 +46,10 @@ public class GameEvent {
 
     public String getEnemyId() {
         return enemyId;
+    }
+
+    public String getImgId() {
+        return imgId;
     }
 
     public String execute(Player player, int choice, DataControl<Item> itemManager) {
