@@ -10,7 +10,9 @@ import com.example.textdungeon.R;
 import com.textdungeon.data.DataControlTower;
 import com.textdungeon.event.BattleEvent;
 import com.textdungeon.model.Item;
+import com.textdungeon.model.Job;
 import com.textdungeon.model.Magic;
+import com.textdungeon.model.Monster;
 import com.textdungeon.model.Stat;
 import com.textdungeon.player.Player;
 import com.textdungeon.system.GameSave;
@@ -23,7 +25,6 @@ public class TestLayout extends AppCompatActivity {
 
     private TextView logView, statusView, detailStatView, invView;
 
-    boolean isWeaponA = true;;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +76,30 @@ public class TestLayout extends AppCompatActivity {
         findViewById(R.id.btn_learn).setOnClickListener(v -> learnMagic());
 
         findViewById(R.id.btn_forget).setOnClickListener(v -> forgetMagic());
+        findViewById(R.id.btn_trigger_battle).setOnClickListener(v -> triggerEvent());
+
+        findViewById(R.id.rebone).setOnClickListener(v -> {
+            player.heal(player.getMaxHp());
+            updateUI();
+            addLog("시스템: 캐릭터를 부활시켰습니다");
+        });
+        findViewById(R.id.restart).setOnClickListener(v -> {
+            dt.setPlayer(null);
+            dt.initPlayer("player", Job.WARRIOR);
+            player = dt.getPlayer();
+            updateUI();
+            addLog("시스템: 플레이어를 재생성합니다");
+        });
+        findViewById(R.id.die).setOnClickListener(v -> {
+            addLog("시스템: 개발중 입니다");
+        });
+        findViewById(R.id.add_item_potion).setOnClickListener(v -> {
+            Item p = dt.getItemManager().spawn("item_3");
+            player.pickUpItem(p);
+            updateUI();
+            addLog("시스템: 포션을 추가하였습니다");
+        });
+
         updateUI();
     }
 
@@ -85,9 +110,47 @@ public class TestLayout extends AppCompatActivity {
     }
 
     private void triggerEvent() {
-        // JSON 파일에 "event_1" 혹은 실제 있는 ID를 써야 합니다.
-        BattleEvent event = dt.getEventManager().spawn("event_1");
+        BattleEvent event = dt.getEventManager().spawn("test_event");
+        if (event != null) {
+            String monsterId = event.getEnemyId();
+            if (monsterId != null && !monsterId.isEmpty()) {
+                startBattlePopup(event, monsterId);
+            } else {
+                // 몬스터 ID가 없음 -> 일반 텍스트 이벤트 실행!
+                triggerEventNoBattle(event);
+            }
+        } else {
+            addLog("시스템: 이벤트를 찾을 수 없습니다.");
+        }
+    }
+    private void startBattlePopup(BattleEvent event, String monsterId) {
+        Monster targetMonster = dt.getMonsterManager().spawn(monsterId);
 
+        if (targetMonster != null) {
+            addLog("\n[조우] " + event.getName());
+            addLog(event.getDescription());
+
+            // 전투 다이얼로그 호출
+            BattleDialog battleDialog = new BattleDialog(this, player, targetMonster);
+
+            // 다이얼로그가 닫히면(전투 종료 시) UI 갱신 및 사망 체크
+            battleDialog.setOnDismissListener(dialog -> {
+                updateUI();
+                checkGameOver();
+            });
+
+            battleDialog.show();
+        } else {
+            addLog("\n시스템: 몬스터 [" + monsterId + "] 데이터를 찾을 수 없습니다.");
+        }
+    }
+    private void checkGameOver() {
+        if (player.getStat().getHp() <= 0) {
+            addLog("\n💀 플레이어가 쓰러졌습니다...");
+            // TODO: 데스 레이아웃으로 넘어가거나 영구적 죽음 처리 로직 추가
+        }
+    }
+    private void triggerEventNoBattle(BattleEvent event) {
         if (event != null) {
             addLog("\n[이벤트] " + event.getName());
             addLog(event.getDescription());
@@ -107,19 +170,28 @@ public class TestLayout extends AppCompatActivity {
         updateUI();
     }
     private void swapWeapon() {
-        // isWeaponA가 true면 item_1(검), false면 item_4(낡은 책) 생성
-        String targetId = isWeaponA ? "item_1" : "item_4";
-        Item newItem = dt.getItemManager().spawn(targetId);
+        String swordId = "item_5";
+        if(!player.getInventory().isItem(swordId)){
+            Item newItem = dt.getItemManager().spawn(swordId);
+            Item newItem2 = dt.getItemManager().spawn("item_1");
+            if (newItem != null && newItem2 != null){
+                player.pickUpItem(newItem);
+                player.pickUpItem(newItem2);
 
-        if (newItem != null) {
-            player.equipItem(newItem);
-            addLog("시스템: [" + newItem.getName() + "]을(를) 장착했습니다.");
-            isWeaponA = !isWeaponA; // 상태 토글
-            updateUI();
-        } else {
-            addLog("시스템: 해당 무기 데이터를 찾을 수 없습니다.");
+                player.equipItem(newItem);
+                addLog("시스템: [" + newItem.getName() + "](를) 장착했습니다.");
+            }
         }
-    }private void castMagic() {
+        else {
+            Item newItem = dt.getItemManager().spawn(swordId);
+            if (newItem != null){
+                player.equipItem(newItem);
+                addLog("시스템: [" + newItem.getName() + "]을(를) 장착했습니다.");
+            }
+        }
+        updateUI();
+    }
+    private void castMagic() {
         String magicId = "mag_1";
         int damage = player.castMagic(magicId, this);
 
@@ -132,17 +204,13 @@ public class TestLayout extends AppCompatActivity {
     }
     private void learnMagic() {
         String magicId = "mag_1";
-        String magicId2 = "mag_2";
         Magic masterData = dt.getMagicManager().spawn(magicId);
-        Magic masterData2 = dt.getMagicManager().spawn(magicId2);
 
         if (masterData != null) {
             // MagicScroll에 새로 추가된 hasMagic과 addMagic 메서드 활용!
             if (!player.getMagicScroll().hasMagic(magicId)) {
                 player.getMagicScroll().addMagic(magicId, masterData.getMaxCount());
-                player.getMagicScroll().addMagic(magicId2, masterData.getMaxCount());
                 addLog("시스템: 새로운 마법 [" + masterData.getName() + "]을(를) 깨우쳤습니다!");
-                addLog("시스템: 새로운 마법 [" + masterData2.getName() + "]을(를) 깨우쳤습니다!");
             } else {
                 addLog("시스템: 이미 배운 마법입니다.");
             }
@@ -153,18 +221,10 @@ public class TestLayout extends AppCompatActivity {
 
     private void forgetMagic() {
         String magicId = "mag_1";
-
         if (player.getMagicScroll().hasMagic(magicId)) {
-            // 1. 이름을 알아내기 위해 타워에서 마스터 데이터를 잠시 빌려옵니다.
             Magic masterData = dt.getMagicManager().spawn(magicId);
-
-            // 안전장치: 혹시라도 데이터가 없으면 그냥 ID를 출력하고, 있으면 진짜 이름을 씁니다.
             String magicName = (masterData != null) ? masterData.getName() : magicId;
-
-            // 2. 마법 삭제 로직 (기존과 동일)
-            player.getMagicScroll().getLearnedMagicList().removeIf(lm -> lm.getMagicId().equals(magicId));
-
-            // 3. 드디어 ID가 아닌 '진짜 이름'으로 로그 출력!
+            player.getMagicScroll().removeMagic(magicId);
             addLog("시스템: 마법 [" + magicName + "]의 기억을 지웠습니다.");
         } else {
             addLog("시스템: 지울 마법이 없습니다. (아직 배우지 않음)");
@@ -189,7 +249,8 @@ public class TestLayout extends AppCompatActivity {
             sb.append("비어 있음");
         } else {
             for (Map.Entry<String, Integer> entry : itemMap.entrySet()) {
-                String itemName = entry.getKey();
+                Item newItem = dt.getItemManager().spawn(entry.getKey());
+                String itemName = newItem.getName();
                 Integer count = entry.getValue();
                 if (count != null && count > 0) {
                     sb.append(itemName).append("(").append(count).append("개) ");

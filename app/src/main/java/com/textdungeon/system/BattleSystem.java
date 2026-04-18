@@ -66,15 +66,26 @@ public class BattleSystem {
 
             case 4: // 마법 사용
                 if (magicId != null) {
+                    LearnedMagic lm = player.getMagicScroll().getMagic(magicId);// 마법 존재 + 사용 가능 횟수 체크
+                    if (lm == null) {
+                        log += "❌ 해당 마법을 보유하고 있지 않습니다!\n";
+                        return log;
+                        }
+                    if (lm.getCurrentCount() <= 0) {
+                        log += "❌ 마법 사용 횟수가 부족합니다!\n";
+                        return log; // 턴 소모 X
+                    }
+                    // 실제 마법 사용 (여기서 use()로 카운트 감소됨)
                     int magicDamage = player.castMagic(magicId, context);
+
                     if (magicDamage > 0) {
                         enemyHp -= magicDamage;
-                        log += "🔥 마법 발동! " + enemyName + "에게 " + magicDamage + "의 광역 데미지!\n";
+                        log += "🔥 마법 발동! " + enemyName + "에게 " + magicDamage + "의 데미지!\n";
                     } else {
-                        log += "❌ 마법 사용 횟수가 부족하거나 마법을 찾을 수 없습니다!\n";
-                        return log; // 턴을 소비하지 않음
+                        log += "❌ 마법 발동 실패!\n";
+                        return log; // 안전 처리
+                        }
                     }
-                }
                 break;
         }
 

@@ -22,7 +22,6 @@
     "attack" : 50
   },
 
-
   {
     "id" : "monster_4",
     "name" : "해골 전사",
@@ -46,7 +45,6 @@
     "maxHp" : 60,
     "attack" : 80
   },
-
 
   {
     "id" : "monster_7",
@@ -72,7 +70,6 @@
     "attack" : 95
   },
 
-
   {
     "id" : "monster_10",
     "name" : "와이번",
@@ -95,6 +92,14 @@
     "hp" :  150,
     "maxHp" : 150,
     "attack" : 170
+  },
+
+  {
+    "id" : "test_monster",
+    "name" : "테스트용 허수아비",
+    "hp" :  20000000,
+    "maxHp" : 20000000,
+    "attack" : 1
   },
 
   {
