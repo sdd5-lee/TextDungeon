@@ -91,7 +91,7 @@
 
   {
     "id": "item_11",
-    "name": "빛바랜 철검",
+    "name": "빛바랜 검",
     "type": "weapon",
     "hp": 0,
     "atk": 15,
@@ -154,7 +154,7 @@
 
   {
     "id": "item_18",
-    "name": "타락한 용사의 성검",
+    "name": "성검",
     "type": "weapon",
     "hp": 0,
     "atk": 15,

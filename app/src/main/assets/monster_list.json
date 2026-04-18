@@ -160,7 +160,7 @@
 
   {
     "id" : "monster_21",
-    "name" : "와이번",
+    "name" : "드래곤",
     "hp" :  100,
     "maxHp" : 100,
     "attack" : 120
