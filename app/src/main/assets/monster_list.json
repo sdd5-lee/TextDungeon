@@ -24,6 +24,22 @@
 
   {
     "id" : "monster_4",
+    "name" : "박쥐",
+    "hp" :  12,
+    "maxHp" : 12,
+    "attack" : 45
+  },
+
+  {
+    "id" : "monster_5",
+    "name" : "홉고블린",
+    "hp" :  35,
+    "maxHp" : 35,
+    "attack" : 55
+  },
+
+  {
+    "id" : "monster_6",
     "name" : "해골 전사",
     "hp" :  40,
     "maxHp" : 40,
@@ -31,7 +47,7 @@
   },
 
   {
-    "id" : "monster_5",
+    "id" : "monster_7",
     "name" : "해골 궁수",
     "hp" :  30,
     "maxHp" : 30,
@@ -39,7 +55,7 @@
   },
 
   {
-    "id" : "monster_6",
+    "id" : "monster_8",
     "name" : "해골 기사",
     "hp" :  60,
     "maxHp" : 60,
@@ -47,7 +63,23 @@
   },
 
   {
-    "id" : "monster_7",
+    "id" : "monster_9",
+    "name" : "위습",
+    "hp" :  20,
+    "maxHp" : 20,
+    "attack" : 90
+  },
+
+  {
+    "id" : "monster_10",
+    "name" : "고블린 로드",
+    "hp" :  45,
+    "maxHp" : 45,
+    "attack" : 90
+  },
+
+  {
+    "id" : "monster_11",
     "name" : "오크 전사",
     "hp" :  70,
     "maxHp" : 70,
@@ -55,7 +87,7 @@
   },
 
   {
-    "id" : "monster_8",
+    "id" : "monster_12",
     "name" : "오크 마법사",
     "hp" :  65,
     "maxHp" : 65,
@@ -63,7 +95,47 @@
   },
 
   {
-    "id" : "monster_9",
+    "id" : "monster_13",
+    "name" : "가고일",
+    "hp" :  100,
+    "maxHp" : 100,
+    "attack" : 50
+  },
+
+  {
+    "id" : "monster_14",
+    "name" : "실버 울프",
+    "hp" :  70,
+    "maxHp" : 70,
+    "attack" : 85
+  },
+
+  {
+    "id" : "monster_15",
+    "name" : "오크 로드",
+    "hp" :  85,
+    "maxHp" : 85,
+    "attack" : 100
+  },
+
+  {
+    "id" : "monster_16",
+    "name" : "리자드맨",
+    "hp" :  90,
+    "maxHp" : 90,
+    "attack" : 105
+  },
+
+  {
+    "id" : "monster_17",
+    "name" : "샤먼 리자드",
+    "hp" :  75,
+    "maxHp" : 75,
+    "attack" : 110
+  },
+
+  {
+    "id" : "monster_18",
     "name" : "트롤",
     "hp" :  80,
     "maxHp" : 80,
@@ -71,7 +143,23 @@
   },
 
   {
-    "id" : "monster_10",
+    "id" : "monster_19",
+    "name" : "키메라",
+    "hp" :  80,
+    "maxHp" : 80,
+    "attack" : 95
+  },
+
+  {
+    "id" : "monster_20",
+    "name" : "골렘",
+    "hp" :  80,
+    "maxHp" : 80,
+    "attack" : 95
+  },
+
+  {
+    "id" : "monster_21",
     "name" : "와이번",
     "hp" :  100,
     "maxHp" : 100,
@@ -79,7 +167,7 @@
   },
 
   {
-    "id" : "monster_11",
+    "id" : "monster_22",
     "name" : "리치",
     "hp" :  120,
     "maxHp" : 120,
@@ -87,7 +175,23 @@
   },
 
   {
-    "id" : "monster_12",
+    "id" : "monster_23",
+    "name" : "미노타우로스",
+    "hp" :  130,
+    "maxHp" : 130,
+    "attack" : 140
+  },
+
+  {
+    "id" : "monster_24",
+    "name" : "타락한 용사",
+    "hp" :  140,
+    "maxHp" : 140,
+    "attack" : 150
+  },
+
+  {
+    "id" : "monster_25",
     "name" : "마왕",
     "hp" :  150,
     "maxHp" : 150,
@@ -100,69 +204,5 @@
     "hp" :  20000000,
     "maxHp" : 20000000,
     "attack" : 1
-  },
-
-  {
-    "id" : "monster_13",
-    "name" : "홉고블린",
-    "hp" :  35,
-    "maxHp" : 35,
-    "attack" : 55
-  },
-
-  {
-    "id" : "monster_14",
-    "name" : "박쥐",
-    "hp" :  12,
-    "maxHp" : 12,
-    "attack" : 45
-  },
-
-  {
-    "id" : "monster_15",
-    "name" : "고블린 로드",
-    "hp" :  45,
-    "maxHp" : 45,
-    "attack" : 90
-  },
-
-  {
-    "id" : "monster_16",
-    "name" : "오크 로드",
-    "hp" :  85,
-    "maxHp" : 85,
-    "attack" : 100
-  },
-
-  {
-    "id" : "monster_17",
-    "name" : "리자드맨",
-    "hp" :  90,
-    "maxHp" : 90,
-    "attack" : 105
-  },
-
-  {
-    "id" : "monster_18",
-    "name" : "샤먼 리자드",
-    "hp" :  75,
-    "maxHp" : 75,
-    "attack" : 110
-  },
-
-  {
-    "id" : "monster_19",
-    "name" : "미노타우로스",
-    "hp" :  130,
-    "maxHp" : 130,
-    "attack" : 140
-  },
-
-  {
-    "id" : "monster_20",
-    "name" : "타락한 용사",
-    "hp" :  140,
-    "maxHp" : 140,
-    "attack" : 150
   }
 ]
