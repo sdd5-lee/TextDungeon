@@ -85,7 +85,7 @@
   {
     "id": "event_3",
     "name": "늑대의 습격",
-    "description": "굶주린 늑대가 당신을 노립니다.",
+    "description": "굶주린 늑대\n[mob_goblin]\n가 당신을 노립니다.",
     "floor": 1,
     "max floor": 9,
     "enemyId": "monster_3",
@@ -113,7 +113,7 @@
   {
     "id": "event_4",
     "name": "박쥐",
-    "description": "커다란 박쥐가 달려듭니다.",
+    "description": "커다란 박쥐\n[mob_goblin]\n가 달려듭니다.",
     "floor": 1,
     "max floor": 9,
     "enemyId": "monster_4",
@@ -142,7 +142,7 @@
   {
     "id": "event_5",
     "name": "홉고블린",
-    "description": "홉고블린이 기분나쁘게 웃고있습니다.",
+    "description": "홉고블린\n[mob_goblin]\n이 기분나쁘게 웃고있습니다.",
     "floor": 10,
     "max floor": 10,
     "enemyId": "monster_5",
@@ -170,7 +170,7 @@
   {
     "id": "event_6",
     "name": "해골 전사",
-    "description": "갑옷을 입은 해골이 공격해옵니다.",
+    "description": "갑옷을 입은 해골\n[mob_goblin]\n이 공격해옵니다.",
     "floor": 11,
     "max floor": 19,
     "enemyId": "monster_6",
@@ -196,7 +196,7 @@
   {
     "id": "event_7",
     "name": "해골 궁수",
-    "description": "해골이 당신에게 활을 조준하고 있습니다.",
+    "description": "해골이\n[mob_goblin]\n 당신에게 활을 조준하고 있습니다.",
     "floor": 11,
     "max floor": 19,
     "enemyId": "monster_7",
@@ -225,7 +225,7 @@
   {
     "id": "event_8",
     "name": "해골 기사",
-    "description": "해골 기사가 당신에게 결투를 신청합니다.",
+    "description": "해골 기사가\n[mob_goblin]\n 당신에게 결투를 신청합니다.",
     "floor": 11,
     "max floor": 19,
     "enemyId": "monster_8",
@@ -256,7 +256,7 @@
   {
     "id": "event_9",
     "name": "위습",
-    "description": "위습의 사념이 느껴집니다.",
+    "description": "위습의 사념\n[mob_goblin]\n이 느껴집니다.",
     "floor": 11,
     "max floor": 19,
     "enemyId": "monster_9",
@@ -285,7 +285,7 @@
   {
     "id": "event_10",
     "name": "고블린 로드",
-    "description": "고블린 로드가 분노하고 있습니다.",
+    "description": "고블린 로드\n[mob_goblin]\n가 분노하고 있습니다.",
     "floor": 20,
     "max floor": 20,
     "enemyId": "monster_10",
@@ -313,7 +313,7 @@
   {
     "id": "event_11",
     "name": "오크 전사",
-    "description": "오크 전사가 빛바랜 검을 휘두르며 달려옵니다.",
+    "description": "오크 전사\n[mob_goblin]\n가 빛바랜 검을 휘두르며 달려옵니다.",
     "floor": 21,
     "max floor": 29,
     "enemyId": "monster_11",
@@ -340,7 +340,7 @@
   {
     "id": "event_12",
     "name": "오크 마법사",
-    "description": "오크 마법사가 주문을 외웁니다.",
+    "description": "오크 마법사\n[mob_goblin]\n가 주문을 외웁니다.",
     "floor": 21,
     "max floor": 29,
     "enemyId": "monster_12",
@@ -367,7 +367,7 @@
   {
     "id": "event_13",
     "name": "가고일",
-    "description": "당신을 바라보던 석상이 움직입니다.",
+    "description": "당신을 바라보던 석상\n[mob_goblin]\n이 움직입니다.",
     "floor": 21,
     "max floor": 29,
     "enemyId": "monster_13",
@@ -396,7 +396,7 @@
   {
     "id": "event_14",
     "name": "실버 울프",
-    "description": "거대한 은빛 늑대입니다.",
+    "description": "거대한 은빛 늑대\n[mob_goblin]\n입니다.",
     "floor": 21,
     "max floor": 29,
     "enemyId": "monster_14",
@@ -423,7 +423,7 @@
   {
     "id": "event_15",
     "name": "오크 로드",
-    "description": "거대한 오크 로드가 나타났습니다.",
+    "description": "거대한 오크 로드\n[mob_goblin]\n가 나타났습니다.",
     "floor": 30,
     "max floor": 30,
     "enemyId": "monster_15",
@@ -451,7 +451,7 @@
   {
     "id": "event_16",
     "name": "리자드맨",
-    "description": "리자드맨이 방패를 두들기며 경고합니다.",
+    "description": "리자드맨\n[mob_goblin]\n이 방패를 두들기며 경고합니다.",
     "floor": 31,
     "max floor": 39,
     "enemyId": "monster_16",
@@ -478,7 +478,7 @@
   {
     "id": "event_17",
     "name": "샤먼 리자드",
-    "description": "샤먼 리자드가 주문을 외웁니다.",
+    "description": "샤먼 리자드\n[mob_goblin]\n가 주문을 외웁니다.",
     "floor": 31,
     "max floor": 39,
     "enemyId": "monster_17",
@@ -505,7 +505,7 @@
   {
     "id": "event_18",
     "name": "트롤",
-    "description": "거대한 트롤이 길을 막고 있습니다.",
+    "description": "거대한 트롤\n[mob_goblin]\n이 길을 막고 있습니다.",
     "floor": 31,
     "max floor": 39,
     "enemyId": "monster_18",
@@ -534,7 +534,7 @@
   {
     "id": "event_19",
     "name": "키메라",
-    "description": "온갖 생물이 섞여있는 괴물입니다.",
+    "description": "온갖 생물이 섞여있는 괴물\n[mob_goblin]\n입니다.",
     "floor": 31,
     "max floor": 39,
     "enemyId": "monster_19",
@@ -561,7 +561,7 @@
   {
     "id": "event_20",
     "name": "골렘",
-    "description": "골렘이 당신을 적으로 인식합니다.",
+    "description": "골렘\n[mob_goblin]\n이 당신을 적으로 인식합니다.",
     "floor": 40,
     "max floor": 40,
     "enemyId": "monster_20",
@@ -589,7 +589,7 @@
   {
     "id": "event_21",
     "name": "드래곤",
-    "description": "드래곤이 불을 뿜으며 달려듭니다.",
+    "description": "드래곤\n[mob_goblin]\n이 불을 뿜으며 달려듭니다.",
     "floor": 41,
     "max floor": 49,
     "enemyId": "monster_21",
@@ -616,7 +616,7 @@
   {
     "id": "event_22",
     "name": "리치",
-    "description": "리치가 당신의 절망을 바랍니다.",
+    "description": "리치\n[mob_goblin]\n가 당신의 절망을 바랍니다.",
     "floor": 41,
     "max floor": 49,
     "enemyId": "monster_22",
@@ -643,7 +643,7 @@
   {
     "id": "event_23",
     "name": "미노타우로스",
-    "description": "거대한 미노타우로스가 포효합니다.",
+    "description": "거대한 미노타우로스\n[mob_goblin]\n가 포효합니다.",
     "floor": 41,
     "max floor": 49,
     "enemyId": "monster_23",
@@ -670,7 +670,7 @@
   {
     "id": "event_24",
     "name": "타락한 용사",
-    "description": "희망이던 용사는 이젠 절망이 되었습니다.",
+    "description": "희망이던 용사\n[mob_goblin]\n는 이젠 절망이 되었습니다.",
     "floor": 41,
     "max floor": 49,
     "enemyId": "monster_24",
@@ -697,7 +697,7 @@
   {
     "id": "event_25",
     "name": "마왕",
-    "description": "당신은 결의를 다집니다.",
+    "description": "\n[mob_goblin]\n당신은 결의를 다집니다.",
     "floor": 50,
     "max floor": 50,
     "enemyId": "monster_25",
