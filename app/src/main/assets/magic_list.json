@@ -11,6 +11,90 @@
     "name": "화염구",
     "count": 3,
     "maxCount": 3,
-    "magicDamage": 25
+    "magicDamage": 30
+  },
+  {
+    "id": "mag_3",
+    "name": "쉴드",
+    "count": 4,
+    "maxCount": 4,
+    "magicDamage":0
+  },
+  {
+    "id": "mag_4",
+    "name": "아이스 애로우",
+    "count": 4,
+    "maxCount": 4,
+    "magicDamage": 20
+  },
+  {
+    "id": "mag_5",
+    "name": "힐",
+    "count": 2,
+    "maxCount": 2,
+    "magicDamage": 0
+  },
+  {
+    "id": "mag_6",
+    "name": "라이트닝",
+    "count": 3,
+    "maxCount": 3,
+    "magicDamage": 40
+  },
+  {
+    "id": "mag_7",
+    "name": "윈드",
+    "count": 4,
+    "maxCount": 4,
+    "magicDamage": 0
+  },
+  {
+    "id": "mag_8",
+    "name": "익스플로젼",
+    "count": 2,
+    "maxCount": 2,
+    "magicDamage": 50
+  },
+  {
+    "id": "mag_9",
+    "name": "마나 드레인",
+    "count": 3,
+    "maxCount": 3,
+    "magicDamage": 30
+  },
+  {
+    "id": "mag_10",
+    "name": "토네이도",
+    "count": 3,
+    "maxCount": 3,
+    "magicDamage": 45
+  },
+  {
+    "id": "mag_11",
+    "name": "블리자드",
+    "count": 2,
+    "maxCount": 2,
+    "magicDamage": 100
+  },
+  {
+    "id": "mag_12",
+    "name": "어스퀘이크",
+    "count": 3,
+    "maxCount": 3,
+    "magicDamage": 80
+  },
+  {
+    "id": "mag_13",
+    "name": "메테오",
+    "count": 1,
+    "maxCount": 1,
+    "magicDamage": 125
+  },
+  {
+    "id": "mag_14",
+    "name": "라그나로크",
+    "count": 1,
+    "maxCount": 1,
+    "magicDamage": 150
   }
 ]

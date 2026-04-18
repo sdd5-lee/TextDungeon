@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 tools:text="PLAYER"
                 android:textColor="#E5E2E1"
-                android:textSize="10sp"
+                android:textSize="12sp"
                 android:letterSpacing="0.1"
                 android:fontFamily="serif"
                 android:textStyle="bold"/>
@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:textColor="#E0BFBA"
-                android:textSize="9sp"
+                android:textSize="11sp"
                 tools:text="HP: 84 / 120" />
         </LinearLayout>
 
@@ -79,7 +79,7 @@
                 android:layout_height="wrap_content"
                 tools:text="고블린"
                 android:textColor="#E9C176"
-                android:textSize="10sp"
+                android:textSize="12sp"
                 android:letterSpacing="0.1"
                 android:fontFamily="serif"
                 android:textStyle="bold"/>
@@ -106,7 +106,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:textColor="#E0BFBA"
-                android:textSize="9sp"
+                android:textSize="11sp"
                 tools:text="150 / 150" />
         </LinearLayout>
     </LinearLayout>
@@ -133,7 +133,7 @@
     <LinearLayout
         android:id="@+id/log_area"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="110dp"
         android:layout_marginTop="4dp"
         android:background="#1C1B1B"
         android:padding="12dp"
@@ -148,32 +148,14 @@
                 android:id="@+id/battle_log_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="The Bone-Stalker shrieks in the darkness.\nYou hit for 12 damage with Quick Strike."
+                android:fontFamily="serif"
+                android:lineSpacingExtra="2dp"
                 android:textColor="#E0BFBA"
                 android:textSize="12sp"
-                android:fontFamily="serif"
                 android:textStyle="italic"
-                android:lineSpacingExtra="2dp"/>
+                tools:text="The Bone-Stalker shrieks in the darkness.\nYou hit for 12 damage with Quick Strike." />
         </ScrollView>
         <!-- 전체 로그 버튼   -->
-        <FrameLayout
-            android:id="@+id/btn_all_log"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
-            android:layout_marginStart="8dp"
-            android:background="#2A2A2A"
-            android:clickable="true"
-            android:focusable="true">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="log"
-                android:textColor="#E5E2E1"
-                android:textSize="12sp"
-                android:fontFamily="serif"
-                android:textStyle="italic" />
-        </FrameLayout>
     </LinearLayout>
 
     <!-- Combat Actions -->

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#131313">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btn_embark">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <!-- Character Selection Header -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="캐릭터 선택"
+                android:textColor="#E9C176"
+                android:textSize="12sp"
+                android:letterSpacing="0.2"
+                android:fontFamily="serif"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="32dp"/>
+
+            <!-- Job Selection Grid (3x3) -->
+            <GridLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:columnCount="3"
+                android:rowCount="3"
+                android:layout_marginBottom="48dp">
+
+                <LinearLayout android:id="@+id/job_knight" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
+                    <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/ic_menu_gallery" app:tint="#E5E2E1" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="KNIGHT" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/job_rogue" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
+                    <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/ic_menu_gallery" app:tint="#E5E2E1" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="ROGUE" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/job_mage" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
+                    <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/ic_menu_gallery" app:tint="#E5E2E1" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="MAGE" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/job_warrior" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
+                    <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/ic_menu_gallery" app:tint="#E5E2E1" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="WARRIOR" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/job_cleric" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
+                    <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/ic_menu_gallery" app:tint="#E5E2E1" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="CLERIC" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/job_ranger" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
+                    <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/ic_menu_gallery" app:tint="#E5E2E1" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="ARCHER" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/job_paladin" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
+                    <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/ic_menu_gallery" app:tint="#E5E2E1" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="HERO" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/job_warlock" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
+                    <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/ic_menu_gallery" app:tint="#E5E2E1" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="WARLOCK" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" android:layout_marginTop="10dp" />
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/job_monk" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
+                    <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/ic_menu_gallery" app:tint="#E5E2E1" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="MONK" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" android:layout_marginTop="10dp" />
+                </LinearLayout>
+
+            </GridLayout>
+
+            <!-- 선택 직업 초기 스탯 표시 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="4"
+                android:layout_marginBottom="24dp">
+
+                <!-- 체력 -->
+                <LinearLayout android:layout_width="0dp" android:layout_height="110dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical">
+                    <View android:layout_width="match_parent" android:layout_height="2dp" android:background="#901418"/>
+                    <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_compass" app:tint="#E5E2E1" android:layout_marginTop="12dp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="VIT" android:textColor="#58413E" android:textSize="11sp" android:letterSpacing="0.1" android:layout_marginTop="8dp" android:textStyle="bold"/>
+                    <TextView android:id="@+id/stat_hp" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="100" android:textColor="#E5E2E1" android:textSize="18sp" android:fontFamily="serif" android:layout_marginTop="2dp"/>
+                </LinearLayout>
+
+                <!-- 힘 -->
+                <LinearLayout android:layout_width="0dp" android:layout_height="110dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical">
+                    <View android:layout_width="match_parent" android:layout_height="2dp" android:background="#E5E2E1"/>
+                    <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_compass" app:tint="#E5E2E1" android:layout_marginTop="12dp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="STR" android:textColor="#58413E" android:textSize="11sp" android:letterSpacing="0.1" android:layout_marginTop="8dp" android:textStyle="bold"/>
+                    <TextView android:id="@+id/stat_str" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="18" android:textColor="#E5E2E1" android:textSize="18sp" android:fontFamily="serif" android:layout_marginTop="2dp"/>
+                </LinearLayout>
+
+                <!-- 민첩 -->
+                <LinearLayout android:layout_width="0dp" android:layout_height="110dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical">
+                    <View android:layout_width="match_parent" android:layout_height="2dp" android:background="#A0A0A0"/>
+                    <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_slideshow" app:tint="#E5E2E1" android:layout_marginTop="12dp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="AGI" android:textColor="#58413E" android:textSize="11sp" android:letterSpacing="0.1" android:layout_marginTop="8dp" android:textStyle="bold"/>
+                    <TextView android:id="@+id/stat_agi" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="12" android:textColor="#E5E2E1" android:textSize="18sp" android:fontFamily="serif" android:layout_marginTop="2dp"/>
+                </LinearLayout>
+
+                <!-- 지혜 -->
+                <LinearLayout android:layout_width="0dp" android:layout_height="110dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical">
+                    <View android:layout_width="match_parent" android:layout_height="2dp" android:background="#E9C176"/>
+                    <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_view" app:tint="#E5E2E1" android:layout_marginTop="12dp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="WIS" android:textColor="#58413E" android:textSize="11sp" android:letterSpacing="0.1" android:layout_marginTop="8dp" android:textStyle="bold"/>
+                    <TextView android:id="@+id/stat_wis" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="09" android:textColor="#E5E2E1" android:textSize="18sp" android:fontFamily="serif" android:layout_marginTop="2dp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Character Description Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#2A2A2A"
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="32dp">
+
+                <TextView
+                    android:id="@+id/character_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="캐릭터 설명"
+                    android:textColor="#E5E2E1"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="4dp"
+                    android:fontFamily="serif"
+                    android:letterSpacing="0.05"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Fixed Bottom CTA Button -->
+    <FrameLayout
+        android:id="@+id/btn_embark"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="#901418"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="게임 시작"
+            android:textColor="#E5E2E1"
+            android:textSize="14sp"
+            android:letterSpacing="0.25"
+            android:fontFamily="serif"
+            android:textStyle="bold"/>
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
