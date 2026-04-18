@@ -22,6 +22,7 @@
     "attack" : 50
   },
 
+
   {
     "id" : "monster_4",
     "name" : "해골 전사",
@@ -45,6 +46,7 @@
     "maxHp" : 60,
     "attack" : 80
   },
+
 
   {
     "id" : "monster_7",
@@ -70,6 +72,7 @@
     "attack" : 95
   },
 
+
   {
     "id" : "monster_10",
     "name" : "와이번",
@@ -92,5 +95,69 @@
     "hp" :  150,
     "maxHp" : 150,
     "attack" : 170
+  },
+
+  {
+    "id" : "monster_13",
+    "name" : "홉고블린",
+    "hp" :  35,
+    "maxHp" : 35,
+    "attack" : 55
+  },
+
+  {
+    "id" : "monster_14",
+    "name" : "박쥐",
+    "hp" :  12,
+    "maxHp" : 12,
+    "attack" : 45
+  },
+
+  {
+    "id" : "monster_15",
+    "name" : "고블린 로드",
+    "hp" :  45,
+    "maxHp" : 45,
+    "attack" : 90
+  },
+
+  {
+    "id" : "monster_16",
+    "name" : "오크 로드",
+    "hp" :  85,
+    "maxHp" : 85,
+    "attack" : 100
+  },
+
+  {
+    "id" : "monster_17",
+    "name" : "리자드맨",
+    "hp" :  90,
+    "maxHp" : 90,
+    "attack" : 105
+  },
+
+  {
+    "id" : "monster_18",
+    "name" : "샤먼 리자드",
+    "hp" :  75,
+    "maxHp" : 75,
+    "attack" : 110
+  },
+
+  {
+    "id" : "monster_19",
+    "name" : "미노타우로스",
+    "hp" :  130,
+    "maxHp" : 130,
+    "attack" : 140
+  },
+
+  {
+    "id" : "monster_20",
+    "name" : "타락한 용사",
+    "hp" :  140,
+    "maxHp" : 140,
+    "attack" : 150
   }
 ]

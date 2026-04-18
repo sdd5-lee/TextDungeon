@@ -2,7 +2,7 @@
   {
     "id": "event_0",
     "name": "치유의 샘",
-    "description": "숲 한복판에서 맑은 샘물을 발견했습니다. 물을 마시겠습니까?",
+    "description": "동굴 한복판에서 맑은 샘물을 발견했습니다. 물을 마시겠습니까?",
     "floor": 1,
     "choices": [
       "물을 마신다",
@@ -163,7 +163,7 @@
     "id": "event_6",
     "name": "해골 전사",
     "description": "갑옷을 입은 해골이 공격해옵니다.",
-    "floor": 1,
+    "floor": 2,
     "enemyId": "monster_4",
     "choices": [
       "싸운다",
@@ -203,6 +203,453 @@
         "itemId": null,
         "description": "그냥 지나갔습니다.",
         "statRewards": []
+      }
+    ]
+  },
+  {
+    "id": "event_8",
+    "name": "슬라임",
+    "description": "슬라임이 천천히 다가오고있습니다.",
+    "floor": 1,
+    "enemyId": "monster_1",
+    "choices": [
+      "싸운다",
+      "그냥 지나간다"
+    ],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "슬라임을 물리쳤습니다.",
+        "statRewards": [
+          { "type": "경험치", "value": 10 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "무시하고 지나갔습니다.",
+        "statRewards": []
+      }
+    ]
+  },
+  {
+    "id": "event_9",
+    "name": "해골 궁수",
+    "description": "해골이 당신에게 활을 조준하고 있습니다.",
+    "floor": 2,
+    "enemyId": "monster_5",
+    "choices": [
+      "싸운다",
+      "회피한다"
+    ],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "날아오는 화살을 피하고 해골 궁수를 물리쳤습니다.",
+        "statRewards": [
+          { "type": "경험치", "value": 40 },
+          { "type": "민첩", "value": 10 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "도망치다가 활을 맞았습니다.",
+        "statRewards": [
+          { "type": "체력", "value": -40 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "event_10",
+    "name": "해골 기사",
+    "description": "해골 기사가 당신에게 결투를 신청합니다.",
+    "floor": 2,
+    "enemyId": "monster_6",
+    "choices": [
+      "싸운다",
+      "회피한다"
+    ],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "해골 기사는 패배를 인정했습니다.",
+        "statRewards": [
+          { "type": "경험치", "value": 60 },
+          { "type": "힘", "value": 15 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "겁쟁이처럼 도망쳤습니다.",
+        "statRewards": [
+          { "type": "체력", "value": -40 },
+          { "type": "힘", "value": -20 },
+          { "type": "민첩", "value": -10 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "event_11",
+    "name": "오크 전사",
+    "description": "오크 전사가 거대한 몽둥이를 휘두르며 달려옵니다.",
+    "floor": 2,
+    "enemyId": "monster_7",
+    "choices": [
+      "싸운다",
+      "회피한다"
+    ],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "오크 전사의 몽둥이를 얻었습니다.",
+        "statRewards": [
+          { "type": "경험치", "value": 50 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "간신히 도망쳤습니다.",
+        "statRewards": [
+        ]
+      }
+    ]
+  },
+  {
+    "id": "event_12",
+    "name": "오크 마법사",
+    "description": "오크 마법사가 주문을 외웁니다.",
+    "floor": 2,
+    "enemyId": "monster_8",
+    "choices": [
+      "싸운다",
+      "회피한다"
+    ],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "물리쳤습니다.",
+        "statRewards": [
+          { "type": "경험치", "value": 50 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "간신히 도망쳤습니다.",
+        "statRewards": [
+        ]
+      }
+    ]
+  },
+  {
+    "id": "event_13",
+    "name": "트롤",
+    "description": "거대한 트롤이 길을 막고 있습니다.",
+    "floor": 2,
+    "enemyId": "monster_9",
+    "choices": [
+      "싸운다",
+      "회피한다"
+    ],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "물리쳤습니다.",
+        "statRewards": [
+          { "type": "경험치", "value": 50 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "간신히 도망쳤습니다.",
+        "statRewards": [
+        ]
+      }
+    ]
+  },
+  {
+    "id": "event_14",
+    "name": "와이번",
+    "description": "와이번이 불을 뿜으며 달려듭니다.",
+    "floor": 5,
+    "enemyId": "monster_10",
+    "choices": [
+      "싸운다",
+      "회피한다"
+    ],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "물리쳤습니다.",
+        "statRewards": [
+          { "type": "경험치", "value": 50 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "간신히 도망쳤습니다.",
+        "statRewards": [
+        ]
+      }
+    ]
+  },
+  {
+    "id": "event_15",
+    "name": "리치",
+    "description": "리치가 당신의 절망을 바랍니다.",
+    "floor": 5,
+    "enemyId": "monster_11",
+    "choices": [
+      "싸운다",
+      "회피한다"
+    ],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "물리쳤습니다.",
+        "statRewards": [
+          { "type": "경험치", "value": 50 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "간신히 도망쳤습니다.",
+        "statRewards": [
+        ]
+      }
+    ]
+  },
+  {
+    "id": "event_16",
+    "name": "마왕",
+    "description": "당신은 결의를 다집니다.",
+    "floor": 5,
+    "enemyId": "monster_12",
+    "choices": [
+      "싸운다",
+      "회피한다"
+    ],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "물리쳤습니다.",
+        "statRewards": [
+          { "type": "경험치", "value": 50 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "간신히 도망쳤습니다.",
+        "statRewards": [
+        ]
+      }
+    ]
+  },
+  {
+    "id": "event_17",
+    "name": "홉고블린",
+    "description": "홉고블린이 기분나쁘게 웃고있습니다.",
+    "floor": 1,
+    "enemyId": "monster_13",
+    "choices": [
+      "싸운다",
+      "회피한다"
+    ],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "물리쳤습니다.",
+        "statRewards": [
+          { "type": "경험치", "value": 50 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "간신히 도망쳤습니다.",
+        "statRewards": [
+        ]
+      }
+    ]
+  },
+  {
+    "id": "event_18",
+    "name": "박쥐",
+    "description": "커다란 박쥐가 달려듭니다.",
+    "floor": 1,
+    "enemyId": "monster_14",
+    "choices": [
+      "싸운다",
+      "회피한다"
+    ],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "물리쳤습니다.",
+        "statRewards": [
+          { "type": "경험치", "value": 50 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "간신히 도망쳤습니다.",
+        "statRewards": [
+        ]
+      }
+    ]
+  },
+  {
+    "id": "event_19",
+    "name": "고블린 로드",
+    "description": "고블린 로드가 분노하고 있습니다.",
+    "floor": 2,
+    "enemyId": "monster_15",
+    "choices": [
+      "싸운다",
+      "회피한다"
+    ],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "물리쳤습니다.",
+        "statRewards": [
+          { "type": "경험치", "value": 50 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "간신히 도망쳤습니다.",
+        "statRewards": [
+        ]
+      }
+    ]
+  },
+  {
+    "id": "event_20",
+    "name": "오크 로드",
+    "description": "거대한 오크 로드가 나타났습니다.",
+    "floor": 3,
+    "enemyId": "monster_16",
+    "choices": [
+      "싸운다",
+      "회피한다"
+    ],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "물리쳤습니다.",
+        "statRewards": [
+          { "type": "경험치", "value": 50 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "간신히 도망쳤습니다.",
+        "statRewards": [
+        ]
+      }
+    ]
+  },
+  {
+    "id": "event_21",
+    "name": "리자드맨",
+    "description": "리자드맨이 방패를 두들기며 경고합니다.",
+    "floor": 3,
+    "enemyId": "monster_17",
+    "choices": [
+      "싸운다",
+      "회피한다"
+    ],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "물리쳤습니다.",
+        "statRewards": [
+          { "type": "경험치", "value": 50 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "간신히 도망쳤습니다.",
+        "statRewards": [
+        ]
+      }
+    ]
+  },
+  {
+    "id": "event_22",
+    "name": "샤먼 리자드",
+    "description": "샤먼 리자드가 주문을 외웁니다.",
+    "floor": 2,
+    "enemyId": "monster_18",
+    "choices": [
+      "싸운다",
+      "회피한다"
+    ],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "물리쳤습니다.",
+        "statRewards": [
+          { "type": "경험치", "value": 50 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "간신히 도망쳤습니다.",
+        "statRewards": [
+        ]
+      }
+    ]
+  },
+  {
+    "id": "event_23",
+    "name": "미노타우로스",
+    "description": "거대한 미노타우로스가 포효합니다.",
+    "floor": 4,
+    "enemyId": "monster_19",
+    "choices": [
+      "싸운다",
+      "회피한다"
+    ],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "물리쳤습니다.",
+        "statRewards": [
+          { "type": "경험치", "value": 50 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "간신히 도망쳤습니다.",
+        "statRewards": [
+        ]
+      }
+    ]
+  },
+  {
+    "id": "event_24",
+    "name": "타락한 용사",
+    "description": "희망이던 용사는 이젠 절망이 되었습니다.",
+    "floor": 5,
+    "enemyId": "monster_20",
+    "choices": [
+      "싸운다",
+      "회피한다"
+    ],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "물리쳤습니다.",
+        "statRewards": [
+          { "type": "경험치", "value": 50 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "간신히 도망쳤습니다.",
+        "statRewards": [
+        ]
       }
     ]
   }
