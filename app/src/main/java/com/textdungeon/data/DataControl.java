@@ -58,7 +58,6 @@ public class DataControl<D> {
             D obj = gson.fromJson(json, clazz);
             result.add(obj);
         }
-
         return result;
     }
 }

@@ -17,6 +17,7 @@ public class Player {
     private Inventory inventory;
     private MagicScroll magicScroll;
     private Equipment equipment;
+    private int diceChane;
     private int money;
 
     public Player(String name, Job job){
@@ -55,12 +56,8 @@ public class Player {
     public void pickUpItem(Item item) {
         inventory.addItem(item);
     }
-
-    // Player.java 내부
     public void consumablesItem(Item item){
-        // 인벤토리에서 차감 성공했다면
         if(inventory.consumeItem(item.getId())){
-            // 아이템아, 나(this)한테 너의 효과를 발동시켜라!
             item.itemUse(this);
         }
     }
@@ -170,4 +167,7 @@ public class Player {
         return magicScroll;
     }
 
+    public int getDiceChane() {
+        return diceChane;
+    }
 }

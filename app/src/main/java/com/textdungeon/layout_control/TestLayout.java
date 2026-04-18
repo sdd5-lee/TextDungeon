@@ -96,7 +96,7 @@ public class TestLayout extends AppCompatActivity {
             addLog("시스템: 개발중 입니다");
         });
         findViewById(R.id.add_item_potion).setOnClickListener(v -> {
-            Item p = dt.getItemManager().spawn("item_3");
+            Item p = dt.getItemManager().spawn("item_30");
             player.pickUpItem(p);
             updateUI();
             addLog("시스템: 포션을 추가하였습니다");
