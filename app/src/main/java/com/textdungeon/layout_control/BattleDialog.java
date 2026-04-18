@@ -76,22 +76,14 @@ public class BattleDialog extends Dialog {
 
         appendLog("야생의 [" + monster.getName() + "]이(가) 나타났다!");
     }
-// BattleDialog.java 내부 (onCreate 바깥에 추가)
-
     @Override
     protected void onStart() {
         super.onStart();
 
         Window window = getWindow();
         if (window != null) {
-            // 스마트폰 화면의 가로 95%, 세로 90% 크기로 큼직하게 꽉 채웁니다.
             int width = (int) (getContext().getResources().getDisplayMetrics().widthPixels * 0.95);
             int height = (int) (getContext().getResources().getDisplayMetrics().heightPixels * 0.90);
-
-        /* 만약 아예 빈틈없이 화면 전체를 덮고 싶다면 아래 코드를 쓰시면 됩니다.
-        int width = android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-        int height = android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-        */
 
             window.setLayout(width, height);
         }
@@ -155,10 +147,6 @@ public class BattleDialog extends Dialog {
         });
         addMagic();
         addItem();
-        // (임시) 마법 탭 안의 FIREBALL 레이아웃을 클릭했을 때 처리
-        // 실제로는 RecyclerView나 동적 생성 코드가 들어가야 합니다.
-        // XML 구조상 FIREBALL 텍스트가 있는 첫 번째 LinearLayout에 ID를 부여해야 정확하지만,
-        // 테스트를 위해 직접 접근합니다.
     }
     private void addMagic(){
         GridLayout magicContainer = findViewById(R.id.magic_container);
@@ -172,9 +160,8 @@ public class BattleDialog extends Dialog {
             if (magic == null){{
                 continue;
             }}
-            BattleButton button = new BattleButton(getContext(),"test_magic_img",magic.getName(),magic.getCount(),"시전하기");
+            BattleButton button = new BattleButton(getContext(),"magic_test",magic.getName(),magic.getCount(),"시전하기");
             button.setOnClickListener(v -> {
-                // BattleSystem으로 마법 시전 명령을 보냅니다 (이전에 만든 executeAction 메서드 활용)
                 executeAction(4, ma.getMagicId());
             });
             magicContainer.addView(button);
@@ -195,21 +182,17 @@ public class BattleDialog extends Dialog {
                 continue;
             }
 
-            // 1. 타워에서 아이템 원본 데이터를 가져옵니다.
             Item itemData = dt.getItemManager().spawn(itemId);
             if (itemData == null || !Objects.equals(itemData.getType(), "consumables")) {
                 continue;
             }
 
             // 2. 버튼 생성
-            BattleButton button = new BattleButton(getContext(), "test_item_img", itemData.getName(), count, "사용하기");
+            BattleButton button = new BattleButton(getContext(), "item_test", itemData.getName(), count, "사용하기");
 
-            // 3. 눌렀을 때의 동작 설정 (여기가 핵심적으로 바뀐 부분입니다!)
             button.setOnClickListener(v -> {
 
-                // ① 가방(Inventory)에서 아이템 1개를 성공적으로 차감했다면
                 if (player.getInventory().consumeItem(itemId)) {
-                    // ② 아이템아, 플레이어(player)에게 너의 효과를 발동해라!
                     itemData.itemUse(player);
                     appendLog("\n[" + itemData.getName() + "]을(를) 사용했습니다!");
                     updateUI(); // 체력바 갱신 (효과가 적용되었으므로)
@@ -219,7 +202,6 @@ public class BattleDialog extends Dialog {
                 }
             });
 
-            // 4. 쟁반(GridLayout)에 부착!
             itemContainer.addView(button);
         }
     }
@@ -236,19 +218,15 @@ public class BattleDialog extends Dialog {
         appendLog(resultLog);
         updateUI();
 
-        // 방금 액션으로 전투가 끝났다면?
         if (battleSystem.isBattleOver()) {
             appendLog("\n[전투가 종료되었습니다. 2초 뒤 돌아갑니다...]");
 
-            // 모든 버튼 비활성화 (클릭 연타 방지)
             findViewById(R.id.actions_area).setVisibility(View.GONE);
 
-            // 2초 뒤 다이얼로그 자동 종료
             new Handler(Looper.getMainLooper()).postDelayed(this::dismiss, 2000);
         }
     }
 
-    // 체력 및 바(Bar) UI 갱신
     private void updateUI() {
         int currentHp = Math.max(0, player.getStat().getHp());
         int enemyHp = Math.max(0, battleSystem.getEnemyHp());

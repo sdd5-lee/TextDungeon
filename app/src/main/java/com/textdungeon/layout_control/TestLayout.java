@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.textdungeon.R;
 import com.textdungeon.data.DataControlTower;
+import com.textdungeon.data.DungeonControl;
 import com.textdungeon.event.BattleEvent;
 import com.textdungeon.model.Item;
 import com.textdungeon.model.Job;
@@ -24,6 +25,7 @@ public class TestLayout extends AppCompatActivity {
     private Player player;
 
     private TextView logView, statusView, detailStatView, invView;
+    private DungeonControl dungeonControl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +50,7 @@ public class TestLayout extends AppCompatActivity {
         findViewById(R.id.btn_event).setOnClickListener(v -> triggerEvent());
         findViewById(R.id.btn_exp).setOnClickListener(v -> gainExp());
         findViewById(R.id.savebutton).setOnClickListener(v -> {
-            dt.saveGame();
+            dt.saveGame(this.dungeonControl);
             Toast.makeText(this, "저장 완료", Toast.LENGTH_SHORT).show();
         });
         findViewById(R.id.loadbutton).setOnClickListener(v -> {
@@ -94,7 +96,7 @@ public class TestLayout extends AppCompatActivity {
             addLog("시스템: 개발중 입니다");
         });
         findViewById(R.id.add_item_potion).setOnClickListener(v -> {
-            Item p = dt.getItemManager().spawn("item_3");
+            Item p = dt.getItemManager().spawn("item_30");
             player.pickUpItem(p);
             updateUI();
             addLog("시스템: 포션을 추가하였습니다");

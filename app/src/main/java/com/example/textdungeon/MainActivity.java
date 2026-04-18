@@ -5,21 +5,29 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.textdungeon.data.DataControlTower;
-import com.textdungeon.layout_control.TestLayout;
-import com.textdungeon.model.Job;
+import com.textdungeon.layout_control.CharacterLayout;
 
 public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.start_activity);
+        setContentView(R.layout.title_layout);
 
         DataControlTower dt = DataControlTower.getInstance(this);
-        dt.initPlayer("player", Job.WARRIOR);
+        findViewById(R.id.btn_start).setOnClickListener(this::MoveCharacter);
     }
-    public void battleMoveMain(View v) {
-        Intent intent = new Intent(this, TestLayout.class);
+    public void MoveCharacter(View v) {
+        Intent intent = new Intent(this, CharacterLayout.class);
+        startActivity(intent);
+    }
+    public void MoveShop(View v) {
+        Intent intent = new Intent(this, CharacterLayout.class);
+        startActivity(intent);
+    }
+    public void MoveOption(View v) {
+        Intent intent = new Intent(this, CharacterLayout.class);
         startActivity(intent);
     }
 }

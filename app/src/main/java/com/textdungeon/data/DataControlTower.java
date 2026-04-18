@@ -73,7 +73,11 @@ public class DataControlTower {
         }
     }
     public void saveGame() {
-        GameSave currentSave = new GameSave(this.player, this.userRecord);
+        GameSave currentSave = new GameSave(this.player,this.userRecord);
+        currentSave.save(appContext);
+    }
+    public void saveGame(DungeonControl dungeonControl) {
+        GameSave currentSave = new GameSave(this.player, dungeonControl.getCurrentFloor(),this.userRecord);
         currentSave.save(appContext);
     }
     public void initPlayer(String name, Job job){

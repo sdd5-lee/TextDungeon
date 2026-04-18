@@ -215,8 +215,11 @@
                 android:id="@+id/choice_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <!-- 코드로 동적 추가될 공간 -->
+                android:orientation="vertical"
+
+                android:divider="@drawable/button_empty_space"
+                android:showDividers="middle">
+
             </LinearLayout>
 
         </LinearLayout>

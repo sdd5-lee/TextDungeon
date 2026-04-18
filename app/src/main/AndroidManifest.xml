@@ -22,6 +22,9 @@
         </activity>
         <activity android:name="com.textdungeon.layout_control.EventLayout" />
         <activity android:name="com.textdungeon.layout_control.TestLayout" />
+        <activity android:name="com.textdungeon.layout_control.CharacterLayout" />
+        <activity android:name="com.textdungeon.layout_control.ShopLayout" />
+        <activity android:name="com.textdungeon.layout_control.OptionLayout" />
     </application>
 
 </manifest>
