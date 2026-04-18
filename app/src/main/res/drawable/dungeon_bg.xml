@@ -1,0 +1,7 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <bitmap
+            android:src="@drawable/dungeon_entrance"
+            android:gravity="top|center_horizontal" /> <!-- 상단 기준 정렬 -->
+    </item>
+</layer-list>
