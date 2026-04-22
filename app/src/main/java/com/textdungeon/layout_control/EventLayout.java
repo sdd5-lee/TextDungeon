@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class EventLayout extends AppCompatActivity {
+public class EventLayout extends BaseActivity {
     DataControlTower dt;
     Player player;
     DungeonControl dungeonControl;

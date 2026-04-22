@@ -7,11 +7,12 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.textdungeon.data.DataControlTower;
+import com.textdungeon.layout_control.BaseActivity;
 import com.textdungeon.layout_control.CharacterLayout;
 import com.textdungeon.layout_control.EventLayout;
 import com.textdungeon.layout_control.TestLayout;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
