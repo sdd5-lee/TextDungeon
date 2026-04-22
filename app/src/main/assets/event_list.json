@@ -380,8 +380,8 @@
     "name": "빈 고블린 오두막",
     "description": "비어있는 고블린 오두막에서 물건들이 보입니다 ",
     "imgId": "abandoned_library",
-    "minFloor": 2,
-    "maxFloor": 2,
+    "minFloor": 12,
+    "maxFloor": 12,
     "enemyId": null,
     "choices": [
       "고블린의 음식을 먹는다",
@@ -608,8 +608,8 @@
     "name": "오크 부족의 주술사",
     "description": "오크 부족의 주술을 받을 수 있습니다. 어떤 주술을 받겠습니까?",
     "imgId": "abandoned_library",
-    "minFloor": 2,
-    "maxFloor": 2,
+    "minFloor": 22,
+    "maxFloor": 22,
     "enemyId": null,
     "choices": [
       "'힘과 체력'의 주술",
