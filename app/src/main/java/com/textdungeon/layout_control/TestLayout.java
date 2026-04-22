@@ -26,7 +26,7 @@ import androidx.media3.datasource.RawResourceDataSource;
 import androidx.media3.common.util.UnstableApi;
 import androidx.media3.exoplayer.ExoPlayer;
 
-public class TestLayout extends AppCompatActivity {
+public class TestLayout extends BaseActivity {
     private DataControlTower dt;
     private Player player;
 

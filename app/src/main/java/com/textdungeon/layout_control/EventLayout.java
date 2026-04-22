@@ -52,6 +52,25 @@ public class EventLayout extends AppCompatActivity {
 
 
         updateUI();
+
+        getOnBackPressedDispatcher().addCallback(this, new androidx.activity.OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // 여기에 적는 코드가, 스마트폰 뒤로 가기 버튼을 눌렀을 때 실행됩니다!
+
+                new android.app.AlertDialog.Builder(EventLayout.this)
+                        .setTitle("게임 종료")
+                        .setMessage("게임을 종료하시겠습니까?\n(현재 층수: " + dungeonControl.getCurrentFloor() + "F)")
+                        .setPositiveButton("저장 후 종료", (dialog, which) -> {
+                            // 1. 안전하게 진행 상황을 저장합니다.
+                            dt.saveGame(dungeonControl);
+                            // 2. 앱을 완전히 종료합니다.
+                            finishAffinity();
+                        })
+                        .setNegativeButton("취소", null) // 취소를 누르면 아무 일도 안 일어남(게임 계속)
+                        .show();
+            }
+        });
     }
 
     private BattleEvent getRandomEvent(){

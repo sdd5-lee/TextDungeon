@@ -14,7 +14,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.textdungeon.data.DataControlTower;
 import com.textdungeon.model.Job;
 
-public class CharacterLayout extends AppCompatActivity {
+public class CharacterLayout extends BaseActivity {
     FrameLayout btnEmbark;
     TextView characterDesc;
     TextView statHp;
