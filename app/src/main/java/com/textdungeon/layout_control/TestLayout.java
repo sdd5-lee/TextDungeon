@@ -20,12 +20,19 @@ import com.textdungeon.system.GameSave;
 
 import java.util.Map;
 
+import androidx.annotation.OptIn;
+import androidx.media3.common.MediaItem;
+import androidx.media3.datasource.RawResourceDataSource;
+import androidx.media3.common.util.UnstableApi;
+import androidx.media3.exoplayer.ExoPlayer;
+
 public class TestLayout extends AppCompatActivity {
     private DataControlTower dt;
     private Player player;
 
     private TextView logView, statusView, detailStatView, invView;
     private DungeonControl dungeonControl;
+    private ExoPlayer bgmPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,14 +108,59 @@ public class TestLayout extends AppCompatActivity {
             updateUI();
             addLog("시스템: 포션을 추가하였습니다");
         });
-
+        findViewById(R.id.btn_test_music).setOnClickListener(v -> {
+            if (bgmPlayer != null) {
+                if (bgmPlayer.isPlaying()) {
+                    // 1. 현재 재생 중이라면 -> 일시정지
+                    bgmPlayer.pause();
+                } else {
+                    // 2. 현재 멈춰있다면 -> 재생 (이어서 재생)
+                    bgmPlayer.seekTo(0);
+                    bgmPlayer.play();
+                }
+            }
+        });
         updateUI();
+        initializeBGM();
+    }
+    @OptIn(markerClass = UnstableApi.class)
+    private void initializeBGM() {
+        if (bgmPlayer == null){
+            bgmPlayer = new ExoPlayer.Builder(this).build();
+            MediaItem mediaItem = MediaItem.fromUri(
+                    RawResourceDataSource.buildRawResourceUri(R.raw.bgm_test));
+            bgmPlayer.setMediaItem(mediaItem);
+            bgmPlayer.prepare();
+        }
     }
 
     @Override
     protected void onResume() { // 돌아올 때마다 갱신
         super.onResume();
         updateUI();
+        if (bgmPlayer != null && !bgmPlayer.isPlaying()) {
+            bgmPlayer.play();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // BGM: 앱이 화면에서 가려질 때 음악 일시정지 (선택 사항)
+        // 백그라운드에서도 음악이 계속 나오게 하려면 이 부분을 지우세요.
+        if (bgmPlayer != null && bgmPlayer.isPlaying()) {
+            bgmPlayer.pause();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // BGM: 액티비티 종료 시 반드시 메모리 해제 (매우 중요!)
+        if (bgmPlayer != null) {
+            bgmPlayer.release();
+            bgmPlayer = null;
+        }
     }
 
     private void triggerEvent() {

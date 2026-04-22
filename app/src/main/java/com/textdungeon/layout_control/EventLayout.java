@@ -37,6 +37,7 @@ public class EventLayout extends AppCompatActivity {
 
         dt = DataControlTower.getInstance(this);
         player = dt.getPlayer();
+
         dungeonControl = new DungeonControl();
 
         Intent intent = getIntent();
@@ -199,9 +200,11 @@ public class EventLayout extends AppCompatActivity {
     }
 
     private void nextFloor() {
+
         choiceButtons.removeAllViews();
         dungeonControl.nextCurrentFloor();
         currentEvent = getRandomEvent();
+        dt.saveGame(dungeonControl);
         ChoiceButton button = new ChoiceButton(this);
         button.setTextView("다음층으로");
         button.setOnClickListener(v -> updateUI());
