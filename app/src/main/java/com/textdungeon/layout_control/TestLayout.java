@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.textdungeon.R;
 import com.textdungeon.data.DataControlTower;
@@ -41,6 +40,7 @@ public class TestLayout extends BaseActivity {
 
         dt = DataControlTower.getInstance(this);
         player = dt.getPlayer();
+        dungeonControl = dt.getDungeonControl();
 
         if (player == null) {
             Toast.makeText(this, "에러 발생", Toast.LENGTH_SHORT).show();
@@ -57,18 +57,14 @@ public class TestLayout extends BaseActivity {
         findViewById(R.id.btn_event).setOnClickListener(v -> triggerEvent());
         findViewById(R.id.btn_exp).setOnClickListener(v -> gainExp());
         findViewById(R.id.savebutton).setOnClickListener(v -> {
-            dt.saveGame(this.dungeonControl);
+            dt.saveGame();
             Toast.makeText(this, "저장 완료", Toast.LENGTH_SHORT).show();
         });
         findViewById(R.id.loadbutton).setOnClickListener(v -> {
-            GameSave loadedSave = GameSave.load(this);
-
-            if (loadedSave != null && loadedSave.getPlayer() != null) {
+            GameSave loadedSave = GameSave.runLoad(this);
+            if (loadedSave != null) {
                 dt.setPlayer(loadedSave.getPlayer());
-                if (loadedSave.getUserRecord() != null) {
-                    dt.setUserRecord(loadedSave.getUserRecord());
-                }
-
+                dt.getDungeonControl().setCurrentFloor(loadedSave.getCurrentFloor());
                 this.player = dt.getPlayer();
 
                 updateUI();
@@ -93,9 +89,10 @@ public class TestLayout extends BaseActivity {
             addLog("시스템: 캐릭터를 부활시켰습니다");
         });
         findViewById(R.id.restart).setOnClickListener(v -> {
-            dt.setPlayer(null);
-            dt.initPlayer("player", Job.WARRIOR);
-            player = dt.getPlayer();
+            dt.resetRun();
+            dt.startNewGame("player", Job.WARRIOR);
+            this.player = dt.getPlayer();
+            this.dungeonControl = dt.getDungeonControl();
             updateUI();
             addLog("시스템: 플레이어를 재생성합니다");
         });
@@ -108,20 +105,20 @@ public class TestLayout extends BaseActivity {
             updateUI();
             addLog("시스템: 포션을 추가하였습니다");
         });
-        findViewById(R.id.btn_test_music).setOnClickListener(v -> {
-            if (bgmPlayer != null) {
-                if (bgmPlayer.isPlaying()) {
-                    // 1. 현재 재생 중이라면 -> 일시정지
-                    bgmPlayer.pause();
-                } else {
-                    // 2. 현재 멈춰있다면 -> 재생 (이어서 재생)
-                    bgmPlayer.seekTo(0);
-                    bgmPlayer.play();
-                }
-            }
-        });
+        findViewById(R.id.btn_test_music).setOnClickListener(v -> toggleBGM());
         updateUI();
         initializeBGM();
+    }
+    private void toggleBGM() {
+        if (bgmPlayer != null) {
+            if (bgmPlayer.isPlaying()) {
+                bgmPlayer.pause();
+                addLog("시스템: BGM 일시정지");
+            } else {
+                bgmPlayer.play();
+                addLog("시스템: BGM 재생");
+            }
+        }
     }
     @OptIn(markerClass = UnstableApi.class)
     private void initializeBGM() {

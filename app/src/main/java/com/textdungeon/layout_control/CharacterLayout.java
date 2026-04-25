@@ -119,7 +119,7 @@ public class CharacterLayout extends BaseActivity {
 
     private void startGame(View v) {
         if(playerJob !=null){
-            dt.initPlayer(playerName, playerJob);
+            dt.startNewGame(playerName, playerJob);
             Intent intent = new Intent(this, EventLayout.class);
             startActivity(intent);
         }else{

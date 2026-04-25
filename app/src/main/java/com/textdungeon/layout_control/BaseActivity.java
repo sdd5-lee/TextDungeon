@@ -5,12 +5,15 @@ import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 
-public class BaseActivity extends AppCompatActivity {
+import com.textdungeon.event.BattleEvent;
+
+public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setFullScreenMode();
     }
+
     private void setFullScreenMode() {
         WindowInsetsControllerCompat windowInsetsController =
                 WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
@@ -20,4 +23,5 @@ public class BaseActivity extends AppCompatActivity {
                     WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
         }
     }
+
 }

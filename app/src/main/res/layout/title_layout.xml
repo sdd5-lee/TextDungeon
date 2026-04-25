@@ -92,6 +92,27 @@
                 android:textStyle="bold" />
         </FrameLayout>
 
+        <FrameLayout
+            android:id="@+id/btn_continue"
+            android:layout_width="156dp"
+            android:layout_height="59dp"
+            android:layout_marginBottom="16dp"
+            android:background="#2A2A2A"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="serif"
+                android:letterSpacing="0.2"
+                android:text="LOADGAME"
+                android:textColor="#E9C176"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+
         <!-- SHOP -->
         <FrameLayout
             android:id="@+id/btn_shop"

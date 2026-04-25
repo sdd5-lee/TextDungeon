@@ -38,7 +38,6 @@ public class ShopSystem {
     }
     public String buyUpgrade(String upgradeId) {
         ShopUpgrade selectUpgrade;
-
         try {
             selectUpgrade = ShopUpgrade.valueOf(upgradeId);
         } catch (IllegalArgumentException e) {
@@ -47,11 +46,9 @@ public class ShopSystem {
 
         UserRecord record = dt.getUserRecord();
         int currentLevel = record.getUpgradeLevel(selectUpgrade.name());
-
         if (currentLevel >= selectUpgrade.maxLevel) {
-            return "[" + selectUpgrade.name + "] 항목은 이미 최대 레벨(Lv." + selectUpgrade.maxLevel + ")입니다.";
+            return "[" + selectUpgrade.title + "] 항목은 이미 최대 레벨(Lv." + selectUpgrade.maxLevel + ")입니다.";
         }
-
         int price = selectUpgrade.getNextPrice(currentLevel);
 
         if (record.getScore() >= price) {
@@ -60,7 +57,7 @@ public class ShopSystem {
             dt.saveGame();
 
             int newLevel = record.getUpgradeLevel(selectUpgrade.name());
-            return "[" + selectUpgrade.name + "] 레벨업 성공! (현재 Lv." + newLevel + ") / 남은 재화: " + record.getScore();
+            return "[" + selectUpgrade.title + "] 레벨업 성공! (현재 Lv." + newLevel + ") / 남은 재화: " + record.getScore();
         } else {
             return "구매 실패 [재화가 부족합니다. 필요 재화: " + price + "]";
         }

@@ -31,16 +31,17 @@ import java.util.Objects;
 public class BattleDialog extends Dialog {
 
     private BattleSystem battleSystem;
-    private Player player;
-    private Monster monster;
-    private Context context;
+    private final Player player;
+    private final Monster monster;
+    private final Context context;
 
     // 최대 체력 (바(Bar) 비율 계산용)
     private int playerMaxHp;
     private int monsterMaxHp;
 
-    // UI 요소
-    private TextView playerName, playerHpText, monsterName, monsterHpText, logView;
+    private TextView playerHpText;
+    private TextView monsterHpText;
+    private TextView logView;
     private View playerHpBar, monsterHpBar;
     private ScrollView magicScrollView, itemsScrollView;
 
@@ -89,11 +90,10 @@ public class BattleDialog extends Dialog {
         }
     }
     private void initViews() {
-        playerName = findViewById(R.id.player_name);
+        // UI 요소
         playerHpText = findViewById(R.id.player_hp_text);
         playerHpBar = findViewById(R.id.player_hp_bar);
 
-        monsterName = findViewById(R.id.monster_name);
         monsterHpText = findViewById(R.id.monster_hp_text);
         monsterHpBar = findViewById(R.id.monster_hp_bar);
 
@@ -103,6 +103,9 @@ public class BattleDialog extends Dialog {
         itemsScrollView = findViewById(R.id.items_scroll_view);
 
         // 이름 세팅
+        TextView playerName = findViewById(R.id.player_name);
+        TextView monsterName = findViewById(R.id.monster_name);
+
         playerName.setText(player.getName()); // 혹은 player.getName()
         monsterName.setText(battleSystem.getEnemyName());
     }
@@ -191,14 +194,13 @@ public class BattleDialog extends Dialog {
             BattleButton button = new BattleButton(getContext(), "item_test", itemData.getName(), count, "사용하기");
 
             button.setOnClickListener(v -> {
+                if (player.getInventory().consumeItem(itemId) && itemData.itemUse(player)) {
 
-                if (player.getInventory().consumeItem(itemId)) {
-                    itemData.itemUse(player);
                     appendLog("\n[" + itemData.getName() + "]을(를) 사용했습니다!");
                     updateUI(); // 체력바 갱신 (효과가 적용되었으므로)
                     addItem();  // 수량이 깎였으니 가방 목록 새로고침
                 } else {
-                    appendLog("아이템이 부족합니다.");
+                    appendLog("아이템이 부족하거나 사용하지 못하는 아이템입니다.");
                 }
             });
 

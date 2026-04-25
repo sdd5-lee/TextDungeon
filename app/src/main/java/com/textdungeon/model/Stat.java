@@ -101,11 +101,24 @@ public class Stat {
         this.wisdom = wisdom;
     }
 
-    public void setStatPoint(int statpoint) {
-        this.statPoint = statpoint;
+    public void setStatPoint(int statPoint) {
+        this.statPoint = statPoint;
     }
-    public void addStatPoint(int statpoint) {
-        this.statPoint += statpoint;
+    public void addStatPoint(int statPoint) {
+        this.statPoint += statPoint;
+    }
+
+    public void addStrength(int point){
+        strength += point;
+    }
+    public void addAgility(int point){
+        agility += point;
+    }
+    public void addHealth(int point){
+        health += point;
+    }
+    public void addWisdom(int point){
+        wisdom += point;
     }
     public void subHp(int damage){
         hp -= damage;
@@ -127,6 +140,12 @@ public class Stat {
                 break;
             case "경험치":
                 this.exp += value;
+                break;
+            case "데미지":
+                this.hp -= value;
+                break;
+            case "회복":
+                this.hp += value;
                 break;
         }
     }
