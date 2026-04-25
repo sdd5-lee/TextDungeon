@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.textdungeon.R;
 import com.textdungeon.data.DataControlTower;
@@ -20,12 +19,19 @@ import com.textdungeon.system.GameSave;
 
 import java.util.Map;
 
-public class TestLayout extends AppCompatActivity {
+import androidx.annotation.OptIn;
+import androidx.media3.common.MediaItem;
+import androidx.media3.datasource.RawResourceDataSource;
+import androidx.media3.common.util.UnstableApi;
+import androidx.media3.exoplayer.ExoPlayer;
+
+public class TestLayout extends BaseActivity {
     private DataControlTower dt;
     private Player player;
 
     private TextView logView, statusView, detailStatView, invView;
     private DungeonControl dungeonControl;
+    private ExoPlayer bgmPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +40,7 @@ public class TestLayout extends AppCompatActivity {
 
         dt = DataControlTower.getInstance(this);
         player = dt.getPlayer();
+        dungeonControl = dt.getDungeonControl();
 
         if (player == null) {
             Toast.makeText(this, "에러 발생", Toast.LENGTH_SHORT).show();
@@ -50,18 +57,14 @@ public class TestLayout extends AppCompatActivity {
         findViewById(R.id.btn_event).setOnClickListener(v -> triggerEvent());
         findViewById(R.id.btn_exp).setOnClickListener(v -> gainExp());
         findViewById(R.id.savebutton).setOnClickListener(v -> {
-            dt.saveGame(this.dungeonControl);
+            dt.saveGame();
             Toast.makeText(this, "저장 완료", Toast.LENGTH_SHORT).show();
         });
         findViewById(R.id.loadbutton).setOnClickListener(v -> {
-            GameSave loadedSave = GameSave.load(this);
-
-            if (loadedSave != null && loadedSave.getPlayer() != null) {
+            GameSave loadedSave = GameSave.runLoad(this);
+            if (loadedSave != null) {
                 dt.setPlayer(loadedSave.getPlayer());
-                if (loadedSave.getUserRecord() != null) {
-                    dt.setUserRecord(loadedSave.getUserRecord());
-                }
-
+                dt.getDungeonControl().setCurrentFloor(loadedSave.getCurrentFloor());
                 this.player = dt.getPlayer();
 
                 updateUI();
@@ -86,9 +89,10 @@ public class TestLayout extends AppCompatActivity {
             addLog("시스템: 캐릭터를 부활시켰습니다");
         });
         findViewById(R.id.restart).setOnClickListener(v -> {
-            dt.setPlayer(null);
-            dt.initPlayer("player", Job.WARRIOR);
-            player = dt.getPlayer();
+            dt.resetRun();
+            dt.startNewGame("player", Job.WARRIOR);
+            this.player = dt.getPlayer();
+            this.dungeonControl = dt.getDungeonControl();
             updateUI();
             addLog("시스템: 플레이어를 재생성합니다");
         });
@@ -101,14 +105,59 @@ public class TestLayout extends AppCompatActivity {
             updateUI();
             addLog("시스템: 포션을 추가하였습니다");
         });
-
+        findViewById(R.id.btn_test_music).setOnClickListener(v -> toggleBGM());
         updateUI();
+        initializeBGM();
+    }
+    private void toggleBGM() {
+        if (bgmPlayer != null) {
+            if (bgmPlayer.isPlaying()) {
+                bgmPlayer.pause();
+                addLog("시스템: BGM 일시정지");
+            } else {
+                bgmPlayer.play();
+                addLog("시스템: BGM 재생");
+            }
+        }
+    }
+    @OptIn(markerClass = UnstableApi.class)
+    private void initializeBGM() {
+        if (bgmPlayer == null){
+            bgmPlayer = new ExoPlayer.Builder(this).build();
+            MediaItem mediaItem = MediaItem.fromUri(
+                    RawResourceDataSource.buildRawResourceUri(R.raw.bgm_test));
+            bgmPlayer.setMediaItem(mediaItem);
+            bgmPlayer.prepare();
+        }
     }
 
     @Override
     protected void onResume() { // 돌아올 때마다 갱신
         super.onResume();
         updateUI();
+        if (bgmPlayer != null && !bgmPlayer.isPlaying()) {
+            bgmPlayer.play();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // BGM: 앱이 화면에서 가려질 때 음악 일시정지 (선택 사항)
+        // 백그라운드에서도 음악이 계속 나오게 하려면 이 부분을 지우세요.
+        if (bgmPlayer != null && bgmPlayer.isPlaying()) {
+            bgmPlayer.pause();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // BGM: 액티비티 종료 시 반드시 메모리 해제 (매우 중요!)
+        if (bgmPlayer != null) {
+            bgmPlayer.release();
+            bgmPlayer = null;
+        }
     }
 
     private void triggerEvent() {

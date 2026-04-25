@@ -3,31 +3,83 @@ package com.textdungeon.ai;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.google.gson.Gson;
 import com.textdungeon.event.BattleEvent;
+import com.textdungeon.model.Item;
+import com.textdungeon.model.Stat;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class ChaosDice {
-    public void roll(BattleEvent currentEvent, AiCallback callback) {
-        String prompt = "현재 플레이어가 마주한 상황 : ["+currentEvent.getDescription()+"]\n"
-                +"이 상황을 완전히 뒤엎는거나 망쳐버리는 하나의 혼돈 성향의 선택지를 1개와"+
-                " 그 선택지를 골랐을때 발생하는 보상, 그리고 뒤에 선택지에 따라서 대성공, 대실패를 붙여줘"+
-                " 그리고 그 답을 반드시 json으로 줘";
+    private final OkHttpClient client;
+    private final Gson gson;
+
+    public ChaosDice(OkHttpClient client) {
+        this.client = client;
+        this.gson = new Gson();
+    }
+
+    public void roll(int floor, Stat stat, List<Item> itemList, BattleEvent currentEvent, AiCallback callback) {
         Handler mainThreadHandler = new Handler(Looper.getMainLooper());
-        new Thread(() -> {
-           try {
-               Thread.sleep(2000);
 
-               String generatedChoice = "선택지: 춤을 추며 적의 무기에 머리를 들이민다.";
+        JSONObject requestData = new JSONObject();
+        try {
+            requestData.put("floor", floor);
 
-               String generatedResult = "[대성공] 적이 당신의 광기에 기겁하며 무기를 버리고 도망칩니다! \n보상: 최대 체력 +50, 500 골드 획득";
-               mainThreadHandler.post(()->{
-                   callback.onSuccess(generatedChoice, generatedResult);
-               });
-           } catch (Exception e) {
-               mainThreadHandler.post(() -> {
-               callback.onError("AI 통신 실패: 우주의 기운이 닿지 않았습니다.");
-           });
-           }
+            String statJson = gson.toJson(stat);
+            requestData.put("stat", new JSONObject(statJson));
+
+            String itemsJson = gson.toJson(itemList);
+            requestData.put("available_items", new JSONArray(itemsJson));
+
+            String eventJson = gson.toJson(currentEvent);
+            requestData.put("original_event", new JSONObject(eventJson));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            mainThreadHandler.post(() -> callback.onError("데이터 조립 실패: " + e.getMessage()));
+            return;
+        }
+
+        RequestBody body = RequestBody.create(requestData.toString(), MediaType.parse("application/json; charset=utf-8"));
+        Request request = new Request.Builder()
+                .url("http://10.0.2.2:8000/add_chaos_choice") // 로컬 서버 주소
+                .post(body)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                mainThreadHandler.post(() -> callback.onError("AI 서버 연결 실패 (네트워크 확인)"));
+            }
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful() && response.body() != null) {
+                    try {
+                        String responseData = response.body().string();
+                        // 서버가 준 JSON을 다시 BattleEvent 객체로 변환
+                        BattleEvent updatedEvent = gson.fromJson(responseData, BattleEvent.class);
+                        mainThreadHandler.post(() -> callback.onSuccess(updatedEvent));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        mainThreadHandler.post(() -> callback.onError("혼돈의 결말을 해석하지 못했습니다."));
+                    }
+                } else {
+                    mainThreadHandler.post(() -> callback.onError("혼돈의 신이 침묵합니다. (서버 응답 오류)"));
+                }
+            }
         });
     }
 }

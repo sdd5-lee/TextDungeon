@@ -10,8 +10,8 @@ import java.util.Set;
 
 public class UserRecord {
     private int score;
-    private Set<String> unlockJobName;
-    private Map<String, Integer> upgradeLevels;
+    private final Set<String> unlockJobName;
+    private final Map<String, Integer> upgradeLevels;
     public UserRecord(){
         this.score = 0;
         this.unlockJobName = new HashSet<>();

@@ -1,5 +1,6 @@
 package com.textdungeon.event;
 
+import com.google.gson.annotations.SerializedName;
 import com.textdungeon.data.DataControl;
 import com.textdungeon.model.Item;
 import com.textdungeon.model.Reward;
@@ -8,15 +9,15 @@ import com.textdungeon.player.Player;
 import java.util.List;
 
 public class GameEvent {
-    protected String id;
-    protected String name;
+    @SerializedName("id") protected String id;
+    @SerializedName("name") protected String name;
     protected String description;
     protected String imgId;
     protected int minFloor;
     protected int maxFloor;
-    protected List<Reward> rewards;
+    @SerializedName("rewards") protected List<Reward> rewards;
 
-    protected List<String> choices;
+    @SerializedName("choices") protected List<String> choices;
     protected String enemyId;
 
     public GameEvent() {}
@@ -56,11 +57,8 @@ public class GameEvent {
         }
         Reward reward = rewards.get(choice);
         reward.apply(player, itemManager);
+        player.getStat().updateBattleStat(player.getLevel());
         return reward.getDescription();
-    }
-    public String execute(Player player, DataControl<Item> itemManager,String answer) {
-        //ai에게 답을 받고 설명,보상생성
-        return "준비중";
     }
 
 }

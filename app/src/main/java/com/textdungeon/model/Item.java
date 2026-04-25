@@ -31,7 +31,6 @@ public class Item {
     }
     public Boolean itemUse(Player player) {
         if ("consumables".equals(this.type)) {
-
             if (this.id.equals("item_3")) {
                 player.heal(this.hp);
             }

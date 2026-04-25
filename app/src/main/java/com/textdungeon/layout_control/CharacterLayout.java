@@ -14,7 +14,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.textdungeon.data.DataControlTower;
 import com.textdungeon.model.Job;
 
-public class CharacterLayout extends AppCompatActivity {
+public class CharacterLayout extends BaseActivity {
     FrameLayout btnEmbark;
     TextView characterDesc;
     TextView statHp;
@@ -119,7 +119,7 @@ public class CharacterLayout extends AppCompatActivity {
 
     private void startGame(View v) {
         if(playerJob !=null){
-            dt.initPlayer(playerName, playerJob);
+            dt.startNewGame(playerName, playerJob);
             Intent intent = new Intent(this, EventLayout.class);
             startActivity(intent);
         }else{
