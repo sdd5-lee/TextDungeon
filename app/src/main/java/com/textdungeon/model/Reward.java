@@ -28,8 +28,8 @@ public class Reward {
         if (statRewards != null) {
             for (RewardStat statReward : statRewards) {
                 player.getStat().gainStat(statReward.getStatType(), statReward.getValue());
-                player.levelUp();
             }
+            player.levelUp();
         }
     }
 }
