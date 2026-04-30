@@ -18,7 +18,7 @@ import com.textdungeon.model.Stat;
 import com.textdungeon.player.Player;
 
 public class StatDialog extends Dialog {
-    private Player player;
+    private final Player player;
     private TextView statPoint;
     private Stat dialogStat;
     private int str,agi,vit,wis,count;

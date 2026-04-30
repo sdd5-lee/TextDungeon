@@ -20,37 +20,29 @@ public class ChoiceButton extends FrameLayout {
         textView = new TextView(context);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.MATCH_PARENT
+                FrameLayout.LayoutParams.WRAP_CONTENT
         );
         params.gravity = Gravity.CENTER;
         textView.setLayoutParams(params);
         textView.setGravity(Gravity.CENTER);
 
+        textView.setSingleLine(false);
+        textView.setMaxLines(4);
+
+        int minHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 80, getResources().getDisplayMetrics());
+        this.setMinimumHeight(minHeight);
+
+        int padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 15, getResources().getDisplayMetrics());
+        textView.setPadding(padding, padding, padding, padding);
+
         setBackgroundResource(R.drawable.button_selector);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
         textView.setTextColor(Color.parseColor("#E0BFBA"));
         textView.setTypeface(Typeface.SERIF, Typeface.BOLD);
-
-
         addView(textView);
     }
     public void setTextView(String text) {
         textView.setText(text);
     }
 
-    public int getChoice() {
-        return choice;
-    }
-
-    public void setChoice(int choice) {
-        this.choice = choice;
-    }
-
-    public boolean getButtonState(){
-        return buttonState;
-    }
-    public boolean setButtonState(boolean b) {
-        buttonState = b;
-        return buttonState;
-    }
 }

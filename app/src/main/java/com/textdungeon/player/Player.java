@@ -12,18 +12,19 @@ import com.textdungeon.model.Stat;
 public class Player {
     private String name;
     private int level;
-    private Stat stat;
-    private Job job;
-    private Inventory inventory;
-    private MagicScroll magicScroll;
-    private Equipment equipment;
+    private final Stat stat;
+    private final Job job;
+    private final Inventory inventory;
+    private final MagicScroll magicScroll;
+    private final Equipment equipment;
     private int diceChane;
-    private int money;
+    private int gold;
 
     public Player(String name, Job job){
         this.name = name;
         level = 1;
-        money = 0;
+        gold = 0;
+        diceChane = 5;
         inventory = new Inventory();
         equipment = new Equipment();
         magicScroll = new MagicScroll();
@@ -127,6 +128,14 @@ public class Player {
         return 0;
     }
 
+    public Boolean useDice() {
+        if (diceChane > 0) {
+            diceChane--;
+            return true;
+        }
+        return false;
+    }
+
     //****************** 최종 공격력 체력 게터******************
     public int getFinalAtk() {
         return stat.getAtk() + equipment.getTotalAtk();
@@ -138,14 +147,14 @@ public class Player {
 
     //******************게터들******************
 
-    public int getMoney() {
-        return money;
+    public int getGold() {
+        return gold;
     }
     public void addMoney(int money){
-        this.money += money;
+        this.gold += money;
     }
-    public void setMoney(int money) {
-        this.money = money;
+    public void setGold(int gold) {
+        this.gold = gold;
     }
 
     public String getName() {return name;}
@@ -166,8 +175,11 @@ public class Player {
     public MagicScroll getMagicScroll() {
         return magicScroll;
     }
-
     public int getDiceChane() {
         return diceChane;
     }
+    public void addDiceChane(int diceChane) {
+        this.diceChane += diceChane;
+    }
+
 }
