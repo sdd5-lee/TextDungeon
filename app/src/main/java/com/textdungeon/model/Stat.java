@@ -24,11 +24,11 @@ public class Stat {
     public void updateBattleStat(int level) {
         int baseAtk = strength * 2;
         int baseMaxHp = health * 10;
-        int baseCrit = agility;
+        int baseCrit = agility * 2;
 
-        atk = baseAtk + level;
+        atk = baseAtk + level / 2;
         maxHp = baseMaxHp + level * 5;
-        critical_rate = Math.min(baseCrit + level, 100);
+        critical_rate = Math.min(baseCrit + level / 2, 100);
         if (hp < maxHp) hp = maxHp;
     }
 

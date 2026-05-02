@@ -14,15 +14,18 @@
     "rewards": [
       {
         "itemId": null,
-        "description": "온몸에 활력이 돕니다! (체력 +15)",
+        "description": "온몸에 활력이 돕니다! (회복 +20, 경험치 +50)",
         "statRewards": [
-          { "type": "체력", "value": 15 }
+          { "type": "회복", "value": 20 },
+          { "type": "경험치", "value": 50 }
         ]
       },
       {
         "itemId": null,
-        "description": "조심해서 나쁠 건 없죠.",
-        "statRewards": []
+        "description": "조심해서 나쁠 건 없죠 (경험치 +50).",
+        "statRewards": [
+          { "type": "경험치", "value": 50 }
+        ]
       }
     ]
   },
@@ -35,22 +38,22 @@
     "maxFloor": 9,
     "enemyId": "monster_1",
     "choices": [
-      "싸운다",
+      "싸운다(끈적끈적한활)",
       "그냥 지나간다"
     ],
     "rewards": [
       {
         "itemId": "item_5",
-        "description": "슬라임 몸속에서 끈적끈적한 활을 얻었습니다! (경험치 +15).",
+        "description": "슬라임 몸속에서 끈적끈적한 활을 얻었습니다! (경험치 +50).",
         "statRewards": [
-          { "type": "경험치", "value": 15 }
+          { "type": "경험치", "value": 50 }
         ]
       },
       {
         "itemId": null,
-        "description": "무시하고 지나갔습니다.",
+        "description": "무시하고 지나갔습니다. (경험치 +25)",
         "statRewards": [
-          { "type": "민첩", "value": 1 }
+          { "type": "경험치", "value": 25 }
         ]
       }
     ]
@@ -64,22 +67,22 @@
     "maxFloor": 9,
     "enemyId": "monster_2",
     "choices": [
-      "싸운다",
+      "싸운다(고블린의 몽둥이)",
       "겁을 주어 쫓아낸다"
     ],
     "rewards": [
       {
         "itemId": "item_6",
-        "description": "고블린을 물리치고 전리품을 챙겼습니다. (경험치 +25)",
+        "description": "고블린을 물리치고 전리품을 챙겼습니다. (경험치 +55)",
         "statRewards": [
-          { "type": "경험치", "value": 25 }
+          { "type": "경험치", "value": 55 }
         ]
       },
       {
         "itemId": null,
-        "description": "빠르게 위협해서 고블린을 쫓아냈습니다.",
+        "description": "빠르게 위협해서 고블린을 쫓아냈습니다. (경험치 +25)",
         "statRewards": [
-          { "type": "민첩", "value": 1 }
+          { "type": "경험치", "value": 25 }
         ]
       }
     ]
@@ -93,22 +96,22 @@
     "maxFloor": 9,
     "enemyId": "monster_3",
     "choices": [
-      "싸운다",
+      "싸운다(늑대의 송곳니)",
       "도망친다"
     ],
     "rewards": [
       {
         "itemId": "item_7",
-        "description": "늑대를 물리쳤습니다! 늑대의 이빨은 쓸만한 무기가 될 것 같습니다. (경험치 +25)",
+        "description": "늑대를 물리쳤습니다! 늑대의 이빨은 쓸만한 무기가 될 것 같습니다. (경험치 +60)",
         "statRewards": [
-          { "type": "경험치", "value": 25 }
+          { "type": "경험치", "value": 60 }
         ]
       },
       {
         "itemId": null,
-        "description": "겨우 도망쳤습니다.",
+        "description": "겨우 도망쳤습니다. (경험치 +30)",
         "statRewards": [
-          { "type": "민첩", "value": 1 }
+          { "type": "경험치", "value": 30 }
         ]
       }
     ]
@@ -122,21 +125,23 @@
     "maxFloor": 9,
     "enemyId": "monster_4",
     "choices": [
-      "싸운다",
+      "싸운다(박쥐 완드)",
       "회피한다"
     ],
     "rewards": [
       {
         "itemId": "item_8",
-        "description": "박쥐가 도망간 자리에서 박쥐 완드를 얻었습니다. (경험치 +25)",
+        "description": "박쥐가 도망간 자리에서 박쥐 완드를 얻었습니다. (경험치 +60)",
         "statRewards": [
-          { "type": "경험치", "value": 25 }
+          { "type": "경험치", "value": 60 }
         ]
       },
       {
         "itemId": null,
-        "description": "간신히 도망쳤습니다.",
-        "statRewards": []
+        "description": "타이밍을 노려 안전하게 빠져나왔습니다. (경험치 +30)",
+        "statRewards": [
+          { "type": "경험치", "value": 30 }
+        ]
       }
     ]
   },
@@ -145,8 +150,8 @@
     "name": "버려진 도서관",
     "description": "먼지 쌓인 책들 중 두 권이 유독 빛나고 있습니다. 그리고 수상한 돌이 있습니다",
     "imgId": "abandoned_library",
-    "minFloor": 2,
-    "maxFloor": 2,
+    "minFloor": 7,
+    "maxFloor": 7,
     "enemyId": null,
     "choices": [
       "'힘과 체력'의 책을 읽는다",
@@ -186,15 +191,15 @@
     "maxFloor": 10,
     "enemyId": "monster_5",
     "choices": [
-      "싸운다",
+      "싸운다(홉고블린의 가죽옷)",
       "회피한다"
     ],
     "rewards": [
       {
         "itemId": "item_26",
-        "description": "물리쳤습니다.(경험치 +50)",
+        "description": "홉고블린이 쓰러지며 더 이상 움직이지 않습니다.(경험치 +80)",
         "statRewards": [
-          { "type": "경험치", "value": 50 }
+          { "type": "경험치", "value": 80 }
         ]
       },
       {
@@ -214,22 +219,23 @@
     "maxFloor": 19,
     "enemyId": "monster_6",
     "choices": [
-      "싸운다",
+      "싸운다(오래된 검)",
       "회피한다"
     ],
     "rewards": [
       {
         "itemId": "item_9",
-        "description": "해골이 가지고 있던 오래된 검을 획득했습니다.(경험치 +40, 체력 +10)",
+        "description": "해골이 가지고 있던 오래된 검을 획득했습니다.(경험치 +110)",
         "statRewards": [
-          { "type": "경험치", "value": 40 },
-          { "type": "체력", "value": 10 }
+          { "type": "경험치", "value": 110 }
         ]
       },
       {
         "itemId": null,
-        "description": "위험을 피했습니다.",
-        "statRewards": []
+        "description": "공격을 간신히 피하며 도망쳤습니다. (경험치 + 55)",
+        "statRewards": [
+          { "type": "경험치", "value": 55 }
+        ]
       }
     ]
   },
@@ -242,23 +248,22 @@
     "maxFloor": 19,
     "enemyId": "monster_7",
     "choices": [
-      "싸운다",
+      "싸운다(오래된 활)",
       "회피한다"
     ],
     "rewards": [
       {
         "itemId": "item_10",
-        "description": "날아오는 화살을 피하고 해골 궁수를 물리쳤습니다.(경험치 +40, 민첩 +10)",
+        "description": "날아오는 화살을 피하고 해골 궁수를 물리쳤습니다.(경험치 +120)",
         "statRewards": [
-          { "type": "경험치", "value": 40 },
-          { "type": "민첩", "value": 10 }
+          { "type": "경험치", "value": 120 }
         ]
       },
       {
         "itemId": null,
-        "description": "도망치다가 활을 맞았습니다.",
+        "description": "화살을 피하며 도망쳤습니다. (경험치 +60)",
         "statRewards": [
-          { "type": "체력", "value": -40 }
+          { "type": "경험치", "value": 60 }
         ]
       }
     ]
@@ -272,25 +277,22 @@
     "maxFloor": 19,
     "enemyId": "monster_8",
     "choices": [
-      "싸운다",
+      "싸운다(기사의 단검)",
       "회피한다"
     ],
     "rewards": [
       {
         "itemId": "item_11",
-        "description": "해골 기사는 패배를 인정하고 자신의 단검을 두고 사라집니다.(경험치 +60, 힘 +15)",
+        "description": "해골 기사는 패배를 인정하고 자신의 단검을 두고 사라집니다.(경험치 +150)",
         "statRewards": [
-          { "type": "경험치", "value": 60 },
-          { "type": "힘", "value": 15 }
+          { "type": "경험치", "value": 150 }
         ]
       },
       {
         "itemId": null,
-        "description": "겁쟁이처럼 도망쳤습니다.",
+        "description": "겁쟁이처럼 도망쳤습니다. (경험치 + 75)",
         "statRewards": [
-          { "type": "체력", "value": -40 },
-          { "type": "힘", "value": -20 },
-          { "type": "민첩", "value": -10 }
+          { "type": "경험치", "value": 75 }
         ]
       }
     ]
@@ -304,21 +306,23 @@
     "maxFloor": 19,
     "enemyId": "monster_9",
     "choices": [
-      "싸운다",
+      "싸운다(해골 스태프)",
       "회피한다"
     ],
     "rewards": [
       {
         "itemId": "item_12",
-        "description": "위습이 사라진 자리엔 해골 모양의 스태프가 남아있습니다.(경험치 +50)",
+        "description": "위습이 사라진 자리엔 해골 모양의 스태프가 남아있습니다.(경험치 +130)",
         "statRewards": [
-          { "type": "경험치", "value": 50 }
+          { "type": "경험치", "value": 130 }
         ]
       },
       {
         "itemId": null,
-        "description": "간신히 도망쳤습니다.",
-        "statRewards": []
+        "description": "위습의 울음소리를 뒤로 도망쳤습니다. (경험치 + 65)",
+        "statRewards": [
+          { "type": "경험치", "value": 65 }
+        ]
       }
     ]
   },
@@ -331,15 +335,15 @@
     "maxFloor": 20,
     "enemyId": "monster_10",
     "choices": [
-      "싸운다",
+      "싸운다(고블린로드의 갑옷)",
       "회피한다"
     ],
     "rewards": [
       {
         "itemId": "item_27",
-        "description": "물리쳤습니다.",
+        "description": "고블린 무리의 지배자를 처치했습니다! (경험치 + 180)",
         "statRewards": [
-          { "type": "경험치", "value": 50 }
+          { "type": "경험치", "value": 180 }
         ]
       },
       {
@@ -365,13 +369,17 @@
     "rewards": [
       {
         "itemId": "item_34",
-        "description": "하급 포션을 구매했습니다.",
-        "statRewards": []
+        "description": "하급 포션을 구매했습니다. (경험치 +100)",
+        "statRewards": [
+          { "type": "경험치", "value": 100 }
+        ]
       },
       {
         "itemId": null,
-        "description": "아무 일도 일어나지 않았습니다.",
-        "statRewards": []
+        "description": "아무 일도 일어나지 않았습니다. (경험치 +110)",
+        "statRewards": [
+          { "type": "경험치", "value": 110 }
+        ]
       }
     ]
   },
@@ -380,8 +388,8 @@
     "name": "빈 고블린 오두막",
     "description": "비어있는 고블린 오두막에서 물건들이 보입니다 ",
     "imgId": "abandoned_library",
-    "minFloor": 12,
-    "maxFloor": 12,
+    "minFloor": 15,
+    "maxFloor": 15,
     "enemyId": null,
     "choices": [
       "고블린의 음식을 먹는다",
@@ -422,21 +430,23 @@
     "maxFloor": 29,
     "enemyId": "monster_11",
     "choices": [
-      "싸운다",
+      "싸운다(오크의 빛바랜 검)",
       "회피한다"
     ],
     "rewards": [
       {
         "itemId": "item_13",
-        "description": "오크의 빛바랜 검을 얻었습니다.",
+        "description": "오크의 빛바랜 검을 얻었습니다. (경험치 +170)",
         "statRewards": [
-          { "type": "경험치", "value": 50 }
+          { "type": "경험치", "value": 170 }
         ]
       },
       {
         "itemId": null,
-        "description": "간신히 도망쳤습니다.",
-        "statRewards": []
+        "description": "힘으로는 상대가 되지 않아 도망갔습니다. (경험치 + 100)",
+        "statRewards": [
+          { "type": "경험치", "value": 100 }
+        ]
       }
     ]
   },
@@ -449,21 +459,23 @@
     "maxFloor": 29,
     "enemyId": "monster_12",
     "choices": [
-      "싸운다",
+      "싸운다(오크의 지팡이)",
       "회피한다"
     ],
     "rewards": [
       {
         "itemId": "item_14",
-        "description": "물리쳤습니다.",
+        "description": "주문이 끊기며 오크 마법사가 쓰러졌습니다. (경험치 +180)",
         "statRewards": [
-          { "type": "경험치", "value": 50 }
+          { "type": "경험치", "value": 180 }
         ]
       },
       {
         "itemId": null,
-        "description": "간신히 도망쳤습니다.",
-        "statRewards": []
+        "description": "날아드는 마법을 피해 간신히 빠져나왔습니다. (경험치 +100)",
+        "statRewards": [
+          { "type": "경험치", "value": 100 }
+        ]
       }
     ]
   },
@@ -476,21 +488,23 @@
     "maxFloor": 29,
     "enemyId": "monster_13",
     "choices": [
-      "싸운다",
+      "싸운다(석상의 활)",
       "회피한다"
     ],
     "rewards": [
       {
         "itemId": "item_15",
-        "description": "물리쳤습니다.",
+        "description": "움직이던 석상이 다시 돌로 굳어버렸습니다. (경험치 + 195)",
         "statRewards": [
-          { "type": "경험치", "value": 50 }
+          { "type": "경험치", "value": 195 }
         ]
       },
       {
         "itemId": null,
-        "description": "간신히 도망쳤습니다.",
-        "statRewards": []
+        "description": "움직이는 석상을 피해 조심스럽게 빠져나왔습니다. (경험치 +100)",
+        "statRewards": [
+          { "type": "경험치", "value": 100 }
+        ]
       }
     ]
   },
@@ -503,21 +517,23 @@
     "maxFloor": 29,
     "enemyId": "monster_14",
     "choices": [
-      "싸운다",
+      "싸운다(늑대의 왕)",
       "회피한다"
     ],
     "rewards": [
       {
         "itemId": "item_16",
-        "description": "물리쳤습니다.",
+        "description": "은빛 늑대가 조용히 쓰러졌습니다. (경험치 +180)",
         "statRewards": [
-          { "type": "경험치", "value": 50 }
+          { "type": "경험치", "value": 180 }
         ]
       },
       {
         "itemId": null,
-        "description": "간신히 도망쳤습니다.",
-        "statRewards": []
+        "description": "숨소리를 죽이며 겨우 따돌렸습니다. (경험치 +100)",
+        "statRewards": [
+          { "type": "경험치", "value": 100 }
+        ]
       }
     ]
   },
@@ -530,15 +546,15 @@
     "maxFloor": 30,
     "enemyId": "monster_15",
     "choices": [
-      "싸운다",
+      "싸운다(오크로드의 철갑옷)",
       "회피한다"
     ],
     "rewards": [
       {
         "itemId": "item_28",
-        "description": "물리쳤습니다.",
+        "description": "거대한 오크 로드가 땅을 울리며 쓰러졌습니다. (경험치 +300)",
         "statRewards": [
-          { "type": "경험치", "value": 50 }
+          { "type": "경험치", "value": 300 }
         ]
       },
       {
@@ -564,16 +580,18 @@
     "rewards": [
       {
         "itemId": null,
-        "description": "해체에 실패해 피해를 입습니다.",
+        "description": "해체에 실패해 피해를 입습니다. (경험치 +100)",
         "statRewards": [
-          { "type": "체력", "value": -10 }
+          { "type": "데미지", "value": 22 },
+          { "type": "경험치", "value": 100 }
         ]
       },
       {
         "itemId": null,
-        "description": "재빠르게 피했습니다.",
+        "description": "재빠르게 피했습니다. (민첩 +2, 경험치 +200)",
         "statRewards": [
-          { "type": "민첩", "value": 2 }
+          { "type": "민첩", "value": 2 },
+          { "type": "경험치", "value": 200 }
         ]
       }
     ]
@@ -593,13 +611,17 @@
     "rewards": [
       {
         "itemId": "item_35",
-        "description": "중급 포션을 구매했습니다.",
-        "statRewards": []
+        "description": "중급 포션을 구매했습니다. (경험치 +170)",
+        "statRewards": [
+          { "type": "경험치", "value": 170 }
+        ]
       },
       {
         "itemId": null,
-        "description": "아무 일도 일어나지 않았습니다.",
-        "statRewards": []
+        "description": "아무 일도 일어나지 않았습니다. (경험치 +200)",
+        "statRewards": [
+          { "type": "경험치", "value": 200 }
+        ]
       }
     ]
   },
@@ -635,7 +657,7 @@
       },
       {
         "itemId": "item_40",
-        "description": "오크부족의 목걸이를 챙겼습니다.",
+        "description": "오크부족의 목걸이를 받았습니다.",
         "statRewards": []
       }
     ]
@@ -649,21 +671,23 @@
     "maxFloor": 39,
     "enemyId": "monster_16",
     "choices": [
-      "싸운다",
+      "싸운다(리자드 활)",
       "회피한다"
     ],
     "rewards": [
       {
         "itemId": "item_17",
-        "description": "물리쳤습니다.",
+        "description": "리자드맨이 몸을 떨다 쓰러졌습니다. (경험치 +230)",
         "statRewards": [
-          { "type": "경험치", "value": 50 }
+          { "type": "경험치", "value": 230 }
         ]
       },
       {
         "itemId": null,
-        "description": "간신히 도망쳤습니다.",
-        "statRewards": []
+        "description": "리자드맨의 날카로운 시선을 피해 빠져나왔습니다. (경험치 +125)",
+        "statRewards": [
+          { "type": "경험치", "value": 125 }
+        ]
       }
     ]
   },
@@ -676,21 +700,23 @@
     "maxFloor": 39,
     "enemyId": "monster_17",
     "choices": [
-      "싸운다",
+      "싸운다(리자드 스태프)",
       "회피한다"
     ],
     "rewards": [
       {
         "itemId": "item_18",
-        "description": "물리쳤습니다.",
+        "description": "주문이 끊기며 샤먼 리자드가 쓰러졌습니다. (경험치 +245)",
         "statRewards": [
-          { "type": "경험치", "value": 50 }
+          { "type": "경험치", "value": 245 }
         ]
       },
       {
         "itemId": null,
-        "description": "간신히 도망쳤습니다.",
-        "statRewards": []
+        "description": "주문이 끝나기 전에 도망쳤습니다. (경험치 +125)",
+        "statRewards": [
+          { "type": "경험치", "value": 125 }
+        ]
       }
     ]
   },
@@ -703,21 +729,23 @@
     "maxFloor": 39,
     "enemyId": "monster_18",
     "choices": [
-      "싸운다",
+      "싸운다(트롤의 몽둥이)",
       "회피한다"
     ],
     "rewards": [
       {
         "itemId": "item_19",
-        "description": "물리쳤습니다.",
+        "description": "트롤이 비명을 지르며 쓰러졌습니다. (경험치 +265)",
         "statRewards": [
-          { "type": "경험치", "value": 50 }
+          { "type": "경험치", "value": 265 }
         ]
       },
       {
         "itemId": null,
-        "description": "간신히 도망쳤습니다.",
-        "statRewards": []
+        "description": "거대한 트롤의 공격을 피해 간신히 도망쳤습니다. (경험치 +125)",
+        "statRewards": [
+          { "type": "경험치", "value": 125 }
+        ]
       }
     ]
   },
@@ -730,21 +758,23 @@
     "maxFloor": 39,
     "enemyId": "monster_19",
     "choices": [
-      "싸운다",
+      "싸운다(불길한 단검)",
       "회피한다"
     ],
     "rewards": [
       {
         "itemId": "item_20",
-        "description": "물리쳤습니다.",
+        "description": "뒤섞인 괴물이 괴성을 남기고 무너졌습니다. (경험치 +280)",
         "statRewards": [
-          { "type": "경험치", "value": 50 }
+          { "type": "경험치", "value": 280 }
         ]
       },
       {
         "itemId": null,
-        "description": "간신히 도망쳤습니다.",
-        "statRewards": []
+        "description": "괴물의 울음소리를 뒤로하고 간신히 도망쳤습니다. (경험치 +125)",
+        "statRewards": [
+          { "type": "경험치", "value": 125 }
+        ]
       }
     ]
   },
@@ -757,15 +787,15 @@
     "maxFloor": 40,
     "enemyId": "monster_20",
     "choices": [
-      "싸운다",
+      "싸운다(고대의 갑옷)",
       "회피한다"
     ],
     "rewards": [
       {
         "itemId": "item_29",
-        "description": "물리쳤습니다.",
+        "description": "골렘이 균열을 내며 완전히 붕괴되었습니다. (경험치 +400)",
         "statRewards": [
-          { "type": "경험치", "value": 50 }
+          { "type": "경험치", "value": 400 }
         ]
       },
       {
@@ -791,13 +821,17 @@
     "rewards": [
       {
         "itemId": "item_36",
-        "description": "상급 포션을 구매했습니다.",
-        "statRewards": []
+        "description": "상급 포션을 구매했습니다. (경험치 +250)",
+        "statRewards": [
+          { "type": "경험치", "value": 250 }
+        ]
       },
       {
         "itemId": null,
-        "description": "아무 일도 일어나지 않았습니다.",
-        "statRewards": []
+        "description": "아무 일도 일어나지 않았습니다. (경험치 +250)",
+        "statRewards": [
+          { "type": "경험치", "value": 250 }
+        ]
       }
     ]
   },
@@ -853,15 +887,18 @@
     "rewards": [
       {
         "itemId": null,
-        "description": "온몸에 활력이 돕니다! (체력 +30)",
+        "description": "온몸에 활력이 돕니다! (회복 +80, 경험치 +250)",
         "statRewards": [
-          { "type": "체력", "value": 30 }
+          { "type": "회복", "value": 80 },
+          { "type": "경험치", "value": 250 }
         ]
       },
       {
         "itemId": null,
-        "description": "조심해서 나쁠 건 없죠.",
-        "statRewards": []
+        "description": "조심해서 나쁠 건 없죠. (경험치 +250)",
+        "statRewards": [
+          { "type": "경험치", "value": 250 }
+        ]
       }
     ]
   },
@@ -874,21 +911,23 @@
     "maxFloor": 49,
     "enemyId": "monster_21",
     "choices": [
-      "싸운다",
+      "싸운다(용살활)",
       "회피한다"
     ],
     "rewards": [
       {
         "itemId": "item_21",
-        "description": "물리쳤습니다.",
+        "description": "전설의 용을 쓰러뜨렸습니다! (경험치 +330)",
         "statRewards": [
-          { "type": "경험치", "value": 50 }
+          { "type": "경험치", "value": 330 }
         ]
       },
       {
         "itemId": null,
-        "description": "간신히 도망쳤습니다.",
-        "statRewards": []
+        "description": "불길을 피해 가까스로 목숨을 건졌습니다. (경험치 +180)",
+        "statRewards": [
+          { "type": "경험치", "value": 180 }
+        ]
       }
     ]
   },
@@ -901,21 +940,23 @@
     "maxFloor": 49,
     "enemyId": "monster_22",
     "choices": [
-      "싸운다",
+      "싸운다(네크로맨서)",
       "회피한다"
     ],
     "rewards": [
       {
         "itemId": "item_22",
-        "description": "물리쳤습니다.",
+        "description": "리치의 마력이 사라지며 육신이 무너졌습니다. (경험치 +320)",
         "statRewards": [
-          { "type": "경험치", "value": 50 }
+          { "type": "경험치", "value": 320 }
         ]
       },
       {
         "itemId": null,
-        "description": "간신히 도망쳤습니다.",
-        "statRewards": []
+        "description": "리치의 마력을 피해 서둘러 자리를 벗어났습니다. (경험치 +180)",
+        "statRewards": [
+          { "type": "경험치", "value": 180 }
+        ]
       }
     ]
   },
@@ -928,21 +969,23 @@
     "maxFloor": 49,
     "enemyId": "monster_23",
     "choices": [
-      "싸운다",
+      "싸운다(고대의 단검)",
       "회피한다"
     ],
     "rewards": [
       {
         "itemId": "item_23",
-        "description": "물리쳤습니다.",
+        "description": "거대한 미노타우로스가 쓰러졌습니다. (경험치 +300)",
         "statRewards": [
-          { "type": "경험치", "value": 50 }
+          { "type": "경험치", "value": 300 }
         ]
       },
       {
         "itemId": null,
-        "description": "간신히 도망쳤습니다.",
-        "statRewards": []
+        "description": "거대한 발걸음을 피해 간신히 빠져나왔습니다. (경험치 +180)",
+        "statRewards": [
+          { "type": "경험치", "value": 180 }
+        ]
       }
     ]
   },
@@ -955,21 +998,23 @@
     "maxFloor": 49,
     "enemyId": "monster_24",
     "choices": [
-      "싸운다",
+      "싸운다(타락한 성검)",
       "회피한다"
     ],
     "rewards": [
       {
         "itemId": "item_24",
-        "description": "물리쳤습니다.",
+        "description": "타락한 용사가 마지막 힘을 다해 쓰러졌습니다. (경험치 +360)",
         "statRewards": [
-          { "type": "경험치", "value": 50 }
+          { "type": "경험치", "value": 360 }
         ]
       },
       {
         "itemId": null,
-        "description": "간신히 도망쳤습니다.",
-        "statRewards": []
+        "description": "그 압도적인 기세에 밀려 물러났습니다. (경험치 +180)",
+        "statRewards": [
+          { "type": "경험치", "value": 180 }
+        ]
       }
     ]
   },
@@ -988,10 +1033,8 @@
     "rewards": [
       {
         "itemId": "item_42",
-        "description": "물리쳤습니다.",
-        "statRewards": [
-          { "type": "경험치", "value": 50 }
-        ]
+        "description": "마왕이 무너지며 어둠이 사라집니다.",
+        "statRewards": []
       },
       {
         "itemId": null,
@@ -1016,13 +1059,17 @@
     "rewards": [
       {
         "itemId": "item_37",
-        "description": "최상급 포션을 구매했습니다.",
-        "statRewards": []
+        "description": "최상급 포션을 구매했습니다. (경험치 +340)",
+        "statRewards": [
+          { "type": "경험치", "value": 340 }
+        ]
       },
       {
         "itemId": null,
-        "description": "아무 일도 일어나지 않았습니다.",
-        "statRewards": []
+        "description": "아무 일도 일어나지 않았습니다. (경험치 +340)",
+        "statRewards": [
+          { "type": "경험치", "value": 340 }
+        ]
       }
     ]
   },
@@ -1043,23 +1090,31 @@
     "rewards": [
       {
         "itemId": "item_30",
-        "description": "타락한 용사의 갑옷을 선택하였습니다.",
-        "statRewards": []
+        "description": "타락한 용사의 갑옷을 선택하였습니다. (경험치 +340)",
+        "statRewards": [
+          { "type": "경험치", "value": 340 }
+        ]
       },
       {
         "itemId": "item_31",
-        "description": "용의 갑주를 선택하였습니다.",
-        "statRewards": []
+        "description": "용의 갑주를 선택하였습니다. (경험치 +340)",
+        "statRewards": [
+          { "type": "경험치", "value": 340 }
+        ]
       },
       {
         "itemId": "item_32",
-        "description": "리치의 로브를 선택하였습니다.",
-        "statRewards": []
+        "description": "리치의 로브를 선택하였습니다. (경험치 +340)",
+        "statRewards": [
+          { "type": "경험치", "value": 340 }
+        ]
       },
       {
         "itemId": "item_33",
-        "description": "고대의 망토를 선택하였습니다.",
-        "statRewards": []
+        "description": "고대의 망토를 선택하였습니다. (경험치 +340)",
+        "statRewards": [
+          { "type": "경험치", "value": 340 }
+        ]
       }
     ]
   }

@@ -42,7 +42,7 @@ public class Player {
             this.level++;
 
             stat.setExp(exp - maxExp);
-            stat.setMaxExp(maxExp + maxExp/2);
+            stat.setMaxExp(80 + this.level * 25);
             stat.addStatPoint(5);
 
             //레벨 반영
