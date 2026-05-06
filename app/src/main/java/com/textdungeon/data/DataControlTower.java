@@ -2,6 +2,7 @@ package com.textdungeon.data;
 
 import android.content.Context;
 
+import com.textdungeon.ai.ChaosManager;
 import com.textdungeon.event.BattleEvent;
 import com.textdungeon.model.Item;
 import com.textdungeon.model.Monster;
@@ -10,11 +11,6 @@ import com.textdungeon.model.Magic;
 import com.textdungeon.player.Player;
 import com.textdungeon.system.GameSave;
 import com.textdungeon.system.UserRecord;
-
-import java.util.concurrent.TimeUnit;
-
-import okhttp3.OkHttpClient;
-
 public class DataControlTower {
     private static DataControlTower instance;
     private final Context appContext;
@@ -25,14 +21,10 @@ public class DataControlTower {
     private Player player;
     private UserRecord userRecord;
     private DungeonControl dungeonControl;
-    private final OkHttpClient httpClient;
+    private ChaosManager chaosManager;
     private DataControlTower(Context context){
         this.appContext = context.getApplicationContext();
-        this.httpClient = new OkHttpClient.Builder()
-                .connectTimeout(30, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS)
-                .build();
+        this.chaosManager = new ChaosManager();
         initAll(context);
         loadGameData();
     }
@@ -121,9 +113,6 @@ public class DataControlTower {
     public Player getPlayer() {
         return player;
     }
-    public OkHttpClient getHttpClient() {
-        return httpClient;
-    }
     public UserRecord getUserRecord() {
         return userRecord;
     }
@@ -136,6 +125,9 @@ public class DataControlTower {
         this.player = player;
     }
 
+    public ChaosManager getChaosManager() {
+        return chaosManager;
+    }
     public void setUserRecord(UserRecord userRecord) {
         this.userRecord = userRecord;
     }

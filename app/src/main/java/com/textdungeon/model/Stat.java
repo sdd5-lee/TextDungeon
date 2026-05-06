@@ -22,14 +22,23 @@ public class Stat {
     }
 
     public void updateBattleStat(int level) {
+        int oldMaxHp = this.maxHp;
+
         int baseAtk = strength * 2;
         int baseMaxHp = health * 10;
         int baseCrit = agility;
 
-        atk = baseAtk + level;
-        maxHp = baseMaxHp + level * 5;
-        critical_rate = Math.min(baseCrit + level, 100);
-        if (hp < maxHp) hp = maxHp;
+        this.atk = baseAtk + level;
+        this.maxHp = baseMaxHp + level * 5;
+        this.critical_rate = Math.min(baseCrit + level, 100);
+
+        if (oldMaxHp > 0 && this.maxHp > oldMaxHp) {
+            int diff = this.maxHp - oldMaxHp;
+            this.hp += diff;
+        }
+        if (this.hp > this.maxHp) {
+            this.hp = this.maxHp;
+        }
     }
 
     public void setHp(int hp) {
@@ -120,9 +129,6 @@ public class Stat {
     public void addWisdom(int point){
         wisdom += point;
     }
-    public void subHp(int damage){
-        hp -= damage;
-    }
 
     public void gainStat(String type, int value) {
         switch (type) {
@@ -148,6 +154,7 @@ public class Stat {
                 this.hp += value;
                 break;
         }
+
     }
 
     public void setExp(int exp) {

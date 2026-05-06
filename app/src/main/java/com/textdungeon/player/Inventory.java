@@ -15,9 +15,6 @@ public class Inventory {
         return itemMap;
     }
 
-    public void removeItem(String itemId) {
-        consumeItem(itemId);
-    }
     public void addItem(Item item) {
         if(item == null) {return;}
         String itemId = item.getId();
