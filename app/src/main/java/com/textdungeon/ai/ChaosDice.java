@@ -1,85 +1,93 @@
 package com.textdungeon.ai;
 
-import android.os.Handler;
-import android.os.Looper;
-
+import com.google.ai.client.generativeai.GenerativeModel;
+import com.google.ai.client.generativeai.java.GenerativeModelFutures;
+import com.google.ai.client.generativeai.type.Content;
+import com.google.ai.client.generativeai.type.GenerateContentResponse;
+import com.google.ai.client.generativeai.type.GenerationConfig;
+import com.google.common.util.concurrent.FutureCallback;
+import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.ListenableFuture;
 import com.google.gson.Gson;
 import com.textdungeon.event.BattleEvent;
 import com.textdungeon.model.Item;
 import com.textdungeon.model.Stat;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.List;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 public class ChaosDice {
-    private final OkHttpClient client;
+    private final GenerativeModelFutures model;
     private final Gson gson;
+    private final Executor executor;
 
-    public ChaosDice(OkHttpClient client) {
-        this.client = client;
+    public ChaosDice() {
+        GenerationConfig.Builder config = new GenerationConfig.Builder();
+                config.responseMimeType = "application/json";
+
+
+        GenerativeModel gm = new GenerativeModel(
+                "gemini-3-flash-preview",
+                "AIzaSyBai-s46iBFliUj3h6MGDU_kWbhzTrr4Ow",
+                config.build()
+        );
+
+        this.model = GenerativeModelFutures.from(gm);
         this.gson = new Gson();
+        this.executor = Executors.newSingleThreadExecutor();
     }
 
     public void roll(int floor, Stat stat, List<Item> itemList, BattleEvent currentEvent, AiCallback callback) {
-        Handler mainThreadHandler = new Handler(Looper.getMainLooper());
+        String itemNames = itemList.stream()
+                .map(Item::getName)
+                .filter(name -> name != null && !name.isEmpty())
+                .collect(Collectors.joining(", "));
 
-        JSONObject requestData = new JSONObject();
-        try {
-            requestData.put("floor", floor);
+        // 2. 파이썬의 프롬프트 구성 그대로 이식
+        String prompt = String.format(
+                "너는 다크 판타지 RPG의 '혼돈의 신'이다. 플레이어의 요청에 따라 기존 이벤트를 기괴하게 뒤틀어라.\n\n" +
+                        "[상황]\n" +
+                        "- 층수: %dF\n" +
+                        "- 플레이어 상태: %s\n" +
+                        "- 사용 가능한 아이템 목록: %s\n" +
+                        "- 원본 이벤트: %s\n\n" +
+                        "[혼돈의 권능 행사 규칙]\n" +
+                        "1. 원본 데이터(id, name, description, choices, rewards)의 기존 내용은 절대 수정하지 마라.\n" +
+                        "2. 'choices' 배열의 마지막에 3번째 선택지를 추가하라. (20자 내외로 짧고 강렬하게)\n" +
+                        "3. 'rewards' 배열의 마지막에 그 선택지에 대응하는 Reward 객체를 추가하라.\n" +
+                        "   - itemId: 아이템 보상을 줄 경우 [사용 가능한 아이템 목록]에 있는 이름 중 하나를 선택하되 이벤트와 맞지 않으면 null을 넣는다.\n" +
+                        "   - statRewards: [{\"type\": \"타입\", \"value\": 수치}] 형식으로 작성하라.\n" +
+                        "4. statRewards의 'type'은 반드시 자바 gainStat 메서드와 일치하는 키워드만 사용: \"힘\", \"민첩\", \"체력\", \"지혜\", \"경험치\", \"데미지\", \"회복\"\n" +
+                        "   - 중요: 체력을 깎으려면 type을 \"데미지\", value는 양수 / 채우려면 type을 \"회복\", value는 양수\n" +
+                        "5. 부연 설명 없이 오직 수정된 JSON 객체 하나만 출력하라.\n" +
+                        "6. 반드시 원본 데이터의 모든 필드를 포함하고, 완전한 전체 JSON 객체를 출력하라. 생략하지 마라.\n" +
+                        "7. 반드시 데이터 description에 어떤 보상을 받았는지 출력하라 생략하지마라.",
+                floor, gson.toJson(stat), itemNames, gson.toJson(currentEvent)
+        );
 
-            String statJson = gson.toJson(stat);
-            requestData.put("stat", new JSONObject(statJson));
+        Content content = new Content.Builder().addText(prompt).build();
+        ListenableFuture<GenerateContentResponse> response = model.generateContent(content);
 
-            String itemsJson = gson.toJson(itemList);
-            requestData.put("available_items", new JSONArray(itemsJson));
-
-            String eventJson = gson.toJson(currentEvent);
-            requestData.put("original_event", new JSONObject(eventJson));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            mainThreadHandler.post(() -> callback.onError("데이터 조립 실패: " + e.getMessage()));
-            return;
-        }
-
-        RequestBody body = RequestBody.create(requestData.toString(), MediaType.parse("application/json; charset=utf-8"));
-        Request request = new Request.Builder()
-                .url("http://10.0.2.2:8000/add_chaos_choice") // 로컬 서버 주소
-                .post(body)
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
+        Futures.addCallback(response, new FutureCallback<GenerateContentResponse>() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                mainThreadHandler.post(() -> callback.onError("AI 서버 연결 실패 (네트워크 확인)"));
-            }
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful() && response.body() != null) {
-                    try {
-                        String responseData = response.body().string();
-                        // 서버가 준 JSON을 다시 BattleEvent 객체로 변환
-                        BattleEvent updatedEvent = gson.fromJson(responseData, BattleEvent.class);
-                        mainThreadHandler.post(() -> callback.onSuccess(updatedEvent));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        mainThreadHandler.post(() -> callback.onError("혼돈의 결말을 해석하지 못했습니다."));
-                    }
-                } else {
-                    mainThreadHandler.post(() -> callback.onError("혼돈의 신이 침묵합니다. (서버 응답 오류)"));
+            public void onSuccess(GenerateContentResponse result) {
+                try {
+                    String resultText = result.getText();
+                    String cleanJson = resultText.replaceAll("(?s)```json\\s*|\\s*```", "").trim();
+
+                    BattleEvent updatedEvent = gson.fromJson(cleanJson, BattleEvent.class);
+                    callback.onSuccess(updatedEvent);
+                } catch (Exception e) {
+                    callback.onError("혼돈의 결말 해석 실패: " + e.getMessage());
                 }
             }
-        });
+
+            @Override
+            public void onFailure(Throwable t) {
+                callback.onError("네트워크 오류: " + t.getMessage());
+            }
+        }, executor);
     }
 }

@@ -178,15 +178,13 @@ public class EventLayout extends BaseActivity {
     }
     private void ChaosEvent() {
         if (player.getDiceChane() <= 0) return;
-        android.util.Log.d("CHAOS_DEBUG", "1. 요청 시작"); // 🌟 출발 확인
         isDiceUsed = true;
         player.useDice();
 
         choiceButtons.removeAllViews();
         addDesc("🎲 운명을 재구성하는 중...");
 
-        ChaosManager chaosManager = new ChaosManager(dt.getHttpClient());
-        chaosManager.requestChaosChoice(
+        dt.getChaosManager().requestChaosChoice(
                 dungeonControl.getCurrentFloor(),
                 player.getStat(),
                 dt.getItemManager().getAll(),
@@ -211,9 +209,8 @@ public class EventLayout extends BaseActivity {
 
                     @Override
                     public void onError(String errorMessage) {
-                        android.util.Log.e("CHAOS_FATAL", "진짜 에러 원인: " + errorMessage);
                         runOnUiThread(() -> {
-                            isDiceUsed = false; // 에러 났으니 주사위 버튼 다시 살림
+                            isDiceUsed = false;
                             player.addDiceChane(1);
                             updateUI();
                             addDesc("에러발생");
@@ -225,10 +222,8 @@ public class EventLayout extends BaseActivity {
     private void startBattlePopup(BattleEvent event, String monsterId, int index) {
         Monster targetMonster = dt.getMonsterManager().spawn(monsterId);
         if (targetMonster != null) {
-            // 전투 다이얼로그 호출
             BattleDialog battleDialog = new BattleDialog(this, player, targetMonster);
 
-            // 다이얼로그가 닫히면(전투 종료 시) UI 갱신 및 사망 체크
             battleDialog.setOnDismissListener(dialog -> {
                 if (!checkGameOver()) {
                     resultEvent(index);
