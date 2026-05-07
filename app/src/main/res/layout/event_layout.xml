@@ -121,23 +121,23 @@
 
             <!-- Str (Strength) -->
             <LinearLayout android:padding="4dp" android:gravity="center_vertical" android:clickable="true" android:focusable="true">
-                <ImageView android:layout_width="14dp" android:layout_height="14dp" android:src="@android:drawable/ic_menu_compass" app:tint="#E0BFBA"/>
-                <TextView android:id="@+id/stat_str" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text=" 14" android:textColor="#E9C176" android:textSize="12sp" android:textStyle="bold"/>
+                <ImageView android:layout_width="18dp" android:layout_height="18dp" android:src="@drawable/ic_strength"/>
+                <TextView android:id="@+id/stat_str" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text=" 14" android:textColor="#E9C176" android:textSize="13sp" android:textStyle="bold"/>
             </LinearLayout>
             <!-- Wis (Wisdom) -->
             <LinearLayout android:padding="4dp" android:gravity="center_vertical" android:clickable="true" android:focusable="true">
-                <ImageView android:layout_width="14dp" android:layout_height="14dp" android:src="@android:drawable/ic_menu_view" app:tint="#E0BFBA"/>
-                <TextView android:id="@+id/stat_wis" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text=" 22" android:textColor="#E9C176" android:textSize="12sp" android:textStyle="bold"/>
+                <ImageView android:layout_width="18dp" android:layout_height="18dp" android:src="@drawable/ic_wisdom" app:tint="#E0BFBA"/>
+                <TextView android:id="@+id/stat_wis" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text=" 22" android:textColor="#E9C176" android:textSize="13sp" android:textStyle="bold"/>
             </LinearLayout>
-            <!-- Health (Stat.health) -->
+            <!-- Health (Health) -->
             <LinearLayout android:padding="4dp" android:gravity="center_vertical" android:clickable="true" android:focusable="true">
-                <ImageView android:layout_width="14dp" android:layout_height="14dp" android:src="@android:drawable/ic_menu_mylocation" app:tint="#E0BFBA"/>
-                <TextView android:id="@+id/stat_health" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text=" 84" android:textColor="#E9C176" android:textSize="12sp" android:textStyle="bold"/>
+                <ImageView android:layout_width="18dp" android:layout_height="18dp" android:src="@drawable/ic_health" app:tint="#E0BFBA"/>
+                <TextView android:id="@+id/stat_health" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text=" 84" android:textColor="#E9C176" android:textSize="13sp" android:textStyle="bold"/>
             </LinearLayout>
             <!-- Agi (Agility) -->
             <LinearLayout android:padding="4dp" android:gravity="center_vertical" android:clickable="true" android:focusable="true">
-                <ImageView android:layout_width="14dp" android:layout_height="14dp" android:src="@android:drawable/ic_menu_slideshow" app:tint="#E0BFBA"/>
-                <TextView android:id="@+id/stat_agi" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text=" 09" android:textColor="#E9C176" android:textSize="12sp" android:textStyle="bold"/>
+                <ImageView android:layout_width="18dp" android:layout_height="18dp" android:src="@drawable/ic_dexterity" app:tint="#E0BFBA"/>
+                <TextView android:id="@+id/stat_agi" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text=" 09" android:textColor="#E9C176" android:textSize="13sp" android:textStyle="bold"/>
             </LinearLayout>
         </GridLayout>
 
@@ -248,8 +248,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@android:drawable/ic_menu_agenda"
-                app:tint="#E9C176"/>
+                android:src="@drawable/ic_magic"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -274,8 +273,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@android:drawable/ic_menu_save"
-                app:tint="#E9C176"/>
+                android:src="@drawable/ic_bag"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -300,8 +298,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@android:drawable/ic_menu_manage"
-                app:tint="#E9C176"/>
+                android:src="@drawable/ic_system"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
