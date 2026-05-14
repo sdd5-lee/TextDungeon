@@ -35,7 +35,7 @@ public class GameSave {
 
             switch (upgrade.category) {
                 case "STR": stat.addStrength(totalBonus); break;
-                case "AGI": stat.setAgility(totalBonus); break;
+                case "AGI": stat.addAgility(totalBonus); break;
                 case "HEALTH": stat.addHealth(totalBonus); break;
                 case "WIS": stat.addWisdom(totalBonus); break;
                 case "STAT_POINT": stat.addStatPoint(totalBonus); break;
