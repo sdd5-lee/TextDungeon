@@ -89,113 +89,113 @@
   {
     "id" : "monster_12",
     "name" : "오크 마법사",
-    "hp" :  65,
-    "maxHp" : 65,
-    "attack" : 85
+    "hp" :  165,
+    "maxHp" : 165,
+    "attack" : 35
   },
 
   {
     "id" : "monster_13",
     "name" : "가고일",
-    "hp" :  100,
-    "maxHp" : 100,
-    "attack" : 50
+    "hp" :  240,
+    "maxHp" : 240,
+    "attack" : 25
   },
 
   {
     "id" : "monster_14",
     "name" : "실버 울프",
-    "hp" :  70,
-    "maxHp" : 70,
-    "attack" : 85
+    "hp" :  170,
+    "maxHp" : 170,
+    "attack" : 32
   },
 
   {
     "id" : "monster_15",
     "name" : "오크 로드",
-    "hp" :  85,
-    "maxHp" : 85,
-    "attack" : 100
+    "hp" :  430,
+    "maxHp" : 430,
+    "attack" : 45
   },
 
   {
     "id" : "monster_16",
     "name" : "리자드맨",
-    "hp" :  90,
-    "maxHp" : 90,
-    "attack" : 105
+    "hp" :  260,
+    "maxHp" : 260,
+    "attack" : 38
   },
 
   {
     "id" : "monster_17",
     "name" : "샤먼 리자드",
-    "hp" :  75,
-    "maxHp" : 75,
-    "attack" : 110
+    "hp" :  230,
+    "maxHp" : 230,
+    "attack" : 48
   },
 
   {
     "id" : "monster_18",
     "name" : "트롤",
-    "hp" :  80,
-    "maxHp" : 80,
-    "attack" : 95
+    "hp" :  330,
+    "maxHp" : 330,
+    "attack" : 40
   },
 
   {
     "id" : "monster_19",
     "name" : "키메라",
-    "hp" :  80,
-    "maxHp" : 80,
-    "attack" : 95
+    "hp" :  280,
+    "maxHp" : 280,
+    "attack" : 50
   },
 
   {
     "id" : "monster_20",
     "name" : "골렘",
-    "hp" :  80,
-    "maxHp" : 80,
-    "attack" : 95
+    "hp" :  600,
+    "maxHp" : 600,
+    "attack" : 65
   },
 
   {
     "id" : "monster_21",
     "name" : "드래곤",
-    "hp" :  100,
-    "maxHp" : 100,
-    "attack" : 120
+    "hp" :  420,
+    "maxHp" : 420,
+    "attack" : 70
   },
 
   {
     "id" : "monster_22",
     "name" : "리치",
-    "hp" :  120,
-    "maxHp" : 120,
-    "attack" : 140
+    "hp" :  360,
+    "maxHp" : 360,
+    "attack" : 85
   },
 
   {
     "id" : "monster_23",
     "name" : "미노타우로스",
-    "hp" :  130,
-    "maxHp" : 130,
-    "attack" : 140
+    "hp" :  480,
+    "maxHp" : 480,
+    "attack" : 60
   },
 
   {
     "id" : "monster_24",
     "name" : "타락한 용사",
-    "hp" :  140,
-    "maxHp" : 140,
-    "attack" : 150
+    "hp" :  450,
+    "maxHp" : 450,
+    "attack" : 80
   },
 
   {
     "id" : "monster_25",
     "name" : "마왕",
-    "hp" :  150,
-    "maxHp" : 150,
-    "attack" : 170
+    "hp" :  1000,
+    "maxHp" : 1000,
+    "attack" : 95
   },
 
   {
@@ -204,5 +204,45 @@
     "hp" :  20000000,
     "maxHp" : 20000000,
     "attack" : 1
+  },
+
+  {
+    "id" : "monster_26",
+    "name" : "거대 쥐",
+    "hp" :  30,
+    "maxHp" : 30,
+    "attack" : 7
+  },
+
+  {
+    "id" : "monster_27",
+    "name" : "좀비",
+    "hp" :  115,
+    "maxHp" : 115,
+    "attack" : 15
+  },
+
+  {
+    "id" : "monster_28",
+    "name" : "그리폰",
+    "hp" :  210,
+    "maxHp" : 210,
+    "attack" : 30
+  },
+
+  {
+    "id" : "monster_29",
+    "name" : "메두사",
+    "hp" :  290,
+    "maxHp" : 290,
+    "attack" : 45
+  },
+
+  {
+    "id" : "monster_30",
+    "name" : "서큐버스",
+    "hp" :  380,
+    "maxHp" : 380,
+    "attack" : 75
   }
 ]

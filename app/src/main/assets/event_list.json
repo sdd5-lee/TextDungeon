@@ -44,9 +44,10 @@
     "rewards": [
       {
         "itemId": "item_5",
-        "description": "슬라임 몸속에서 끈적끈적한 활을 얻었습니다! (경험치 +50).",
+        "description": "슬라임 몸속에서 끈적끈적한 활을 얻었습니다! (경험치 +50, 골드 +10).",
         "statRewards": [
-          { "type": "경험치", "value": 50 }
+          { "type": "경험치", "value": 50 },
+          { "type": "골드", "value": 10 }
         ]
       },
       {
@@ -73,9 +74,10 @@
     "rewards": [
       {
         "itemId": "item_6",
-        "description": "고블린을 물리치고 전리품을 챙겼습니다. (경험치 +55)",
+        "description": "고블린을 물리치고 전리품을 챙겼습니다. (경험치 +55, 골드 + 12)",
         "statRewards": [
-          { "type": "경험치", "value": 55 }
+          { "type": "경험치", "value": 55 },
+          { "type": "골드", "value": 12 }
         ]
       },
       {
@@ -102,9 +104,10 @@
     "rewards": [
       {
         "itemId": "item_7",
-        "description": "늑대를 물리쳤습니다! 늑대의 이빨은 쓸만한 무기가 될 것 같습니다. (경험치 +60)",
+        "description": "늑대를 물리쳤습니다! 늑대의 이빨은 쓸만한 무기가 될 것 같습니다. (경험치 +60, 골드 +18)",
         "statRewards": [
-          { "type": "경험치", "value": 60 }
+          { "type": "경험치", "value": 60 },
+          { "type": "골드", "value": 18 }
         ]
       },
       {
@@ -131,9 +134,10 @@
     "rewards": [
       {
         "itemId": "item_8",
-        "description": "박쥐가 도망간 자리에서 박쥐 완드를 얻었습니다. (경험치 +60)",
+        "description": "박쥐가 도망간 자리에서 박쥐 완드를 얻었습니다. (경험치 +60, 골드 +15)",
         "statRewards": [
-          { "type": "경험치", "value": 60 }
+          { "type": "경험치", "value": 60 },
+          { "type": "골드", "value": 15 }
         ]
       },
       {
@@ -197,9 +201,10 @@
     "rewards": [
       {
         "itemId": "item_26",
-        "description": "홉고블린이 쓰러지며 더 이상 움직이지 않습니다.(경험치 +80)",
+        "description": "홉고블린이 쓰러지며 더 이상 움직이지 않습니다.(경험치 +80, 골드 +150)",
         "statRewards": [
-          { "type": "경험치", "value": 80 }
+          { "type": "경험치", "value": 80 },
+          { "type": "골드", "value": 150 }
         ]
       },
       {
@@ -225,9 +230,10 @@
     "rewards": [
       {
         "itemId": "item_9",
-        "description": "해골이 가지고 있던 오래된 검을 획득했습니다.(경험치 +110)",
+        "description": "해골이 가지고 있던 오래된 검을 획득했습니다.(경험치 +110, 골드 +30)",
         "statRewards": [
-          { "type": "경험치", "value": 110 }
+          { "type": "경험치", "value": 110 },
+          { "type": "골드", "value": 30 }
         ]
       },
       {
@@ -254,9 +260,10 @@
     "rewards": [
       {
         "itemId": "item_10",
-        "description": "날아오는 화살을 피하고 해골 궁수를 물리쳤습니다.(경험치 +120)",
+        "description": "날아오는 화살을 피하고 해골 궁수를 물리쳤습니다.(경험치 +120, 골드 +30)",
         "statRewards": [
-          { "type": "경험치", "value": 120 }
+          { "type": "경험치", "value": 120 },
+          { "type": "골드", "value": 30 }
         ]
       },
       {
@@ -283,9 +290,10 @@
     "rewards": [
       {
         "itemId": "item_11",
-        "description": "해골 기사는 패배를 인정하고 자신의 단검을 두고 사라집니다.(경험치 +150)",
+        "description": "해골 기사는 패배를 인정하고 자신의 단검을 두고 사라집니다.(경험치 +150, 골드 +45)",
         "statRewards": [
-          { "type": "경험치", "value": 150 }
+          { "type": "경험치", "value": 150 },
+          { "type": "골드", "value": 45 }
         ]
       },
       {
@@ -312,9 +320,10 @@
     "rewards": [
       {
         "itemId": "item_12",
-        "description": "위습이 사라진 자리엔 해골 모양의 스태프가 남아있습니다.(경험치 +130)",
+        "description": "위습이 사라진 자리엔 해골 모양의 스태프가 남아있습니다.(경험치 +130, 골드 +38)",
         "statRewards": [
-          { "type": "경험치", "value": 130 }
+          { "type": "경험치", "value": 130 },
+          { "type": "골드", "value": 38 }
         ]
       },
       {
@@ -341,9 +350,10 @@
     "rewards": [
       {
         "itemId": "item_27",
-        "description": "고블린 무리의 지배자를 처치했습니다! (경험치 + 180)",
+        "description": "고블린 무리의 지배자를 처치했습니다! (경험치 + 180, 골드 +400)",
         "statRewards": [
-          { "type": "경험치", "value": 180 }
+          { "type": "경험치", "value": 180 },
+          { "type": "골드", "value": 400 }
         ]
       },
       {
@@ -436,9 +446,10 @@
     "rewards": [
       {
         "itemId": "item_13",
-        "description": "오크의 빛바랜 검을 얻었습니다. (경험치 +170)",
+        "description": "오크의 빛바랜 검을 얻었습니다. (경험치 +170, 골드 +80)",
         "statRewards": [
-          { "type": "경험치", "value": 170 }
+          { "type": "경험치", "value": 170 },
+          { "type": "골드", "value": 80 }
         ]
       },
       {
@@ -465,9 +476,10 @@
     "rewards": [
       {
         "itemId": "item_14",
-        "description": "주문이 끊기며 오크 마법사가 쓰러졌습니다. (경험치 +180)",
+        "description": "주문이 끊기며 오크 마법사가 쓰러졌습니다. (경험치 +180, 골드 +85)",
         "statRewards": [
-          { "type": "경험치", "value": 180 }
+          { "type": "경험치", "value": 180 },
+          { "type": "골드", "value": 85 }
         ]
       },
       {
@@ -494,9 +506,10 @@
     "rewards": [
       {
         "itemId": "item_15",
-        "description": "움직이던 석상이 다시 돌로 굳어버렸습니다. (경험치 + 195)",
+        "description": "움직이던 석상이 다시 돌로 굳어버렸습니다. (경험치 +195, 골드 +95)",
         "statRewards": [
-          { "type": "경험치", "value": 195 }
+          { "type": "경험치", "value": 195 },
+          { "type": "골드", "value": 95 }
         ]
       },
       {
@@ -523,9 +536,10 @@
     "rewards": [
       {
         "itemId": "item_16",
-        "description": "은빛 늑대가 조용히 쓰러졌습니다. (경험치 +180)",
+        "description": "은빛 늑대가 조용히 쓰러졌습니다. (경험치 +180, 골드 +110)",
         "statRewards": [
-          { "type": "경험치", "value": 180 }
+          { "type": "경험치", "value": 180 },
+          { "type": "골드", "value": 110 }
         ]
       },
       {
@@ -552,9 +566,10 @@
     "rewards": [
       {
         "itemId": "item_28",
-        "description": "거대한 오크 로드가 땅을 울리며 쓰러졌습니다. (경험치 +300)",
+        "description": "거대한 오크 로드가 땅을 울리며 쓰러졌습니다. (경험치 +300, 골드 +850)",
         "statRewards": [
-          { "type": "경험치", "value": 300 }
+          { "type": "경험치", "value": 300 },
+          { "type": "골드", "value": 850 }
         ]
       },
       {
@@ -677,9 +692,10 @@
     "rewards": [
       {
         "itemId": "item_17",
-        "description": "리자드맨이 몸을 떨다 쓰러졌습니다. (경험치 +230)",
+        "description": "리자드맨이 몸을 떨다 쓰러졌습니다. (경험치 +230, 골드 +210)",
         "statRewards": [
-          { "type": "경험치", "value": 230 }
+          { "type": "경험치", "value": 230 },
+          { "type": "골드", "value": 210 }
         ]
       },
       {
@@ -706,9 +722,10 @@
     "rewards": [
       {
         "itemId": "item_18",
-        "description": "주문이 끊기며 샤먼 리자드가 쓰러졌습니다. (경험치 +245)",
+        "description": "주문이 끊기며 샤먼 리자드가 쓰러졌습니다. (경험치 +245, 골드 +200)",
         "statRewards": [
-          { "type": "경험치", "value": 245 }
+          { "type": "경험치", "value": 245 },
+          { "type": "골드", "value": 200 }
         ]
       },
       {
@@ -735,9 +752,10 @@
     "rewards": [
       {
         "itemId": "item_19",
-        "description": "트롤이 비명을 지르며 쓰러졌습니다. (경험치 +265)",
+        "description": "트롤이 비명을 지르며 쓰러졌습니다. (경험치 +265, 골드 +225)",
         "statRewards": [
-          { "type": "경험치", "value": 265 }
+          { "type": "경험치", "value": 265 },
+          { "type": "골드", "value": 225 }
         ]
       },
       {
@@ -764,9 +782,10 @@
     "rewards": [
       {
         "itemId": "item_20",
-        "description": "뒤섞인 괴물이 괴성을 남기고 무너졌습니다. (경험치 +280)",
+        "description": "뒤섞인 괴물이 괴성을 남기고 무너졌습니다. (경험치 +280, 골드 +220)",
         "statRewards": [
-          { "type": "경험치", "value": 280 }
+          { "type": "경험치", "value": 280 },
+          { "type": "골드", "value": 220 }
         ]
       },
       {
@@ -793,9 +812,10 @@
     "rewards": [
       {
         "itemId": "item_29",
-        "description": "골렘이 균열을 내며 완전히 붕괴되었습니다. (경험치 +400)",
+        "description": "골렘이 균열을 내며 완전히 붕괴되었습니다. (경험치 +400, 골드 +1500)",
         "statRewards": [
-          { "type": "경험치", "value": 400 }
+          { "type": "경험치", "value": 400 },
+          { "type": "골드", "value": 1500 }
         ]
       },
       {
@@ -917,9 +937,10 @@
     "rewards": [
       {
         "itemId": "item_21",
-        "description": "전설의 용을 쓰러뜨렸습니다! (경험치 +330)",
+        "description": "전설의 용을 쓰러뜨렸습니다! (경험치 +330, 골드 +450)",
         "statRewards": [
-          { "type": "경험치", "value": 330 }
+          { "type": "경험치", "value": 330 },
+          { "type": "골드", "value": 450 }
         ]
       },
       {
@@ -946,9 +967,10 @@
     "rewards": [
       {
         "itemId": "item_22",
-        "description": "리치의 마력이 사라지며 육신이 무너졌습니다. (경험치 +320)",
+        "description": "리치의 마력이 사라지며 육신이 무너졌습니다. (경험치 +320, 골드 +460)",
         "statRewards": [
-          { "type": "경험치", "value": 320 }
+          { "type": "경험치", "value": 320 },
+          { "type": "골드", "value": 460 }
         ]
       },
       {
@@ -975,9 +997,10 @@
     "rewards": [
       {
         "itemId": "item_23",
-        "description": "거대한 미노타우로스가 쓰러졌습니다. (경험치 +300)",
+        "description": "거대한 미노타우로스가 쓰러졌습니다. (경험치 +300, 골드 +430)",
         "statRewards": [
-          { "type": "경험치", "value": 300 }
+          { "type": "경험치", "value": 300 },
+          { "type": "골드", "value": 430 }
         ]
       },
       {
@@ -1004,9 +1027,10 @@
     "rewards": [
       {
         "itemId": "item_24",
-        "description": "타락한 용사가 마지막 힘을 다해 쓰러졌습니다. (경험치 +360)",
+        "description": "타락한 용사가 마지막 힘을 다해 쓰러졌습니다. (경험치 +360, 골드 +500)",
         "statRewards": [
-          { "type": "경험치", "value": 360 }
+          { "type": "경험치", "value": 360 },
+          { "type": "골드", "value": 500 }
         ]
       },
       {
@@ -1114,6 +1138,246 @@
         "description": "고대의 망토를 선택하였습니다. (경험치 +340)",
         "statRewards": [
           { "type": "경험치", "value": 340 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "event_37",
+    "name": "거대 쥐",
+    "description": "쥐들의 왕이 당신을 위협합니다.",
+    "imgId": "mob_goblin",
+    "minFloor": 1,
+    "maxFloor": 9,
+    "enemyId": "monster_26",
+    "choices": [
+      "싸운다",
+      "그냥 지나간다"
+    ],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "거대 쥐는 쓰러졌습니다! (경험치 +50, 골드 +12).",
+        "statRewards": [
+          { "type": "경험치", "value": 50 },
+          { "type": "골드", "value": 12 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "쥐떼들을 피해서 도망쳤습니다. (경험치 +25)",
+        "statRewards": [
+          { "type": "경험치", "value": 25 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "event_38",
+    "name": "좀비",
+    "description": "좀비가 당신의 살을 원합니다.",
+    "imgId": "mob_goblin",
+    "minFloor": 11,
+    "maxFloor": 19,
+    "enemyId": "monster_27",
+    "choices": [
+      "싸운다",
+      "그냥 지나간다"
+    ],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "좀비의 목이 떨어져 움직이지 않습니다 (경험치 +125, 골드 +40).",
+        "statRewards": [
+          { "type": "경험치", "value": 125 },
+          { "type": "골드", "value": 40 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "느린 좀비를 손쉽게 따돌렸습니다. (경험치 +60)",
+        "statRewards": [
+          { "type": "경험치", "value": 60 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "event_39",
+    "name": "그리폰",
+    "description": "신화속 상상의 동물이 눈 앞에 있습니다.",
+    "imgId": "mob_goblin",
+    "minFloor": 21,
+    "maxFloor": 29,
+    "enemyId": "monster_28",
+    "choices": [
+      "싸운다",
+      "그냥 지나간다"
+    ],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "그리폰은 힘없이 쓰러졌습니다. (경험치 +175, 골드 +95).",
+        "statRewards": [
+          { "type": "경험치", "value": 175 },
+          { "type": "골드", "value": 95 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "그리폰에게 들키지 않게 지나갔습니다. (경험치 +100)",
+        "statRewards": [
+          { "type": "경험치", "value": 100 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "event_40",
+    "name": "메두사",
+    "description": "석상들 사이에서 메두사가 모습을 드러냅니다.",
+    "imgId": "mob_goblin",
+    "minFloor": 31,
+    "maxFloor": 39,
+    "enemyId": "monster_29",
+    "choices": [
+      "싸운다",
+      "그냥 지나간다"
+    ],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "메두사가 돌처럼 굳어 무너져내렸습니다! (경험치 +240, 골드 +220).",
+        "statRewards": [
+          { "type": "경험치", "value": 240 },
+          { "type": "골드", "value": 220 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "석상들 사이로 숨어서 도망쳤습니다. (경험치 +125)",
+        "statRewards": [
+          { "type": "경험치", "value": 125 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "event_41",
+    "name": "서큐버스",
+    "description": "서큐버스가 당신을 유혹합니다.",
+    "imgId": "mob_goblin",
+    "minFloor": 41,
+    "maxFloor": 49,
+    "enemyId": "monster_30",
+    "choices": [
+      "싸운다",
+      "그냥 지나간다"
+    ],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "당신은 유혹을 이겨냈습니다. (경험치 +330, 골드 +410).",
+        "statRewards": [
+          { "type": "경험치", "value": 330 },
+          { "type": "골드", "value": 410 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "유혹을 뿌리치고 서둘러 도망쳤습니다. (경험치 +165)",
+        "statRewards": [
+          { "type": "경험치", "value": 165 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "event_42",
+    "name": "상점",
+    "description": "여러 물건을 파는 상점입니다.",
+    "imgId": "suspicious_merchant",
+    "minFloor": 1,
+    "maxFloor": 49,
+    "enemyId": null,
+    "choices": [
+      "물건을 산다",
+      "지나간다"
+    ],
+    "rewards": [
+      {
+        "itemId": "item_34",
+        "description": "포션을 구매했습니다.",
+        "statRewards": []
+      },
+      {
+        "itemId": null,
+        "description": "상점을 그냥 지나갔습니다.",
+        "statRewards": []
+      }
+    ]
+  },
+  {
+    "id": "event_43",
+    "name": "도박사",
+    "description": "도박사가 동전 던지기를 제안합니다.",
+    "imgId": "suspicious_merchant",
+    "minFloor": 11,
+    "maxFloor": 19,
+    "enemyId": null,
+    "choices": [
+      "앞면에 건다",
+      "뒷면에 건다",
+      "무시한다"
+    ],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "당신은 도박에 성공했습니다 (골드 +100).",
+        "statRewards": [
+          { "type": "골드", "value": 100 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "운이 나쁘군요 (골드 -100).",
+        "statRewards": [
+          { "type": "골드", "value": -100 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "도박은 패가망신의 지름길이죠.",
+        "statRewards": []
+      }
+    ]
+  },
+  {
+    "id": "event_44",
+    "name": "미로",
+    "description": "당신은 미로에 빠져 헤매던 중 탈출구를 가르키는 조각상을 발견합니다.",
+    "imgId": "suspicious_merchant",
+    "minFloor": 21,
+    "maxFloor": 29,
+    "enemyId": null,
+    "choices": [
+      "손가락 방향으로 간다",
+      "손가락 반대 방향으로 간다"
+    ],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "누가 미로에서 정답을 알려주겠어요? (데미지 +25, 경험치 +75).",
+        "statRewards": [
+          { "type": "데미지", "value": 25 },
+          { "type": "경험치", "value": 75 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "미로에서 탈출했습니다. (경험치 +175)",
+        "statRewards": [
+          { "type": "경험치", "value": 175 }
         ]
       }
     ]
