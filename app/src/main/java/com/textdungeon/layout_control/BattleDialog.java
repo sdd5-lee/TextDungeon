@@ -158,14 +158,16 @@ public class BattleDialog extends Dialog {
         MagicScroll magicScroll = player.getMagicScroll();
         DataControlTower dt = DataControlTower.getInstance(getContext());
 
-        for (LearnedMagic ma : magicScroll.getLearnedMagics()) {
-            Magic magic = dt.getMagicManager().spawn(ma.getMagicId());
+        for (LearnedMagic lm : magicScroll.getLearnedMagics()) {
+            Magic magic = dt.getMagicManager().spawn(lm.getMagicId());
             if (magic == null){{
                 continue;
             }}
-            BattleButton button = new BattleButton(getContext(),"magic_test",magic.getName(),magic.getCount(),"시전하기");
+            BattleButton button = new BattleButton(getContext(),"test_magic_img",magic.getName(),lm.getCurrentCount(),"시전하기");
             button.setOnClickListener(v -> {
-                executeAction(4, ma.getMagicId());
+                executeAction(4, lm.getMagicId());
+                updateUI();
+                addMagic();
             });
             magicContainer.addView(button);
         }
@@ -190,15 +192,14 @@ public class BattleDialog extends Dialog {
                 continue;
             }
 
-            // 2. 버튼 생성
-            BattleButton button = new BattleButton(getContext(), "item_test", itemData.getName(), count, "사용하기");
+            BattleButton button = new BattleButton(getContext(), "item_test_img", itemData.getName(), count, "사용하기");
 
             button.setOnClickListener(v -> {
                 if (player.getInventory().consumeItem(itemId) && itemData.itemUse(player)) {
 
                     appendLog("\n[" + itemData.getName() + "]을(를) 사용했습니다!");
-                    updateUI(); // 체력바 갱신 (효과가 적용되었으므로)
-                    addItem();  // 수량이 깎였으니 가방 목록 새로고침
+                    updateUI();
+                    addItem();
                 } else {
                     appendLog("아이템이 부족하거나 사용하지 못하는 아이템입니다.");
                 }
