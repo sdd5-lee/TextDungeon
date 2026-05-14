@@ -124,11 +124,10 @@ public class EventLayout extends BaseActivity {
 
         String result = eventManager.applyReward(currentEvent, choiceIndex);
 
-        if (result == null) {
-            appendDesc("인벤토리가 가득 찼습니다. 버릴 아이템을 선택해주세요.");
+        //if (result == null) {
+            //appendDesc("인벤토리가 가득 찼습니다. 버릴 아이템을 선택해주세요.");
             // TODO: 인벤토리 다이얼로그를 열고, 버리기 완료 후 applyEventResult 재호출
-            return;
-        }
+       //}
 
         appendDesc("결과 : " + result);
         updatePlayerHeader();
