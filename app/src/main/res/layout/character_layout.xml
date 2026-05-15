@@ -99,7 +99,7 @@
                 <!-- 체력 -->
                 <LinearLayout android:layout_width="0dp" android:layout_height="110dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical">
                     <View android:layout_width="match_parent" android:layout_height="2dp" android:background="#901418"/>
-                    <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_health" app:tint="#E5E2E1" android:layout_marginTop="12dp"/>
+                    <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_compass" app:tint="#E5E2E1" android:layout_marginTop="12dp"/>
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="VIT" android:textColor="#58413E" android:textSize="11sp" android:letterSpacing="0.1" android:layout_marginTop="8dp" android:textStyle="bold"/>
                     <TextView android:id="@+id/stat_hp" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="100" android:textColor="#E5E2E1" android:textSize="18sp" android:fontFamily="serif" android:layout_marginTop="2dp"/>
                 </LinearLayout>
@@ -107,7 +107,7 @@
                 <!-- 힘 -->
                 <LinearLayout android:layout_width="0dp" android:layout_height="110dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical">
                     <View android:layout_width="match_parent" android:layout_height="2dp" android:background="#E5E2E1"/>
-                    <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_strength" app:tint="#E5E2E1" android:layout_marginTop="12dp"/>
+                    <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_compass" app:tint="#E5E2E1" android:layout_marginTop="12dp"/>
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="STR" android:textColor="#58413E" android:textSize="11sp" android:letterSpacing="0.1" android:layout_marginTop="8dp" android:textStyle="bold"/>
                     <TextView android:id="@+id/stat_str" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="18" android:textColor="#E5E2E1" android:textSize="18sp" android:fontFamily="serif" android:layout_marginTop="2dp"/>
                 </LinearLayout>
@@ -115,7 +115,7 @@
                 <!-- 민첩 -->
                 <LinearLayout android:layout_width="0dp" android:layout_height="110dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical">
                     <View android:layout_width="match_parent" android:layout_height="2dp" android:background="#A0A0A0"/>
-                    <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_dexterity" app:tint="#E5E2E1" android:layout_marginTop="12dp"/>
+                    <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_slideshow" app:tint="#E5E2E1" android:layout_marginTop="12dp"/>
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="AGI" android:textColor="#58413E" android:textSize="11sp" android:letterSpacing="0.1" android:layout_marginTop="8dp" android:textStyle="bold"/>
                     <TextView android:id="@+id/stat_agi" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="12" android:textColor="#E5E2E1" android:textSize="18sp" android:fontFamily="serif" android:layout_marginTop="2dp"/>
                 </LinearLayout>
@@ -123,7 +123,7 @@
                 <!-- 지혜 -->
                 <LinearLayout android:layout_width="0dp" android:layout_height="110dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical">
                     <View android:layout_width="match_parent" android:layout_height="2dp" android:background="#E9C176"/>
-                    <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_wisdom" app:tint="#E5E2E1" android:layout_marginTop="12dp"/>
+                    <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_view" app:tint="#E5E2E1" android:layout_marginTop="12dp"/>
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="WIS" android:textColor="#58413E" android:textSize="11sp" android:letterSpacing="0.1" android:layout_marginTop="8dp" android:textStyle="bold"/>
                     <TextView android:id="@+id/stat_wis" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="09" android:textColor="#E5E2E1" android:textSize="18sp" android:fontFamily="serif" android:layout_marginTop="2dp"/>
                 </LinearLayout>
