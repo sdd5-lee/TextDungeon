@@ -9,6 +9,7 @@ public class Item {
     private String type;
     private int hp;
     private int atk;
+    private int value;
 
     private Item() {}
     public static Item createFromJson(String json) {
