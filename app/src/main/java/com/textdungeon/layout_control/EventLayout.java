@@ -1,6 +1,7 @@
 package com.textdungeon.layout_control;
 
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -10,6 +11,7 @@ import com.textdungeon.ai.AiCallback;
 import com.textdungeon.buttons.ChoiceButton;
 import com.textdungeon.data.DataControlTower;
 import com.textdungeon.event.BattleEvent;
+import com.textdungeon.event.GameEvent;
 import com.textdungeon.model.Monster;
 import com.textdungeon.player.Player;
 import com.textdungeon.system.EventManager;
@@ -24,8 +26,13 @@ public class EventLayout extends BaseActivity {
     // ── UI 상태 ────────────────────────────────
     private TextView eventDesc;
     private LinearLayout choiceButtons;
-    private BattleEvent currentEvent;
+    private GameEvent currentEvent;
     private boolean isDiceUsed = false;
+
+    // ─────────────────────────────────────────────────────────────
+    // 생명주기
+    // ─────────────────────────────────────────────────────────────
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,11 +43,25 @@ public class EventLayout extends BaseActivity {
         eventManager = new EventManager(dt);
 
         currentEvent = eventManager.pickRandomEvent();
+        LinearLayout btnMagicLearn = findViewById(R.id.btn_magic_learn);
+        if (btnMagicLearn != null) {
+            btnMagicLearn.setOnClickListener(v -> {
+                MagicLearnDialog dialog = new MagicLearnDialog(
+                        EventLayout.this,
+                        player,
+                        dt.getMagicManager()
+                );
+                dialog.show();
+            });
+        }
         renderEvent();
 
         setupBackButton();
     }
 
+    // ─────────────────────────────────────────────────────────────
+    // UI 렌더링 (EventLayout의 본래 역할)
+    // ─────────────────────────────────────────────────────────────
     private void renderEvent() {
         if (player == null) return;
 
@@ -50,15 +71,20 @@ public class EventLayout extends BaseActivity {
         eventDesc.setText("");
         choiceButtons.removeAllViews();
 
+        // 이벤트 텍스트
         appendDesc(currentEvent.getName());
         appendDesc(currentEvent.getDescription());
 
+        // 플레이어 정보 헤더
         updatePlayerHeader();
 
+        // 이벤트 이미지
         renderEventImage();
 
+        // 선택지 버튼
         renderChoiceButtons();
 
+        // 혼돈의 주사위 버튼
         if (!isDiceUsed) {
             renderDiceButton();
         }
@@ -105,6 +131,10 @@ public class EventLayout extends BaseActivity {
         diceButton.setOnClickListener(v -> onDiceSelected());
         choiceButtons.addView(diceButton);
     }
+
+    // ─────────────────────────────────────────────────────────────
+    // 사용자 액션 처리 (UI 이벤트 → EventManager 위임)
+    // ─────────────────────────────────────────────────────────────
     private void onChoiceSelected(int index) {
         if (currentEvent == null) {
             appendDesc("시스템: 이벤트를 찾을 수 없습니다.");
@@ -112,10 +142,21 @@ public class EventLayout extends BaseActivity {
         }
         choiceButtons.removeAllViews();
 
+        // 상점 이벤트 처리
+        if (currentEvent instanceof com.textdungeon.event.ShopEvent) {
+            com.textdungeon.event.ShopEvent shopEvent = (com.textdungeon.event.ShopEvent) currentEvent;
+            shopEvent.openShop(this, player, dt.getItemManager());
+            // 상점 닫으면 다음 층으로
+            showNextFloorButton();
+            return;
+        }
+
+        // 배틀 이벤트 처리
         String monsterId = currentEvent.getEnemyId();
         if (monsterId != null && !monsterId.isEmpty()) {
             showBattleDialog(monsterId, index);
         } else {
+            // 일반 이벤트 처리
             applyEventResult(index);
         }
     }
@@ -124,10 +165,12 @@ public class EventLayout extends BaseActivity {
 
         String result = eventManager.applyReward(currentEvent, choiceIndex);
 
-        //if (result == null) {
-            //appendDesc("인벤토리가 가득 찼습니다. 버릴 아이템을 선택해주세요.");
+        if (result == null) {
+            // 인벤토리가 가득 찬 경우 — 버리기 UI (추후 구현)
+            appendDesc("인벤토리가 가득 찼습니다. 버릴 아이템을 선택해주세요.");
             // TODO: 인벤토리 다이얼로그를 열고, 버리기 완료 후 applyEventResult 재호출
-       //}
+            return;
+        }
 
         appendDesc("결과 : " + result);
         updatePlayerHeader();
@@ -153,7 +196,7 @@ public class EventLayout extends BaseActivity {
                 currentEvent,
                 new AiCallback() {
                     @Override
-                    public void onSuccess(BattleEvent updatedEvent) {
+                    public void onSuccess(GameEvent updatedEvent) {
                         runOnUiThread(() -> {
                             if (updatedEvent != null && updatedEvent.getChoices().size() > 2) {
                                 currentEvent = updatedEvent;
@@ -179,6 +222,10 @@ public class EventLayout extends BaseActivity {
                 }
         );
     }
+
+    // ─────────────────────────────────────────────────────────────
+    // 팝업 / 다이얼로그
+    // ─────────────────────────────────────────────────────────────
 
     private void showBattleDialog(String monsterId, int choiceIndex) {
         Monster monster = eventManager.spawnMonster(monsterId);
@@ -208,8 +255,12 @@ public class EventLayout extends BaseActivity {
         levelUpDialog.show();
     }
 
+    // ─────────────────────────────────────────────────────────────
+    // 다음 층 이동
+    // ─────────────────────────────────────────────────────────────
+
     private void showNextFloorButton() {
-        eventManager.goNextFloor();
+        eventManager.goNextFloor();   // 로직: 층 증가 + 저장
         choiceButtons.removeAllViews();
 
         ChoiceButton button = new ChoiceButton(this);
@@ -221,6 +272,11 @@ public class EventLayout extends BaseActivity {
         });
         choiceButtons.addView(button);
     }
+
+    // ─────────────────────────────────────────────────────────────
+    // 뒤로가기 처리
+    // ─────────────────────────────────────────────────────────────
+
     private void setupBackButton() {
         getOnBackPressedDispatcher().addCallback(this,
                 new androidx.activity.OnBackPressedCallback(true) {
@@ -239,6 +295,11 @@ public class EventLayout extends BaseActivity {
                     }
                 });
     }
+
+    // ─────────────────────────────────────────────────────────────
+    // 유틸
+    // ─────────────────────────────────────────────────────────────
+
     private void appendDesc(String text) {
         if (eventDesc == null) eventDesc = findViewById(R.id.event_description);
         eventDesc.append(" " + text + "\n");

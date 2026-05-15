@@ -235,29 +235,32 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
+            android:id="@+id/btn_magic_learn"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_margin="8dp"
             android:layout_weight="1"
+            android:background="#1C1B1B"
+            android:clickable="true"
+            android:focusable="true"
             android:gravity="center"
             android:orientation="vertical"
-            android:background="#1C1B1B"
-            android:layout_margin="8dp"
-            android:padding="4dp"
-            android:clickable="true"
-            android:focusable="true">
+            android:padding="4dp">
+
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@android:drawable/ic_menu_agenda"
-                app:tint="#E9C176"/>
+                app:tint="#E9C176" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:letterSpacing="0.1"
                 android:text="MAGIC"
                 android:textColor="#E9C176"
                 android:textSize="10sp"
-                android:textStyle="bold"
-                android:letterSpacing="0.1"/>
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout

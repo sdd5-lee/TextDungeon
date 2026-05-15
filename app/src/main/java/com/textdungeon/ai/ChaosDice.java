@@ -11,6 +11,7 @@ import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.gson.Gson;
 import com.textdungeon.event.BattleEvent;
+import com.textdungeon.event.GameEvent;
 import com.textdungeon.model.Item;
 import com.textdungeon.model.Stat;
 
@@ -38,7 +39,7 @@ public class ChaosDice {
         this.executor = Executors.newSingleThreadExecutor();
     }
 
-    public void roll(int floor, Stat stat, List<Item> itemList, BattleEvent currentEvent, AiCallback callback) {
+    public void roll(int floor, Stat stat, List<Item> itemList, GameEvent currentEvent, AiCallback callback) {
         String itemNames = itemList.stream()
                 .map(Item::getName)
                 .filter(name -> name != null && !name.isEmpty())

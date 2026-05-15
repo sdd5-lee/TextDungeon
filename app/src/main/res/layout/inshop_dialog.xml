@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#2C2C2C"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="🏪 상점"
+        android:textSize="24sp"
+        android:textColor="#FFFFFF"
+        android:gravity="center"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tv_player_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="#CCCCCC"
+        android:gravity="center"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/tv_gold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="#FFD700"
+        android:gravity="center"
+        android:layout_marginTop="4dp"
+        android:textStyle="bold"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#555555"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+
+        <LinearLayout
+            android:id="@+id/item_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btn_close"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="뒤로가기"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#666666"
+        android:layout_marginTop="16dp"/>
+
+</LinearLayout>

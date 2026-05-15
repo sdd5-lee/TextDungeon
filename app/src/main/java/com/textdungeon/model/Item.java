@@ -41,4 +41,8 @@ public class Item {
         }
         return false;
     }
+
+    public int getValue() {
+        return value;
+    }
 }

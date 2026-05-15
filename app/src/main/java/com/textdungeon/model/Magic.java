@@ -9,6 +9,7 @@ public class Magic {
     private int count;
     private int maxCount;
     private int magicDamage;
+    private int value;
 
     public Magic(){}
     public static Magic createFromJson(String json) {
@@ -32,4 +33,7 @@ public class Magic {
         return id;
     }
 
+    public int getValue() {
+        return value;
+    }
 }
