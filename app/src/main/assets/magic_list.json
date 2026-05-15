@@ -4,97 +4,111 @@
     "name": "매직 미사일",
     "count": 5,
     "maxCount": 5,
-    "magicDamage": 10
+    "magicDamage": 10,
+    "value": 5
   },
   {
     "id": "mag_2",
     "name": "화염구",
     "count": 3,
     "maxCount": 3,
-    "magicDamage": 30
+    "magicDamage": 30,
+    "value": 15
   },
   {
     "id": "mag_3",
-    "name": "쉴드",
+    "name": "어둠의 가시",
     "count": 4,
     "maxCount": 4,
-    "magicDamage":0
+    "magicDamage": 25,
+    "value": 12
   },
   {
     "id": "mag_4",
     "name": "아이스 애로우",
     "count": 4,
     "maxCount": 4,
-    "magicDamage": 20
+    "magicDamage": 20,
+    "value": 10
   },
   {
     "id": "mag_5",
-    "name": "힐",
+    "name": "홀리 스피어",
     "count": 2,
     "maxCount": 2,
-    "magicDamage": 0
+    "magicDamage": 35,
+    "value": 18
   },
   {
     "id": "mag_6",
     "name": "라이트닝",
     "count": 3,
     "maxCount": 3,
-    "magicDamage": 40
+    "magicDamage": 40,
+    "value": 20
   },
   {
     "id": "mag_7",
     "name": "윈드",
     "count": 4,
     "maxCount": 4,
-    "magicDamage": 0
+    "magicDamage": 0,
+    "value": 15
   },
   {
     "id": "mag_8",
     "name": "익스플로젼",
     "count": 2,
     "maxCount": 2,
-    "magicDamage": 50
+    "magicDamage": 50,
+    "value": 30
   },
   {
     "id": "mag_9",
     "name": "마나 드레인",
     "count": 3,
     "maxCount": 3,
-    "magicDamage": 30
+    "magicDamage": 30,
+    "value": 15
   },
   {
     "id": "mag_10",
     "name": "토네이도",
     "count": 3,
     "maxCount": 3,
-    "magicDamage": 45
+    "magicDamage": 45,
+    "value": 25
   },
   {
     "id": "mag_11",
     "name": "블리자드",
     "count": 2,
     "maxCount": 2,
-    "magicDamage": 100
+    "magicDamage": 100,
+    "value": 50
   },
   {
     "id": "mag_12",
     "name": "어스퀘이크",
     "count": 3,
     "maxCount": 3,
-    "magicDamage": 80
+    "magicDamage": 80,
+    "value": 40
   },
   {
     "id": "mag_13",
     "name": "메테오",
     "count": 1,
     "maxCount": 1,
-    "magicDamage": 125
+    "magicDamage": 125,
+    "value": 60
   },
   {
     "id": "mag_14",
     "name": "라그나로크",
     "count": 1,
     "maxCount": 1,
-    "magicDamage": 150
+    "magicDamage": 150,
+    "value": 75
   }
 ]

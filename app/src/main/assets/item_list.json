@@ -5,196 +5,197 @@
     "type": "weapon",
     "hp": 0,
     "atk": 6,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 60
   },
-
   {
     "id": "item_2",
     "name": "낡은 활",
     "type": "weapon",
     "hp": 0,
     "atk": 6,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 60
   },
-
   {
     "id": "item_3",
     "name": "나무 단검",
     "type": "weapon",
     "hp": 0,
     "atk": 5,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 50
   },
-
   {
     "id": "item_4",
     "name": "낡은 책",
     "type": "weapon",
     "hp": 0,
     "atk": 4,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 40
   },
-
   {
     "id": "item_5",
     "name": "끈적끈적한 활",
     "type": "weapon",
     "hp": 0,
     "atk": 9,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 0
   },
-
   {
     "id": "item_6",
     "name": "고블린의 몽둥이",
     "type": "weapon",
     "hp": 0,
     "atk": 10,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 0
   },
-
   {
     "id": "item_7",
     "name": "늑대의 송곳니",
     "type": "weapon",
     "hp": 0,
     "atk": 10,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 0
   },
-
   {
     "id": "item_8",
     "name": "박쥐 완드",
     "type": "weapon",
     "hp": 0,
     "atk": 8,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 0
   },
-
   {
     "id": "item_9",
     "name": "오래된 검",
     "type": "weapon",
     "hp": 0,
     "atk": 15,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 150
   },
-
   {
     "id": "item_10",
     "name": "오래된 활",
     "type": "weapon",
     "hp": 0,
     "atk": 15,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 150
   },
-
   {
     "id": "item_11",
     "name": "기사의 단검",
     "type": "weapon",
     "hp": 0,
     "atk": 14,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 140
   },
-
   {
     "id": "item_12",
     "name": "해골 스태프",
     "type": "weapon",
     "hp": 0,
     "atk": 12,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 120
   },
-
   {
     "id": "item_13",
     "name": "오크의 빛바랜 검",
     "type": "weapon",
     "hp": 0,
     "atk": 20,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 0
   },
-
   {
     "id": "item_14",
     "name": "오크의 지팡이",
     "type": "weapon",
     "hp": 0,
     "atk": 18,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 0
   },
-
   {
     "id": "item_15",
     "name": "석상의 활",
     "type": "weapon",
     "hp": 0,
     "atk": 22,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 0
   },
-
   {
     "id": "item_16",
     "name": "늑대의 왕",
     "type": "weapon",
     "hp": 0,
     "atk": 20,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 0
   },
-
   {
     "id": "item_17",
     "name": "리자드 활",
     "type": "weapon",
     "hp": 0,
     "atk": 30,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 300
   },
-
   {
     "id": "item_18",
     "name": "리자드 스태프",
     "type": "weapon",
     "hp": 0,
     "atk": 25,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 250
   },
-
   {
     "id": "item_19",
     "name": "트롤의 몽둥이",
     "type": "weapon",
     "hp": 0,
     "atk": 28,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 280
   },
-
   {
     "id": "item_20",
     "name": "불길한 단검",
     "type": "weapon",
     "hp": 0,
     "atk": 29,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 290
   },
-
   {
     "id": "item_21",
     "name": "용살활",
     "type": "weapon",
     "hp": 0,
     "atk": 45,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 0
   },
-
   {
     "id": "item_22",
     "name": "네크로맨서",
     "type": "weapon",
     "hp": 0,
     "atk": 35,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 0
   },
   {
     "id": "item_23",
@@ -202,7 +203,8 @@
     "type": "weapon",
     "hp": 0,
     "atk": 38,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 0
   },
   {
     "id": "item_24",
@@ -210,171 +212,169 @@
     "type": "weapon",
     "hp": 0,
     "atk": 42,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 0
   },
-
   {
     "id": "item_25",
     "name": "천갑옷",
     "type": "armor",
     "hp": 10,
     "atk": 0,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 0
   },
-
   {
     "id": "item_26",
     "name": "홉고블린의 가죽옷",
     "type": "armor",
     "hp": 20,
     "atk": 0,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 60
   },
-
   {
     "id": "item_27",
     "name": "고블린로드의 갑옷",
     "type": "armor",
     "hp": 50,
     "atk": 0,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 0
   },
-
   {
     "id": "item_28",
     "name": "오크로드의 철갑옷",
     "type": "armor",
     "hp": 85,
     "atk": 0,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 255
   },
-
   {
     "id": "item_29",
     "name": "고대의 갑옷",
     "type": "armor",
     "hp": 120,
     "atk": 0,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 0
   },
-
   {
     "id": "item_30",
     "name": "타락한 용사의 갑옷",
     "type": "armor",
     "hp": 180,
     "atk": 0,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 0
   },
-
   {
     "id": "item_31",
     "name": "용의 갑주",
     "type": "armor",
     "hp": 180,
     "atk": 0,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 0
   },
-
   {
     "id": "item_32",
     "name": "리치의 로브",
     "type": "armor",
     "hp": 180,
     "atk": 0,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 0
   },
-
-
   {
     "id": "item_33",
     "name": "고대의 망토",
     "type": "armor",
     "hp": 180,
     "atk": 0,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 0
   },
-
-
-
   {
     "id": "item_34",
     "name": "하급 포션",
     "type": "consumables",
     "hp": 40,
     "atk": 0,
-    "isConsumable": true
+    "isConsumable": true,
+    "value": 80
   },
-
   {
     "id": "item_35",
     "name": "중급 포션",
     "type": "consumables",
     "hp": 100,
     "atk": 0,
-    "isConsumable": true
+    "isConsumable": true,
+    "value": 200
   },
-
   {
     "id": "item_36",
     "name": "상급 포션",
     "type": "consumables",
     "hp": 150,
     "atk": 0,
-    "isConsumable": true
+    "isConsumable": true,
+    "value": 300
   },
-
   {
     "id": "item_37",
     "name": "최상급 포션",
     "type": "consumables",
     "hp": 220,
     "atk": 0,
-    "isConsumable": true
+    "isConsumable": true,
+    "value": 440
   },
-
   {
     "id": "item_38",
     "name": "수상한 돌",
     "type": "artifact",
     "hp": 6,
     "atk": 6,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 0
   },
-
   {
     "id": "item_39",
     "name": "고블린 인형",
     "type": "artifact",
     "hp": 12,
     "atk": 12,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 0
   },
-
   {
     "id": "item_40",
     "name": "오크부족의 목걸이",
     "type": "artifact",
     "hp": 18,
     "atk": 18,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 0
   },
-
   {
     "id": "item_41",
     "name": "골렘의 핵",
     "type": "artifact",
     "hp": 22,
     "atk": 22,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 0
   },
-
   {
     "id": "item_42",
     "name": "고대의 잔재",
     "type": "artifact",
     "hp": 30,
     "atk": 30,
-    "isConsumable": false
+    "isConsumable": false,
+    "value": 0
   }
 ]

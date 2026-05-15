@@ -4,6 +4,7 @@ import com.textdungeon.data.DataControl;
 import com.textdungeon.data.DataControlTower;
 import com.textdungeon.data.DungeonControl;
 import com.textdungeon.event.BattleEvent;
+import com.textdungeon.event.GameEvent;
 import com.textdungeon.model.Monster;
 import com.textdungeon.player.Player;
 
@@ -42,11 +43,11 @@ public class EventManager {
      * 현재 층에 맞는 이벤트 목록에서 랜덤으로 하나 반환.
      * @throws IllegalStateException 해당 층에 이벤트가 없을 때
      */
-    public BattleEvent pickRandomEvent() {
+    public GameEvent pickRandomEvent() {
         int currentFloor = dungeonControl.getCurrentFloor();
-        DataControl<BattleEvent> eventList = dt.getEventManager();
+        DataControl<GameEvent> eventList = dt.getEventManager();
 
-        List<BattleEvent> possibleEvents = eventList.getAll().stream()
+        List<GameEvent> possibleEvents = eventList.getAll().stream()
                 .filter(e -> currentFloor >= e.getMinFloor() && currentFloor <= e.getMaxFloor())
                 .collect(Collectors.toList());
 
@@ -65,7 +66,7 @@ public class EventManager {
      * 선택지에 따른 보상을 플레이어에 적용하고 결과 문자열을 반환.
      * TODO: 인벤토리 UI 완성 후 아래 주석을 해제할 것.
      */
-    public String applyReward(BattleEvent event, int choiceIndex) {
+    public String applyReward(GameEvent event, int choiceIndex) {
         // TODO: 인벤토리 버리기 UI 완성 후 아래 블록 주석 해제
         // if (player.getInventory().isFullItem()) {
         //     return null;

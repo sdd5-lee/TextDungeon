@@ -9,6 +9,7 @@ import com.example.textdungeon.R;
 import com.textdungeon.data.DataControlTower;
 import com.textdungeon.data.DungeonControl;
 import com.textdungeon.event.BattleEvent;
+import com.textdungeon.event.GameEvent;
 import com.textdungeon.model.Item;
 import com.textdungeon.model.Job;
 import com.textdungeon.model.Magic;
@@ -161,7 +162,7 @@ public class TestLayout extends BaseActivity {
     }
 
     private void triggerEvent() {
-        BattleEvent event = dt.getEventManager().spawn("test_event");
+        GameEvent event = dt.getEventManager().spawn("test_event");
         if (event != null) {
             String monsterId = event.getEnemyId();
             if (monsterId != null && !monsterId.isEmpty()) {
@@ -174,7 +175,7 @@ public class TestLayout extends BaseActivity {
             addLog("시스템: 이벤트를 찾을 수 없습니다.");
         }
     }
-    private void startBattlePopup(BattleEvent event, String monsterId) {
+    private void startBattlePopup(GameEvent event, String monsterId) {
         Monster targetMonster = dt.getMonsterManager().spawn(monsterId);
 
         if (targetMonster != null) {
@@ -201,7 +202,7 @@ public class TestLayout extends BaseActivity {
             // TODO: 데스 레이아웃으로 넘어가거나 영구적 죽음 처리 로직 추가
         }
     }
-    private void triggerEventNoBattle(BattleEvent event) {
+    private void triggerEventNoBattle(GameEvent event) {
         if (event != null) {
             addLog("\n[이벤트] " + event.getName());
             addLog(event.getDescription());
