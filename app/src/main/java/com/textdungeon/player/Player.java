@@ -18,12 +18,10 @@ public class Player {
     private final MagicScroll magicScroll;
     private final Equipment equipment;
     private int diceChane;
-    private int gold;
 
     public Player(String name, Job job){
         this.name = name;
         level = 1;
-        gold = 0;
         diceChane = 5;
         inventory = new Inventory();
         equipment = new Equipment();
@@ -146,16 +144,6 @@ public class Player {
     }
 
     //******************게터들******************
-
-    public int getGold() {
-        return gold;
-    }
-    public void addMoney(int money){
-        this.gold += money;
-    }
-    public void setGold(int gold) {
-        this.gold = gold;
-    }
 
     public String getName() {return name;}
     public Inventory getInventory() { return inventory; }

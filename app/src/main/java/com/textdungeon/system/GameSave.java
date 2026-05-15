@@ -39,7 +39,7 @@ public class GameSave {
                 case "HEALTH": stat.addHealth(totalBonus); break;
                 case "WIS": stat.addWisdom(totalBonus); break;
                 case "STAT_POINT": stat.addStatPoint(totalBonus); break;
-                case "GOLD": newPlayer.addMoney(totalBonus); break;
+                case "GOLD": stat.addGold(totalBonus); break;
                 case "DICE": newPlayer.addDiceChane(totalBonus); break;
             }
         }
