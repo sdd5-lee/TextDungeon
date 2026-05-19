@@ -13,18 +13,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TextDungeon"
-
         android:usesCleartextTraffic="true">
-
+        <activity
+            android:name="com.textdungeon.SystemSettingActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.textdungeon.DifficultyActivity"
+            android:exported="false" />
         <activity
             android:name="com.textdungeon.layout_control.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name="com.textdungeon.layout_control.EventLayout" />
         <activity android:name="com.textdungeon.layout_control.TestLayout" />
         <activity android:name="com.textdungeon.layout_control.CharacterLayout" />
