@@ -46,6 +46,10 @@ public class BattleSystem {
         switch (choice) {
             case 1: // 일반 공격
                 int damage = player.getFinalAtk() + random.nextInt(5);
+                if(random.nextInt(100) < player.getStat().getCritical_rate()){
+                    damage *=2;
+                    log += "크리티컬!   ";
+                }
                 enemyHp -= damage;
                 log += "⚔️ 일반 공격! " + enemyName + "에게 " + damage + "의 데미지!\n";
                 break;
@@ -73,7 +77,10 @@ public class BattleSystem {
                     }
                     // 실제 마법 사용 (여기서 use()로 카운트 감소됨)
                     int magicDamage = player.castMagic(magicId, context);
-
+                    if(random.nextInt(100) < player.getStat().getCritical_rate()){
+                        magicDamage *=2;
+                        log += "크리티컬!   \n";
+                    }
                     if (magicDamage > 0) {
                         enemyHp -= magicDamage;
                         log += "🔥 마법 발동! " + enemyName + "에게 " + magicDamage + "의 데미지!\n";

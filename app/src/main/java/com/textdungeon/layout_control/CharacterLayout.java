@@ -7,8 +7,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.textdungeon.R;
 import com.google.android.material.snackbar.Snackbar;
 import com.textdungeon.data.DataControlTower;
@@ -85,7 +83,7 @@ public class CharacterLayout extends BaseActivity {
         jobPaladin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Job.HERO.defaultUnlokced){
+                if (Job.HERO.defaultUnlocked){
                     updateUI(Job.HERO);
                 }else{
                     Snackbar.make(v, "해금되지 않은 직업입니다", Snackbar.LENGTH_SHORT).show();

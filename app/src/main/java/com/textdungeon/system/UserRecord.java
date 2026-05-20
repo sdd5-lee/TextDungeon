@@ -17,7 +17,7 @@ public class UserRecord {
         this.unlockJobName = new HashSet<>();
         this.upgradeLevels = new HashMap<>();
         for (Job job: Job.values()) {
-            if (job.defaultUnlokced){
+            if (job.defaultUnlocked){
                 unlockJobName.add(job.name);
             }
         }
