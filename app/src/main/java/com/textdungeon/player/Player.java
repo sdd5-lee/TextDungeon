@@ -22,7 +22,7 @@ public class Player {
     public Player(String name, Job job){
         this.name = name;
         level = 1;
-        diceChane = 5;
+        diceChane = 0;
         inventory = new Inventory();
         equipment = new Equipment();
         magicScroll = new MagicScroll();
