@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.textdungeon.R; // 실제 패키지명에 맞게 확인해주세요!
+import com.example.textdungeon.R;
 import com.textdungeon.data.DataControl;
 import com.textdungeon.model.Magic;
 import com.textdungeon.player.Player;

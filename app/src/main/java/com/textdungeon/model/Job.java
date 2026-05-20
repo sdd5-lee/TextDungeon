@@ -7,7 +7,11 @@ public enum Job {
     ROGUE("도적", 8, 12, 8,2, "생존본능", true),
     ARCHER("궁수", 10, 12, 6,2, "명사수", true),
 
-    //잠금 직업 추가
+    //잠금 직업 추가 CLERIC, WARLOCK,MONK,KNIGHT 해금 직업은
+    KNIGHT("기사", 10, 12, 6,2, "명사수", true),
+    WARLOCK("전투 마법사", 10, 12, 6,2, "명사수", true),
+    CLERIC("사제", 10, 12, 6,2, "명사수", true),
+    MONK("궁수", 10, 12, 6,2, "명사수", true),
     HERO("용사", 14,14,14,12,"용사의의지",false);
 
     public final String name;
@@ -16,8 +20,8 @@ public enum Job {
     //직업별 특성 추가
     public final String traitName;
     //해금 여부 확인
-    public final boolean defaultUnlokced;
-    Job(String name, int strength, int agility, int health, int wisdom, String traitName, boolean defaultUnlokced){
+    public final boolean defaultUnlocked;
+    Job(String name, int strength, int agility, int health, int wisdom, String traitName, boolean defaultUnlocked){
         this.name = name;
         this.strength = strength;
         this.agility = agility;
@@ -26,6 +30,6 @@ public enum Job {
         //특성
         this.traitName = traitName;
         //해금
-        this.defaultUnlokced = defaultUnlokced;
+        this.defaultUnlocked = defaultUnlocked;
     }
 }
