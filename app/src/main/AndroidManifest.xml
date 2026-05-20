@@ -15,10 +15,10 @@
         android:theme="@style/Theme.TextDungeon"
         android:usesCleartextTraffic="true">
         <activity
-            android:name="com.textdungeon.SystemSettingActivity"
+            android:name="com.textdungeon.layout_control.SystemSettingActivity"
             android:exported="false" />
         <activity
-            android:name="com.textdungeon.DifficultyActivity"
+            android:name="com.textdungeon.layout_control.DifficultyActivity"
             android:exported="false" />
         <activity
             android:name="com.textdungeon.layout_control.MainActivity"
