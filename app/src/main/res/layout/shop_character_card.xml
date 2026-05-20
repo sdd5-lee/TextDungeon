@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="260dp"
+    android:layout_height="420dp"
+    android:background="@drawable/bg_event_panel"
+    android:orientation="vertical"
+    android:padding="2dp"
+    android:layout_marginEnd="20dp">
+
+    <!-- 캐릭터 이미지 -->
+    <ImageView
+        android:id="@+id/char_image"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/item_background"
+        android:background="#000000"
+        tools:ignore="ContentDescription" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp">
+        <!-- 캐릭터 이름/설명 -->
+        <TextView
+            android:id="@+id/char_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="WARRIOR"
+            android:textColor="#E9C176"
+            android:textSize="20sp"
+            android:fontFamily="serif"
+            android:textStyle="bold"
+            android:letterSpacing="0.1" />
+
+        <TextView
+            android:id="@+id/char_desc"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="12dp"
+            tools:text="강력한 근접 공격과 높은 체력을 지닌 전사입니다. 전장의 최전선에서 아군을 보호합니다."
+            android:textColor="#E5E2E1"
+            android:textSize="13sp"
+            android:lineSpacingExtra="4dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#33E9C176"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 해금 버튼 (가격 표시) -->
+        <LinearLayout
+            android:id="@+id/btn_unlock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:background="#131313"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground">
+
+            <TextView
+                android:id="@+id/unlock_status"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="해금"
+                android:textColor="#E9C176"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.2" />
+
+            <TextView
+                android:id="@+id/char_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="3,000G"
+                android:textColor="#E9C176"
+                android:textSize="16sp"
+                android:fontFamily="serif"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
