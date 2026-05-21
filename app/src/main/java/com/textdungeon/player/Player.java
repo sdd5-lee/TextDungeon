@@ -86,7 +86,22 @@ public class Player {
         int hpDiff = newEquipHp - oldEquipHp;
         applyHpChange(hpDiff);
     }
+    public void unequipItem(String type, int slotIndex) {
+        if (inventory.isFullItem()) {
+            return;
+        }
 
+        int oldEquipHp = equipment.getTotalHp();
+
+        Item old = equipment.unequip(type, slotIndex);
+
+        if (old != null) {
+            inventory.addItem(old);
+        }
+
+        int newEquipHp = equipment.getTotalHp();
+        applyHpChange(newEquipHp - oldEquipHp);
+    }
     public void applyHpChange(int hpDiff) {
         int currentHp = stat.getHp();
         int newHp = currentHp + hpDiff;
@@ -126,12 +141,10 @@ public class Player {
         return 0;
     }
 
-    public Boolean useDice() {
+    public void useDice() {
         if (diceChane > 0) {
             diceChane--;
-            return true;
         }
-        return false;
     }
 
     //****************** 최종 공격력 체력 게터******************

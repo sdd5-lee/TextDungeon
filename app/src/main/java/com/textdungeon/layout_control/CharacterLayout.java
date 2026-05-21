@@ -22,7 +22,7 @@ public class CharacterLayout extends BaseActivity {
     TextView statWis;
     Job playerJob;
     String playerName;
-    DataControlTower dt = DataControlTower.getInstance(this);
+    DataControlTower dt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +42,7 @@ public class CharacterLayout extends BaseActivity {
         statAgi = findViewById(R.id.stat_agi);
         statWis = findViewById(R.id.stat_wis);
 
+        dt = DataControlTower.getInstance(this);
         UserRecord record = dt.getUserRecord();
 
         characterDesc = findViewById(R.id.character_description);

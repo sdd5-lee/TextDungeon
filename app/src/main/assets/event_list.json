@@ -1818,7 +1818,8 @@
       "item_2",
       "item_3",
       "item_4",
-      "item_34"
+      "item_34",
+      "item_38"
     ],
     "choices": [
       "상점 둘러보기",
@@ -1851,8 +1852,9 @@
       "item_10",
       "item_11",
       "item_12",
+      "item_26",
       "item_35",
-      "item_26"
+      "item_39"
     ],
     "choices": [
       "상점 둘러보기",
@@ -1875,7 +1877,7 @@
     "id": "event_shop_3",
     "type": "shop",
     "name": "고대 유물 상점",
-    "description": "낡은 건물에서 신비로운 빛이 새어 나옵니다. 안에는 고대 유물들이 진열되어 있고, 수수께끼 같은 상인이 당신을 맞이합니다.",
+    "description": "낡은 건물에서 신비로운 빛이 새어 나옵니다. 안에는 고대 유물들이 진열되어 있고, 수수께께 같은 상인이 당신을 맞이합니다.",
     "imgId": "suspicious_merchant",
     "minFloor": 31,
     "maxFloor": 49,
@@ -1885,9 +1887,11 @@
       "item_18",
       "item_19",
       "item_20",
+      "item_28",
       "item_36",
       "item_37",
-      "item_28"
+      "item_40",
+      "item_41"
     ],
     "choices": [
       "상점 둘러보기",

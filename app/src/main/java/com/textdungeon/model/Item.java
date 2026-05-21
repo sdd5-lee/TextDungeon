@@ -5,6 +5,7 @@ import com.textdungeon.player.Player;
 
 public class Item {
     private String name;
+    private String description;
     private String id;
     private String type;
     private int hp;
@@ -32,11 +33,7 @@ public class Item {
     }
     public Boolean itemUse(Player player) {
         if ("consumables".equals(this.type)) {
-            if (this.id.equals("item_3")) {
-                player.heal(this.hp);
-            }
-            //else if (this.id.equals("item_02")) {
-            //}
+            player.heal(this.hp);
             return true;
         }
         return false;
@@ -44,5 +41,9 @@ public class Item {
 
     public int getValue() {
         return value;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

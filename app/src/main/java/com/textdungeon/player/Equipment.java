@@ -14,7 +14,6 @@ public class Equipment {
         if (newItem == null) return null;
 
         Item oldItem = null;
-
         switch (newItem.getType()) {
             case "weapon":
                 oldItem = weapon;
@@ -37,6 +36,26 @@ public class Equipment {
                     artifact[slot] = newItem;
                 } else {
                     return newItem;
+                }
+                break;
+        }
+        return oldItem;
+    }
+    public Item unequip(String type, int slot) {
+        Item oldItem = null;
+        switch (type.toLowerCase()) {
+            case "weapon":
+                oldItem = weapon;
+                weapon = null;
+                break;
+            case "armor":
+                oldItem = armor;
+                armor = null;
+                break;
+            case "artifact":
+                if (slot >= 0 && slot < artifact.length) {
+                    oldItem = artifact[slot];
+                    artifact[slot] = null;
                 }
                 break;
         }
@@ -76,4 +95,5 @@ public class Equipment {
     public Item[] getArtifact() {
         return artifact;
     }
+
 }

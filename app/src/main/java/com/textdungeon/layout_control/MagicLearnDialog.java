@@ -47,7 +47,7 @@ public class MagicLearnDialog extends Dialog {
 
         tvCurrentWisdom = findViewById(R.id.tv_current_wisdom);
         magicContainer = findViewById(R.id.magic_container);
-        Button btnClose = findViewById(R.id.btn_close);
+        Button btnClose = findViewById(R.id.btn_shop_close);
 
         // 현재 지혜 표시 (가져오기)
         tvCurrentWisdom.setText("💡 나의 현재 지혜: " + player.getStat().getWisdom());

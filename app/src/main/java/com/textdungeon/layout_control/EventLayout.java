@@ -18,12 +18,9 @@ import com.textdungeon.system.EventManager;
 
 public class EventLayout extends BaseActivity {
 
-    // ── 의존 객체 ──────────────────────────────
     private DataControlTower dt;
     private Player player;
     private EventManager eventManager;
-
-    // ── UI 상태 ────────────────────────────────
     private TextView eventDesc;
     private LinearLayout choiceButtons;
     private GameEvent currentEvent;
@@ -54,6 +51,27 @@ public class EventLayout extends BaseActivity {
                 dialog.show();
             });
         }
+        LinearLayout btnInventory = findViewById(R.id.btn_inventory);
+        if (btnInventory != null) {
+            btnInventory.setOnClickListener(v -> {
+                InventoryDialog dialog = new InventoryDialog(
+                        EventLayout.this,
+                        player,
+                        dt.getItemManager(),
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                runOnUiThread(() -> updatePlayerHeader());
+                            }
+                        }
+                );
+                updatePlayerHeader();
+                dialog.show();
+            });
+        }
+
+        LinearLayout btnSystem = findViewById(R.id.btn_system);
+
         renderEvent();
 
         setupBackButton();
@@ -260,7 +278,7 @@ public class EventLayout extends BaseActivity {
     // ─────────────────────────────────────────────────────────────
 
     private void showNextFloorButton() {
-        eventManager.goNextFloor();   // 로직: 층 증가 + 저장
+        eventManager.goNextFloor();
         choiceButtons.removeAllViews();
 
         ChoiceButton button = new ChoiceButton(this);

@@ -11,7 +11,6 @@
     android:paddingStart="12dp"
     android:paddingEnd="12dp">
 
-    <!-- Dialog Title -->
     <TextView
         android:id="@+id/dialog_title"
         android:layout_width="wrap_content"
@@ -26,20 +25,18 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
-        android:id="@+id/btn_close"
+        android:id="@+id/btn_inventory_close"
         android:layout_width="32dp"
         android:layout_height="32dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
         android:text="✕"
         android:textColor="#E9C176"
         android:textSize="20sp"
-        android:gravity="center"
-        android:clickable="true"
-        android:focusable="true"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <!-- Equipment Slots (4 fixed slots) -->
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/equipment_slots"
@@ -52,75 +49,71 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dialog_title">
 
-        <!-- Weapon -->
         <FrameLayout
             android:id="@+id/slot_weapon"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_margin="4dp"
             android:background="@drawable/bg_event_panel">
-
             <ImageView
+                android:id="@+id/slot_weapon_img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:alpha="0.3"
                 android:padding="12dp"
                 android:src="@drawable/ic_weapon"
-                android:tint="#ffffff"
+                app:tint="#ffffff"
                 tools:ignore="ContentDescription" />
         </FrameLayout>
 
-        <!-- Armor -->
         <FrameLayout
             android:id="@+id/slot_armor"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_margin="4dp"
             android:background="@drawable/bg_event_panel">
-
             <ImageView
+                android:id="@+id/slot_armor_img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:alpha="0.3"
                 android:padding="12dp"
                 android:src="@drawable/ic_armor"
-                android:tint="#ffffff"
+                app:tint="#ffffff"
                 tools:ignore="ContentDescription" />
         </FrameLayout>
 
-        <!-- artifact 1 -->
         <FrameLayout
             android:id="@+id/slot_atf_1"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_margin="4dp"
             android:background="@drawable/bg_event_panel">
-
             <ImageView
+                android:id="@+id/slot_atf_1_img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:alpha="0.3"
                 android:padding="12dp"
                 android:src="@drawable/ic_artifact"
-                android:tint="#ffffff"
+                app:tint="#ffffff"
                 tools:ignore="ContentDescription" />
         </FrameLayout>
 
-        <!-- artifact 2 -->
         <FrameLayout
             android:id="@+id/slot_atf_2"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_margin="4dp"
             android:background="@drawable/bg_event_panel">
-
             <ImageView
+                android:id="@+id/slot_atf_2_img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:alpha="0.3"
                 android:padding="12dp"
                 android:src="@drawable/ic_artifact"
-                android:tint="#ffffff"
+                app:tint="#ffffff"
                 tools:ignore="ContentDescription" />
         </FrameLayout>
     </LinearLayout>
@@ -135,17 +128,48 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Bag Slots (5x6 Grid, Scrollable) -->
+    <LinearLayout
+        android:id="@+id/layout_stats"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/divider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/tv_final_atk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:text="⚔️ 공격력: 0"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_final_hp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="❤️ 최대 체력: 0"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
     <ScrollView
         android:id="@+id/bag_scroll"
         android:layout_width="0dp"
         android:layout_height="250dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
         android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider">
+        app:layout_constraintTop_toBottomOf="@id/layout_stats">
 
         <GridLayout
             android:id="@+id/bag_grid"
@@ -153,47 +177,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="top|center_horizontal"
             android:columnCount="5"
-            android:padding="4dp">
-
-            <!-- 30 Slots (5x6) -->
-            <!-- Row 1 -->
-            <FrameLayout android:layout_width="70dp" android:layout_height="70dp" android:layout_margin="2dp" android:background="@drawable/bg_event_panel" />
-            <FrameLayout android:layout_width="70dp" android:layout_height="70dp" android:layout_margin="2dp" android:background="@drawable/bg_event_panel" />
-            <FrameLayout android:layout_width="70dp" android:layout_height="70dp" android:layout_margin="2dp" android:background="@drawable/bg_event_panel" />
-            <FrameLayout android:layout_width="70dp" android:layout_height="70dp" android:layout_margin="2dp" android:background="@drawable/bg_event_panel" />
-            <FrameLayout android:layout_width="70dp" android:layout_height="70dp" android:layout_margin="2dp" android:background="@drawable/bg_event_panel" />
-            <!-- Row 2 -->
-            <FrameLayout android:layout_width="70dp" android:layout_height="70dp" android:layout_margin="2dp" android:background="@drawable/bg_event_panel" />
-            <FrameLayout android:layout_width="70dp" android:layout_height="70dp" android:layout_margin="2dp" android:background="@drawable/bg_event_panel" />
-            <FrameLayout android:layout_width="70dp" android:layout_height="70dp" android:layout_margin="2dp" android:background="@drawable/bg_event_panel" />
-            <FrameLayout android:layout_width="70dp" android:layout_height="70dp" android:layout_margin="2dp" android:background="@drawable/bg_event_panel" />
-            <FrameLayout android:layout_width="70dp" android:layout_height="70dp" android:layout_margin="2dp" android:background="@drawable/bg_event_panel" />
-            <!-- Row 3 -->
-            <FrameLayout android:layout_width="70dp" android:layout_height="70dp" android:layout_margin="2dp" android:background="@drawable/bg_event_panel" />
-            <FrameLayout android:layout_width="70dp" android:layout_height="70dp" android:layout_margin="2dp" android:background="@drawable/bg_event_panel" />
-            <FrameLayout android:layout_width="70dp" android:layout_height="70dp" android:layout_margin="2dp" android:background="@drawable/bg_event_panel" />
-            <FrameLayout android:layout_width="70dp" android:layout_height="70dp" android:layout_margin="2dp" android:background="@drawable/bg_event_panel" />
-            <FrameLayout android:layout_width="70dp" android:layout_height="70dp" android:layout_margin="2dp" android:background="@drawable/bg_event_panel" />
-            <!-- Row 4 -->
-            <FrameLayout android:layout_width="70dp" android:layout_height="70dp" android:layout_margin="2dp" android:background="@drawable/bg_event_panel" />
-            <FrameLayout android:layout_width="70dp" android:layout_height="70dp" android:layout_margin="2dp" android:background="@drawable/bg_event_panel" />
-            <FrameLayout android:layout_width="70dp" android:layout_height="70dp" android:layout_margin="2dp" android:background="@drawable/bg_event_panel" />
-            <FrameLayout android:layout_width="70dp" android:layout_height="70dp" android:layout_margin="2dp" android:background="@drawable/bg_event_panel" />
-            <FrameLayout android:layout_width="70dp" android:layout_height="70dp" android:layout_margin="2dp" android:background="@drawable/bg_event_panel" />
-            <!-- Row 5 -->
-            <FrameLayout android:layout_width="70dp" android:layout_height="70dp" android:layout_margin="2dp" android:background="@drawable/bg_event_panel" />
-            <FrameLayout android:layout_width="70dp" android:layout_height="70dp" android:layout_margin="2dp" android:background="@drawable/bg_event_panel" />
-            <FrameLayout android:layout_width="70dp" android:layout_height="70dp" android:layout_margin="2dp" android:background="@drawable/bg_event_panel" />
-            <FrameLayout android:layout_width="70dp" android:layout_height="70dp" android:layout_margin="2dp" android:background="@drawable/bg_event_panel" />
-            <FrameLayout android:layout_width="70dp" android:layout_height="70dp" android:layout_margin="2dp" android:background="@drawable/bg_event_panel" />
-            <!-- Row 6 -->
-            <FrameLayout android:layout_width="70dp" android:layout_height="70dp" android:layout_margin="2dp" android:background="@drawable/bg_event_panel" />
-            <FrameLayout android:layout_width="70dp" android:layout_height="70dp" android:layout_margin="2dp" android:background="@drawable/bg_event_panel" />
-            <FrameLayout android:layout_width="70dp" android:layout_height="70dp" android:layout_margin="2dp" android:background="@drawable/bg_event_panel" />
-            <FrameLayout android:layout_width="70dp" android:layout_height="70dp" android:layout_margin="2dp" android:background="@drawable/bg_event_panel" />
-            <FrameLayout android:layout_width="70dp" android:layout_height="70dp" android:layout_margin="2dp" android:background="@drawable/bg_event_panel" />
-
-        </GridLayout>
+            android:padding="4dp"/>
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

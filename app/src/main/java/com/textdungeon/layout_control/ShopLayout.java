@@ -43,8 +43,6 @@ public class ShopLayout extends BaseActivity {
         record = dt.getUserRecord();
         playerGem = findViewById(R.id.player_gem);
 
-        record.addScore(10000);
-
         TextView unlockTab = findViewById(R.id.tab_unlock);
         TextView upgradeTab = findViewById(R.id.tab_upgrade);
 

@@ -44,7 +44,7 @@
     </ScrollView>
 
     <Button
-        android:id="@+id/btn_close"
+        android:id="@+id/btn_shop_close"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="닫기"
