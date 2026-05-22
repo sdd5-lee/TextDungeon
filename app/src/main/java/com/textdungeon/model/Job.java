@@ -25,7 +25,7 @@ public enum Job {
             "모든 능력치가 뛰어나며 세상을 구원할 운명을 지닌 전설의 용사입니다.", 5000, "item_background");
 
     public final String name;
-    public final int strength, agility, health, wisdom; // 힘, 민첩, 체력, 지혜
+    public final int strength, agility, health, wisdom;
 
     // 직업별 특성
     public final String traitName;
