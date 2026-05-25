@@ -11,6 +11,7 @@ import com.example.textdungeon.R;
 import com.google.android.material.snackbar.Snackbar;
 import com.textdungeon.data.DataControlTower;
 import com.textdungeon.model.Job;
+import com.textdungeon.system.UserRecord;
 
 public class CharacterLayout extends BaseActivity {
     FrameLayout btnEmbark;
@@ -21,7 +22,7 @@ public class CharacterLayout extends BaseActivity {
     TextView statWis;
     Job playerJob;
     String playerName;
-    DataControlTower dt = DataControlTower.getInstance(this);
+    DataControlTower dt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +33,7 @@ public class CharacterLayout extends BaseActivity {
         LinearLayout jobWarrior = findViewById(R.id.job_warrior);
         LinearLayout jobCleric = findViewById(R.id.job_cleric);
         LinearLayout jobRanger = findViewById(R.id.job_ranger);
-        LinearLayout jobPaladin = findViewById(R.id.job_paladin);
+        LinearLayout jobHero = findViewById(R.id.job_paladin);
         LinearLayout jobWarlock = findViewById(R.id.job_warlock);
         LinearLayout jobMonk = findViewById(R.id.job_monk);
 
@@ -41,15 +42,11 @@ public class CharacterLayout extends BaseActivity {
         statAgi = findViewById(R.id.stat_agi);
         statWis = findViewById(R.id.stat_wis);
 
+        dt = DataControlTower.getInstance(this);
+        UserRecord record = dt.getUserRecord();
+
         characterDesc = findViewById(R.id.character_description);
         btnEmbark = findViewById(R.id.btn_embark);
-
-        jobKnight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Snackbar.make(v, "준비중인 직업입니다.", Snackbar.LENGTH_SHORT).show();
-            }
-        });
         jobRogue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,22 +65,37 @@ public class CharacterLayout extends BaseActivity {
                 updateUI(Job.WARRIOR);
             }
         });
-        jobCleric.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Snackbar.make(v, "준비중인 직업입니다.", Snackbar.LENGTH_SHORT).show();
-            }
-        });
         jobRanger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 updateUI(Job.ARCHER);
             }
         });
-        jobPaladin.setOnClickListener(new View.OnClickListener() {
+
+        jobKnight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Job.HERO.defaultUnlocked){
+                if (record.isUnlockJob(Job.KNIGHT.name)){
+                    updateUI(Job.KNIGHT);
+                }else{
+                    Snackbar.make(v, "해금되지 않은 직업입니다", Snackbar.LENGTH_SHORT).show();
+                }
+            }
+        });
+        jobCleric.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (record.isUnlockJob(Job.CLERIC.name)){
+                    updateUI(Job.CLERIC);
+                }else{
+                    Snackbar.make(v, "해금되지 않은 직업입니다", Snackbar.LENGTH_SHORT).show();
+                }
+            }
+        });
+        jobHero.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (record.isUnlockJob(Job.HERO.name)){
                     updateUI(Job.HERO);
                 }else{
                     Snackbar.make(v, "해금되지 않은 직업입니다", Snackbar.LENGTH_SHORT).show();
@@ -93,13 +105,21 @@ public class CharacterLayout extends BaseActivity {
         jobWarlock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(v, "준비중인 직업입니다.", Snackbar.LENGTH_SHORT).show();
+                if (record.isUnlockJob(Job.WARLOCK.name)){
+                    updateUI(Job.WARLOCK);
+                }else{
+                    Snackbar.make(v, "해금되지 않은 직업입니다", Snackbar.LENGTH_SHORT).show();
+                }
             }
         });
         jobMonk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(v, "준비중인 직업입니다.", Snackbar.LENGTH_SHORT).show();
+                if (record.isUnlockJob(Job.MONK.name)){
+                    updateUI(Job.MONK);
+                }else{
+                    Snackbar.make(v, "해금되지 않은 직업입니다", Snackbar.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -131,7 +151,7 @@ public class CharacterLayout extends BaseActivity {
         statStr.setText(String.valueOf(job.strength));
         statAgi.setText(String.valueOf(job.agility));
         statWis.setText(String.valueOf(job.wisdom));
-        characterDesc.setText(job.name +" 입니다.");
+        characterDesc.setText(job.description);
         playerJob = job;
     }
 }

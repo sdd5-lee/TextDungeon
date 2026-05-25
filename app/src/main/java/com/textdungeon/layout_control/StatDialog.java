@@ -151,7 +151,7 @@ public class StatDialog extends Dialog {
         dialogStat.setHealth(vit);
         dialogStat.setWisdom(wis);
         dialogStat.setStatPoint(count);
-
+        dialogStat.updateBattleStat(player.getLevel());
         dismiss();
     }
     @Override

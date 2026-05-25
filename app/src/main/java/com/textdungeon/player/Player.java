@@ -1,8 +1,5 @@
 package com.textdungeon.player;
 
-import android.content.Context;
-
-import com.textdungeon.data.DataControlTower;
 import com.textdungeon.model.Item;
 import com.textdungeon.model.Job;
 import com.textdungeon.model.LearnedMagic;
@@ -22,7 +19,7 @@ public class Player {
     public Player(String name, Job job){
         this.name = name;
         level = 1;
-        diceChane = 5;
+        diceChane = 0;
         inventory = new Inventory();
         equipment = new Equipment();
         magicScroll = new MagicScroll();
@@ -86,7 +83,22 @@ public class Player {
         int hpDiff = newEquipHp - oldEquipHp;
         applyHpChange(hpDiff);
     }
+    public void unequipItem(String type, int slotIndex) {
+        if (inventory.isFullItem()) {
+            return;
+        }
 
+        int oldEquipHp = equipment.getTotalHp();
+
+        Item old = equipment.unequip(type, slotIndex);
+
+        if (old != null) {
+            inventory.addItem(old);
+        }
+
+        int newEquipHp = equipment.getTotalHp();
+        applyHpChange(newEquipHp - oldEquipHp);
+    }
     public void applyHpChange(int hpDiff) {
         int currentHp = stat.getHp();
         int newHp = currentHp + hpDiff;
@@ -114,33 +126,30 @@ public class Player {
             stat.setHp(max);
         }
     }
-    public int castMagic(String magicId, Context context) {
-        LearnedMagic lm = magicScroll.getMagic(magicId);
-
+    public int castMagic(Magic magic) {
+        LearnedMagic lm = magicScroll.getMagic(magic.getId());
         if (lm != null && lm.use()) {
-            Magic magic = DataControlTower.getInstance(context).getMagicManager().spawn(magicId);
-
-            return magic.getMagicDamage(stat.getWisdom());
+            return magic.getMagicDamage(stat.getWisdom()) + equipment.getTotalMagicDamage();
         }
-
         return 0;
     }
 
-    public Boolean useDice() {
+    public void useDice() {
         if (diceChane > 0) {
             diceChane--;
-            return true;
         }
-        return false;
     }
 
     //****************** 최종 공격력 체력 게터******************
     public int getFinalAtk() {
         return stat.getAtk() + equipment.getTotalAtk();
     }
-
     public int getMaxHp(){
         return stat.getMaxHp() + equipment.getTotalHp();
+    }
+
+    public int getTotalCrit(){
+        return stat.getCritical_rate() + equipment.getCrit();
     }
 
     //******************게터들******************

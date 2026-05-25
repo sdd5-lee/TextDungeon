@@ -29,7 +29,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/player_gold"
+            android:id="@+id/player_gem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="serif"
@@ -95,27 +95,12 @@
         app:layout_constraintTop_toBottomOf="@id/shop_tabs"
         app:layout_constraintBottom_toTopOf="@id/bottom_action">
 
-        <!-- 영웅 해금 (가로 스크롤) -->
-        <HorizontalScrollView
-            android:id="@+id/unlock_scroll"
+        <!-- 영웅 해금 (한 장씩 넘기는 ViewPager2로 교체됨) -->
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/unlock_viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingHorizontal="16dp"
-            android:scrollbars="none"
-            android:visibility="visible">
-
-            <LinearLayout
-                android:id="@+id/unlock_container"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-                <!-- 자바 코드에서 동적으로 추가되지만, 미리보기를 위해 include 포함 -->
-                <include layout="@layout/shop_character_card" />
-                <include layout="@layout/shop_character_card" />
-            </LinearLayout>
-        </HorizontalScrollView>
+            android:visibility="visible" />
 
         <!-- 업그레이드 (세로 스크롤) -->
         <ScrollView
@@ -124,20 +109,14 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:paddingHorizontal="16dp"
-            android:visibility="gone">
+            android:visibility="invisible">
 
             <LinearLayout
                 android:id="@+id/upgrade_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingVertical="16dp">
-                <!-- 자바 코드에서 동적으로 추가되지만, 미리보기를 위해 include 포함 -->
-                <include layout="@layout/shop_upgrade_card" />
-                <include layout="@layout/shop_upgrade_card" />
-                <include layout="@layout/shop_upgrade_card" />
-                <include layout="@layout/shop_upgrade_card" />
-            </LinearLayout>
+                android:paddingVertical="16dp"/>
         </ScrollView>
     </FrameLayout>
 
@@ -150,12 +129,12 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
-            android:id="@+id/btn_back"
+            android:id="@+id/btn_main_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="?attr/selectableItemBackground"
-            android:clickable="true"
+            android:clickable="false"
             android:focusable="true"
             android:fontFamily="serif"
             android:letterSpacing="0.2"

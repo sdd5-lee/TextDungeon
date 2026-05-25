@@ -57,7 +57,7 @@ public class GameSave {
              InputStreamReader isr = new InputStreamReader(fis)) {
             return new Gson().fromJson(isr, UserRecord.class);
         } catch (Exception e) {
-            return new UserRecord(); // 파일 없으면 새로 생성
+            return new UserRecord();
         }
     }
     public void runSave(Context context) {

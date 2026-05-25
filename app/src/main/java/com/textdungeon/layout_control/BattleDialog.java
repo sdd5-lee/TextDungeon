@@ -66,7 +66,7 @@ public class BattleDialog extends Dialog {
 
         // 최대 체력 기록
         playerMaxHp = player.getMaxHp();
-        monsterMaxHp = monster.getHp(); // 몬스터의 초기 체력을 최대 체력으로 간주
+        monsterMaxHp = monster.getHp();
 
         // 전투 시스템 초기화
         battleSystem = new BattleSystem(player, monster, context);

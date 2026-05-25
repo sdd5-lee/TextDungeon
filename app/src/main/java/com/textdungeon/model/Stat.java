@@ -9,16 +9,14 @@ public class Stat {
     private int maxExp;
     private int statPoint;
 
-    private int gold; // [추가] 골드
-
+    private int gold;
     public Stat(int strength, int agility, int health, int wisdom) {
         this.strength = strength;
         this.agility = agility;
         this.health = health;
         this.wisdom = wisdom;
 
-        this.gold = 100; //초기 골드 100골드
-
+        this.gold = 100;
 
         statPoint = 0;
         exp = 0 ;
