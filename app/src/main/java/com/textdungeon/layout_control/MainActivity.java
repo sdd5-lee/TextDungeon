@@ -53,7 +53,6 @@ public class MainActivity extends BaseActivity {
     }
 
     public void moveEvent() {
-        // 이어하기 로직
         Intent intent = new Intent(this, EventLayout.class);
         intent.putExtra("IS_NEW_GAME", false);
         startActivity(intent);
@@ -64,7 +63,6 @@ public class MainActivity extends BaseActivity {
     }
 
     public void moveOption(View v) {
-        // 옵션창 (현재 캐릭터 레이아웃으로 되어있는데, 나중에 전용 창을 만드세요!)
-        Toast.makeText(this, "옵션 기능을 준비 중입니다.", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(this, SystemSettingActivity.class));
     }
 }

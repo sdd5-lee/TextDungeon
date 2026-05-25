@@ -264,7 +264,7 @@ public class EventLayout extends BaseActivity {
             appendDesc("시스템: 몬스터 [" + monsterId + "] 데이터를 찾을 수 없습니다.");
             return;
         }
-        BattleDialog battleDialog = new BattleDialog(this, player, monster);
+        BattleDialog battleDialog = new BattleDialog(this, player, monster,dt.getDifficulty());
         battleDialog.setOnDismissListener(dialog -> {
             if (eventManager.isPlayerDead()) {
                 // TODO: 게임오버 화면 연결 (2번 구현 시 여기만 수정)

@@ -16,10 +16,10 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name="com.textdungeon.layout_control.SystemSettingActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name="com.textdungeon.layout_control.DifficultyActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name="com.textdungeon.layout_control.MainActivity"
             android:exported="true">
@@ -30,7 +30,6 @@
             </intent-filter>
         </activity>
         <activity android:name="com.textdungeon.layout_control.EventLayout" />
-        <activity android:name="com.textdungeon.layout_control.TestLayout" />
         <activity android:name="com.textdungeon.layout_control.CharacterLayout" />
         <activity android:name="com.textdungeon.layout_control.ShopLayout" />
         <activity android:name="com.textdungeon.layout_control.OptionLayout" />

@@ -1,6 +1,7 @@
 package com.textdungeon.data;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -26,6 +27,7 @@ public class DataControlTower {
     private UserRecord userRecord;
     private DungeonControl dungeonControl;
     private ChaosManager chaosManager;
+    private Difficulty difficulty;
     private DataControlTower(Context context){
         this.appContext = context.getApplicationContext();
         this.chaosManager = new ChaosManager();
@@ -81,9 +83,11 @@ public class DataControlTower {
         this.dungeonControl = new DungeonControl();
         if (save != null){
             this.player = save.getPlayer();
+            this.difficulty = save.getDifficulty();
             this.dungeonControl.setCurrentFloor(save.getCurrentFloor());
         }else {
             this.player = null;
+            this.difficulty = Difficulty.NORMAL;
             this.dungeonControl.setCurrentFloor(1);
         }
     }
@@ -95,7 +99,7 @@ public class DataControlTower {
 
     public void saveGame() {
         if (this.player == null){return;}
-        GameSave currentSave = new GameSave(this.player, dungeonControl.getCurrentFloor());
+        GameSave currentSave = new GameSave(this.player, dungeonControl.getCurrentFloor(),difficulty);
         currentSave.runSave(appContext);
     }
     public void resetRun() {
@@ -143,5 +147,13 @@ public class DataControlTower {
     }
     public void setUserRecord(UserRecord userRecord) {
         this.userRecord = userRecord;
+    }
+
+    public void setDifficulty(String difficultyName) {
+        difficulty = Difficulty.valueOf(difficultyName);
+        Log.d("DataControlTower", "난이도 설정됨: " + difficulty);
+    }
+    public Difficulty getDifficulty() {
+        return difficulty;
     }
 }

@@ -3,7 +3,6 @@ package com.textdungeon.system;
 import com.textdungeon.data.DataControl;
 import com.textdungeon.data.DataControlTower;
 import com.textdungeon.data.DungeonControl;
-import com.textdungeon.event.BattleEvent;
 import com.textdungeon.event.GameEvent;
 import com.textdungeon.model.Monster;
 import com.textdungeon.player.Player;
@@ -48,7 +47,7 @@ public class EventManager {
          if (player.getInventory().isFullItem()) {
              return null;
          }
-        String result = event.execute(player, choiceIndex, dt.getItemManager());
+        String result = event.execute(player, choiceIndex, dt.getItemManager(),dt.getDifficulty());
         dt.saveGame();
         return result;
     }

@@ -3,6 +3,7 @@ package com.textdungeon.system;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.textdungeon.data.Difficulty;
 import com.textdungeon.model.ShopUpgrade;
 import com.textdungeon.model.Stat;
 import com.textdungeon.player.Player;
@@ -17,12 +18,15 @@ public class GameSave {
     private static final String META_FILE = "user_record.json";
     private int currentFloor;
     private final Player player;
-    public GameSave(Player player, int currentFloor) {
+    private final Difficulty difficulty;
+    public GameSave(Player player, int currentFloor, Difficulty difficulty) {
         this.player = player;
         this.currentFloor = currentFloor;
+        this.difficulty = difficulty;
     }
-    public GameSave(Player player) {
+    public GameSave(Player player, Difficulty difficulty) {
         this.player = player;
+        this.difficulty = difficulty;
     }
     public static Player createNewPlayer(UserRecord record, String name, com.textdungeon.model.Job job){
         Player newPlayer = new Player(name,job);
@@ -91,5 +95,9 @@ public class GameSave {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
     }
 }

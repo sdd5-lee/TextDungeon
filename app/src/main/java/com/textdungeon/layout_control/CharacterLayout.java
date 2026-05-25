@@ -137,8 +137,8 @@ public class CharacterLayout extends BaseActivity {
 
     private void startGame(View v) {
         if(playerJob !=null){
+            Intent intent = new Intent(this, DifficultyActivity.class);
             dt.startNewGame(playerName, playerJob);
-            Intent intent = new Intent(this, EventLayout.class);
             startActivity(intent);
         }else{
             Snackbar.make(v, "직업을 선택하지 않았습니다", Snackbar.LENGTH_SHORT).show();
