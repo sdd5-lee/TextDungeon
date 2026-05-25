@@ -41,7 +41,11 @@ public class Inventory {
         }
         return false;
     }
-
+    public void removeItem(String itemId) {
+        if (itemMap.containsKey(itemId)) {
+            itemMap.remove(itemId);
+        }
+    }
     public boolean isFullItem() {
         return itemMap.size() >= MAX_INV;
     }

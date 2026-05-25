@@ -128,12 +128,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <LinearLayout
+    <GridLayout
         android:id="@+id/layout_stats"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
+        android:columnCount="2"
+        android:useDefaultMargins="true"
+        android:alignmentMode="alignMargins"
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@id/divider"
         app:layout_constraintStart_toStartOf="parent"
@@ -141,9 +142,11 @@
 
         <TextView
             android:id="@+id/tv_final_atk"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_columnWeight="1"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
             android:text="⚔️ 공격력: 0"
             android:textColor="#FFFFFF"
             android:textSize="14sp"
@@ -151,14 +154,42 @@
 
         <TextView
             android:id="@+id/tv_final_hp"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_columnWeight="1"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
             android:text="❤️ 최대 체력: 0"
             android:textColor="#FFFFFF"
             android:textSize="14sp"
             android:textStyle="bold" />
-    </LinearLayout>
 
+        <TextView
+            android:id="@+id/tv_final_magic"
+            android:layout_width="0dp"
+            android:layout_columnWeight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:text="✨ 마법 데미지: 0"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_final_critical_rate"
+            android:layout_width="0dp"
+            android:layout_columnWeight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:text="💥 크리티컬: 0%"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </GridLayout>
     <ScrollView
         android:id="@+id/bag_scroll"
         android:layout_width="0dp"

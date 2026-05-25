@@ -11,7 +11,8 @@ public class Item {
     private int hp;
     private int atk;
     private int value;
-
+    private int crit;
+    private int magicDamage;
     private Item() {}
     public static Item createFromJson(String json) {
         return new Gson().fromJson(json, Item.class);
@@ -45,5 +46,12 @@ public class Item {
 
     public String getDescription() {
         return description;
+    }
+
+    public int getMagicDamage() {
+        return magicDamage;
+    }
+    public int getCrit() {
+        return crit;
     }
 }

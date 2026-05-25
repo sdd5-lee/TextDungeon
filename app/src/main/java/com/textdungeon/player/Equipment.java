@@ -1,7 +1,6 @@
 package com.textdungeon.player;
 
 import com.textdungeon.model.Item;
-import com.textdungeon.model.Monster;
 
 public class Equipment {
     private Item weapon;
@@ -80,6 +79,26 @@ public class Equipment {
             }
         }
         return totalHp;
+    }
+    public int getCrit(){
+        int Crit = 0;
+        Item [] items = {weapon,armor,artifact[0],artifact[1]};
+        for (Item i: items) {
+            if (i != null) {
+                Crit += i.getCrit();
+            }
+        }
+        return Crit;
+    }
+    public int getTotalMagicDamage(){
+        int totalMagicDamage = 0;
+        Item [] items = {weapon,armor,artifact[0],artifact[1]};
+        for (Item i: items) {
+            if (i != null) {
+                totalMagicDamage += i.getMagicDamage();
+            }
+        }
+        return totalMagicDamage;
     }
     public Item getArmor() {
         return armor;

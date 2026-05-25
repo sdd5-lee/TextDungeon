@@ -78,7 +78,7 @@ public class EventLayout extends BaseActivity {
     }
 
     // ─────────────────────────────────────────────────────────────
-    // UI 렌더링 (EventLayout의 본래 역할)
+    // UI 렌더링
     // ─────────────────────────────────────────────────────────────
     private void renderEvent() {
         if (player == null) return;
@@ -151,7 +151,7 @@ public class EventLayout extends BaseActivity {
     }
 
     // ─────────────────────────────────────────────────────────────
-    // 사용자 액션 처리 (UI 이벤트 → EventManager 위임)
+    // 사용자 액션 처리
     // ─────────────────────────────────────────────────────────────
     private void onChoiceSelected(int index) {
         if (currentEvent == null) {
@@ -184,9 +184,22 @@ public class EventLayout extends BaseActivity {
         String result = eventManager.applyReward(currentEvent, choiceIndex);
 
         if (result == null) {
-            // 인벤토리가 가득 찬 경우 — 버리기 UI (추후 구현)
             appendDesc("인벤토리가 가득 찼습니다. 버릴 아이템을 선택해주세요.");
-            // TODO: 인벤토리 다이얼로그를 열고, 버리기 완료 후 applyEventResult 재호출
+
+            InventoryDialog dialog = new InventoryDialog(
+                    EventLayout.this,
+                    player,
+                    dt.getItemManager(),
+                    new Runnable() {
+                        @Override
+                        public void run() {
+                            runOnUiThread(() -> {
+                                updatePlayerHeader();
+                                applyEventResult(choiceIndex);
+                            });
+                        }
+                    }
+            );
             return;
         }
 

@@ -18,7 +18,6 @@ public class Stat {
 
         this.gold = 100;
 
-
         statPoint = 0;
         exp = 0 ;
         maxExp = 100;

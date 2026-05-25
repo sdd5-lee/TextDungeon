@@ -1,6 +1,9 @@
 package com.textdungeon.system;
 
 import android.content.Context;
+
+import com.textdungeon.data.DataControlTower;
+import com.textdungeon.model.Magic;
 import com.textdungeon.model.Monster;
 import com.textdungeon.player.Player;
 import com.textdungeon.model.LearnedMagic;
@@ -51,39 +54,39 @@ public class BattleSystem {
                     log += "크리티컬!   ";
                 }
                 enemyHp -= damage;
-                log += "⚔️ 일반 공격! " + enemyName + "에게 " + damage + "의 데미지!\n";
+                log += "일반 공격! " + enemyName + "에게 " + damage + "의 데미지!\n";
                 break;
 
             case 2: // 방어
                 isDefending = true;
-                log += "🛡️ 방어 자세를 취합니다! (받는 데미지 절반)\n";
+                log += "방어 자세를 취합니다! (받는 데미지 절반)\n";
                 break;
 
             case 3: // 도망
                 if (random.nextInt(100) < 40) { // 40% 확률 도망
                     isBattleOver = true;
-                    return "💨 성공적으로 도망쳤습니다!";
+                    return "성공적으로 도망쳤습니다!";
                 } else {
-                    log += "🏃 도망에 실패했습니다!\n";
+                    log += "도망에 실패했습니다!\n";
                 }
                 break;
 
             case 4: // 마법 사용
                 if (magicId != null) {
-                    LearnedMagic lm = player.getMagicScroll().getMagic(magicId);// 마법 존재 + 사용 가능 횟수 체크
+                    LearnedMagic lm = player.getMagicScroll().getMagic(magicId);
                     if (lm.getCurrentCount() <= 0) {
                         log += "마법 사용 횟수가 부족합니다!\n";
                         return log;
                     }
-                    // 실제 마법 사용 (여기서 use()로 카운트 감소됨)
-                    int magicDamage = player.castMagic(magicId, context);
+
+                    int magicDamage = player.castMagic(DataControlTower.getInstance(context).getMagicManager().spawn(lm.getMagicId()));
                     if(random.nextInt(100) < player.getStat().getCritical_rate()){
                         magicDamage *=2;
                         log += "크리티컬!   \n";
                     }
                     if (magicDamage > 0) {
                         enemyHp -= magicDamage;
-                        log += "🔥 마법 발동! " + enemyName + "에게 " + magicDamage + "의 데미지!\n";
+                        log += "마법 발동! " + enemyName + "에게 " + magicDamage + "의 데미지!\n";
                     }
                     break;
                 }
@@ -93,7 +96,7 @@ public class BattleSystem {
         if (enemyHp <= 0) {
             enemyHp = 0;
             isBattleOver = true;
-            return log + "🎉 " + enemyName + "을(를) 물리쳤습니다!";
+            return log + " " + enemyName + "을(를) 물리쳤습니다!";
         }
 
         isPlayerTurn = false;
@@ -112,11 +115,11 @@ public class BattleSystem {
 
         player.takeDamage(damage);
 
-        String log = "👾 " + enemyName + "의 공격! 플레이어에게 " + damage + "의 피해.";
+        String log = enemyName + "의 공격! 플레이어에게 " + damage + "의 피해.";
 
         if (player.getStat().getHp() <= 0) {
             isBattleOver = true;
-            log += "\n💀 플레이어가 쓰러졌습니다...";
+            log += "\n 플레이어가 쓰러졌습니다...";
         }
 
         isPlayerTurn = true;
@@ -129,9 +132,5 @@ public class BattleSystem {
     public boolean isBattleOver() { return isBattleOver; }
     public String getEnemyName() { return enemyName; }
     public int getEnemyHp() { return enemyHp; }
-    
-    // 현재 사용 가능한 마법 리스트 반환 (UI 연결용)
-    public List<LearnedMagic> getAvailableMagics() {
-        return player.getMagicScroll().getLearnedMagics();
-    }
+
 }

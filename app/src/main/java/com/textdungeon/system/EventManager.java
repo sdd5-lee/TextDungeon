@@ -44,16 +44,10 @@ public class EventManager {
     // ─────────────────────────────────────────
     // 이벤트 결과 처리
     // ─────────────────────────────────────────
-
-    /**
-     * 선택지에 따른 보상을 플레이어에 적용하고 결과 문자열을 반환.
-     * TODO: 인벤토리 UI 완성 후 아래 주석을 해제할 것.
-     */
     public String applyReward(GameEvent event, int choiceIndex) {
-        // TODO: 인벤토리 버리기 UI 완성 후 아래 블록 주석 해제
-        // if (player.getInventory().isFullItem()) {
-        //     return null;
-        // }
+         if (player.getInventory().isFullItem()) {
+             return null;
+         }
         String result = event.execute(player, choiceIndex, dt.getItemManager());
         dt.saveGame();
         return result;

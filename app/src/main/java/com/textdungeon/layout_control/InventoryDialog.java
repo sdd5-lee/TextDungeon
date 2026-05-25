@@ -40,7 +40,6 @@ public class InventoryDialog extends Dialog {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.inventory_dialog);
 
-        // 배경 투명하게 처리 및 다이얼로그 가로 크기를 화면 너비의 95%로 확장
         if (getWindow() != null) {
             getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             DisplayMetrics displayMetrics = getContext().getResources().getDisplayMetrics();
@@ -90,10 +89,14 @@ public class InventoryDialog extends Dialog {
     private void updateStatsUI() {
         TextView tvAtk = findViewById(R.id.tv_final_atk);
         TextView tvHp = findViewById(R.id.tv_final_hp);
+        TextView tvMD = findViewById(R.id.tv_final_magic);
+        TextView tvCR = findViewById(R.id.tv_final_critical_rate);
 
-        if (tvAtk != null && tvHp != null) {
-            tvAtk.setText("⚔️ 공격력: " + player.getFinalAtk());
-            tvHp.setText("❤️ 최대 체력: " + player.getMaxHp());
+        if (tvAtk != null && tvHp != null && tvMD != null && tvCR != null) {
+            tvAtk.setText("공격력: " + player.getFinalAtk());
+            tvHp.setText("최대 체력: " + player.getMaxHp());
+            tvMD.setText("마법 데미지: " + player.getEquipment().getTotalMagicDamage());
+            tvCR.setText("크리티컬 확률: " +  player.getTotalCrit());
         }
     }
 
@@ -148,7 +151,33 @@ public class InventoryDialog extends Dialog {
         TextView btnMainAction = itemDialog.findViewById(R.id.btn_main_action);
 
         name.setText(item.getName() + " :  "+ count +"개");
-        desc.setText(item.getDescription() + "\n\n 공격력 : " + item.getAtk()+"\n체력 : " + item.getHp());
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(item.getDescription());
+        StringBuilder stats = new StringBuilder();
+        boolean hasStats = false;
+
+        if (item.getAtk() != 0) {
+            stats.append("\n공격력: ").append(item.getAtk());
+            hasStats = true;
+        }
+        if (item.getHp() != 0) {
+            stats.append("\n체력: ").append(item.getHp());
+            hasStats = true;
+        }
+        if (item.getMagicDamage() != 0) {
+            stats.append("\n마법 대미지: ").append(item.getMagicDamage());
+            hasStats = true;
+        }
+        if (item.getCrit() != 0) {
+            stats.append("\n크리티컬 확률: ").append(item.getCrit()).append("%");
+            hasStats = true;
+        }
+        if (hasStats) {
+            sb.append("\n\n").append(stats.toString());
+        }
+        desc.setText(sb.toString());
+
         getItemIcon(item, icon);
 
         if (item.getType().equalsIgnoreCase("consumables")) {
@@ -174,8 +203,23 @@ public class InventoryDialog extends Dialog {
         }
 
         btnDiscard.setOnClickListener(v -> {
-            itemDialog.dismiss();
-            refreshInventory();
+            new android.app.AlertDialog.Builder(getContext())
+                    .setTitle("아이템 버리기")
+                    .setMessage(item.getName() + "을(를) 정말 버리시겠습니까?")
+                    .setPositiveButton("버리기", (dialog, which) -> {
+                        player.getInventory().removeItem(item.getId());
+                        itemDialog.dismiss();
+                        refreshAllUI();
+                        if (onUpdateCallback != null) {
+                            onUpdateCallback.run();
+                        }
+
+                        itemDialog.dismiss();
+                        dismiss();
+                        Toast.makeText(getContext(), item.getName() + "을(를) 버렸습니다.", Toast.LENGTH_SHORT).show();
+                    })
+                    .setNegativeButton("취소", null)
+                    .show();
         });
 
         btnClose.setOnClickListener(v -> itemDialog.dismiss());
@@ -270,13 +314,6 @@ public class InventoryDialog extends Dialog {
             case "consumables": return "ic_potion";
             case "artifact": return "ic_artifact";
             default: return "ic_default";
-        }
-    }
-    private void refreshInventory() {
-        GridLayout bagGrid = findViewById(R.id.bag_grid);
-        if (bagGrid != null) {
-            bagGrid.removeAllViews();
-            itemList();
         }
     }
 

@@ -63,7 +63,8 @@ public class ChaosEventGenerator {
                         "3. shopItems: (type이 'shop'이면 위의 아이템 목록에서 3개 선택하여 리스트 작성, 아니면 null 또는 생략)\n" +
                         "4. 모든 필드를 원본 이벤트 구조와 완벽하게 일치시켜라.\n" +
                         "5. 부연 설명 없이 오직 수정된 JSON 객체 하나만 출력하라.\n" +
-                        "6. 두가지의 선택지는 반드시 높은 보상과 강한 패널티가 동반되어야한다.",
+                        "6. 두가지의 선택지는 반드시 높은 보상과 강한 패널티가 동반되어야한다."+
+                        "7. 충수는 min,max가 같아야한다 그리고 7이상을 넣어라",
                 floor, eventType, floor, gson.toJson(stat), itemNames, floor, eventType
         );
 

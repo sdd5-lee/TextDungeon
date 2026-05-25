@@ -84,14 +84,19 @@ public class MagicLearnDialog extends Dialog {
 
             tvName.setText(magic.getName());
             tvReqWisdom.setText("요구 지혜: " + reqWisdom);
-
-            if (currentWisdom >= reqWisdom) {
-                tvReqWisdom.setTextColor(0xFF81C784); // 초록색 (조건 충족)
-                btnLearn.setBackgroundColor(0xFF9C27B0); // 보라색 (배우기 가능)
+            if(player.getMagicScroll().hasMagic(magic.getId())){
+                tvReqWisdom.setTextColor(0xFFE57373);
+                tvName.setTextColor(0xFFE57373);
+                tvReqWisdom.setText("이미 배운 마법입니다.");
+                btnLearn.setVisibility(View.INVISIBLE);
+            }
+            else if (currentWisdom >= reqWisdom) {
+                tvReqWisdom.setTextColor(0xFF81C784);
+                btnLearn.setBackgroundColor(0xFF9C27B0);
                 btnLearn.setOnClickListener(v -> onLearnMagic(magic));
             } else {
-                tvReqWisdom.setTextColor(0xFFE57373); // 빨간색 (조건 미달)
-                btnLearn.setBackgroundColor(0xFF666666); // 회색 (비활성화)
+                tvReqWisdom.setTextColor(0xFFE57373);
+                btnLearn.setBackgroundColor(0xFF666666);
                 btnLearn.setOnClickListener(v ->
                         Toast.makeText(getContext(), "지혜가 부족하여 해독할 수 없습니다.", Toast.LENGTH_SHORT).show()
                 );
@@ -103,8 +108,7 @@ public class MagicLearnDialog extends Dialog {
 
     private void onLearnMagic(Magic magic) {
         player.getMagicScroll().addMagic(magic.getId(), magic.getMaxCount());
-
         Toast.makeText(getContext(), magic.getName() + " 마법의 이치를 깨달았습니다!", Toast.LENGTH_SHORT).show();
-        dismiss(); // 다이얼로그 닫기
+        dismiss();
     }
 }

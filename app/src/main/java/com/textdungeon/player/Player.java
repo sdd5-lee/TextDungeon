@@ -1,8 +1,5 @@
 package com.textdungeon.player;
 
-import android.content.Context;
-
-import com.textdungeon.data.DataControlTower;
 import com.textdungeon.model.Item;
 import com.textdungeon.model.Job;
 import com.textdungeon.model.LearnedMagic;
@@ -129,15 +126,11 @@ public class Player {
             stat.setHp(max);
         }
     }
-    public int castMagic(String magicId, Context context) {
-        LearnedMagic lm = magicScroll.getMagic(magicId);
-
+    public int castMagic(Magic magic) {
+        LearnedMagic lm = magicScroll.getMagic(magic.getId());
         if (lm != null && lm.use()) {
-            Magic magic = DataControlTower.getInstance(context).getMagicManager().spawn(magicId);
-
-            return magic.getMagicDamage(stat.getWisdom());
+            return magic.getMagicDamage(stat.getWisdom()) + equipment.getTotalMagicDamage();
         }
-
         return 0;
     }
 
@@ -151,9 +144,12 @@ public class Player {
     public int getFinalAtk() {
         return stat.getAtk() + equipment.getTotalAtk();
     }
-
     public int getMaxHp(){
         return stat.getMaxHp() + equipment.getTotalHp();
+    }
+
+    public int getTotalCrit(){
+        return stat.getCritical_rate() + equipment.getCrit();
     }
 
     //******************게터들******************

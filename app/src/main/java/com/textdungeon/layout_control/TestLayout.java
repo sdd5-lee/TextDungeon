@@ -245,7 +245,7 @@ public class TestLayout extends BaseActivity {
     }
     private void castMagic() {
         String magicId = "mag_1";
-        int damage = player.castMagic(magicId, this);
+        int damage = 100;
 
         if (damage > 0) {
             addLog("[전투] 마법 시전 성공! 적에게 " + damage + "의 데미지를 입혔습니다.");
