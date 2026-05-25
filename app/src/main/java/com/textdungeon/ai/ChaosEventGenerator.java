@@ -29,7 +29,7 @@ public class ChaosEventGenerator {
         config.responseMimeType = "application/json";
 
         GenerativeModel gm = new GenerativeModel(
-                "gemini-1.5-flash",
+                "gemini-3-flash-preview",
                 BuildConfig.GEMINI_API_KEY,
                 config.build()
         );
