@@ -2,6 +2,7 @@ package com.textdungeon.player;
 
 import com.textdungeon.model.Item;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,5 +40,13 @@ public class Inventory {
             return true;
         }
         return false;
+    }
+    public void removeItem(String itemId) {
+        if (itemMap.containsKey(itemId)) {
+            itemMap.remove(itemId);
+        }
+    }
+    public boolean isFullItem() {
+        return itemMap.size() >= MAX_INV;
     }
 }

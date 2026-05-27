@@ -177,46 +177,46 @@
                 android:id="@+id/battle_btn_attack"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginEnd="1dp"
                 android:layout_weight="1"
                 android:background="#1C1B1B"
-                android:gravity="center"
-                android:text="ATTACK"
-                android:textColor="#58413E"
-                android:textSize="12sp"
-                android:letterSpacing="0.1"
-                android:layout_marginEnd="1dp"
                 android:clickable="true"
-                android:focusable="true"/>
+                android:focusable="true"
+                android:gravity="center"
+                android:letterSpacing="0.1"
+                android:text="ATTACK"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/battle_btn_guard"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginHorizontal="1dp"
                 android:layout_weight="1"
                 android:background="#1C1B1B"
-                android:gravity="center"
-                android:text="GUARD"
-                android:textColor="#58413E"
-                android:textSize="12sp"
-                android:letterSpacing="0.1"
-                android:layout_marginHorizontal="1dp"
                 android:clickable="true"
-                android:focusable="true"/>
+                android:focusable="true"
+                android:gravity="center"
+                android:letterSpacing="0.1"
+                android:text="GUARD"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/battle_btn_escape"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginStart="1dp"
                 android:layout_weight="1"
                 android:background="#1C1B1B"
-                android:gravity="center"
-                android:text="ESCAPE"
-                android:textColor="#58413E"
-                android:textSize="12sp"
-                android:letterSpacing="0.1"
-                android:layout_marginStart="1dp"
                 android:clickable="true"
-                android:focusable="true"/>
+                android:focusable="true"
+                android:gravity="center"
+                android:letterSpacing="0.1"
+                android:text="ESCAPE"
+                android:textColor="#FDFDFD"
+                android:textSize="12sp" />
         </LinearLayout>
 
         <!-- 마법(스킬) 목록 -->

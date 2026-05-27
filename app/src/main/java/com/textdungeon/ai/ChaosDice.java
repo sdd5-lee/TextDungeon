@@ -1,5 +1,6 @@
 package com.textdungeon.ai;
 
+import com.example.textdungeon.BuildConfig;
 import com.google.ai.client.generativeai.GenerativeModel;
 import com.google.ai.client.generativeai.java.GenerativeModelFutures;
 import com.google.ai.client.generativeai.type.Content;
@@ -10,6 +11,7 @@ import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.gson.Gson;
 import com.textdungeon.event.BattleEvent;
+import com.textdungeon.event.GameEvent;
 import com.textdungeon.model.Item;
 import com.textdungeon.model.Stat;
 
@@ -17,7 +19,6 @@ import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
-
 public class ChaosDice {
     private final GenerativeModelFutures model;
     private final Gson gson;
@@ -25,12 +26,11 @@ public class ChaosDice {
 
     public ChaosDice() {
         GenerationConfig.Builder config = new GenerationConfig.Builder();
-                config.responseMimeType = "application/json";
-
+        config.responseMimeType = "application/json";
 
         GenerativeModel gm = new GenerativeModel(
                 "gemini-3-flash-preview",
-                "AIzaSyBai-s46iBFliUj3h6MGDU_kWbhzTrr4Ow",
+                BuildConfig.GEMINI_API_KEY,
                 config.build()
         );
 
@@ -39,13 +39,12 @@ public class ChaosDice {
         this.executor = Executors.newSingleThreadExecutor();
     }
 
-    public void roll(int floor, Stat stat, List<Item> itemList, BattleEvent currentEvent, AiCallback callback) {
+    public void roll(int floor, Stat stat, List<Item> itemList, GameEvent currentEvent, AiCallback callback) {
         String itemNames = itemList.stream()
                 .map(Item::getName)
                 .filter(name -> name != null && !name.isEmpty())
                 .collect(Collectors.joining(", "));
 
-        // 2. 파이썬의 프롬프트 구성 그대로 이식
         String prompt = String.format(
                 "너는 다크 판타지 RPG의 '혼돈의 신'이다. 플레이어의 요청에 따라 기존 이벤트를 기괴하게 뒤틀어라.\n\n" +
                         "[상황]\n" +

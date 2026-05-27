@@ -5,11 +5,14 @@ import com.textdungeon.player.Player;
 
 public class Item {
     private String name;
+    private String description;
     private String id;
     private String type;
     private int hp;
     private int atk;
-
+    private int value;
+    private int crit;
+    private int magicDamage;
     private Item() {}
     public static Item createFromJson(String json) {
         return new Gson().fromJson(json, Item.class);
@@ -31,13 +34,24 @@ public class Item {
     }
     public Boolean itemUse(Player player) {
         if ("consumables".equals(this.type)) {
-            if (this.id.equals("item_3")) {
-                player.heal(this.hp);
-            }
-            //else if (this.id.equals("item_02")) {
-            //}
+            player.heal(this.hp);
             return true;
         }
         return false;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getMagicDamage() {
+        return magicDamage;
+    }
+    public int getCrit() {
+        return crit;
     }
 }

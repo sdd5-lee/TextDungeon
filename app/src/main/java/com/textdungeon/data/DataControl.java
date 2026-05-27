@@ -18,10 +18,15 @@ import java.util.Map;
 public class DataControl<D> {
     private final Map<String, String> dataList = new HashMap<>();
     private final Class<D> clazz;
-    private final Gson gson = new Gson();
+    private final Gson gson;
 
     public DataControl(Class<D> clazz) {
         this.clazz = clazz;
+        this.gson = new Gson();
+    }
+    public DataControl(Class<D> clazz,Gson customGson) {
+        this.clazz = clazz;
+        this.gson = customGson;
     }
 
     public void init(Context context, String fileName) {

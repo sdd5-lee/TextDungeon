@@ -9,21 +9,21 @@ import java.util.Map;
 import java.util.Set;
 
 public class UserRecord {
-    private int score;
+    private int  gem;
     private final Set<String> unlockJobName;
     private final Map<String, Integer> upgradeLevels;
     public UserRecord(){
-        this.score = 0;
+        this.gem = 0;
         this.unlockJobName = new HashSet<>();
         this.upgradeLevels = new HashMap<>();
         for (Job job: Job.values()) {
-            if (job.defaultUnlokced){
+            if (job.defaultUnlocked){
                 unlockJobName.add(job.name);
             }
         }
     }
-    public void unlockJobs(String jobName){
-        unlockJobName.add(jobName);
+    public void unlockJobs(Job job){
+        unlockJobName.add(job.name);
     }
     public boolean isUnlockJob(String jobName){
         return unlockJobName.contains(jobName);
@@ -37,9 +37,9 @@ public class UserRecord {
         int currentLevel = getUpgradeLevel(upgradeId);
         upgradeLevels.put(upgradeId, currentLevel + 1);
     }
-    public int getScore() { return score; }
-    public void deductScore(int score) { this.score -= score; }
-    public void addScore(int score) { this.score += score; }
+    public int getGem() { return gem; }
+    public void deductScore(int score) { this.gem -= score; }
+    public void addScore(int score) { this.gem += score; }
 
     public Set<String> getUnlockJobName() {
         return unlockJobName;

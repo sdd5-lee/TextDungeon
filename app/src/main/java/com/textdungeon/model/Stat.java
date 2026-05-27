@@ -9,11 +9,15 @@ public class Stat {
     private int maxExp;
     private int statPoint;
 
+    private int gold;
     public Stat(int strength, int agility, int health, int wisdom) {
         this.strength = strength;
         this.agility = agility;
         this.health = health;
         this.wisdom = wisdom;
+
+        this.gold = 100;
+
         statPoint = 0;
         exp = 0 ;
         maxExp = 100;
@@ -130,6 +134,21 @@ public class Stat {
         wisdom += point;
     }
 
+    //골드 추가 부분
+    public int getGold() {
+        return gold;
+    }
+
+    public void setGold(int gold) {
+        this.gold = gold;
+    }
+    //골드 추가 부분
+
+    public void addGold(int amount) {
+        this.gold += amount;
+        if (this.gold < 0) this.gold = 0; // 골드가 마이너스가 되지 않도록 방지
+    }
+
     public void gainStat(String type, int value) {
         switch (type) {
             case "힘":
@@ -152,6 +171,9 @@ public class Stat {
                 break;
             case "회복":
                 this.hp += value;
+                break;
+            case "골드": // [추가] 골드 사용
+                this.addGold(value);
                 break;
         }
 

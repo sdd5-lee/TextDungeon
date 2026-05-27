@@ -16,8 +16,8 @@ public class GameEvent {
     protected int minFloor;
     protected int maxFloor;
     @SerializedName("rewards") protected List<Reward> rewards;
-
     @SerializedName("choices") protected List<String> choices;
+    @SerializedName("type") protected String type;
     protected String enemyId;
 
     public GameEvent() {}
@@ -49,6 +49,10 @@ public class GameEvent {
 
     public String getImgId() {
         return imgId;
+    }
+    public String getItemId(int choice){
+        Reward reward = getRewards().get(choice);
+        return reward.getItemId();
     }
 
     public String execute(Player player, int choice, DataControl<Item> itemManager) {

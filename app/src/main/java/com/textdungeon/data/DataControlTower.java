@@ -2,8 +2,12 @@ package com.textdungeon.data;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.textdungeon.ai.ChaosManager;
 import com.textdungeon.event.BattleEvent;
+import com.textdungeon.event.GameEvent;
+import com.textdungeon.event.ShopEvent;
 import com.textdungeon.model.Item;
 import com.textdungeon.model.Monster;
 import com.textdungeon.model.Job;
@@ -16,7 +20,7 @@ public class DataControlTower {
     private final Context appContext;
     private DataControl<Monster> monsterManager;
     private DataControl<Item> itemManager;
-    private DataControl<BattleEvent> eventManager;
+    private DataControl<GameEvent> eventManager;
     private DataControl<Magic> magicManager;
     private Player player;
     private UserRecord userRecord;
@@ -41,7 +45,16 @@ public class DataControlTower {
         itemManager = new DataControl<>(Item.class);
         itemManager.init(context, "item_list.json");
 
-        eventManager = new DataControl<>(BattleEvent.class);
+        RuntimeTypeAdapterFactory<GameEvent> eventAdapterFactory =
+                RuntimeTypeAdapterFactory.of(GameEvent.class, "type")
+                        .registerSubtype(BattleEvent.class, "battle")
+                        .registerSubtype(GameEvent.class, "normal")
+                        .registerSubtype(ShopEvent.class, "shop");
+
+        Gson eventGson = new GsonBuilder()
+                .registerTypeAdapterFactory(eventAdapterFactory)
+                .create();
+        eventManager = new DataControl<>(GameEvent.class, eventGson);
         eventManager.init(context, "event_list.json");
 
         magicManager = new DataControl<>(Magic.class);
@@ -94,7 +107,7 @@ public class DataControlTower {
         return appContext;
     }
 
-    public DataControl<BattleEvent> getEventManager() {
+    public DataControl<GameEvent> getEventManager() {
         return eventManager;
     }
 

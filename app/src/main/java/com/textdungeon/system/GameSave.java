@@ -35,11 +35,11 @@ public class GameSave {
 
             switch (upgrade.category) {
                 case "STR": stat.addStrength(totalBonus); break;
-                case "AGI": stat.setAgility(totalBonus); break;
+                case "AGI": stat.addAgility(totalBonus); break;
                 case "HEALTH": stat.addHealth(totalBonus); break;
                 case "WIS": stat.addWisdom(totalBonus); break;
                 case "STAT_POINT": stat.addStatPoint(totalBonus); break;
-                case "GOLD": newPlayer.addMoney(totalBonus); break;
+                case "GOLD": stat.addGold(totalBonus); break;
                 case "DICE": newPlayer.addDiceChane(totalBonus); break;
             }
         }
@@ -57,7 +57,7 @@ public class GameSave {
              InputStreamReader isr = new InputStreamReader(fis)) {
             return new Gson().fromJson(isr, UserRecord.class);
         } catch (Exception e) {
-            return new UserRecord(); // 파일 없으면 새로 생성
+            return new UserRecord();
         }
     }
     public void runSave(Context context) {

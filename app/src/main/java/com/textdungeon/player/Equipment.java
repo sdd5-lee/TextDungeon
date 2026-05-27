@@ -1,7 +1,6 @@
 package com.textdungeon.player;
 
 import com.textdungeon.model.Item;
-import com.textdungeon.model.Monster;
 
 public class Equipment {
     private Item weapon;
@@ -14,7 +13,6 @@ public class Equipment {
         if (newItem == null) return null;
 
         Item oldItem = null;
-
         switch (newItem.getType()) {
             case "weapon":
                 oldItem = weapon;
@@ -42,6 +40,26 @@ public class Equipment {
         }
         return oldItem;
     }
+    public Item unequip(String type, int slot) {
+        Item oldItem = null;
+        switch (type.toLowerCase()) {
+            case "weapon":
+                oldItem = weapon;
+                weapon = null;
+                break;
+            case "armor":
+                oldItem = armor;
+                armor = null;
+                break;
+            case "artifact":
+                if (slot >= 0 && slot < artifact.length) {
+                    oldItem = artifact[slot];
+                    artifact[slot] = null;
+                }
+                break;
+        }
+        return oldItem;
+    }
     public int getTotalAtk(){
         int totalAtk= 0;
         Item [] items = {weapon,armor,artifact[0],artifact[1]};
@@ -62,6 +80,26 @@ public class Equipment {
         }
         return totalHp;
     }
+    public int getCrit(){
+        int Crit = 0;
+        Item [] items = {weapon,armor,artifact[0],artifact[1]};
+        for (Item i: items) {
+            if (i != null) {
+                Crit += i.getCrit();
+            }
+        }
+        return Crit;
+    }
+    public int getTotalMagicDamage(){
+        int totalMagicDamage = 0;
+        Item [] items = {weapon,armor,artifact[0],artifact[1]};
+        for (Item i: items) {
+            if (i != null) {
+                totalMagicDamage += i.getMagicDamage();
+            }
+        }
+        return totalMagicDamage;
+    }
     public Item getArmor() {
         return armor;
     }
@@ -76,4 +114,5 @@ public class Equipment {
     public Item[] getArtifact() {
         return artifact;
     }
+
 }

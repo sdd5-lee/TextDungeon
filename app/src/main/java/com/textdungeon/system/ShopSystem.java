@@ -1,20 +1,16 @@
 package com.textdungeon.system;
 
+import android.content.Context;
+
 import com.textdungeon.data.DataControlTower;
 import com.textdungeon.model.Job;
 import com.textdungeon.model.ShopUpgrade;
 
 public class ShopSystem {
     DataControlTower dt;
-    public ShopSystem(android.content.Context context){
-        this.dt = DataControlTower.getInstance(context);
-    }
-    private int getJobPrice(Job job) {
-        switch (job) {
-            case HERO: return 5000;
-            //case ARCHER: return 1500;
-            default: return 0;
-        }
+    Context context;
+    public ShopSystem(DataControlTower dt){
+        this.dt = dt;
     }
     public String buyJob(String jobName){
         Job selectJob;
@@ -27,10 +23,11 @@ public class ShopSystem {
         if(record.isUnlockJob(selectJob.name)){
             return "직업 : ["+ selectJob.name + "]은 이미 해금한 직업입니다";
         }
-        int price = getJobPrice(selectJob);
-        if (record.getScore() >= price) {
+        int price = selectJob.price;
+        if (record.getGem() >= price) {
             record.deductScore(price);
-            dt.saveGame();
+            record.unlockJobs(selectJob);
+            GameSave.saveUserRecord(context, record);
             return "직업 : ["+ selectJob.name + "]이 해금되었습니다";
         }else {
             return "구매 실패 [재화가 부족합니다]";
@@ -51,13 +48,12 @@ public class ShopSystem {
         }
         int price = selectUpgrade.getNextPrice(currentLevel);
 
-        if (record.getScore() >= price) {
+        if (record.getGem() >= price) {
             record.deductScore(price);
             record.levelUpUpgrade(selectUpgrade.name());
-            dt.saveGame();
-
+            GameSave.saveUserRecord(context, record);
             int newLevel = record.getUpgradeLevel(selectUpgrade.name());
-            return "[" + selectUpgrade.title + "] 레벨업 성공! (현재 Lv." + newLevel + ") / 남은 재화: " + record.getScore();
+            return "[" + selectUpgrade.title + "] 레벨업 성공! (현재 Lv." + newLevel + ") / 남은 재화: " + record.getGem();
         } else {
             return "구매 실패 [재화가 부족합니다. 필요 재화: " + price + "]";
         }
