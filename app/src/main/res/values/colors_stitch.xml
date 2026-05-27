@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="stitch_surface">#131313</color>
+    <color name="stitch_on_surface">#E5E2E1</color>
+    <color name="stitch_surface_container_low">#1C1B1B</color>
+    <color name="stitch_surface_container_high">#2A2A2A</color>
+    <color name="stitch_secondary">#E9C176</color> <!-- Aged Gold -->
+    <color name="stitch_on_secondary">#412D00</color>
+    <color name="stitch_primary">#FFB3AD</color> <!-- Fresh Ink -->
+    <color name="stitch_primary_container">#901418</color> <!-- Deep Red -->
+    <color name="stitch_on_primary_container">#FF9C94</color>
+    <color name="stitch_outline_variant">#58413E</color>
+    <color name="stitch_on_surface_variant">#E0BFBA</color>
+</resources>
