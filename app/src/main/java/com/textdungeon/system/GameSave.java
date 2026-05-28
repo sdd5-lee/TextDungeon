@@ -49,7 +49,7 @@ public class GameSave {
                 case "WIS": stat.addWisdom(totalBonus); break;
                 case "STAT_POINT": stat.addStatPoint(totalBonus); break;
                 case "GOLD": stat.addGold(totalBonus); break;
-                case "DICE": newPlayer.addDiceChane(totalBonus); break;
+                case "DICE_Chane": newPlayer.addDiceChane(totalBonus); break;
             }
         }
         stat.updateBattleStat(newPlayer.getLevel());
