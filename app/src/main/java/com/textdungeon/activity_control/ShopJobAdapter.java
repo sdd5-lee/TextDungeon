@@ -1,4 +1,4 @@
-package com.textdungeon.layout_control;
+package com.textdungeon.activity_control;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.textdungeon.R;
 import com.textdungeon.model.Job;
-import com.textdungeon.system.GameSave;
 import com.textdungeon.system.ShopSystem;
+import com.textdungeon.system.SoundManager; // ★ SoundManager 임포트 추가
 import com.textdungeon.system.UserRecord;
 
 import java.util.List;
@@ -39,7 +39,7 @@ public class ShopJobAdapter extends RecyclerView.Adapter<ShopJobAdapter.JobViewH
     @NonNull
     @Override
     public JobViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.shop_character_card, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.main_shop_character_card, parent, false);
         return new JobViewHolder(view);
     }
 
@@ -65,6 +65,8 @@ public class ShopJobAdapter extends RecyclerView.Adapter<ShopJobAdapter.JobViewH
             holder.unlockButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    SoundManager.getInstance(context).playButtonSfx();
+
                     String resultMsg = shopSystem.buyJob(job.name());
                     Toast.makeText(context, resultMsg, Toast.LENGTH_SHORT).show();
                     if (resultMsg.contains("해금되었습니다")) {

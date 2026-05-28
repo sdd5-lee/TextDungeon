@@ -1,5 +1,7 @@
 package com.textdungeon.system;
 
+import android.util.Log;
+
 import com.textdungeon.data.DataControl;
 import com.textdungeon.data.DataControlTower;
 import com.textdungeon.data.DungeonControl;
@@ -15,11 +17,13 @@ public class EventManager {
     private final DataControlTower dt;
     private final Player player;
     private final DungeonControl dungeonControl;
+    private int aiCount;
 
     public EventManager(DataControlTower dt) {
         this.dt = dt;
         this.player = dt.getPlayer();
         this.dungeonControl = dt.getDungeonControl();
+        this.aiCount = dt.getDifficulty().eventCount;
     }
 
     // ─────────────────────────────────────────
@@ -28,6 +32,12 @@ public class EventManager {
     public GameEvent pickRandomEvent() {
         int currentFloor = dungeonControl.getCurrentFloor();
         DataControl<GameEvent> eventList = dt.getEventManager();
+
+        if (dt.getAiEvents().containsKey(currentFloor)) {
+            GameEvent aiEvent = dt.getAiEvents().get(currentFloor);
+            dt.getAiEvents().remove(currentFloor);
+            return aiEvent;
+        }
 
         List<GameEvent> possibleEvents = eventList.getAll().stream()
                 .filter(e -> currentFloor >= e.getMinFloor() && currentFloor <= e.getMaxFloor())
@@ -39,7 +49,6 @@ public class EventManager {
 
         return possibleEvents.get(new Random().nextInt(possibleEvents.size()));
     }
-
     // ─────────────────────────────────────────
     // 이벤트 결과 처리
     // ─────────────────────────────────────────
@@ -87,4 +96,5 @@ public class EventManager {
     public boolean isPlayerDead() {
         return player.getStat().getHp() <= 0;
     }
+
 }

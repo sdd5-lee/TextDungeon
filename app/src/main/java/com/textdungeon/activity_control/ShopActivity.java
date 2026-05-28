@@ -1,4 +1,4 @@
-package com.textdungeon.layout_control;
+package com.textdungeon.activity_control;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -22,7 +22,7 @@ import com.textdungeon.system.UserRecord;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShopLayout extends BaseActivity {
+public class ShopActivity extends BaseActivity {
     private ShopSystem shopSystem;
     private DataControlTower dt;
     private TextView playerGem;
@@ -36,7 +36,7 @@ public class ShopLayout extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.shop_main_layout);
+        setContentView(R.layout.activity_main_shop);
 
         dt = DataControlTower.getInstance(this);
         shopSystem = new ShopSystem(dt);
@@ -51,6 +51,8 @@ public class ShopLayout extends BaseActivity {
         upgradeContainer = findViewById(R.id.upgrade_container);
 
         FrameLayout backToMain = findViewById(R.id.bottom_action);
+
+        setSfx(unlockTab, upgradeTab, backToMain);
 
         unlockTab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,10 +121,10 @@ public class ShopLayout extends BaseActivity {
 
     public void upgradeTabList(){
         LayoutInflater inflater = LayoutInflater.from(this);
-        upgradeContainer.removeAllViews(); // 초기화
+        upgradeContainer.removeAllViews();
 
         for (ShopUpgrade upgrade : ShopUpgrade.values()) {
-            View rowView = inflater.inflate(R.layout.shop_upgrade_card, upgradeContainer, false);
+            View rowView = inflater.inflate(R.layout.main_shop_upgrade_card, upgradeContainer, false);
 
             TextView tvName = rowView.findViewById(R.id.upgrade_name);
             TextView tvLevel = rowView.findViewById(R.id.upgrade_level);
@@ -130,6 +132,8 @@ public class ShopLayout extends BaseActivity {
             TextView tvValue = rowView.findViewById(R.id.upgrade_value);
             TextView tvPrice = rowView.findViewById(R.id.upgrade_price);
             LinearLayout btnUpgrade = rowView.findViewById(R.id.btn_upgrade);
+
+            setSfx(btnUpgrade);
 
             // 현재 레벨 가져오기
             int currentLevel = record.getUpgradeLevel(upgrade.name());
@@ -159,7 +163,7 @@ public class ShopLayout extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         String resultMsg = shopSystem.buyUpgrade(upgrade.name());
-                        Toast.makeText(ShopLayout.this, resultMsg, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ShopActivity.this, resultMsg, Toast.LENGTH_SHORT).show();
 
                         // 구매 성공 시 재화 UI와 리스트 갱신
                         if (resultMsg.contains("성공")) {

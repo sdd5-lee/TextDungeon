@@ -1,4 +1,4 @@
-package com.textdungeon.layout_control;
+package com.textdungeon.dialog_control;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -59,7 +59,7 @@ public class BattleDialog extends Dialog {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         // 사용자님이 만드신 배틀 레이아웃 연결
-        setContentView(R.layout.battle_dialog);
+        setContentView(R.layout.dialog_battle);
         setCancelable(false);
         setCanceledOnTouchOutside(false);
         // 배경을 투명하게 하여 모서리 각진 부분 제거 (필요 시)

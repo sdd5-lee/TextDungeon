@@ -1,7 +1,10 @@
-package com.textdungeon.layout_control;
+package com.textdungeon.activity_control;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
+import android.os.Handler;
+import android.os.Looper;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -10,13 +13,16 @@ import com.example.textdungeon.R;
 import com.textdungeon.ai.AiCallback;
 import com.textdungeon.buttons.ChoiceButton;
 import com.textdungeon.data.DataControlTower;
-import com.textdungeon.event.BattleEvent;
+import com.textdungeon.dialog_control.BattleDialog;
+import com.textdungeon.dialog_control.InventoryDialog;
+import com.textdungeon.dialog_control.MagicLearnDialog;
+import com.textdungeon.dialog_control.StatDialog;
 import com.textdungeon.event.GameEvent;
 import com.textdungeon.model.Monster;
 import com.textdungeon.player.Player;
 import com.textdungeon.system.EventManager;
 
-public class EventLayout extends BaseActivity {
+public class EventActivity extends BaseActivity {
 
     private DataControlTower dt;
     private Player player;
@@ -26,6 +32,12 @@ public class EventLayout extends BaseActivity {
     private GameEvent currentEvent;
     private boolean isDiceUsed = false;
 
+    private Handler typingHandler = new Handler(Looper.getMainLooper());
+    private Runnable typingRunnable;
+    private StringBuilder typingBuffer = new StringBuilder();
+    private String currentTypingText = "";
+    private int currentTypingIndex = 0;
+
     // ─────────────────────────────────────────────────────────────
     // 생명주기
     // ─────────────────────────────────────────────────────────────
@@ -33,29 +45,43 @@ public class EventLayout extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.event_layout);
+        setContentView(R.layout.activity_event);
 
         dt = DataControlTower.getInstance(this);
         player = dt.getPlayer();
         eventManager = new EventManager(dt);
 
+        if (eventManager.getCurrentFloor() > 50) {
+            Intent intent = new Intent(this, ClearActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
         currentEvent = eventManager.pickRandomEvent();
+
+        setupSkipListener();
+
         LinearLayout btnMagicLearn = findViewById(R.id.btn_magic_learn);
         if (btnMagicLearn != null) {
+            setSfx(btnMagicLearn);
             btnMagicLearn.setOnClickListener(v -> {
                 MagicLearnDialog dialog = new MagicLearnDialog(
-                        EventLayout.this,
+                        EventActivity.this,
                         player,
                         dt.getMagicManager()
                 );
                 dialog.show();
             });
         }
+
         LinearLayout btnInventory = findViewById(R.id.btn_inventory);
         if (btnInventory != null) {
+            setSfx(btnInventory);
             btnInventory.setOnClickListener(v -> {
                 InventoryDialog dialog = new InventoryDialog(
-                        EventLayout.this,
+                        EventActivity.this,
                         player,
                         dt.getItemManager(),
                         new Runnable() {
@@ -70,43 +96,45 @@ public class EventLayout extends BaseActivity {
             });
         }
 
-        LinearLayout btnSystem = findViewById(R.id.btn_system);
-
         renderEvent();
-
         setupBackButton();
     }
 
     // ─────────────────────────────────────────────────────────────
-    // UI 렌더링
+    // UI 렌더링 & 타이핑 애니메이션
     // ─────────────────────────────────────────────────────────────
-    private void renderEvent() {
+    private void renderEvent(String extraMsg) {
         if (player == null) return;
 
-        eventDesc    = findViewById(R.id.event_description);
+        eventDesc = findViewById(R.id.event_description);
         choiceButtons = findViewById(R.id.choice_container);
 
         eventDesc.setText("");
+        typingBuffer.setLength(0);
         choiceButtons.removeAllViews();
 
-        // 이벤트 텍스트
+        if (extraMsg != null) {
+            appendDesc(extraMsg);
+        }
+
         appendDesc(currentEvent.getName());
         appendDesc(currentEvent.getDescription());
 
-        // 플레이어 정보 헤더
         updatePlayerHeader();
-
-        // 이벤트 이미지
         renderEventImage();
-
-        // 선택지 버튼
         renderChoiceButtons();
 
-        // 혼돈의 주사위 버튼
         if (!isDiceUsed) {
             renderDiceButton();
         }
+
+        startTypingAnimation();
     }
+
+    private void renderEvent() {
+        renderEvent(null);
+    }
+
     private void updatePlayerHeader() {
         ((TextView) findViewById(R.id.player_level)).setText("LV. " + player.getLevel());
         ((TextView) findViewById(R.id.hp_text)).setText(
@@ -133,6 +161,8 @@ public class EventLayout extends BaseActivity {
         int index = 0;
         for (String choiceText : currentEvent.getChoices()) {
             ChoiceButton button = new ChoiceButton(this);
+            setSfx(button);
+
             button.setTextView(choiceText);
             button.setLayoutParams(matchParentWrapContent());
             int finalIndex = index;
@@ -144,6 +174,8 @@ public class EventLayout extends BaseActivity {
 
     private void renderDiceButton() {
         ChoiceButton diceButton = new ChoiceButton(this);
+        setSfx(diceButton);
+
         diceButton.setTextView("혼돈의 주사위 사용하기 (" + player.getDiceChane() + "개)");
         diceButton.setLayoutParams(matchParentWrapContent());
         diceButton.setOnClickListener(v -> onDiceSelected());
@@ -156,38 +188,36 @@ public class EventLayout extends BaseActivity {
     private void onChoiceSelected(int index) {
         if (currentEvent == null) {
             appendDesc("시스템: 이벤트를 찾을 수 없습니다.");
+            startTypingAnimation();
             return;
         }
         choiceButtons.removeAllViews();
 
-        // 상점 이벤트 처리
         if (currentEvent instanceof com.textdungeon.event.ShopEvent) {
             com.textdungeon.event.ShopEvent shopEvent = (com.textdungeon.event.ShopEvent) currentEvent;
             shopEvent.openShop(this, player, dt.getItemManager());
-            // 상점 닫으면 다음 층으로
             showNextFloorButton();
+            startTypingAnimation();
             return;
         }
 
-        // 배틀 이벤트 처리
         String monsterId = currentEvent.getEnemyId();
         if (monsterId != null && !monsterId.isEmpty()) {
             showBattleDialog(monsterId, index);
         } else {
-            // 일반 이벤트 처리
             applyEventResult(index);
         }
     }
+
     private void applyEventResult(int choiceIndex) {
         int levelSnapshot = eventManager.snapshotLevel();
-
         String result = eventManager.applyReward(currentEvent, choiceIndex);
 
         if (result == null) {
             appendDesc("인벤토리가 가득 찼습니다. 버릴 아이템을 선택해주세요.");
-
+            startTypingAnimation();
             InventoryDialog dialog = new InventoryDialog(
-                    EventLayout.this,
+                    EventActivity.this,
                     player,
                     dt.getItemManager(),
                     new Runnable() {
@@ -200,6 +230,7 @@ public class EventLayout extends BaseActivity {
                         }
                     }
             );
+            dialog.show();
             return;
         }
 
@@ -211,7 +242,10 @@ public class EventLayout extends BaseActivity {
         } else {
             showNextFloorButton();
         }
+
+        startTypingAnimation();
     }
+
     private void onDiceSelected() {
         if (player.getDiceChane() <= 0) return;
         isDiceUsed = true;
@@ -219,8 +253,9 @@ public class EventLayout extends BaseActivity {
 
         choiceButtons.removeAllViews();
         appendDesc("🎲 운명을 재구성하는 중...");
+        startTypingAnimation();
 
-        dt.getChaosManager().requestChaosChoice(
+        dt.getAiManager().requestChaosChoice(
                 eventManager.getCurrentFloor(),
                 player.getStat(),
                 dt.getItemManager().getAll(),
@@ -231,13 +266,12 @@ public class EventLayout extends BaseActivity {
                         runOnUiThread(() -> {
                             if (updatedEvent != null && updatedEvent.getChoices().size() > 2) {
                                 currentEvent = updatedEvent;
-                                appendDesc("시스템: 새로운 선택지가 생성되었습니다.");
+                                renderEvent("시스템: 새로운 선택지가 생성되었습니다.");
                             } else {
                                 isDiceUsed = false;
                                 player.addDiceChane(1);
-                                appendDesc("시스템: 혼돈의 신이 응답하지 않습니다.");
+                                renderEvent("시스템: 혼돈의 신이 응답하지 않습니다.");
                             }
-                            renderEvent();
                         });
                     }
 
@@ -246,8 +280,7 @@ public class EventLayout extends BaseActivity {
                         runOnUiThread(() -> {
                             isDiceUsed = false;
                             player.addDiceChane(1);
-                            renderEvent();
-                            appendDesc("시스템: 오류가 발생했습니다.");
+                            renderEvent("시스템: 오류가 발생했습니다.");
                         });
                     }
                 }
@@ -262,14 +295,27 @@ public class EventLayout extends BaseActivity {
         Monster monster = eventManager.spawnMonster(monsterId);
         if (monster == null) {
             appendDesc("시스템: 몬스터 [" + monsterId + "] 데이터를 찾을 수 없습니다.");
+            startTypingAnimation();
             return;
         }
-        BattleDialog battleDialog = new BattleDialog(this, player, monster,dt.getDifficulty());
+        BattleDialog battleDialog = new BattleDialog(this, player, monster, dt.getDifficulty());
         battleDialog.setOnDismissListener(dialog -> {
             if (eventManager.isPlayerDead()) {
-                // TODO: 게임오버 화면 연결 (2번 구현 시 여기만 수정)
-                appendDesc("💀 플레이어가 사망했습니다...");
+                appendDesc("당신은 사망하였습니다.");
+                ChoiceButton button = new ChoiceButton(this);
+                setSfx(button);
+
+                button.setTextView("사망 확인");
+                button.setOnClickListener(v -> {
+                    Intent intent = new Intent(this, DiedActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                });
+                choiceButtons.addView(button);
+                startTypingAnimation();
             } else {
+                dt.getUserRecord().addKillCount();
                 applyEventResult(choiceIndex);
             }
         });
@@ -280,8 +326,8 @@ public class EventLayout extends BaseActivity {
         appendDesc("레벨업! " + player.getLevel() + "레벨이 되었습니다!");
         StatDialog levelUpDialog = new StatDialog(this, player);
         levelUpDialog.setOnDismissListener(dialog -> {
-            renderEvent();
             showNextFloorButton();
+            startTypingAnimation();
         });
         levelUpDialog.show();
     }
@@ -294,14 +340,33 @@ public class EventLayout extends BaseActivity {
         eventManager.goNextFloor();
         choiceButtons.removeAllViews();
 
-        ChoiceButton button = new ChoiceButton(this);
-        button.setTextView("다음층으로 (" + eventManager.getCurrentFloor() + "F)");
-        button.setOnClickListener(v -> {
-            isDiceUsed = false;
-            currentEvent = eventManager.pickRandomEvent();
-            renderEvent();
-        });
-        choiceButtons.addView(button);
+        if (eventManager.getCurrentFloor() > 50){
+            appendDesc("던전안에 숨어있던 마왕을 쓰러트렸습니다.\n더 이상의 적은 없다.");
+            ChoiceButton button = new ChoiceButton(this);
+
+            setSfx(button);
+
+            button.setTextView("던전탐사를 끝낸다");
+            button.setOnClickListener(v -> {
+                Intent intent = new Intent(this, ClearActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                dt.saveGame();
+                startActivity(intent);
+                finish();
+            });
+            choiceButtons.addView(button);
+        } else {
+            ChoiceButton button = new ChoiceButton(this);
+            setSfx(button);
+
+            button.setTextView("다음층으로 (" + eventManager.getCurrentFloor() + "F)");
+            button.setOnClickListener(v -> {
+                isDiceUsed = false;
+                currentEvent = eventManager.pickRandomEvent();
+                renderEvent();
+            });
+            choiceButtons.addView(button);
+        }
     }
 
     // ─────────────────────────────────────────────────────────────
@@ -313,7 +378,7 @@ public class EventLayout extends BaseActivity {
                 new androidx.activity.OnBackPressedCallback(true) {
                     @Override
                     public void handleOnBackPressed() {
-                        new android.app.AlertDialog.Builder(EventLayout.this)
+                        new android.app.AlertDialog.Builder(EventActivity.this)
                                 .setTitle("게임 종료")
                                 .setMessage("게임을 종료하시겠습니까?\n(현재 층수: "
                                         + eventManager.getCurrentFloor() + "F)")
@@ -328,12 +393,58 @@ public class EventLayout extends BaseActivity {
     }
 
     // ─────────────────────────────────────────────────────────────
-    // 유틸
+    // 유틸 (타이핑 로직)
     // ─────────────────────────────────────────────────────────────
+    private void setupSkipListener() {
+        eventDesc = findViewById(R.id.event_description);
+        eventDesc.setOnClickListener(v -> {
+            if (typingRunnable != null) {
+                typingHandler.removeCallbacks(typingRunnable);
+                typingRunnable = null;
+                // 버퍼에 남은 텍스트 즉시 전체 출력
+                if (currentTypingIndex < currentTypingText.length()) {
+                    eventDesc.append(currentTypingText.substring(currentTypingIndex));
+                }
+                if (choiceButtons != null) {
+                    choiceButtons.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+    }
 
     private void appendDesc(String text) {
         if (eventDesc == null) eventDesc = findViewById(R.id.event_description);
-        eventDesc.append(" " + text + "\n");
+        typingBuffer.append(" ").append(text).append("\n");
+    }
+
+    private void startTypingAnimation() {
+        if (typingRunnable != null) {
+            typingHandler.removeCallbacks(typingRunnable);
+        }
+
+        currentTypingText = typingBuffer.toString();
+        currentTypingIndex = 0;
+        typingBuffer.setLength(0);
+        if (choiceButtons != null) {
+            choiceButtons.setVisibility(View.INVISIBLE);
+        }
+
+        typingRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if (currentTypingIndex < currentTypingText.length()) {
+                    eventDesc.append(String.valueOf(currentTypingText.charAt(currentTypingIndex)));
+                    currentTypingIndex++;
+                    typingHandler.postDelayed(this, 30);
+                } else {
+                    typingRunnable = null;
+                    if (choiceButtons != null) {
+                        choiceButtons.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        };
+        typingHandler.post(typingRunnable);
     }
 
     private LinearLayout.LayoutParams matchParentWrapContent() {

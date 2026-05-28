@@ -9,9 +9,11 @@ import java.util.Map;
 import java.util.Set;
 
 public class UserRecord {
-    private int  gem;
+    private int gem;
     private final Set<String> unlockJobName;
     private final Map<String, Integer> upgradeLevels;
+    private int killCount;
+    private int clearCount;
     public UserRecord(){
         this.gem = 0;
         this.unlockJobName = new HashSet<>();
@@ -38,8 +40,8 @@ public class UserRecord {
         upgradeLevels.put(upgradeId, currentLevel + 1);
     }
     public int getGem() { return gem; }
-    public void deductScore(int score) { this.gem -= score; }
-    public void addScore(int score) { this.gem += score; }
+    public void deductGem(int score) { this.gem -= score; }
+    public void addGem(int score) { this.gem += score; }
 
     public Set<String> getUnlockJobName() {
         return unlockJobName;
@@ -47,5 +49,18 @@ public class UserRecord {
 
     public Map<String, Integer> getUpgradeLevels() {
         return upgradeLevels;
+    }
+    public void addKillCount(){
+        killCount++;
+    }
+    public int getKillCount() {
+        return killCount;
+    }
+
+    public void addClearCount() {
+        this.clearCount++;
+    }
+    public int getClearCount() {
+        return clearCount;
     }
 }

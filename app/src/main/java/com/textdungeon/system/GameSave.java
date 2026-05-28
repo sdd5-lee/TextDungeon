@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.textdungeon.data.Difficulty;
+import com.textdungeon.event.GameEvent;
 import com.textdungeon.model.ShopUpgrade;
 import com.textdungeon.model.Stat;
 import com.textdungeon.player.Player;
@@ -12,6 +13,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
+import java.util.Map;
 
 public class GameSave {
     private static final String RUN_FILE = "run_save.json";
@@ -19,10 +21,13 @@ public class GameSave {
     private int currentFloor;
     private final Player player;
     private final Difficulty difficulty;
-    public GameSave(Player player, int currentFloor, Difficulty difficulty) {
+    private Map<Integer, GameEvent> aiEvents;
+
+    public GameSave(Player player, int currentFloor, Difficulty difficulty,Map<Integer, GameEvent> aiEvents) {
         this.player = player;
         this.currentFloor = currentFloor;
         this.difficulty = difficulty;
+        this.aiEvents = aiEvents;
     }
     public GameSave(Player player, Difficulty difficulty) {
         this.player = player;

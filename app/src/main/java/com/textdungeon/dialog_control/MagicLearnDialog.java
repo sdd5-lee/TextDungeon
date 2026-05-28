@@ -1,4 +1,4 @@
-package com.textdungeon.layout_control;
+package com.textdungeon.dialog_control;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -37,7 +37,7 @@ public class MagicLearnDialog extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.magic_scroll_dialog);
+        setContentView(R.layout.dialog_magic_scroll);
 
         // 배경 투명화 및 꽉 차게 설정
         if (getWindow() != null) {
@@ -73,7 +73,7 @@ public class MagicLearnDialog extends Dialog {
         }
 
         for (Magic magic : allMagics) {
-            View rowView = inflater.inflate(R.layout.magic_scroll_row, magicContainer, false);
+            View rowView = inflater.inflate(R.layout.row_magic_scroll, magicContainer, false);
 
             TextView tvName = rowView.findViewById(R.id.tv_magic_name);
             TextView tvReqWisdom = rowView.findViewById(R.id.tv_req_wisdom);

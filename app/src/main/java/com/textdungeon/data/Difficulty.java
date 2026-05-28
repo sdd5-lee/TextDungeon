@@ -2,7 +2,7 @@ package com.textdungeon.data;
 
 public enum Difficulty {
     // 순서: 이름, 이벤트 생성 숫자, 몬스터 스탯 배수, 보상 획득량 배수
-    EASY("쉬움", 2, 1, 1),
+    EASY("쉬움", 1, 1, 1),
     NORMAL("보통", 3, 2, 2),
     HARD("어려움", 5, 3, 3);
 

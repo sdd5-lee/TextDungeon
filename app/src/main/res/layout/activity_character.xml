@@ -19,7 +19,6 @@
             android:orientation="vertical"
             android:padding="24dp">
 
-            <!-- Character Selection Header -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -30,9 +29,25 @@
                 android:fontFamily="serif"
                 android:textStyle="bold"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="32dp"/>
+                android:layout_marginBottom="24dp"/>
 
-            <!-- Job Selection Grid (3x3) -->
+            <EditText
+                android:id="@+id/edit_player_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginBottom="32dp"
+                android:background="#2A2A2A"
+                android:hint="모험가의 이름을 입력하세요"
+                android:textColorHint="#888888"
+                android:textColor="#E5E2E1"
+                android:textSize="14sp"
+                android:padding="16dp"
+                android:fontFamily="serif"
+                android:maxLines="1"
+                android:inputType="textPersonName"
+                android:gravity="center"/>
+
             <GridLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -88,7 +103,6 @@
 
             </GridLayout>
 
-            <!-- 선택 직업 초기 스탯 표시 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -96,7 +110,6 @@
                 android:weightSum="4"
                 android:layout_marginBottom="24dp">
 
-                <!-- 체력 -->
                 <LinearLayout android:layout_width="0dp" android:layout_height="110dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical">
                     <View android:layout_width="match_parent" android:layout_height="2dp" android:background="#901418"/>
                     <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_compass" app:tint="#E5E2E1" android:layout_marginTop="12dp"/>
@@ -104,7 +117,6 @@
                     <TextView android:id="@+id/stat_hp" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="100" android:textColor="#E5E2E1" android:textSize="18sp" android:fontFamily="serif" android:layout_marginTop="2dp"/>
                 </LinearLayout>
 
-                <!-- 힘 -->
                 <LinearLayout android:layout_width="0dp" android:layout_height="110dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical">
                     <View android:layout_width="match_parent" android:layout_height="2dp" android:background="#E5E2E1"/>
                     <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_compass" app:tint="#E5E2E1" android:layout_marginTop="12dp"/>
@@ -112,7 +124,6 @@
                     <TextView android:id="@+id/stat_str" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="18" android:textColor="#E5E2E1" android:textSize="18sp" android:fontFamily="serif" android:layout_marginTop="2dp"/>
                 </LinearLayout>
 
-                <!-- 민첩 -->
                 <LinearLayout android:layout_width="0dp" android:layout_height="110dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical">
                     <View android:layout_width="match_parent" android:layout_height="2dp" android:background="#A0A0A0"/>
                     <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_slideshow" app:tint="#E5E2E1" android:layout_marginTop="12dp"/>
@@ -120,7 +131,6 @@
                     <TextView android:id="@+id/stat_agi" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="12" android:textColor="#E5E2E1" android:textSize="18sp" android:fontFamily="serif" android:layout_marginTop="2dp"/>
                 </LinearLayout>
 
-                <!-- 지혜 -->
                 <LinearLayout android:layout_width="0dp" android:layout_height="110dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical">
                     <View android:layout_width="match_parent" android:layout_height="2dp" android:background="#E9C176"/>
                     <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_view" app:tint="#E5E2E1" android:layout_marginTop="12dp"/>
@@ -129,7 +139,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Character Description Section -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -154,7 +163,6 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- Fixed Bottom CTA Button -->
     <FrameLayout
         android:id="@+id/btn_embark"
         android:layout_width="match_parent"

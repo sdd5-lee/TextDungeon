@@ -38,7 +38,6 @@ public class GameEvent {
         return minFloor;
     }
 
-    //추가
     public List<String> getChoices() {
         return choices;
     }
@@ -68,7 +67,6 @@ public class GameEvent {
             for (int i = 0; i < difficulty.rewardMultiplier; i++){
                 reward.apply(player, itemManager);
                 player.getStat().updateBattleStat(player.getLevel());
-                Log.d("DataControlTower", "난이도 설정됨: " + difficulty);
             }
         }else{
             reward.apply(player, itemManager);
