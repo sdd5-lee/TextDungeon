@@ -1,4 +1,4 @@
-package com.textdungeon.layout_control;
+package com.textdungeon.dialog_control;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.example.textdungeon.R; // R 패키지 경로는 프로젝트에 맞게 수정
 import com.textdungeon.buttons.BattleButton;
 import com.textdungeon.data.DataControlTower;
+import com.textdungeon.data.Difficulty;
 import com.textdungeon.model.Item;
 import com.textdungeon.model.LearnedMagic;
 import com.textdungeon.model.Magic;
@@ -34,8 +35,6 @@ public class BattleDialog extends Dialog {
     private final Player player;
     private final Monster monster;
     private final Context context;
-
-    // 최대 체력 (바(Bar) 비율 계산용)
     private int playerMaxHp;
     private int monsterMaxHp;
 
@@ -44,12 +43,14 @@ public class BattleDialog extends Dialog {
     private TextView logView;
     private View playerHpBar, monsterHpBar;
     private ScrollView magicScrollView, itemsScrollView;
+    private Difficulty difficulty;
 
-    public BattleDialog(Context context, Player player, Monster monster) {
+    public BattleDialog(Context context, Player player, Monster monster, Difficulty difficulty) {
         super(context);
         this.context = context;
         this.player = player;
         this.monster = monster;
+        this.difficulty = difficulty;
     }
 
     @Override
@@ -58,7 +59,7 @@ public class BattleDialog extends Dialog {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         // 사용자님이 만드신 배틀 레이아웃 연결
-        setContentView(R.layout.battle_dialog);
+        setContentView(R.layout.dialog_battle);
         setCancelable(false);
         setCanceledOnTouchOutside(false);
         // 배경을 투명하게 하여 모서리 각진 부분 제거 (필요 시)
@@ -66,10 +67,10 @@ public class BattleDialog extends Dialog {
 
         // 최대 체력 기록
         playerMaxHp = player.getMaxHp();
-        monsterMaxHp = monster.getHp();
+        monsterMaxHp = monster.getHp() * difficulty.statMultiplier;
 
         // 전투 시스템 초기화
-        battleSystem = new BattleSystem(player, monster, context);
+        battleSystem = new BattleSystem(player, monster, context,DataControlTower.getInstance(getContext()).getDifficulty());
 
         initViews();
         setupListeners();
@@ -106,7 +107,7 @@ public class BattleDialog extends Dialog {
         TextView playerName = findViewById(R.id.player_name);
         TextView monsterName = findViewById(R.id.monster_name);
 
-        playerName.setText(player.getName()); // 혹은 player.getName()
+        playerName.setText(player.getName());
         monsterName.setText(battleSystem.getEnemyName());
     }
 
@@ -212,11 +213,9 @@ public class BattleDialog extends Dialog {
     // 전투 액션 실행 및 화면 갱신
     private void executeAction(int choice, String magicId) {
         if (battleSystem.isBattleOver()) {
-            dismiss(); // 이미 끝났으면 창 닫기
+            dismiss();
             return;
         }
-
-        // BattleSystem에 액션 전달 후 로그 받기
         String resultLog = battleSystem.playerAction(choice, magicId);
         appendLog(resultLog);
         updateUI();
@@ -238,7 +237,6 @@ public class BattleDialog extends Dialog {
         playerHpText.setText("HP: " + currentHp + " / " + playerMaxHp);
         monsterHpText.setText(enemyHp + " / " + monsterMaxHp);
 
-        // 플레이어 HP Bar 너비 조절 (Weight 활용)
         LinearLayout.LayoutParams playerParams = (LinearLayout.LayoutParams) playerHpBar.getLayoutParams();
         playerParams.weight = (float) currentHp / playerMaxHp;
         playerHpBar.setLayoutParams(playerParams);
@@ -249,7 +247,6 @@ public class BattleDialog extends Dialog {
         monsterHpBar.setLayoutParams(monsterParams);
     }
 
-    // 로그 텍스트 누적
     private void appendLog(String msg) {
         String currentText = logView.getText().toString();
         logView.setText(currentText + "\n" + msg);

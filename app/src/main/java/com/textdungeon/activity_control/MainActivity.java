@@ -1,9 +1,7 @@
-package com.textdungeon.layout_control;
-
+package com.textdungeon.activity_control;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.textdungeon.R;
 import com.textdungeon.data.DataControlTower;
@@ -14,16 +12,24 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.title_layout);
+        setContentView(R.layout.activity_main);
 
         dt = DataControlTower.getInstance(this);
 
         View btnNewGame = findViewById(R.id.btn_start);
         View btnContinue = findViewById(R.id.btn_continue);
+        View btnShop = findViewById(R.id.btn_shop);
+        View btnOption = findViewById(R.id.btn_option);
+
+        // ★ 고정 버튼 사운드 적용
+        setSfx(btnNewGame, btnShop, btnOption);
 
         btnNewGame.setOnClickListener(v -> moveCharacter());
 
         if (btnContinue != null) {
+            // ★ 이어하기 버튼이 존재할 경우 사운드 적용
+            setSfx(btnContinue);
+
             if (dt.getPlayer() != null) {
                 btnContinue.setVisibility(View.VISIBLE);
                 btnContinue.setOnClickListener(v -> moveEvent());
@@ -32,8 +38,8 @@ public class MainActivity extends BaseActivity {
             }
         }
 
-        findViewById(R.id.btn_shop).setOnClickListener(this::moveShop);
-        findViewById(R.id.btn_option).setOnClickListener(this::moveOption);
+        btnShop.setOnClickListener(this::moveShop);
+        btnOption.setOnClickListener(this::moveOption);
     }
 
     public void moveCharacter() {
@@ -43,28 +49,26 @@ public class MainActivity extends BaseActivity {
                     .setMessage("진행 중인 데이터가 삭제됩니다. 계속하시겠습니까?")
                     .setPositiveButton("예", (dialog, which) -> {
                         dt.resetRun();
-                        startActivity(new Intent(this, CharacterLayout.class));
+                        startActivity(new Intent(this, CharacterActivity.class));
                     })
                     .setNegativeButton("아니오", null)
                     .show();
         } else {
-            startActivity(new Intent(this, CharacterLayout.class));
+            startActivity(new Intent(this, CharacterActivity.class));
         }
     }
 
     public void moveEvent() {
-        // 이어하기 로직
-        Intent intent = new Intent(this, EventLayout.class);
+        Intent intent = new Intent(this, EventActivity.class);
         intent.putExtra("IS_NEW_GAME", false);
         startActivity(intent);
     }
 
     public void moveShop(View v) {
-        startActivity(new Intent(this, ShopLayout.class));
+        startActivity(new Intent(this, ShopActivity.class));
     }
 
     public void moveOption(View v) {
-        // 옵션창 (현재 캐릭터 레이아웃으로 되어있는데, 나중에 전용 창을 만드세요!)
-        Toast.makeText(this, "옵션 기능을 준비 중입니다.", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(this, SystemSettingActivity.class));
     }
 }

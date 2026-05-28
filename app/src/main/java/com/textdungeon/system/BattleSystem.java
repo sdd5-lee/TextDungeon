@@ -3,6 +3,7 @@ package com.textdungeon.system;
 import android.content.Context;
 
 import com.textdungeon.data.DataControlTower;
+import com.textdungeon.data.Difficulty;
 import com.textdungeon.model.Magic;
 import com.textdungeon.model.Monster;
 import com.textdungeon.player.Player;
@@ -25,15 +26,15 @@ public class BattleSystem {
 
     private Random random = new Random();
 
-    public BattleSystem(Player player, Monster monster, Context context) {
+    public BattleSystem(Player player, Monster monster, Context context, Difficulty difficulty) {
         this.player = player;
         this.monster = monster;
         this.context = context;
 
         // BattleEvent에서 넘어온 몬스터 정보 초기화
         this.enemyName = monster.getName();
-        this.enemyHp = monster.getHp();
-        this.enemyAttack = monster.getAttack();
+        this.enemyHp = monster.getMaxHp() * difficulty.statMultiplier;
+        this.enemyAttack = monster.getAttack() * difficulty.statMultiplier;
     }
 
     // =========================

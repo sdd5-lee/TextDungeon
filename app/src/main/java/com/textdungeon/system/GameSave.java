@@ -3,6 +3,8 @@ package com.textdungeon.system;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.textdungeon.data.Difficulty;
+import com.textdungeon.event.GameEvent;
 import com.textdungeon.model.ShopUpgrade;
 import com.textdungeon.model.Stat;
 import com.textdungeon.player.Player;
@@ -11,18 +13,25 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
+import java.util.Map;
 
 public class GameSave {
     private static final String RUN_FILE = "run_save.json";
     private static final String META_FILE = "user_record.json";
     private int currentFloor;
     private final Player player;
-    public GameSave(Player player, int currentFloor) {
+    private final Difficulty difficulty;
+    private Map<Integer, GameEvent> aiEvents;
+
+    public GameSave(Player player, int currentFloor, Difficulty difficulty,Map<Integer, GameEvent> aiEvents) {
         this.player = player;
         this.currentFloor = currentFloor;
+        this.difficulty = difficulty;
+        this.aiEvents = aiEvents;
     }
-    public GameSave(Player player) {
+    public GameSave(Player player, Difficulty difficulty) {
         this.player = player;
+        this.difficulty = difficulty;
     }
     public static Player createNewPlayer(UserRecord record, String name, com.textdungeon.model.Job job){
         Player newPlayer = new Player(name,job);
@@ -40,7 +49,7 @@ public class GameSave {
                 case "WIS": stat.addWisdom(totalBonus); break;
                 case "STAT_POINT": stat.addStatPoint(totalBonus); break;
                 case "GOLD": stat.addGold(totalBonus); break;
-                case "DICE": newPlayer.addDiceChane(totalBonus); break;
+                case "DICE_Chane": newPlayer.addDiceChane(totalBonus); break;
             }
         }
         stat.updateBattleStat(newPlayer.getLevel());
@@ -91,5 +100,9 @@ public class GameSave {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
     }
 }

@@ -1,10 +1,11 @@
 package com.textdungeon.data;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.textdungeon.ai.ChaosManager;
+import com.textdungeon.ai.aiManager;
 import com.textdungeon.event.BattleEvent;
 import com.textdungeon.event.GameEvent;
 import com.textdungeon.event.ShopEvent;
@@ -15,6 +16,10 @@ import com.textdungeon.model.Magic;
 import com.textdungeon.player.Player;
 import com.textdungeon.system.GameSave;
 import com.textdungeon.system.UserRecord;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class DataControlTower {
     private static DataControlTower instance;
     private final Context appContext;
@@ -25,10 +30,13 @@ public class DataControlTower {
     private Player player;
     private UserRecord userRecord;
     private DungeonControl dungeonControl;
-    private ChaosManager chaosManager;
+    private aiManager aiManager;
+    private Difficulty difficulty;
+    private Map<Integer, GameEvent> aiEvents;
     private DataControlTower(Context context){
         this.appContext = context.getApplicationContext();
-        this.chaosManager = new ChaosManager();
+        this.aiManager = new aiManager();
+        this.aiEvents = new HashMap<>();
         initAll(context);
         loadGameData();
     }
@@ -81,9 +89,11 @@ public class DataControlTower {
         this.dungeonControl = new DungeonControl();
         if (save != null){
             this.player = save.getPlayer();
+            this.difficulty = save.getDifficulty();
             this.dungeonControl.setCurrentFloor(save.getCurrentFloor());
         }else {
             this.player = null;
+            this.difficulty = Difficulty.NORMAL;
             this.dungeonControl.setCurrentFloor(1);
         }
     }
@@ -95,7 +105,7 @@ public class DataControlTower {
 
     public void saveGame() {
         if (this.player == null){return;}
-        GameSave currentSave = new GameSave(this.player, dungeonControl.getCurrentFloor());
+        GameSave currentSave = new GameSave(this.player, dungeonControl.getCurrentFloor(),difficulty,aiEvents);
         currentSave.runSave(appContext);
     }
     public void resetRun() {
@@ -138,10 +148,24 @@ public class DataControlTower {
         this.player = player;
     }
 
-    public ChaosManager getChaosManager() {
-        return chaosManager;
+    public aiManager getAiManager() {
+        return aiManager;
     }
     public void setUserRecord(UserRecord userRecord) {
         this.userRecord = userRecord;
+    }
+
+    public void setDifficulty(String difficultyName) {
+        difficulty = Difficulty.valueOf(difficultyName);
+    }
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public Map<Integer,GameEvent> getAiEvents() {
+        return aiEvents;
+    }
+    public void addAiEvent(int targetFloor, GameEvent newEvent) {
+        aiEvents.put(targetFloor, newEvent);
     }
 }

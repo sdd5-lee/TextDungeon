@@ -15,13 +15,13 @@
         android:theme="@style/Theme.TextDungeon"
         android:usesCleartextTraffic="true">
         <activity
-            android:name="com.textdungeon.layout_control.SystemSettingActivity"
-            android:exported="false" />
+            android:name="com.textdungeon.activity_control.SystemSettingActivity"
+            android:exported="true" />
         <activity
-            android:name="com.textdungeon.layout_control.DifficultyActivity"
-            android:exported="false" />
+            android:name="com.textdungeon.activity_control.DifficultyActivity"
+            android:exported="true" />
         <activity
-            android:name="com.textdungeon.layout_control.MainActivity"
+            android:name="com.textdungeon.activity_control.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,11 +29,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.textdungeon.layout_control.EventLayout" />
-        <activity android:name="com.textdungeon.layout_control.TestLayout" />
-        <activity android:name="com.textdungeon.layout_control.CharacterLayout" />
-        <activity android:name="com.textdungeon.layout_control.ShopLayout" />
-        <activity android:name="com.textdungeon.layout_control.OptionLayout" />
+        <activity android:name="com.textdungeon.activity_control.EventActivity" />
+        <activity android:name="com.textdungeon.activity_control.CharacterActivity" />
+        <activity android:name="com.textdungeon.activity_control.ShopActivity" />
+        <activity android:name="com.textdungeon.activity_control.OptionLayout" />
+        <activity android:name="com.textdungeon.activity_control.ClearActivity" />
+        <activity android:name="com.textdungeon.activity_control.DiedActivity" />
     </application>
 
 </manifest>

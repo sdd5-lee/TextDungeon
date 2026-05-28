@@ -1,5 +1,7 @@
 package com.textdungeon.ai;
 
+import android.util.Log;
+
 import com.example.textdungeon.BuildConfig;
 import com.google.ai.client.generativeai.GenerativeModel;
 import com.google.ai.client.generativeai.java.GenerativeModelFutures;
@@ -19,18 +21,19 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
-public class ChaosEventGenerator {
+public class EventGenerator {
+    private static final String TAG = "EventGenerator";
     private final GenerativeModelFutures model;
     private final Gson gson;
     private final Executor executor;
 
-    public ChaosEventGenerator() {
+    public EventGenerator() {
         GenerationConfig.Builder config = new GenerationConfig.Builder();
         config.responseMimeType = "application/json";
 
         GenerativeModel gm = new GenerativeModel(
                 "gemini-3-flash-preview",
-                BuildConfig.GEMINI_API_KEY,
+                BuildConfig.GEMINI_API_KEY_GODS,
                 config.build()
         );
 
@@ -39,33 +42,30 @@ public class ChaosEventGenerator {
         this.executor = Executors.newSingleThreadExecutor();
     }
 
-    public void generate(int floor, Stat stat, List<Item> itemList, String eventType, AiCallback callback) {
+    public void generate(int floor, Stat stat, List<Item> itemList, String eventType, AiType aiType, AiCallback callback) {
         String itemNames = itemList.stream()
-                .map(Item::getName)
+                .map(item -> item.getId() + ":" + item.getName())
                 .collect(Collectors.joining(", "));
 
         String prompt = String.format(
-                "너는 다크 판타지 RPG의 '혼돈의 신'이다. %dF에서 발생할 %s 타입의 새로운 이벤트를 창조하라.\n\n" +
-                        "[상황]\n" +
-                        "- 현재 층: %dF\n" +
-                        "- 플레이어 상태: %s\n" +
-                        "- 상점/보상용 아이템 목록: %s\n\n" +
-                        "[생성 규칙]\n" +
-                        "1. 반드시 JSON 객체 하나만 출력하라. 필드명은 아래와 같아야 한다.\n" +
-                        "   - id: 'event_chaos_' + 랜덤숫자\n" +
-                        "   - name, description, imgId (imgId는 기존 데이터의 이미지ID 중 선택)\n" +
-                        "   - minFloor, maxFloor: %d\n" +
-                        "   - type: '%s'\n" +
-                        "   - enemyId: (type이 'battle'이면 몬스터ID, 아니면 null)\n" +
-                        "   - choices: [선택지1, 선택지2] (무조건 2개)\n" +
-                        "   - rewards: [Reward객체1, Reward객체2] (choices 순서와 대응)\n" +
-                        "2. statRewards 타입 키워드: \"힘\", \"민첩\", \"체력\", \"지혜\", \"경험치\", \"데미지\", \"회복\", \"골드\"\n" +
-                        "3. shopItems: (type이 'shop'이면 위의 아이템 목록에서 3개 선택하여 리스트 작성, 아니면 null 또는 생략)\n" +
-                        "4. 모든 필드를 원본 이벤트 구조와 완벽하게 일치시켜라.\n" +
-                        "5. 부연 설명 없이 오직 수정된 JSON 객체 하나만 출력하라.\n" +
-                        "6. 두가지의 선택지는 반드시 높은 보상과 강한 패널티가 동반되어야한다."+
-                        "7. 충수는 min,max가 같아야한다 그리고 7이상을 넣어라",
-                floor, eventType, floor, gson.toJson(stat), itemNames, floor, eventType
+                "[%s | %dF | %s]\n" +
+                        "플레이어: %s\n" +
+                        "아이템(id:이름 형식, 반드시 이 목록의 id만 사용): %s\n" +
+                        "성향: %s\n\n" +
+                        "아래 구조로 JSON 하나만 출력:\n" +
+                        "{\"id\":\"%s1\",\"name\":\"\",\"description\":\"\",\"imgId\":\"\",\"minFloor\":%d,\"maxFloor\":%d,\"type\":\"%s\"," +
+                        "\"enemyId\":null,\"choices\":[\"\",\"\"],\"rewards\":[" +
+                        "{\"itemId\":null,\"statRewards\":[{\"힘\":0}]}," +
+                        "{\"itemId\":null,\"statRewards\":[{\"경험치\":0}]}]," +
+                        "\"shopItems\":null}\n" +
+                        "shopItems는 type이 shop이면 아이템목록서 3개, enemyId는 type이 battle이면 몬스터ID.\n" +
+                        "설명 금지."+"statRewards 형식: [{\"type\":\"키워드\",\"value\":수치}]\n" +
+                        "키워드는 반드시 이것만 사용: 힘,민첩,체력,지혜,경험치,데미지,회복,골드\n" +
+                        "체력감소=데미지 양수 / 회복=회복 양수 / 영구감소 등 특수효과 없음\n" ,
+                aiType.getGodName(), floor, eventType,
+                gson.toJson(stat), itemNames,
+                aiType.getRule(),
+                aiType.getIdPrefix(), floor, floor, eventType
         );
 
         Content content = new Content.Builder().addText(prompt).build();
@@ -74,11 +74,18 @@ public class ChaosEventGenerator {
         Futures.addCallback(response, new FutureCallback<GenerateContentResponse>() {
             @Override
             public void onSuccess(GenerateContentResponse result) {
+                String rawText = result.getText();
+                Log.d(TAG, "AI 원본 응답 도착:\n" + rawText);
+
                 try {
-                    String cleanJson = result.getText().replaceAll("(?s)```json\\s*|\\s*```", "").trim();
+                    String cleanJson = rawText.replaceAll("(?s)```json\\s*|\\s*```", "").trim();
                     GameEvent newEvent = gson.fromJson(cleanJson, GameEvent.class);
+
+                    Log.d(TAG, "JSON 파싱 성공! 생성된 이벤트 이름: " + newEvent.getName());
                     callback.onSuccess(newEvent);
+
                 } catch (Exception e) {
+                    Log.e(TAG, "JSON 파싱 실패!", e);
                     callback.onError("이벤트 창조 실패: " + e.getMessage());
                 }
             }

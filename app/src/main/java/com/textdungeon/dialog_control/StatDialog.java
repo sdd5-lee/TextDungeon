@@ -1,4 +1,4 @@
-package com.textdungeon.layout_control;
+package com.textdungeon.dialog_control;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -32,7 +32,7 @@ public class StatDialog extends Dialog {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        setContentView(R.layout.stats_dialog);
+        setContentView(R.layout.dialog_stats);
         setCancelable(false);
         setCanceledOnTouchOutside(false);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

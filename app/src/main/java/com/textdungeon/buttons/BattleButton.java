@@ -6,7 +6,7 @@ import android.graphics.Typeface;
 import androidx.appcompat.widget.AppCompatButton;
 
 import com.example.textdungeon.R;
-import com.textdungeon.layout_control.GameUI;
+import com.textdungeon.activity_control.GameUI;
 
 public class BattleButton extends AppCompatButton {
     public BattleButton(Context context, String iconName, String itemName, int count, String actionName) {

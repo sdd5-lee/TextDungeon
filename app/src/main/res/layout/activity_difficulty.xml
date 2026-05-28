@@ -45,7 +45,7 @@
             android:shadowDx="2"
             android:shadowDy="2"
             android:shadowRadius="4"
-            android:text="SELECT DIFFICULTY"
+            android:text="난이도 선택"
             android:textColor="#E9C176"
             android:textSize="30sp"
             android:textStyle="bold" />

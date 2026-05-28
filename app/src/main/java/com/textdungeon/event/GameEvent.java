@@ -1,7 +1,11 @@
 package com.textdungeon.event;
 
+import android.util.Log;
+import android.widget.Toast;
+
 import com.google.gson.annotations.SerializedName;
 import com.textdungeon.data.DataControl;
+import com.textdungeon.data.Difficulty;
 import com.textdungeon.model.Item;
 import com.textdungeon.model.Reward;
 import com.textdungeon.player.Player;
@@ -34,7 +38,6 @@ public class GameEvent {
         return minFloor;
     }
 
-    //추가
     public List<String> getChoices() {
         return choices;
     }
@@ -55,13 +58,20 @@ public class GameEvent {
         return reward.getItemId();
     }
 
-    public String execute(Player player, int choice, DataControl<Item> itemManager) {
+    public String execute(Player player, int choice, DataControl<Item> itemManager, Difficulty difficulty) {
         if (rewards == null || rewards.isEmpty() || choice >= rewards.size()) {
             return "보상은 없습니다";
         }
         Reward reward = rewards.get(choice);
-        reward.apply(player, itemManager);
-        player.getStat().updateBattleStat(player.getLevel());
+        if (difficulty != null) {
+            for (int i = 0; i < difficulty.rewardMultiplier; i++){
+                reward.apply(player, itemManager);
+                player.getStat().updateBattleStat(player.getLevel());
+            }
+        }else{
+            reward.apply(player, itemManager);
+            player.getStat().updateBattleStat(player.getLevel());
+        }
         return reward.getDescription();
     }
 

@@ -1,4 +1,4 @@
-package com.textdungeon.layout_control;
+package com.textdungeon.dialog_control;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -38,7 +38,7 @@ public class InventoryDialog extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.inventory_dialog);
+        setContentView(R.layout.dialog_inventory);
 
         if (getWindow() != null) {
             getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -103,7 +103,7 @@ public class InventoryDialog extends Dialog {
     private void itemList() {
         GridLayout bagGrid = findViewById(R.id.bag_grid);
         LayoutInflater inflater = LayoutInflater.from(getContext());
-
+        bagGrid.removeAllViews();
         Map<String, Integer> itemMap = player.getInventory().getItemMap();
         for (String itemId : itemMap.keySet()) {
             View itemSlot = inflater.inflate(R.layout.item_slot, bagGrid, false);
@@ -137,7 +137,7 @@ public class InventoryDialog extends Dialog {
 
     private void showItemActionDialog(Item item, int count) {
         Dialog itemDialog = new Dialog(getContext());
-        itemDialog.setContentView(R.layout.item_action_dialog);
+        itemDialog.setContentView(R.layout.dialog_item_action);
 
         if (itemDialog.getWindow() != null) {
             itemDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -228,7 +228,7 @@ public class InventoryDialog extends Dialog {
     }
     private void showEquippedItemDialog(Item item, String type, int slotIndex) {
         Dialog itemDialog = new Dialog(getContext());
-        itemDialog.setContentView(R.layout.item_action_dialog);
+        itemDialog.setContentView(R.layout.dialog_item_action);
 
         if (itemDialog.getWindow() != null) {
             itemDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

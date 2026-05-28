@@ -1,4 +1,4 @@
-package com.textdungeon.layout_control;
+package com.textdungeon.dialog_control;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -40,7 +40,7 @@ public class ShopDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.inshop_dialog);
+        setContentView(R.layout.dialog_item_shop);
 
         if (getWindow() != null) {
             getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -76,7 +76,7 @@ public class ShopDialog extends Dialog {
         for (String itemId : shopItemIds) {
             Item item = itemManager.spawn(itemId);
             if (item != null) {
-                View rowView = inflater.inflate(R.layout.inshop_item_row, itemContainer, false);
+                View rowView = inflater.inflate(R.layout.row_item_shop, itemContainer, false);
 
                 TextView tvName = rowView.findViewById(R.id.tv_item_name);
                 TextView tvPrice = rowView.findViewById(R.id.tv_item_price);

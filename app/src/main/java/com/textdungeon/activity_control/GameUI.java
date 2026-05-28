@@ -1,4 +1,4 @@
-package com.textdungeon.layout_control;
+package com.textdungeon.activity_control;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

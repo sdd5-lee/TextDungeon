@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.textdungeon.data.DataControl;
+import com.textdungeon.data.Difficulty;
 import com.textdungeon.model.Monster;
 import com.textdungeon.player.Player;
 import com.textdungeon.system.BattleSystem;
@@ -15,11 +16,11 @@ public class BattleEvent extends GameEvent {
         return new Gson().fromJson(json, BattleEvent.class);
     }
 
-    public BattleSystem startBattle(Player player, DataControl<Monster> monsterManager, Context context) {
+    public BattleSystem startBattle(Player player, DataControl<Monster> monsterManager, Context context, Difficulty difficulty) {
         Monster enemy = spawnEnemy(monsterManager);
         if (enemy == null) return null;
 
-        return new BattleSystem(player, enemy,context);
+        return new BattleSystem(player, enemy,context, difficulty);
     }
 
     public Monster spawnEnemy(DataControl<Monster> monsterManager) {

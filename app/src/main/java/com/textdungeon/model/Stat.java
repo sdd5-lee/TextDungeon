@@ -146,7 +146,7 @@ public class Stat {
 
     public void addGold(int amount) {
         this.gold += amount;
-        if (this.gold < 0) this.gold = 0; // 골드가 마이너스가 되지 않도록 방지
+        if (this.gold < 0) this.gold = 0;
     }
 
     public void gainStat(String type, int value) {
@@ -172,7 +172,7 @@ public class Stat {
             case "회복":
                 this.hp += value;
                 break;
-            case "골드": // [추가] 골드 사용
+            case "골드":
                 this.addGold(value);
                 break;
         }
@@ -185,4 +185,5 @@ public class Stat {
     public void setMaxExp(int maxExp) {
         this.maxExp = maxExp;
     }
+
 }

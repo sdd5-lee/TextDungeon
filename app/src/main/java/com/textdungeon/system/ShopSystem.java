@@ -25,7 +25,7 @@ public class ShopSystem {
         }
         int price = selectJob.price;
         if (record.getGem() >= price) {
-            record.deductScore(price);
+            record.deductGem(price);
             record.unlockJobs(selectJob);
             GameSave.saveUserRecord(context, record);
             return "직업 : ["+ selectJob.name + "]이 해금되었습니다";
@@ -49,7 +49,7 @@ public class ShopSystem {
         int price = selectUpgrade.getNextPrice(currentLevel);
 
         if (record.getGem() >= price) {
-            record.deductScore(price);
+            record.deductGem(price);
             record.levelUpUpgrade(selectUpgrade.name());
             GameSave.saveUserRecord(context, record);
             int newLevel = record.getUpgradeLevel(selectUpgrade.name());
