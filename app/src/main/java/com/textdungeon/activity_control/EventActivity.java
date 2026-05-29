@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import com.textdungeon.data.DataControlTower;
 import com.textdungeon.dialog_control.BattleDialog;
 import com.textdungeon.dialog_control.InventoryDialog;
 import com.textdungeon.dialog_control.MagicLearnDialog;
+import com.textdungeon.dialog_control.PlayerInfoDialog;
 import com.textdungeon.dialog_control.StatDialog;
 import com.textdungeon.event.GameEvent;
 import com.textdungeon.model.Monster;
@@ -96,6 +98,14 @@ public class EventActivity extends BaseActivity {
             });
         }
 
+        View avatar = findViewById(R.id.avatar);
+        View hpArea = findViewById(R.id.hp_area);
+        GridLayout statList = findViewById(R.id.stat_list);
+
+        avatar.setOnClickListener(v -> new PlayerInfoDialog(this, player).show());
+        hpArea.setOnClickListener(v -> new PlayerInfoDialog(this, player).show());
+        statList.setOnClickListener(v -> new PlayerInfoDialog(this, player).show());
+
         renderEvent();
         setupBackButton();
     }
@@ -147,6 +157,18 @@ public class EventActivity extends BaseActivity {
         ((TextView) findViewById(R.id.stat_agi)).setText(" " + player.getStat().getAgility());
         ((TextView) findViewById(R.id.floor_number)).setText(
                 eventManager.getCurrentFloor() + " F");
+
+        // HP 바 업데이트 추가
+        View hpBar = findViewById(R.id.hp_progress);
+        LinearLayout.LayoutParams hpParams = (LinearLayout.LayoutParams) hpBar.getLayoutParams();
+        hpParams.weight = (float) player.getStat().getHp() / player.getMaxHp();
+        hpBar.setLayoutParams(hpParams);
+
+        // XP 바 업데이트 추가
+        View xpBar = findViewById(R.id.xp_progress);
+        LinearLayout.LayoutParams xpParams = (LinearLayout.LayoutParams) xpBar.getLayoutParams();
+        xpParams.weight = (float) player.getStat().getExp() / player.getStat().getMaxExp();
+        xpBar.setLayoutParams(xpParams);
     }
 
     private void renderEventImage() {
@@ -213,7 +235,7 @@ public class EventActivity extends BaseActivity {
         int levelSnapshot = eventManager.snapshotLevel();
         String result = eventManager.applyReward(currentEvent, choiceIndex);
 
-        if (result == null) {
+        if (result.equals("full")) {
             appendDesc("인벤토리가 가득 찼습니다. 버릴 아이템을 선택해주세요.");
             startTypingAnimation();
             InventoryDialog dialog = new InventoryDialog(

@@ -79,15 +79,15 @@ public class BattleSystem {
                         log += "마법 사용 횟수가 부족합니다!\n";
                         return log;
                     }
-
-                    int magicDamage = player.castMagic(DataControlTower.getInstance(context).getMagicManager().spawn(lm.getMagicId()));
+                    Magic magic =DataControlTower.getInstance(context).getMagicManager().spawn(lm.getMagicId());
+                    int magicDamage = player.castMagic(magic);
                     if(random.nextInt(100) < player.getStat().getCritical_rate()){
                         magicDamage *=2;
                         log += "크리티컬!   \n";
                     }
                     if (magicDamage > 0) {
                         enemyHp -= magicDamage;
-                        log += "마법 발동! " + enemyName + "에게 " + magicDamage + "의 데미지!\n";
+                        log += magic.getName()+" 발동! " + enemyName + "에게 " + magicDamage + "의 데미지!\n";
                     }
                     break;
                 }

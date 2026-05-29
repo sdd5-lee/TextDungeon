@@ -291,9 +291,7 @@ public class InventoryDialog extends Dialog {
         new android.app.AlertDialog.Builder(getContext())
                 .setTitle("장착할 슬롯을 선택하세요")
                 .setItems(slots, (dialog, which) -> {
-
                     player.equipArtifact(which, item);
-
                     parentDialog.dismiss();
                     refreshAllUI();
                 })
@@ -308,6 +306,7 @@ public class InventoryDialog extends Dialog {
         if (imgResId != 0) icon.setImageResource(imgResId);
     }
     private String getIconNameByType(String type) {
+        //TODO: 아이템에 이미지 생성이 끝나면 방식변경
         switch (type.toLowerCase()) {
             case "weapon": return "ic_weapon";
             case "armor": return "ic_armor";
