@@ -68,7 +68,7 @@ public class DifficultyActivity extends BaseActivity {
 
         for (int i = 0; i < targetCount; i++) {
             AiType randomGod = shuffledGods.get(i % shuffledGods.size());
-            int targetFloor = (i + 1) * 10;
+            int targetFloor = (i * 10)+1;
             String targetEventType = "normal";
             if (randomGod == AiType.STRUGGLE) {
                 targetEventType = "battle";

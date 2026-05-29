@@ -61,7 +61,7 @@ public class EventGenerator {
                         "shopItems는 type이 shop이면 아이템목록서 3개, enemyId는 type이 battle이면 몬스터ID.\n" +
                         "설명 금지."+"statRewards 형식: [{\"type\":\"키워드\",\"value\":수치}]\n" +
                         "키워드는 반드시 이것만 사용: 힘,민첩,체력,지혜,경험치,데미지,회복,골드\n" +
-                        "체력감소=데미지 양수 / 회복=회복 양수 / 영구감소 등 특수효과 없음\n" ,
+                        "체력감소=데미지 양수 / 회복=회복 양수 / 영구감소 등 특수효과 없음\n",
                 aiType.getGodName(), floor, eventType,
                 gson.toJson(stat), itemNames,
                 aiType.getRule(),
