@@ -32,7 +32,6 @@
         <activity android:name="com.textdungeon.activity_control.EventActivity" />
         <activity android:name="com.textdungeon.activity_control.CharacterActivity" />
         <activity android:name="com.textdungeon.activity_control.ShopActivity" />
-        <activity android:name="com.textdungeon.activity_control.OptionLayout" />
         <activity android:name="com.textdungeon.activity_control.ClearActivity" />
         <activity android:name="com.textdungeon.activity_control.DiedActivity" />
     </application>

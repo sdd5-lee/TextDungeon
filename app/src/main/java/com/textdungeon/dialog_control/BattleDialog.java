@@ -58,11 +58,10 @@ public class BattleDialog extends Dialog {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        // 사용자님이 만드신 배틀 레이아웃 연결
         setContentView(R.layout.dialog_battle);
         setCancelable(false);
         setCanceledOnTouchOutside(false);
-        // 배경을 투명하게 하여 모서리 각진 부분 제거 (필요 시)
+
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         // 최대 체력 기록
@@ -164,7 +163,7 @@ public class BattleDialog extends Dialog {
             if (magic == null){{
                 continue;
             }}
-            BattleButton button = new BattleButton(getContext(),"test_magic_img",magic.getName(),lm.getCurrentCount(),"시전하기");
+            BattleButton button = new BattleButton(getContext(),magic.getImg(),magic.getName(),lm.getCurrentCount(),"시전하기");
             button.setOnClickListener(v -> {
                 executeAction(4, lm.getMagicId());
                 updateUI();
@@ -197,7 +196,6 @@ public class BattleDialog extends Dialog {
 
             button.setOnClickListener(v -> {
                 if (player.getInventory().consumeItem(itemId) && itemData.itemUse(player)) {
-
                     appendLog("\n[" + itemData.getName() + "]을(를) 사용했습니다!");
                     updateUI();
                     addItem();

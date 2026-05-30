@@ -63,7 +63,7 @@ public class Player {
         int oldEquipHp = equipment.getTotalHp();
 
         inventory.consumeItem(item.getId());
-        Item old = equipment.equip(item,0);
+        Item old = equipment.equip(item);
         if (old != null) inventory.addItem(old);
 
         int newEquipHp = equipment.getTotalHp();

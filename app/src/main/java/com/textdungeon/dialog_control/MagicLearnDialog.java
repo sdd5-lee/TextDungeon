@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,7 +50,6 @@ public class MagicLearnDialog extends Dialog {
         magicContainer = findViewById(R.id.magic_container);
         Button btnClose = findViewById(R.id.btn_shop_close);
 
-        // 현재 지혜 표시 (가져오기)
         tvCurrentWisdom.setText("💡 나의 현재 지혜: " + player.getStat().getWisdom());
         // 마법 목록 렌더링
         renderMagics();
@@ -75,9 +75,22 @@ public class MagicLearnDialog extends Dialog {
         for (Magic magic : allMagics) {
             View rowView = inflater.inflate(R.layout.row_magic_scroll, magicContainer, false);
 
+            ImageView ivMagicIcon = rowView.findViewById(R.id.iv_magic_icon);
             TextView tvName = rowView.findViewById(R.id.tv_magic_name);
             TextView tvReqWisdom = rowView.findViewById(R.id.tv_req_wisdom);
             Button btnLearn = rowView.findViewById(R.id.btn_learn);
+
+            String imgName = magic.getImg();
+            if (imgName != null && !imgName.isEmpty()) {
+                int resId = getContext().getResources().getIdentifier(
+                        imgName, "drawable", getContext().getPackageName());
+
+                if (resId != 0) {
+                    ivMagicIcon.setImageResource(resId);
+                } else {
+                    ivMagicIcon.setImageResource(R.drawable.magic_default_icon);
+                }
+            }
 
             int reqWisdom = magic.getValue();
             int currentWisdom = player.getStat().getWisdom();

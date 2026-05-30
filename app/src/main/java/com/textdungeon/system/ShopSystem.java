@@ -8,7 +8,6 @@ import com.textdungeon.model.ShopUpgrade;
 
 public class ShopSystem {
     DataControlTower dt;
-    Context context;
     public ShopSystem(DataControlTower dt){
         this.dt = dt;
     }
@@ -27,7 +26,7 @@ public class ShopSystem {
         if (record.getGem() >= price) {
             record.deductGem(price);
             record.unlockJobs(selectJob);
-            GameSave.saveUserRecord(context, record);
+            GameSave.saveUserRecord(dt.getAppContext(), record);
             return "직업 : ["+ selectJob.name + "]이 해금되었습니다";
         }else {
             return "구매 실패 [재화가 부족합니다]";
@@ -51,7 +50,7 @@ public class ShopSystem {
         if (record.getGem() >= price) {
             record.deductGem(price);
             record.levelUpUpgrade(selectUpgrade.name());
-            GameSave.saveUserRecord(context, record);
+            GameSave.saveUserRecord(dt.getAppContext(), record);
             int newLevel = record.getUpgradeLevel(selectUpgrade.name());
             return "[" + selectUpgrade.title + "] 레벨업 성공! (현재 Lv." + newLevel + ") / 남은 재화: " + record.getGem();
         } else {

@@ -47,7 +47,6 @@ public class CharacterActivity extends BaseActivity {
         characterDesc = findViewById(R.id.character_description);
         btnEmbark = findViewById(R.id.btn_embark);
 
-        // ★ 모든 직업 버튼과 시작(Embark) 버튼에 사운드 일괄 적용
         setSfx(jobKnight, jobRogue, jobMage, jobWarrior, jobCleric, jobRanger, jobHero, jobWarlock, jobMonk, btnEmbark);
 
         dt = DataControlTower.getInstance(this);

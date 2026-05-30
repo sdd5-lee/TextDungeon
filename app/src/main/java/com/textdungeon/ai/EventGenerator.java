@@ -14,6 +14,7 @@ import com.google.common.util.concurrent.ListenableFuture;
 import com.google.gson.Gson;
 import com.textdungeon.event.GameEvent;
 import com.textdungeon.model.Item;
+import com.textdungeon.model.Monster;
 import com.textdungeon.model.Stat;
 
 import java.util.List;
@@ -42,28 +43,33 @@ public class EventGenerator {
         this.executor = Executors.newSingleThreadExecutor();
     }
 
-    public void generate(int floor, Stat stat, List<Item> itemList, String eventType, AiType aiType, AiCallback callback) {
+    public void generate(int floor, Stat stat, List<Item> itemList, List<Monster> monsterList, String eventType, AiType aiType, AiCallback callback) {
         String itemNames = itemList.stream()
                 .map(item -> item.getId() + ":" + item.getName())
                 .collect(Collectors.joining(", "));
 
+        String monsterNames = monsterList.stream()
+                .map(monster -> monster.getId() + ":" + monster.getName())
+                .collect(Collectors.joining(", "));
         String prompt = String.format(
                 "[%s | %dF | %s]\n" +
                         "플레이어: %s\n" +
                         "아이템(id:이름 형식, 반드시 이 목록의 id만 사용): %s\n" +
+                        "몬스터(id:이름 형식, battle타입이면 반드시 이 목록의 id만 사용): %s\n" +
                         "성향: %s\n\n" +
                         "아래 구조로 JSON 하나만 출력:\n" +
                         "{\"id\":\"%s1\",\"name\":\"\",\"description\":\"\",\"imgId\":\"\",\"minFloor\":%d,\"maxFloor\":%d,\"type\":\"%s\"," +
                         "\"enemyId\":null,\"choices\":[\"\",\"\"],\"rewards\":[" +
-                        "{\"itemId\":null,\"statRewards\":[{\"힘\":0}]}," +
-                        "{\"itemId\":null,\"statRewards\":[{\"경험치\":0}]}]," +
+                        "{\"itemId\":null,\"statRewards\":[{\"type\":\"힘\",\"value\":0}]}," +
+                        "{\"itemId\":null,\"statRewards\":[{\"type\":\"경험치\",\"value\":0}]}]," +
                         "\"shopItems\":null}\n" +
-                        "shopItems는 type이 shop이면 아이템목록서 3개, enemyId는 type이 battle이면 몬스터ID.\n" +
-                        "설명 금지."+"statRewards 형식: [{\"type\":\"키워드\",\"value\":수치}]\n" +
+                        "shopItems는 type이 shop이면 아이템목록서 3개, enemyId는 type이 battle이면 몬스터 목록의 id만 사용.\n" +
+                        "statRewards 형식: [{\"type\":\"키워드\",\"value\":수치}]\n" +
                         "키워드는 반드시 이것만 사용: 힘,민첩,체력,지혜,경험치,데미지,회복,골드\n" +
-                        "체력감소=데미지 양수 / 회복=회복 양수 / 영구감소 등 특수효과 없음\n" ,
+                        "체력감소=데미지 양수 / 회복=회복 양수 / 영구감소 등 특수효과 없음\n" +
+                        "설명 금지.",
                 aiType.getGodName(), floor, eventType,
-                gson.toJson(stat), itemNames,
+                gson.toJson(stat), itemNames, monsterNames,
                 aiType.getRule(),
                 aiType.getIdPrefix(), floor, floor, eventType
         );
