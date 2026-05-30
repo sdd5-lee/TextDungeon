@@ -75,4 +75,7 @@ public class GameEvent {
         return reward.getDescription();
     }
 
+    public boolean hasItemReward(int choiceIndex) {
+        return getItemId(choiceIndex) != null;
+    }
 }

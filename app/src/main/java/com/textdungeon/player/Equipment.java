@@ -23,12 +23,6 @@ public class Equipment {
                 oldItem = armor;
                 armor = newItem;
                 break;
-
-            case "consumables":
-                oldItem = consumables;
-                consumables = newItem;
-                break;
-
             case "artifact":
                 if (slot >= 0 && slot < artifact.length) {
                     oldItem = artifact[slot];
@@ -36,6 +30,21 @@ public class Equipment {
                 } else {
                     return newItem;
                 }
+                break;
+        }
+        return oldItem;
+    }
+    public Item equip(Item newItem) {
+        if (newItem == null) return null;
+        Item oldItem = null;
+        switch (newItem.getType()) {
+            case "weapon":
+                oldItem = weapon;
+                weapon = newItem;
+                break;
+            case "armor":
+                oldItem = armor;
+                armor = newItem;
                 break;
         }
         return oldItem;

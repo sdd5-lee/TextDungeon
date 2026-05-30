@@ -50,7 +50,7 @@ public class BattleSystem {
         switch (choice) {
             case 1: // 일반 공격
                 int damage = player.getFinalAtk() + random.nextInt(5);
-                if(random.nextInt(100) < player.getStat().getCritical_rate()){
+                if(random.nextInt(100) < player.getTotalCrit()){
                     damage *=2;
                     log += "크리티컬!   ";
                 }
@@ -75,13 +75,13 @@ public class BattleSystem {
             case 4: // 마법 사용
                 if (magicId != null) {
                     LearnedMagic lm = player.getMagicScroll().getMagic(magicId);
-                    if (lm.getCurrentCount() <= 0) {
+                    if (lm == null || lm.getCurrentCount() <= 0) {
                         log += "마법 사용 횟수가 부족합니다!\n";
                         return log;
                     }
                     Magic magic =DataControlTower.getInstance(context).getMagicManager().spawn(lm.getMagicId());
                     int magicDamage = player.castMagic(magic);
-                    if(random.nextInt(100) < player.getStat().getCritical_rate()){
+                    if(random.nextInt(100) < player.getTotalCrit()){
                         magicDamage *=2;
                         log += "크리티컬!   \n";
                     }

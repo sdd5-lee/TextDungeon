@@ -167,16 +167,24 @@ public class Stat {
                 this.exp += value;
                 break;
             case "데미지":
-                this.hp -= value;
+                damage(value);
                 break;
             case "회복":
-                this.hp += value;
+                heal(value);
                 break;
             case "골드":
                 this.addGold(value);
                 break;
         }
 
+    }
+    public void heal(int heal) {
+        int newHp = Math.max(getMaxHp(),getHp() + heal);
+        setHp(newHp);
+    }
+    public void damage(int damage) {
+        int newHp = Math.min(getMaxHp(),getHp() - damage);
+        setHp(newHp);
     }
 
     public void setExp(int exp) {

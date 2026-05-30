@@ -53,9 +53,9 @@ public class EventManager {
     // 이벤트 결과 처리
     // ─────────────────────────────────────────
     public String applyReward(GameEvent event, int choiceIndex) {
-         if (player.getInventory().isFullItem()) {
-             return "full";
-         }
+        if (event.hasItemReward(choiceIndex) && player.getInventory().isFullItem()) {
+            return "full";
+        }
         String result = event.execute(player, choiceIndex, dt.getItemManager(),dt.getDifficulty());
         dt.saveGame();
         return result;

@@ -62,7 +62,7 @@ public class PlayerInfoDialog extends Dialog {
         ((TextView) findViewById(R.id.info_health)).setText("체력: " + player.getStat().getHealth());
         ((TextView) findViewById(R.id.info_wis)).setText("지혜: " + player.getStat().getWisdom());
         ((TextView) findViewById(R.id.info_atk)).setText("공격력: " + player.getStat().getAtk());
-        ((TextView) findViewById(R.id.info_crit)).setText("크리티컬: " + player.getStat().getCritical_rate() + "%");
+        ((TextView) findViewById(R.id.info_crit)).setText("크리티컬: " + player.getTotalCrit() + "%");
         ((TextView) findViewById(R.id.info_gold)).setText("골드: " + player.getStat().getGold());
         ((TextView) findViewById(R.id.info_stat_point)).setText("남은 스탯 포인트: " + player.getStat().getStatPoint());
 
