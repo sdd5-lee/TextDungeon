@@ -179,11 +179,11 @@ public class Stat {
 
     }
     public void heal(int heal) {
-        int newHp = Math.max(getMaxHp(),getHp() + heal);
+        int newHp = Math.min(getMaxHp(),getHp() + heal);
         setHp(newHp);
     }
     public void damage(int damage) {
-        int newHp = Math.min(getMaxHp(),getHp() - damage);
+        int newHp = Math.max(0,getHp() - damage);
         setHp(newHp);
     }
 
