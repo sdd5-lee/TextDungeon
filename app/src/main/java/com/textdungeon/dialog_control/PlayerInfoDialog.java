@@ -52,6 +52,7 @@ public class PlayerInfoDialog extends Dialog {
 
         ((TextView) findViewById(R.id.info_name)).setText(player.getName());
         ((TextView) findViewById(R.id.info_job)).setText(player.getJob().name);
+        ((TextView) findViewById(R.id.info_trait)).setText(player.getTrait().displayName);
         ((TextView) findViewById(R.id.info_level)).setText("LV. " + player.getLevel());
         ((TextView) findViewById(R.id.info_hp)).setText(
                 player.getStat().getHp() + " / " + player.getMaxHp());
@@ -70,12 +71,12 @@ public class PlayerInfoDialog extends Dialog {
         equipContainer.removeAllViews();
         for (Map.Entry<String, Integer> entry : player.getInventory().getItemMap().entrySet()) {
             Item item = dt.getItemManager().spawn(entry.getKey());
-            if (item == null || !item.getType().equals("consumables")) continue;
+            if (item == null) continue;
             TextView tv = new TextView(context);
             tv.setTextColor(Color.parseColor("#E9C176"));
             tv.setTextSize(14f);
             tv.setPadding(0, 4, 0, 4);
-            tv.setText("• " + item.getName());
+            tv.setText("• " + item.getName()+ " " + entry.getValue()+" 개");
             equipContainer.addView(tv);
         }
     }

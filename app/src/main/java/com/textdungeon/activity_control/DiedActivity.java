@@ -13,7 +13,6 @@ import com.textdungeon.player.Player;
 public class DiedActivity extends BaseActivity {
     private TextView tvClearDesc;
     private TextView tvScoreValue;
-    private TextView btnRestart;
     private TextView btnExit;
 
     @Override
@@ -23,25 +22,17 @@ public class DiedActivity extends BaseActivity {
 
         tvClearDesc = findViewById(R.id.tv_clear_desc);
         tvScoreValue = findViewById(R.id.tv_score_value);
-        btnRestart = findViewById(R.id.btn_restart);
         btnExit = findViewById(R.id.btn_exit);
 
         tvClearDesc.setText("당신의 여정은 여기서 끝이 났습니다.\n다시 일어나 새로운 여정을 시작하십시오.");
         tvScoreValue.setText(String.valueOf(diedGem()));
 
-        setSfx(btnRestart, btnExit);
-        btnRestart.setOnClickListener(v -> {
-            DataControlTower.getInstance(this).resetRun();
-            Intent intent = new Intent(this, CharacterActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            finish();
-        });
+        setSfx(btnExit);
 
         btnExit.setOnClickListener(v -> {
             DataControlTower.getInstance(this).resetRun();
             Intent intent = new Intent(this, MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
         });

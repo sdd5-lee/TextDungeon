@@ -17,23 +17,15 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <!-- Avatar/Helmet Placeholder -->
-        <View
-            android:id="@+id/avatar"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="#1C1B1B"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@android:drawable/ic_menu_gallery"
-            app:tint="#E5E2E1"
-            app:layout_constraintBottom_toBottomOf="@id/avatar"
-            app:layout_constraintEnd_toEndOf="@id/avatar"
-            app:layout_constraintStart_toStartOf="@id/avatar"
-            app:layout_constraintTop_toTopOf="@id/avatar" />
+            android:id="@+id/avatar"
+            android:layout_width="50dp"   android:layout_height="50dp"
+            android:layout_marginTop="4dp"
+            android:scaleType="centerCrop"
+            android:background="#1C1B1B"
+            tools:src="@drawable/job_knight"  app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/player_level"
@@ -49,11 +41,14 @@
             app:layout_constraintTop_toBottomOf="@id/avatar" />
 
         <!-- HP Bar Area -->
+
+        <!-- Stats Grid -->
         <LinearLayout
             android:id="@+id/hp_area"
             android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
             android:orientation="vertical"
             app:layout_constraintStart_toEndOf="@id/avatar"
             app:layout_constraintTop_toTopOf="parent">
@@ -65,6 +60,7 @@
                 android:background="#0E0E0E"
                 android:orientation="horizontal"
                 android:weightSum="1">
+
                 <View
                     android:id="@+id/hp_progress"
                     android:layout_width="0dp"
@@ -78,10 +74,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                tools:text="84 / 120"
                 android:textColor="#E5E2E1"
                 android:textSize="12sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="84 / 120" />
 
             <!-- XP Bar Container -->
             <LinearLayout
@@ -91,12 +87,13 @@
                 android:background="#0E0E0E"
                 android:orientation="horizontal"
                 android:weightSum="1">
+
                 <View
                     android:id="@+id/xp_progress"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:background="#E9C176"
                     android:alpha="0.4"
+                    android:background="#E9C176"
                     tools:layout_weight="0.3" />
             </LinearLayout>
 
@@ -105,13 +102,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                tools:text="150 / 500"
+                android:fontFamily="serif"
                 android:textColor="#E5E2E1"
                 android:textSize="12sp"
-                android:fontFamily="serif" />
+                tools:text="150 / 500" />
         </LinearLayout>
 
-        <!-- Stats Grid -->
         <GridLayout
             android:id="@+id/stat_list"
             android:layout_width="wrap_content"

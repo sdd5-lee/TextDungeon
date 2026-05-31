@@ -61,7 +61,13 @@ public class EventActivity extends BaseActivity {
             return;
         }
 
-        currentEvent = eventManager.pickRandomEvent();
+        GameEvent saved = dt.getDungeonControl().getCurrentEvent();
+        if (saved != null) {
+            currentEvent = saved;
+        } else {
+            currentEvent = eventManager.pickRandomEvent();
+            dt.getDungeonControl().setCurrentEvent(currentEvent);
+        }
 
         setupSkipListener();
 
@@ -97,10 +103,29 @@ public class EventActivity extends BaseActivity {
                 dialog.show();
             });
         }
+        LinearLayout btnSystemSetting = findViewById(R.id.btn_system);
+        if (btnSystemSetting != null) {
+            setSfx(btnSystemSetting);
+            btnSystemSetting.setOnClickListener(v -> {
+                startActivityForResult(
+                        new Intent(this, SystemSettingActivity.class),
+                        100
+                );
+            });
 
-        View avatar = findViewById(R.id.avatar);
+        }
+        ImageView avatar = findViewById(R.id.avatar);
         View hpArea = findViewById(R.id.hp_area);
         GridLayout statList = findViewById(R.id.stat_list);
+
+        String jobImgName = player.getJob().img.toLowerCase();
+        int resId = getResources().getIdentifier(jobImgName, "drawable", getPackageName());
+
+        if (resId != 0) {
+            avatar.setImageResource(resId);
+        } else {
+            avatar.setImageResource(R.drawable.dungeon_entrance);
+        }
 
         avatar.setOnClickListener(v -> new PlayerInfoDialog(this, player).show());
         hpArea.setOnClickListener(v -> new PlayerInfoDialog(this, player).show());
@@ -109,10 +134,16 @@ public class EventActivity extends BaseActivity {
         renderEvent();
         setupBackButton();
     }
-
     // ─────────────────────────────────────────────────────────────
     // UI 렌더링 & 타이핑 애니메이션
     // ─────────────────────────────────────────────────────────────
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100) {
+            recreate();
+        }
+    }
     private void renderEvent(String extraMsg) {
         if (player == null) return;
 
@@ -288,6 +319,7 @@ public class EventActivity extends BaseActivity {
                         runOnUiThread(() -> {
                             if (updatedEvent != null && updatedEvent.getChoices().size() > 2) {
                                 currentEvent = updatedEvent;
+                                dt.getDungeonControl().setCurrentEvent(currentEvent);
                                 renderEvent("시스템: 새로운 선택지가 생성되었습니다.");
                             } else {
                                 isDiceUsed = false;
@@ -385,6 +417,7 @@ public class EventActivity extends BaseActivity {
             button.setOnClickListener(v -> {
                 isDiceUsed = false;
                 currentEvent = eventManager.pickRandomEvent();
+                dt.getDungeonControl().setCurrentEvent(currentEvent);
                 renderEvent();
             });
             choiceButtons.addView(button);

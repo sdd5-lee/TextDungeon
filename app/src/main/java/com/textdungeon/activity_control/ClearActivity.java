@@ -13,7 +13,6 @@ import com.textdungeon.player.Player;
 public class ClearActivity extends BaseActivity {
     private TextView tvClearDesc;
     private TextView tvScoreValue;
-    private TextView btnRestart;
     private TextView btnExit;
     DataControlTower dt = DataControlTower.getInstance(this);
 
@@ -25,27 +24,18 @@ public class ClearActivity extends BaseActivity {
         tvClearDesc = findViewById(R.id.tv_clear_desc);
         tvScoreValue = findViewById(R.id.tv_score_value);
 
-        btnRestart = findViewById(R.id.btn_restart);
         btnExit = findViewById(R.id.btn_exit);
 
         int count = dt.getUserRecord().getClearCount();
         tvClearDesc.setText(String.format("당신은 신들의 축복을 받으며 던전 최심부에 도달하고\n 최종적으로 마왕을 쓰러트렸습니다 수고하셨습니다.\n\n당신은 지금까지 %d번 던전을 클리어했습니다.",count));
         tvScoreValue.setText(String.valueOf(clearGem()));
 
-
-        setSfx(btnRestart, btnExit);
-        btnRestart.setOnClickListener(v -> {
-            DataControlTower.getInstance(this).resetRun();
-            Intent intent = new Intent(this, CharacterActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            finish();
-        });
+        setSfx(btnExit);
 
         btnExit.setOnClickListener(v -> {
             DataControlTower.getInstance(this).resetRun();
             Intent intent = new Intent(this, MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
         });

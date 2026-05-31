@@ -3,53 +3,92 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="#2C2C2C"
+    android:background="#1E1E1E"
     android:padding="20dp">
 
-    <TextView
+    <!-- 헤더: 타이틀 + 지혜 배지 -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="📖 마법서 연구"
-        android:textSize="24sp"
-        android:textColor="#FFFFFF"
-        android:gravity="center"
-        android:textStyle="bold"/>
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
-    <TextView
-        android:id="@+id/tv_current_wisdom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textColor="#64B5F6"
-        android:gravity="center"
-        android:layout_marginTop="12dp"
-        android:textStyle="bold"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="마법서 연구"
+            android:textSize="22sp"
+            android:textColor="#E9C176"
+            android:fontFamily="serif"
+            android:textStyle="bold|italic"/>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="#131313"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="12sp"/>
+
+            <TextView
+                android:id="@+id/tv_current_wisdom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:textColor="#E0BFBA"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- 골드 구분선 -->
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#555555"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"/>
+        android:layout_height="1dp"
+        android:background="#33E9C176"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="14dp"/>
 
+    <!-- 마법 목록 -->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="300dp">
+        android:layout_height="320dp">
 
         <LinearLayout
             android:id="@+id/magic_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:orientation="vertical"/>
+
     </ScrollView>
 
+    <!-- 골드 구분선 -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#33E9C176"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="14dp"/>
+
+    <!-- 닫기 버튼 -->
     <Button
         android:id="@+id/btn_shop_close"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:text="닫기"
-        android:textColor="#FFFFFF"
-        android:backgroundTint="#666666"
-        android:layout_marginTop="16dp"/>
+        android:textColor="#E0BFBA"
+        android:textSize="14sp"
+        android:backgroundTint="#1C1B1B"/>
 
 </LinearLayout>

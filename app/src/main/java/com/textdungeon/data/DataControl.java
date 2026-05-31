@@ -65,4 +65,15 @@ public class DataControl<D> {
         }
         return result;
     }
+    public D getRandomData() {
+        if (dataList == null || dataList.isEmpty()) {
+            return null;
+        }
+        List<String> jsonList = new ArrayList<>(dataList.values());
+
+        int randomIndex = new java.util.Random().nextInt(jsonList.size());
+        String randomJson = jsonList.get(randomIndex);
+
+        return gson.fromJson(randomJson, clazz);
+    }
 }

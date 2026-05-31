@@ -21,13 +21,11 @@ public class MainActivity extends BaseActivity {
         View btnShop = findViewById(R.id.btn_shop);
         View btnOption = findViewById(R.id.btn_option);
 
-        // ★ 고정 버튼 사운드 적용
         setSfx(btnNewGame, btnShop, btnOption);
 
         btnNewGame.setOnClickListener(v -> moveCharacter());
 
         if (btnContinue != null) {
-            // ★ 이어하기 버튼이 존재할 경우 사운드 적용
             setSfx(btnContinue);
 
             if (dt.getPlayer() != null) {

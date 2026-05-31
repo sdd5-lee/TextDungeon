@@ -96,9 +96,8 @@
         android:layout_marginBottom="40dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent">
-
         <TextView
-            android:id="@+id/btn_restart"
+            android:id="@+id/btn_exit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_event_panel"
@@ -107,25 +106,9 @@
             android:foreground="?attr/selectableItemBackground"
             android:gravity="center"
             android:padding="16dp"
-            android:text="새로운 여정 시작"
+            android:text="타이틀로 돌아가기"
             android:textColor="#E9C176"
             android:textSize="16sp"
-            android:fontFamily="serif"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/btn_exit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/bg_event_panel"
-            android:clickable="true"
-            android:focusable="true"
-            android:gravity="center"
-            android:padding="16dp"
-            android:text="타이틀로 돌아가기"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp"
             android:fontFamily="serif"
             android:textStyle="bold"/>
 

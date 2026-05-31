@@ -97,12 +97,21 @@ public class DataControlTower {
             this.dungeonControl.setCurrentFloor(1);
         }
     }
-    public void startNewGame(String name, Job job){
-        this.player = GameSave.createNewPlayer(this.userRecord, name,job);
+    public void startNewGame(String name, Job job, String traitId){
+        this.player = GameSave.createNewPlayer(this.userRecord, name,job,traitId);
+
+        this.player.setTraitId(traitId);
+
+        if (this.player.getTrait() != null) {
+            if (this.player.getTrait().triggerTreasure()) {
+                for (int i = 0; i < 3; i++) {
+                    giveRandomStartingItem(this.player);
+                }
+            }
+        }
         this.dungeonControl.setCurrentFloor(1);
         saveGame();
     }
-
     public void saveGame() {
         if (this.player == null){return;}
         GameSave currentSave = new GameSave(this.player, dungeonControl.getCurrentFloor(),difficulty,aiEvents);
@@ -167,5 +176,12 @@ public class DataControlTower {
     }
     public void addAiEvent(int targetFloor, GameEvent newEvent) {
         aiEvents.put(targetFloor, newEvent);
+    }
+    private void giveRandomStartingItem(Player p) {
+        Item randomItem = itemManager.getRandomData();
+
+        if (randomItem != null) {
+            p.getInventory().addItem(randomItem);
+        }
     }
 }

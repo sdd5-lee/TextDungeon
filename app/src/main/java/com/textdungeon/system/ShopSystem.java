@@ -1,10 +1,9 @@
 package com.textdungeon.system;
 
-import android.content.Context;
-
 import com.textdungeon.data.DataControlTower;
 import com.textdungeon.model.Job;
 import com.textdungeon.model.ShopUpgrade;
+import com.textdungeon.model.Trait;
 
 public class ShopSystem {
     DataControlTower dt;
@@ -16,7 +15,7 @@ public class ShopSystem {
         try {
             selectJob = Job.valueOf(jobName);
         }catch (IllegalArgumentException e){
-            return "존재하지 않는 직업 코드입니다.";
+            return "존재하지 않는 직업입니다.";
         }
         UserRecord record = dt.getUserRecord();
         if(record.isUnlockJob(selectJob.name)){
@@ -28,6 +27,28 @@ public class ShopSystem {
             record.unlockJobs(selectJob);
             GameSave.saveUserRecord(dt.getAppContext(), record);
             return "직업 : ["+ selectJob.name + "]이 해금되었습니다";
+        }else {
+            return "구매 실패 [재화가 부족합니다]";
+        }
+    }
+    public String buyTrait(String traitName){
+        Trait trait;
+
+        try {
+            trait = Trait.valueOf(traitName);
+        }catch (IllegalArgumentException e){
+            return "존재하지 않는 특성 코드입니다.";
+        }
+        UserRecord record = dt.getUserRecord();
+        if(record.isUnlockTrait(trait.name())){
+            return "특성 : ["+ trait.displayName + "]은 이미 해금한 특성입니다";
+        }
+        int price = trait.price;
+        if (record.getGem() >= price) {
+            record.deductGem(price);
+            record.unlockTraits(trait.name());
+            GameSave.saveUserRecord(dt.getAppContext(), record);
+            return "특성 : ["+ trait.displayName + "]이 해금되었습니다";
         }else {
             return "구매 실패 [재화가 부족합니다]";
         }

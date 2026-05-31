@@ -66,9 +66,11 @@ public class SystemSettingActivity extends BaseActivity {
             } else if (checkedId == R.id.rb_font_large) {
                 newScale = 1.2f;
             }
-
-            prefs.edit().putFloat("fontScale", newScale).apply();
-            recreate();
+            float currentScale = prefs.getFloat("fontScale", 1.0f);
+            if (currentScale != newScale) {
+                prefs.edit().putFloat("fontScale", newScale).apply();
+                recreate();
+            }
         });
 
         btnBack.setOnClickListener(v -> finish());

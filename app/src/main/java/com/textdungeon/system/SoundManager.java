@@ -15,7 +15,9 @@ public class SoundManager {
     private SoundManager(Context context) {
         // BGM 설정
         bgmPlayer = MediaPlayer.create(context, R.raw.bgm_main);
-        bgmPlayer.setLooping(true);
+        if (bgmPlayer != null) { // ★ 파일이 정상적으로 로드되었을 때만 세팅
+            bgmPlayer.setLooping(true);
+        }
 
         // 효과음 설정
         soundPool = new SoundPool.Builder()
