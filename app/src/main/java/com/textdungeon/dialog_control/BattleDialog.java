@@ -106,7 +106,7 @@ public class BattleDialog extends Dialog {
         TextView playerName = findViewById(R.id.player_name);
         TextView monsterName = findViewById(R.id.monster_name);
 
-        playerName.setText(player.getName());
+        playerName.setText(player.getTrait().displayName+" "+player.getName());
         monsterName.setText(battleSystem.getEnemyName());
     }
 

@@ -1,6 +1,7 @@
 package com.textdungeon.system;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.textdungeon.data.Difficulty;
@@ -29,14 +30,18 @@ public class GameSave {
         this.difficulty = difficulty;
         this.aiEvents = aiEvents;
     }
-    public GameSave(Player player, Difficulty difficulty) {
-        this.player = player;
-        this.difficulty = difficulty;
-    }
-    public static Player createNewPlayer(UserRecord record, String name, com.textdungeon.model.Job job){
+    public static Player createNewPlayer(UserRecord record, String name, com.textdungeon.model.Job job, String traitName){
         Player newPlayer = new Player(name,job);
         Stat stat = newPlayer.getStat();
 
+        com.textdungeon.model.Trait customTrait = com.textdungeon.model.Trait.valueOf(traitName);
+        if (customTrait.modifyBaseStat()) {
+            int bonus = customTrait.modifyStatBonus();
+            stat.addStrength(bonus);
+            stat.addAgility(bonus);
+            stat.addHealth(bonus);
+            stat.addWisdom(bonus);
+        }
         for (ShopUpgrade upgrade : ShopUpgrade.values()) {
             int currentLevel = record.getUpgradeLevel(upgrade.name());
             if (currentLevel <= 0) continue;

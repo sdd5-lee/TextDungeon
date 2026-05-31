@@ -11,16 +11,23 @@ import java.util.Set;
 public class UserRecord {
     private int gem;
     private final Set<String> unlockJobName;
+    private final Set<String> unlockTraitName;
     private final Map<String, Integer> upgradeLevels;
     private int killCount;
     private int clearCount;
     public UserRecord(){
         this.gem = 0;
         this.unlockJobName = new HashSet<>();
+        this.unlockTraitName = new HashSet<>();
         this.upgradeLevels = new HashMap<>();
         for (Job job: Job.values()) {
             if (job.defaultUnlocked){
                 unlockJobName.add(job.name);
+            }
+        }
+        for (Job job : Job.values()) {
+            if (job.defaultUnlocked) {
+                unlockTraitName.add(job.trait.name());
             }
         }
     }
@@ -34,22 +41,28 @@ public class UserRecord {
     public int getUpgradeLevel(String upgradeId) {
         return upgradeLevels.getOrDefault(upgradeId, 0);
     }
-
     public void levelUpUpgrade(String upgradeId) {
         int currentLevel = getUpgradeLevel(upgradeId);
         upgradeLevels.put(upgradeId, currentLevel + 1);
     }
-    public int getGem() { return gem; }
-    public void deductGem(int score) { this.gem -= score; }
-    public void addGem(int score) { this.gem += score; }
+
+    public void unlockTraits(String traitId){
+        unlockTraitName.add(traitId);
+    }
+    public boolean isUnlockTrait(String traitId){
+        return unlockTraitName.contains(traitId);
+    }
 
     public Set<String> getUnlockJobName() {
         return unlockJobName;
     }
-
     public Map<String, Integer> getUpgradeLevels() {
         return upgradeLevels;
     }
+    public Set<String> getUnlockTraitName() {
+        return unlockTraitName;
+    }
+
     public void addKillCount(){
         killCount++;
     }
@@ -63,4 +76,8 @@ public class UserRecord {
     public int getClearCount() {
         return clearCount;
     }
+    public int getGem() { return gem; }
+    public void deductGem(int gem) { this.gem -= gem; }
+    public void addGem(int gem) { this.gem += gem; }
+
 }

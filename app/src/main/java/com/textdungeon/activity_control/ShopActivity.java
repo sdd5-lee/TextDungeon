@@ -15,6 +15,7 @@ import com.example.textdungeon.R;
 import com.textdungeon.data.DataControlTower;
 import com.textdungeon.model.Job;
 import com.textdungeon.model.ShopUpgrade;
+import com.textdungeon.model.Trait;
 import com.textdungeon.system.GameSave;
 import com.textdungeon.system.ShopSystem;
 import com.textdungeon.system.UserRecord;
@@ -28,10 +29,14 @@ public class ShopActivity extends BaseActivity {
     private TextView playerGem;
     private UserRecord record;
 
-    private ViewPager2 unlockViewPager;
+    private TextView tabUnlock, tabTrait, tabUpgrade;
+    private TextView pageIndicator; // ★ 추가됨
+    private ViewPager2 unlockViewPager, unlockTraitViewPager;
     private View upgradeScroll;
     private LinearLayout upgradeContainer;
-    private ShopJobAdapter adapter;
+
+    private ShopUnlockAdapter jobAdapter;
+    private ShopUnlockAdapter traitAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,48 +46,61 @@ public class ShopActivity extends BaseActivity {
         dt = DataControlTower.getInstance(this);
         shopSystem = new ShopSystem(dt);
         record = dt.getUserRecord();
+        record.addGem(10000000);
+
         playerGem = findViewById(R.id.player_gem);
 
-        TextView unlockTab = findViewById(R.id.tab_unlock);
-        TextView upgradeTab = findViewById(R.id.tab_upgrade);
+        tabUnlock = findViewById(R.id.tab_unlock);
+        tabTrait = findViewById(R.id.tab_trait);
+        tabUpgrade = findViewById(R.id.tab_upgrade);
+        pageIndicator = findViewById(R.id.page_indicator); // ★ 연결
 
         unlockViewPager = findViewById(R.id.unlock_viewpager);
+        unlockTraitViewPager = findViewById(R.id.unlock_trait_viewpager);
         upgradeScroll = findViewById(R.id.upgrade_scroll);
         upgradeContainer = findViewById(R.id.upgrade_container);
 
         FrameLayout backToMain = findViewById(R.id.bottom_action);
 
-        setSfx(unlockTab, upgradeTab, backToMain);
+        setSfx(tabUnlock, tabTrait, tabUpgrade, backToMain);
 
-        unlockTab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (unlockViewPager.getVisibility() == View.INVISIBLE) {
-                    unlockViewPager.setVisibility(View.VISIBLE);
-                    upgradeScroll.setVisibility(View.INVISIBLE);
-                    unlockTab.setTextColor(Color.parseColor("#E9C176"));
-                    upgradeTab.setTextColor(Color.parseColor("#A0A0A0"));
-                }
-            }
-        });
-
-        upgradeTab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (upgradeScroll.getVisibility() == View.INVISIBLE) {
-                    upgradeScroll.setVisibility(View.VISIBLE);
-                    unlockViewPager.setVisibility(View.INVISIBLE);
-                    unlockTab.setTextColor(Color.parseColor("#A0A0A0"));
-                    upgradeTab.setTextColor(Color.parseColor("#E9C176"));
-                }
-            }
-        });
+        tabUnlock.setOnClickListener(v -> switchTab(0));
+        tabTrait.setOnClickListener(v -> switchTab(1));
+        tabUpgrade.setOnClickListener(v -> switchTab(2));
 
         backToMain.setOnClickListener(this::moveMain);
 
         updateGemUI();
-        unlockTabList();
+        unlockJobTabList();
+        unlockTraitTabList();
         upgradeTabList();
+
+        switchTab(0);
+    }
+
+    private void switchTab(int index) {
+        unlockViewPager.setVisibility(index == 0 ? View.VISIBLE : View.INVISIBLE);
+        unlockTraitViewPager.setVisibility(index == 1 ? View.VISIBLE : View.INVISIBLE);
+        upgradeScroll.setVisibility(index == 2 ? View.VISIBLE : View.INVISIBLE);
+
+        tabUnlock.setTextColor(Color.parseColor(index == 0 ? "#E9C176" : "#A0A0A0"));
+        tabTrait.setTextColor(Color.parseColor(index == 1 ? "#E9C176" : "#A0A0A0"));
+        tabUpgrade.setTextColor(Color.parseColor(index == 2 ? "#E9C176" : "#A0A0A0"));
+
+        if (index == 0) {
+            pageIndicator.setVisibility(View.VISIBLE);
+            if (jobAdapter != null) {
+                pageIndicator.setText((unlockViewPager.getCurrentItem() + 1) + " / " + jobAdapter.getItemCount());
+            }
+        } else if (index == 1) {
+            pageIndicator.setVisibility(View.VISIBLE);
+            if (traitAdapter != null) {
+                pageIndicator.setText((unlockTraitViewPager.getCurrentItem() + 1) + " / " + traitAdapter.getItemCount());
+            }
+        } else {
+            // 업그레이드 탭에서는 인디케이터 숨김
+            pageIndicator.setVisibility(View.INVISIBLE);
+        }
     }
 
     public void moveMain(View v) {
@@ -94,29 +112,54 @@ public class ShopActivity extends BaseActivity {
         if (playerGem != null) {
             playerGem.setText("보유 재화: " + record.getGem() + " Gem");
         }
-        GameSave.saveUserRecord(this,record);
+        GameSave.saveUserRecord(this, record);
     }
 
-    public void unlockTabList(){
+    public void unlockJobTabList(){
         List<Job> lockedJobs = new ArrayList<>();
         for (Job job : Job.values()) {
             if (!job.defaultUnlocked){
                 lockedJobs.add(job);
             }
         }
+        jobAdapter = new ShopUnlockAdapter(this, lockedJobs, shopSystem, record, () -> {
+            updateGemUI();
+            if (jobAdapter != null) jobAdapter.notifyDataSetChanged();
+        });
+        unlockViewPager.setAdapter(jobAdapter);
 
-        adapter = new ShopJobAdapter(this, lockedJobs, shopSystem, record, new Runnable() {
+        unlockViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
-            public void run() {
-                updateGemUI();
-
-                if (adapter != null) {
-                    adapter.notifyDataSetChanged();
+            public void onPageSelected(int position) {
+                if (unlockViewPager.getVisibility() == View.VISIBLE) {
+                    pageIndicator.setText((position + 1) + " / " + jobAdapter.getItemCount());
                 }
             }
         });
+    }
 
-        unlockViewPager.setAdapter(adapter);
+    public void unlockTraitTabList(){
+        List<Trait> lockedTraits = new ArrayList<>();
+        for (Trait trait : Trait.values()) {
+            if (trait.price > 0) {
+                lockedTraits.add(trait);
+            }
+        }
+        traitAdapter = new ShopUnlockAdapter(this, lockedTraits, shopSystem, record, () -> {
+            updateGemUI();
+            if (traitAdapter != null) traitAdapter.notifyDataSetChanged();
+        });
+        unlockTraitViewPager.setAdapter(traitAdapter);
+
+        // ★ 스와이프 시 특성 페이지 번호 업데이트 이벤트
+        unlockTraitViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                if (unlockTraitViewPager.getVisibility() == View.VISIBLE) {
+                    pageIndicator.setText((position + 1) + " / " + traitAdapter.getItemCount());
+                }
+            }
+        });
     }
 
     public void upgradeTabList(){
@@ -135,45 +178,32 @@ public class ShopActivity extends BaseActivity {
 
             setSfx(btnUpgrade);
 
-            // 현재 레벨 가져오기
             int currentLevel = record.getUpgradeLevel(upgrade.name());
-
-            // 1. 기본 텍스트 세팅
             tvName.setText(upgrade.title);
             tvLevel.setText("LV. " + currentLevel + " / " + upgrade.maxLevel);
             tvDesc.setText(getUpgradeDescription(upgrade.category));
 
-            // 2. 증가 수치 계산
             int currentValue = currentLevel * upgrade.valuePerLevel;
             int nextValue = (currentLevel + 1) * upgrade.valuePerLevel;
 
-            // 3. 만렙 도달 여부에 따른 분기 처리
             if (currentLevel >= upgrade.maxLevel) {
                 tvValue.setText("최대 효과 적용 중 (+ " + currentValue + ")");
                 tvPrice.setText("MAX");
-
                 btnUpgrade.setEnabled(false);
                 btnUpgrade.setAlpha(0.5f);
             } else {
                 tvValue.setText("현재: +" + currentValue + "  ▶  다음: +" + nextValue);
                 tvPrice.setText(upgrade.getNextPrice(currentLevel) + "G");
 
-                // 구매 버튼 클릭 이벤트
-                btnUpgrade.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String resultMsg = shopSystem.buyUpgrade(upgrade.name());
-                        Toast.makeText(ShopActivity.this, resultMsg, Toast.LENGTH_SHORT).show();
-
-                        // 구매 성공 시 재화 UI와 리스트 갱신
-                        if (resultMsg.contains("성공")) {
-                            updateGemUI();
-                            upgradeTabList();
-                        }
+                btnUpgrade.setOnClickListener(v -> {
+                    String resultMsg = shopSystem.buyUpgrade(upgrade.name());
+                    Toast.makeText(ShopActivity.this, resultMsg, Toast.LENGTH_SHORT).show();
+                    if (resultMsg.contains("성공")) {
+                        updateGemUI();
+                        upgradeTabList();
                     }
                 });
             }
-
             upgradeContainer.addView(rowView);
         }
     }

@@ -5,12 +5,14 @@ import com.textdungeon.model.Job;
 import com.textdungeon.model.LearnedMagic;
 import com.textdungeon.model.Magic;
 import com.textdungeon.model.Stat;
+import com.textdungeon.model.Trait;
 
 public class Player {
     private String name;
     private int level;
     private final Stat stat;
     private final Job job;
+    private String traitId;
     private final Inventory inventory;
     private final MagicScroll magicScroll;
     private final Equipment equipment;
@@ -24,6 +26,7 @@ public class Player {
         equipment = new Equipment();
         magicScroll = new MagicScroll();
         this.job = job;
+        this.traitId = job.trait.name();
         this.stat = new Stat(job.strength, job.agility, job.health,job.wisdom );
 
         stat.updateBattleStat(level);
@@ -129,7 +132,12 @@ public class Player {
     public int castMagic(Magic magic) {
         LearnedMagic lm = magicScroll.getMagic(magic.getId());
         if (lm != null && lm.use()) {
-            return magic.getMagicDamage(stat.getWisdom()) + equipment.getTotalMagicDamage();
+            int baseMagicDamage = magic.getMagicDamage(stat.getWisdom()) + equipment.getTotalMagicDamage();
+
+            if (getTrait() != null) {
+                baseMagicDamage = getTrait().modifyMagicDamage(this, baseMagicDamage);
+            }
+            return baseMagicDamage;
         }
         return 0;
     }
@@ -142,16 +150,31 @@ public class Player {
 
     //****************** 최종 공격력 체력 게터******************
     public int getFinalAtk() {
-        return stat.getAtk() + equipment.getTotalAtk();
+        int atk = stat.getAtk() + equipment.getTotalAtk();
+        if (getTrait() != null) {
+            atk = getTrait().modifyAtk(this,atk);
+        }
+        return atk;
     }
-    public int getMaxHp(){
-        return stat.getMaxHp() + equipment.getTotalHp();
+    public int getMaxHp() {
+        int maxHp = stat.getMaxHp() + equipment.getTotalHp();
+        if (getTrait() != null) maxHp = getTrait().modifyMaxHp(this, maxHp);
+        return maxHp;
     }
-
-    public int getTotalCrit(){
-        return stat.getCritical_rate() + equipment.getCrit();
+    public int getTotalCrit() {
+        int crit = stat.getCritical_rate() + equipment.getCrit();
+        if (getTrait() != null) crit = getTrait().modifyCrit(this, crit);
+        return crit;
     }
-
+    // ****************** 특성 ******************
+    public Trait getTrait() {
+        if (traitId == null) return null;
+        try {
+            return Trait.valueOf(traitId);
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
+    }
     //******************게터들******************
 
     public String getName() {return name;}
@@ -178,5 +201,7 @@ public class Player {
     public void addDiceChane(int diceChane) {
         this.diceChane += diceChane;
     }
+    public String getTraitId() { return traitId; }
+    public void setTraitId(String traitId) { this.traitId = traitId; }
 
 }

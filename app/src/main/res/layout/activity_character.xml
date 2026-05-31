@@ -54,7 +54,7 @@
                 android:layout_gravity="center_horizontal"
                 android:columnCount="3"
                 android:rowCount="3"
-                android:layout_marginBottom="48dp">
+                android:layout_marginBottom="32dp">
 
                 <LinearLayout android:id="@+id/job_knight" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
                     <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/ic_menu_gallery" app:tint="#E5E2E1" />
@@ -139,13 +139,71 @@
                 </LinearLayout>
             </LinearLayout>
 
+
+            <LinearLayout
+                android:id="@+id/btn_trait_toggle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="장착 특성:"
+                    android:textColor="#A0A0A0"
+                    android:textSize="14sp"
+                    android:fontFamily="serif"
+                    android:layout_marginEnd="8dp"/>
+
+                <TextView
+                    android:id="@+id/tv_selected_trait"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="직업을 선택하세요"
+                    android:textColor="#E9C176"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:fontFamily="serif"/>
+
+                <ImageView
+                    android:id="@+id/iv_trait_arrow"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@android:drawable/arrow_down_float"
+                    app:tint="#A0A0A0" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/trait_scroll_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#1A1A1A"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"
+                android:padding="8dp">
+
+                <GridLayout
+                    android:id="@+id/trait_grid_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:columnCount="4"
+                    android:alignmentMode="alignBounds" />
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#2A2A2A"
                 android:orientation="vertical"
                 android:padding="20dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginBottom="32dp">
 
                 <TextView

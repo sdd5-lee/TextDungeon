@@ -24,7 +24,7 @@ public class JobTest {
 
     @Test
     public void 잠금_직업들은_price가_0보다_큼() {
-        for (Job job : new Job[]{Job.KNIGHT, Job.MONK, Job.CLERIC, Job.WARLOCK, Job.HERO}) {
+        for (Job job : new Job[]{Job.KNIGHT, Job.MONK, Job.PALADIN, Job.WARLOCK, Job.HERO}) {
             assertTrue(job.price > 0);
             assertFalse(job.defaultUnlocked);
         }

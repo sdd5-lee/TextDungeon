@@ -134,16 +134,12 @@ public class Stat {
         wisdom += point;
     }
 
-    //골드 추가 부분
     public int getGold() {
         return gold;
     }
-
     public void setGold(int gold) {
         this.gold = gold;
     }
-    //골드 추가 부분
-
     public void addGold(int amount) {
         this.gold += amount;
         if (this.gold < 0) this.gold = 0;
@@ -176,7 +172,9 @@ public class Stat {
                 this.addGold(value);
                 break;
         }
-
+    }
+    public void gainStatExp(int value,int expBonus) {
+        this.exp += value * expBonus;
     }
     public void heal(int heal) {
         int newHp = Math.min(getMaxHp(),getHp() + heal);
