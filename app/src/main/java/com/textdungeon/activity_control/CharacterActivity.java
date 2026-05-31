@@ -60,7 +60,7 @@ public class CharacterActivity extends BaseActivity {
         LinearLayout jobWarlock = findViewById(R.id.job_warlock);
         LinearLayout jobMonk = findViewById(R.id.job_monk);
 
-        // Map에 직업 뷰 등록
+        // Map에 직업 뷰 등록 (성기사 매핑 유지)
         jobViews.put(Job.KNIGHT, jobKnight);
         jobViews.put(Job.ROGUE, jobRogue);
         jobViews.put(Job.MAGE, jobMage);
@@ -88,14 +88,8 @@ public class CharacterActivity extends BaseActivity {
 
         setSfx(jobKnight, jobRogue, jobMage, jobWarrior, jobCleric, jobRanger, jobHero, jobWarlock, jobMonk, btnEmbark, btnTraitToggle);
 
-        // 미해금 직업 베일(가림) 처리
-        applyVeil(jobKnight, Job.KNIGHT);
-        applyVeil(jobCleric, Job.PALADIN);
-        applyVeil(jobHero, Job.HERO);
-        applyVeil(jobWarlock, Job.WARLOCK);
-        applyVeil(jobMonk, Job.MONK);
+        initJobCards();
 
-        // 직업 선택 이벤트
         jobRogue.setOnClickListener(v -> updateUI(Job.ROGUE));
         jobMage.setOnClickListener(v -> updateUI(Job.MAGE));
         jobWarrior.setOnClickListener(v -> updateUI(Job.WARRIOR));
@@ -120,15 +114,30 @@ public class CharacterActivity extends BaseActivity {
         btnEmbark.setOnClickListener(this::startGame);
     }
 
-    private void applyVeil(LinearLayout layout, Job job) {
-        if (!job.defaultUnlocked && !record.isUnlockJob(job.name)) {
-            layout.setAlpha(0.3f);
+    private void initJobCards() {
+        for (Map.Entry<Job, LinearLayout> entry : jobViews.entrySet()) {
+            Job job = entry.getKey();
+            LinearLayout layout = entry.getValue();
             ImageView iv = (ImageView) layout.getChildAt(0);
             TextView tv = (TextView) layout.getChildAt(1);
-            iv.setImageResource(android.R.drawable.ic_secure);
-            iv.setColorFilter(Color.parseColor("#888888"));
-            tv.setText("???");
-            tv.setTextColor(Color.parseColor("#888888"));
+
+            if (!job.defaultUnlocked && !record.isUnlockJob(job.name)) {
+                layout.setAlpha(0.3f);
+                iv.setImageResource(android.R.drawable.ic_secure);
+                iv.setColorFilter(Color.parseColor("#888888"));
+                tv.setText("???");
+                tv.setTextColor(Color.parseColor("#888888"));
+            } else {
+                layout.setAlpha(1.0f);
+                int imgResId = getResources().getIdentifier(job.img, "drawable", getPackageName());
+                if (imgResId != 0) {
+                    iv.setImageResource(imgResId);
+                } else {
+                    iv.setImageResource(android.R.drawable.ic_menu_gallery);
+                }
+                iv.clearColorFilter();
+                tv.setText(job.name);
+            }
         }
     }
 
@@ -139,7 +148,6 @@ public class CharacterActivity extends BaseActivity {
 
     private void updateUI(Job job) {
         playerJob = job;
-
         selectedTrait = job.trait;
 
         highlightSelectedJob();
@@ -149,12 +157,10 @@ public class CharacterActivity extends BaseActivity {
         statAgi.setText(String.valueOf(job.agility));
         statWis.setText(String.valueOf(job.wisdom));
 
-        // 특성 선택 버튼 보이기 및 업데이트
         btnTraitToggle.setVisibility(View.VISIBLE);
         tvSelectedTrait.setText(selectedTrait.displayName);
         updateDescription();
 
-        // 특성 목록 닫기 & 갱신
         if (isTraitExpanded) toggleTraitMenu();
         populateTraitList();
     }
@@ -168,15 +174,12 @@ public class CharacterActivity extends BaseActivity {
                 continue;
             }
 
-            ImageView iv = (ImageView) layout.getChildAt(0);
             TextView tv = (TextView) layout.getChildAt(1);
 
             if (job == playerJob) {
-                iv.setColorFilter(Color.parseColor("#E9C176"));
                 tv.setTextColor(Color.parseColor("#E9C176"));
                 layout.setBackgroundColor(Color.parseColor("#3A3A3A"));
             } else {
-                iv.setColorFilter(Color.parseColor("#E5E2E1"));
                 tv.setTextColor(Color.parseColor("#E5E2E1"));
                 layout.setBackgroundColor(Color.parseColor("#2A2A2A"));
             }

@@ -57,48 +57,48 @@
                 android:layout_marginBottom="32dp">
 
                 <LinearLayout android:id="@+id/job_knight" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
-                    <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/ic_menu_gallery" app:tint="#E5E2E1" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="KNIGHT" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" />
+                    <ImageView android:layout_width="60dp" android:layout_height="60dp" android:scaleType="centerCrop" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="KNIGHT" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout android:id="@+id/job_rogue" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
-                    <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/ic_menu_gallery" app:tint="#E5E2E1" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="ROGUE" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" />
+                    <ImageView android:layout_width="60dp" android:layout_height="60dp" android:scaleType="centerCrop" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="ROGUE" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout android:id="@+id/job_mage" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
-                    <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/ic_menu_gallery" app:tint="#E5E2E1" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="MAGE" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" />
+                    <ImageView android:layout_width="60dp" android:layout_height="60dp" android:scaleType="centerCrop" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="MAGE" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout android:id="@+id/job_warrior" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
-                    <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/ic_menu_gallery" app:tint="#E5E2E1" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="WARRIOR" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" />
+                    <ImageView android:layout_width="60dp" android:layout_height="60dp" android:scaleType="centerCrop" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="WARRIOR" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout android:id="@+id/job_cleric" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
-                    <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/ic_menu_gallery" app:tint="#E5E2E1" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="CLERIC" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" />
+                    <ImageView android:layout_width="60dp" android:layout_height="60dp" android:scaleType="centerCrop" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="CLERIC" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout android:id="@+id/job_ranger" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
-                    <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/ic_menu_gallery" app:tint="#E5E2E1" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="ARCHER" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" />
+                    <ImageView android:layout_width="60dp" android:layout_height="60dp" android:scaleType="centerCrop" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="ARCHER" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout android:id="@+id/job_paladin" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
-                    <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/ic_menu_gallery" app:tint="#E5E2E1" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="HERO" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" />
+                    <ImageView android:layout_width="60dp" android:layout_height="60dp" android:scaleType="centerCrop" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="HERO" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout android:id="@+id/job_warlock" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
-                    <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/ic_menu_gallery" app:tint="#E5E2E1" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="WARLOCK" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" android:layout_marginTop="10dp" />
+                    <ImageView android:layout_width="60dp" android:layout_height="60dp" android:scaleType="centerCrop" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="WARLOCK" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout android:id="@+id/job_monk" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
-                    <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/ic_menu_gallery" app:tint="#E5E2E1" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="MONK" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" android:layout_marginTop="10dp" />
+                    <ImageView android:layout_width="60dp" android:layout_height="60dp" android:scaleType="centerCrop" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="MONK" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" />
                 </LinearLayout>
 
             </GridLayout>
@@ -139,7 +139,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-
+            <!-- 특성 선택 아코디언 메뉴 -->
             <LinearLayout
                 android:id="@+id/btn_trait_toggle"
                 android:layout_width="match_parent"
