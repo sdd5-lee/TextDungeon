@@ -43,7 +43,7 @@ public class Player {
             stat.setMaxExp(80 + this.level * 25);
             stat.addStatPoint(5);
 
-            //레벨 반영
+
             stat.updateBattleStat(level);
 
             magicScroll.updateCounts(stat.getWisdom());

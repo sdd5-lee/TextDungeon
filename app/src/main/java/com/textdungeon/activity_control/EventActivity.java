@@ -40,10 +40,6 @@ public class EventActivity extends BaseActivity {
     private String currentTypingText = "";
     private int currentTypingIndex = 0;
 
-    // ─────────────────────────────────────────────────────────────
-    // 생명주기
-    // ─────────────────────────────────────────────────────────────
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -261,7 +257,6 @@ public class EventActivity extends BaseActivity {
             applyEventResult(index);
         }
     }
-
     private void applyEventResult(int choiceIndex) {
         int levelSnapshot = eventManager.snapshotLevel();
         String result = eventManager.applyReward(currentEvent, choiceIndex);
@@ -289,7 +284,9 @@ public class EventActivity extends BaseActivity {
 
         appendDesc("결과 : " + result);
         updatePlayerHeader();
-
+        if (currentEvent.isRetry(choiceIndex)) {
+            renderRetryButtons();
+        }
         if (eventManager.didLevelUp(levelSnapshot)) {
             showLevelUpDialog();
         } else {
@@ -297,6 +294,37 @@ public class EventActivity extends BaseActivity {
         }
 
         startTypingAnimation();
+    }
+
+    private void applyEscapeResult() {
+        int levelSnapshot = eventManager.snapshotLevel();
+
+        appendDesc("결과 : 당신은 전투를 피해 도망쳤습니다");
+        updatePlayerHeader();
+        if (eventManager.didLevelUp(levelSnapshot)) {
+            showLevelUpDialog();
+        } else {
+            showNextFloorButton();
+        }
+        startTypingAnimation();
+    }
+
+    private void renderRetryButtons() {
+        choiceButtons.removeAllViews();
+        int index = 0;
+        for (String choiceText : currentEvent.getChoices()) {
+            if (!currentEvent.isRetry(index)) {
+                ChoiceButton button = new ChoiceButton(this);
+                setSfx(button);
+                button.setTextView(choiceText);
+                button.setLayoutParams(matchParentWrapContent());
+
+                int finalIndex = index;
+                button.setOnClickListener(v -> onChoiceSelected(finalIndex));
+                choiceButtons.addView(button);
+            }
+            index++;
+        }
     }
 
     private void onDiceSelected() {
@@ -352,10 +380,17 @@ public class EventActivity extends BaseActivity {
             startTypingAnimation();
             return;
         }
-        BattleDialog battleDialog = new BattleDialog(this, player, monster, dt.getDifficulty());
+        final boolean[] escapeState = {false};
+        BattleDialog battleDialog = new BattleDialog(this, player, monster, dt.getDifficulty(),
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        escapeState[0] = true;
+                    }});
         battleDialog.setOnDismissListener(dialog -> {
             if (eventManager.isPlayerDead()) {
                 appendDesc("당신은 사망하였습니다.");
+
                 ChoiceButton button = new ChoiceButton(this);
                 setSfx(button);
 
@@ -368,6 +403,8 @@ public class EventActivity extends BaseActivity {
                 });
                 choiceButtons.addView(button);
                 startTypingAnimation();
+            } else if(escapeState[0]) {
+                applyEscapeResult();
             } else {
                 dt.getUserRecord().addKillCount();
                 applyEventResult(choiceIndex);
@@ -378,7 +415,12 @@ public class EventActivity extends BaseActivity {
 
     private void showLevelUpDialog() {
         appendDesc("레벨업! " + player.getLevel() + "레벨이 되었습니다!");
-        StatDialog levelUpDialog = new StatDialog(this, player);
+        StatDialog levelUpDialog = new StatDialog(this, player, new Runnable() {
+                    @Override
+                    public void run() {
+                        runOnUiThread(() -> updatePlayerHeader());
+                    }
+                });
         levelUpDialog.setOnDismissListener(dialog -> {
             showNextFloorButton();
             startTypingAnimation();
@@ -456,7 +498,6 @@ public class EventActivity extends BaseActivity {
             if (typingRunnable != null) {
                 typingHandler.removeCallbacks(typingRunnable);
                 typingRunnable = null;
-                // 버퍼에 남은 텍스트 즉시 전체 출력
                 if (currentTypingIndex < currentTypingText.length()) {
                     eventDesc.append(currentTypingText.substring(currentTypingIndex));
                 }

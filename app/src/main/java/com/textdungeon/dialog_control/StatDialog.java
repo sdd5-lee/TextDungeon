@@ -22,9 +22,12 @@ public class StatDialog extends Dialog {
     private TextView statPoint;
     private Stat dialogStat;
     private int str,agi,vit,wis,count;
-    public StatDialog(Context context, Player player) {
+    Runnable onUpdateCallback;
+
+    public StatDialog(Context context, Player player,Runnable onUpdateCallback) {
         super(context);
         this.player = player;
+        this.onUpdateCallback = onUpdateCallback;
     }
 
     @Override
@@ -152,6 +155,9 @@ public class StatDialog extends Dialog {
         dialogStat.setWisdom(wis);
         dialogStat.setStatPoint(count);
         dialogStat.updateBattleStat(player.getLevel());
+        if (onUpdateCallback != null) {
+            onUpdateCallback.run();
+        }
         dismiss();
     }
     @Override

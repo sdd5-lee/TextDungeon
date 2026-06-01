@@ -119,6 +119,7 @@ public class DataControlTower {
     }
     public void resetRun() {
         this.player = null;
+        getDungeonControl().setCurrentEvent(null);
         GameSave.deleteRun(appContext);
     }
 

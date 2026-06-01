@@ -72,9 +72,17 @@ public class GameEvent {
             reward.apply(player, itemManager);
             player.getStat().updateBattleStat(player.getLevel());
         }
+        if (reward.getDescription() == null || reward.getDescription().isEmpty()) {
+            return "신비로운 힘이 당신의 몸을 감싸다 지나갔습니다.";
+        }
         return reward.getDescription();
     }
-
+    public boolean isRetry(int choiceIndex) {
+        if (rewards != null && choiceIndex < rewards.size()) {
+            return rewards.get(choiceIndex).isRetry();
+        }
+        return false;
+    }
     public boolean hasItemReward(int choiceIndex) {
         return getItemId(choiceIndex) != null;
     }

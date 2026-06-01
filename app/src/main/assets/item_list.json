@@ -502,5 +502,77 @@
     "isConsumable": false,
     "value": 0,
     "description": "마왕이 소멸한 뒤 남겨진 어둠의 파편입니다.\n\n[획득 방법] 보스 전투: 마왕 처치 시 획득"
+  },
+  {
+  "id": "item_43",
+  "name": "거대 박쥐의 날개옷",
+  "type": "armor",
+  "hp": 35,
+  "atk": 0,
+  "magicDamage": 0,
+  "crit": 5,
+  "isConsumable": false,
+  "value": 0,
+  "description": "변이된 거대 박쥐의 질긴 가죽으로 만든 옷입니다.\n\n[획득 방법] 보스 전투: 거대 박쥐 처치 시 획득"
+},
+  {
+    "id": "item_44",
+    "name": "망령의 대검",
+    "type": "weapon",
+    "hp": 0,
+    "atk": 25,
+    "magicDamage": 15,
+    "crit": 10,
+    "isConsumable": false,
+    "value": 0,
+    "description": "망령 기사단장이 휘두르던 저주받은 대검입니다.\n\n[획득 방법] 보스 전투: 망령 기사단장 처치 시 획득"
+  },
+  {
+    "id": "item_45",
+    "name": "사신의 낫",
+    "type": "weapon",
+    "hp": 0,
+    "atk": 45,
+    "magicDamage": 30,
+    "crit": 20,
+    "isConsumable": false,
+    "value": 0,
+    "description": "피에 물든 사신이 영혼을 수확할 때 쓰던 끔찍한 낫입니다.\n\n[획득 방법] 히든 보스 전투: 사신 처치 시 획득"
+  },
+  {
+    "id": "item_46",
+    "name": "워로드의 도끼",
+    "type": "weapon",
+    "hp": 0,
+    "atk": 35,
+    "magicDamage": 0,
+    "crit": 15,
+    "isConsumable": false,
+    "value": 0,
+    "description": "오크 워로드가 전장을 휩쓸던 거대한 양손 도끼입니다.\n\n[획득 방법] 보스 전투: 오크 워로드 처치 시 획득"
+  },
+  {
+    "id": "item_47",
+    "name": "군주의 삼지창",
+    "type": "weapon",
+    "hp": 0,
+    "atk": 45,
+    "magicDamage": 20,
+    "crit": 15,
+    "isConsumable": false,
+    "value": 0,
+    "description": "늪지대 군주가 다루던 매서운 삼지창입니다.\n\n[획득 방법] 보스 전투: 늪지대 군주 처치 시 획득"
+  },
+  {
+    "id": "item_48",
+    "name": "태초의 동력원",
+    "type": "artifact",
+    "hp": 50,
+    "atk": 30,
+    "magicDamage": 30,
+    "crit": 15,
+    "isConsumable": false,
+    "value": 0,
+    "description": "태초의 골렘을 움직이던 무한한 마력의 핵입니다.\n\n[획득 방법] 히든 보스 전투: 태초의 골렘 처치 시 획득"
   }
 ]

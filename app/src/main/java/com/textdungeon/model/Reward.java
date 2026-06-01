@@ -10,7 +10,11 @@ public class Reward {
     private String description;
     private String itemId;
     private List<RewardStat> statRewards;
+    private boolean retry;
 
+    public boolean isRetry() {
+        return retry;
+    }
     public String getId() {
         return id;
     }

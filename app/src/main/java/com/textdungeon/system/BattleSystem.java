@@ -1,6 +1,7 @@
 package com.textdungeon.system;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.textdungeon.data.DataControlTower;
 import com.textdungeon.data.Difficulty;
@@ -24,6 +25,7 @@ public class BattleSystem {
     private int battleTurn;
     private boolean isPlayerTurn = true;
     private boolean isBattleOver = false;
+    private boolean EscapeState = false;
 
     private Random random = new Random();
 
@@ -37,55 +39,11 @@ public class BattleSystem {
         this.enemyHp = monster.getMaxHp() * difficulty.statMultiplier;
         this.enemyAttack = monster.getAttack() * difficulty.statMultiplier;
     }
-
-    // =========================
-    // 특성 검사 메서드
-    // =========================
-    private int applyTraitCritDamage(int damage) {
-        Trait trait = player.getTrait();
-        if (trait == null) return damage * 2;
-        return trait.modifyCritDamage(player, damage * 2);
-    }
-
-    private int applyTraitIncomingDamage(int damage) {
-        Trait trait = player.getTrait();
-        if (trait == null) return damage;
-        return trait.modifyIncomingDamage(player, damage);
-    }
-
-    private int applyTraitCounter(int damage) {
-        Trait trait = player.getTrait();
-        if (trait == null) return 0;
-        return trait.modifyCounterDamage(player, damage);
-    }
-
-    private boolean isAlwaysEscape() {
-        Trait trait = player.getTrait();
-        return trait != null && trait.alwaysEscape();
-    }
-
-    private void applyTraitBattleEnd() {
-        Trait trait = player.getTrait();
-        if (trait != null) trait.onBattleEnd(player);
-    }
-
-    private boolean applyVampiricTouch() {
-        Trait trait = player.getTrait();
-        return trait != null && trait.bloodSucking();
-    }
-    private boolean applyMoreStrike() {
-        Trait trait = player.getTrait();
-        return trait != null && trait.triggerMoreStrike();
-    }
-    private boolean applyStruggle() {
-        Trait trait = player.getTrait();
-        return trait != null && trait.triggerStruggle();
-    }
-
     // =========================
     // 플레이어 액션 (1: 공격, 2: 방어, 3: 도망, 4: 마법)
     // =========================
     public String playerAction(int choice, String magicId) {
+        if (EscapeState) return "당신은 도망쳤습니다!";
         if (isBattleOver) return "전투가 이미 종료되었습니다.";
         if (!isPlayerTurn) return "적의 턴을 기다려주세요.";
         StringBuilder log = new StringBuilder();
@@ -126,7 +84,7 @@ public class BattleSystem {
 
             case 3: // 도망
                 if (isAlwaysEscape() || random.nextInt(100) < 40) {
-                    isBattleOver = true;
+                    EscapeState = true;
                     return "성공적으로 도망쳤습니다!";
                 } else {
                     log.append("도망에 실패했습니다!\n");
@@ -213,10 +171,53 @@ public class BattleSystem {
         return log;
     }
 
+    private int applyTraitCritDamage(int damage) {
+        Trait trait = player.getTrait();
+        if (trait == null) return damage * 2;
+        return trait.modifyCritDamage(player, damage * 2);
+    }
+
+    private int applyTraitIncomingDamage(int damage) {
+        Trait trait = player.getTrait();
+        if (trait == null) return damage;
+        return trait.modifyIncomingDamage(player, damage);
+    }
+
+    private int applyTraitCounter(int damage) {
+        Trait trait = player.getTrait();
+        if (trait == null) return 0;
+        return trait.modifyCounterDamage(player, damage);
+    }
+
+    private boolean isAlwaysEscape() {
+        Trait trait = player.getTrait();
+        return trait != null && trait.alwaysEscape();
+    }
+
+    private void applyTraitBattleEnd() {
+        Trait trait = player.getTrait();
+        if (trait != null) trait.onBattleEnd(player);
+    }
+
+    private boolean applyVampiricTouch() {
+        Trait trait = player.getTrait();
+        return trait != null && trait.bloodSucking();
+    }
+    private boolean applyMoreStrike() {
+        Trait trait = player.getTrait();
+        return trait != null && trait.triggerMoreStrike();
+    }
+    private boolean applyStruggle() {
+        Trait trait = player.getTrait();
+        return trait != null && trait.triggerStruggle();
+    }
+
+
     // =========================
     // 게터
     // =========================
     public boolean isBattleOver() { return isBattleOver; }
+    public boolean isEscapeState(){return EscapeState;}
     public String getEnemyName() { return enemyName; }
     public int getEnemyHp() { return enemyHp; }
 }
