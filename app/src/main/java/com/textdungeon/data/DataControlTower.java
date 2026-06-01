@@ -14,6 +14,7 @@ import com.textdungeon.model.Monster;
 import com.textdungeon.model.Job;
 import com.textdungeon.model.Magic;
 import com.textdungeon.player.Player;
+import com.textdungeon.system.AchievementManager;
 import com.textdungeon.system.GameSave;
 import com.textdungeon.system.UserRecord;
 
@@ -33,19 +34,31 @@ public class DataControlTower {
     private aiManager aiManager;
     private Difficulty difficulty;
     private Map<Integer, GameEvent> aiEvents;
+
+    private AchievementManager achievementManager;
+
     private DataControlTower(Context context){
         this.appContext = context.getApplicationContext();
         this.aiManager = new aiManager();
         this.aiEvents = new HashMap<>();
-        initAll(context);
+
         loadGameData();
+
+        this.achievementManager = new AchievementManager(appContext);
+        if (this.userRecord != null) {
+            this.achievementManager.syncSavedData(this.userRecord.getAchievements());
+        }
+
+        initAll(context);
     }
+
     public static DataControlTower getInstance(Context context){
         if (instance == null){
             instance = new DataControlTower(context.getApplicationContext());
         }
         return instance;
     }
+
     private void initAll(Context context) {
         monsterManager = new DataControl<>(Monster.class);
         monsterManager.init(context, "monster_list.json");
@@ -79,6 +92,7 @@ public class DataControlTower {
             throw new IllegalStateException("게임 데이터 무결성 검사 실패");
         }
     }
+
     private void loadGameData() {
         this.userRecord = GameSave.loadUserRecord(appContext);
         if (this.userRecord == null){
@@ -86,20 +100,19 @@ public class DataControlTower {
         }
         this.dungeonControl = new DungeonControl();
         GameSave save = GameSave.runLoad(appContext);
-        this.dungeonControl = new DungeonControl();
         if (save != null){
             this.player = save.getPlayer();
             this.difficulty = save.getDifficulty();
             this.dungeonControl.setCurrentFloor(save.getCurrentFloor());
-        }else {
+        } else {
             this.player = null;
             this.difficulty = Difficulty.NORMAL;
             this.dungeonControl.setCurrentFloor(1);
         }
     }
-    public void startNewGame(String name, Job job, String traitId){
-        this.player = GameSave.createNewPlayer(this.userRecord, name,job,traitId);
 
+    public void startNewGame(String name, Job job, String traitId){
+        this.player = GameSave.createNewPlayer(this.userRecord, name, job, traitId);
         this.player.setTraitId(traitId);
 
         if (this.player.getTrait() != null) {
@@ -112,75 +125,46 @@ public class DataControlTower {
         this.dungeonControl.setCurrentFloor(1);
         saveGame();
     }
+
     public void saveGame() {
-        if (this.player == null){return;}
-        GameSave currentSave = new GameSave(this.player, dungeonControl.getCurrentFloor(),difficulty,aiEvents);
+        if (this.player == null){ return; }
+        if (this.userRecord != null && this.achievementManager != null) {
+            this.userRecord.setAchievements(this.achievementManager.getAllAchievements());
+            GameSave.saveUserRecord(appContext, this.userRecord);
+        }
+
+        GameSave currentSave = new GameSave(this.player, dungeonControl.getCurrentFloor(), difficulty, aiEvents);
         currentSave.runSave(appContext);
     }
+
     public void resetRun() {
         this.player = null;
         getDungeonControl().setCurrentEvent(null);
         GameSave.deleteRun(appContext);
     }
 
-    public Context getAppContext() {
-        return appContext;
+    public AchievementManager getAchievementManager() {
+        return achievementManager;
     }
 
-    public DataControl<GameEvent> getEventManager() {
-        return eventManager;
-    }
+    public Context getAppContext() { return appContext; }
+    public DataControl<GameEvent> getEventManager() { return eventManager; }
+    public DataControl<Item> getItemManager() { return itemManager; }
+    public DataControl<Magic> getMagicManager() { return magicManager; }
+    public DataControl<Monster> getMonsterManager() { return monsterManager; }
+    public Player getPlayer() { return player; }
+    public UserRecord getUserRecord() { return userRecord; }
+    public DungeonControl getDungeonControl() { return dungeonControl; }
+    public void setPlayer(Player player) { this.player = player; }
+    public aiManager getAiManager() { return aiManager; }
+    public void setUserRecord(UserRecord userRecord) { this.userRecord = userRecord; }
+    public void setDifficulty(String difficultyName) { difficulty = Difficulty.valueOf(difficultyName); }
+    public Difficulty getDifficulty() { return difficulty; }
+    public Map<Integer, GameEvent> getAiEvents() { return aiEvents; }
+    public void addAiEvent(int targetFloor, GameEvent newEvent) { aiEvents.put(targetFloor, newEvent); }
 
-    public DataControl<Item> getItemManager() {
-        return itemManager;
-    }
-
-    public DataControl<Magic> getMagicManager() {
-        return magicManager;
-    }
-
-    public DataControl<Monster> getMonsterManager() {
-        return monsterManager;
-    }
-
-    public Player getPlayer() {
-        return player;
-    }
-    public UserRecord getUserRecord() {
-        return userRecord;
-    }
-
-    public DungeonControl getDungeonControl() {
-        return dungeonControl;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
-    public aiManager getAiManager() {
-        return aiManager;
-    }
-    public void setUserRecord(UserRecord userRecord) {
-        this.userRecord = userRecord;
-    }
-
-    public void setDifficulty(String difficultyName) {
-        difficulty = Difficulty.valueOf(difficultyName);
-    }
-    public Difficulty getDifficulty() {
-        return difficulty;
-    }
-
-    public Map<Integer,GameEvent> getAiEvents() {
-        return aiEvents;
-    }
-    public void addAiEvent(int targetFloor, GameEvent newEvent) {
-        aiEvents.put(targetFloor, newEvent);
-    }
     private void giveRandomStartingItem(Player p) {
         Item randomItem = itemManager.getRandomData();
-
         if (randomItem != null) {
             p.getInventory().addItem(randomItem);
         }

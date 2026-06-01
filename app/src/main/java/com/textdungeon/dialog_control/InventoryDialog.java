@@ -13,9 +13,9 @@ import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.textdungeon.R;
+import com.google.android.material.snackbar.Snackbar;
 import com.textdungeon.data.DataControl;
 import com.textdungeon.model.Item;
 import com.textdungeon.player.Equipment;
@@ -186,7 +186,7 @@ public class InventoryDialog extends Dialog {
                 player.consumablesItem(item);
                 itemDialog.dismiss();
                 refreshAllUI();
-                Toast.makeText(getContext(), item.getName()+"를 사용하였습니다", Toast.LENGTH_SHORT).show();
+                showBar(item.getName() + "를 사용하였습니다");
             });
         } else {
             btnMainAction.setText("장착하기");
@@ -198,7 +198,7 @@ public class InventoryDialog extends Dialog {
                     itemDialog.dismiss();
                     refreshAllUI();
                 }
-                Toast.makeText(getContext(), item.getName()+"를 장착하였습니다", Toast.LENGTH_SHORT).show();
+                showBar(item.getName() + "를 장착하였습니다");
             });
         }
 
@@ -216,7 +216,7 @@ public class InventoryDialog extends Dialog {
 
                         itemDialog.dismiss();
                         dismiss();
-                        Toast.makeText(getContext(), item.getName() + "을(를) 버렸습니다.", Toast.LENGTH_SHORT).show();
+                        showBar(item.getName() + "을(를) 버렸습니다.");
                     })
                     .setNegativeButton("취소", null)
                     .show();
@@ -250,7 +250,7 @@ public class InventoryDialog extends Dialog {
         btnMainAction.setText("장착 해제");
         btnMainAction.setOnClickListener(v -> {
             if (player.getInventory().isFullItem()) {
-                android.widget.Toast.makeText(getContext(), "가방이 꽉 차서 장착을 해제할 수 없습니다.", android.widget.Toast.LENGTH_SHORT).show();
+                showBar("가방이 꽉 차서 장착을 해제할 수 없습니다.");
                 return;
             }
             player.unequipItem(type, slotIndex);
@@ -298,15 +298,27 @@ public class InventoryDialog extends Dialog {
                 .setNegativeButton("취소", null)
                 .show();
     }
+    private void showBar(String message) {
+        View activityRootView = null;
+        if (getContext() instanceof android.app.Activity) {
+            activityRootView = ((android.app.Activity) getContext()).findViewById(android.R.id.content);
+        } else if (getWindow() != null) {
+            activityRootView = getWindow().getDecorView();
+        }
 
-
+        if (activityRootView != null) {
+            Snackbar snackbar = Snackbar.make(activityRootView, message, Snackbar.LENGTH_SHORT);
+            snackbar.setBackgroundTint(Color.parseColor("#901418"));
+            snackbar.setTextColor(Color.parseColor("#E5E2E1"));
+            snackbar.show();
+        }
+    }
     private void getItemIcon(Item item,ImageView icon){
         String imgName = getIconNameByType(item.getType());
         int imgResId = getContext().getResources().getIdentifier(imgName, "drawable", getContext().getPackageName());
         if (imgResId != 0) icon.setImageResource(imgResId);
     }
     private String getIconNameByType(String type) {
-        //TODO: 아이템에 이미지 생성이 끝나면 방식변경
         switch (type.toLowerCase()) {
             case "weapon": return "ic_weapon";
             case "armor": return "ic_armor";

@@ -1,8 +1,5 @@
 package com.textdungeon.event;
 
-import android.util.Log;
-import android.widget.Toast;
-
 import com.google.gson.annotations.SerializedName;
 import com.textdungeon.data.DataControl;
 import com.textdungeon.data.Difficulty;

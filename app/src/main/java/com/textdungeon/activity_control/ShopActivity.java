@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.textdungeon.R;
@@ -53,7 +52,7 @@ public class ShopActivity extends BaseActivity {
         tabUnlock = findViewById(R.id.tab_unlock);
         tabTrait = findViewById(R.id.tab_trait);
         tabUpgrade = findViewById(R.id.tab_upgrade);
-        pageIndicator = findViewById(R.id.page_indicator); // ★ 연결
+        pageIndicator = findViewById(R.id.page_indicator);
 
         unlockViewPager = findViewById(R.id.unlock_viewpager);
         unlockTraitViewPager = findViewById(R.id.unlock_trait_viewpager);
@@ -151,7 +150,6 @@ public class ShopActivity extends BaseActivity {
         });
         unlockTraitViewPager.setAdapter(traitAdapter);
 
-        // ★ 스와이프 시 특성 페이지 번호 업데이트 이벤트
         unlockTraitViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
@@ -197,7 +195,7 @@ public class ShopActivity extends BaseActivity {
 
                 btnUpgrade.setOnClickListener(v -> {
                     String resultMsg = shopSystem.buyUpgrade(upgrade.name());
-                    Toast.makeText(ShopActivity.this, resultMsg, Toast.LENGTH_SHORT).show();
+                    showGameMessage(resultMsg);
                     if (resultMsg.contains("성공")) {
                         updateGemUI();
                         upgradeTabList();

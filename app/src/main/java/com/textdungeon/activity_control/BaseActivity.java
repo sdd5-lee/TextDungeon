@@ -3,6 +3,7 @@ package com.textdungeon.activity_control;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,7 +13,11 @@ import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 
+import com.google.android.material.snackbar.Snackbar;
+import com.textdungeon.model.Achievement;
 import com.textdungeon.system.SoundManager;
+
+import java.util.List;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -74,6 +79,24 @@ public abstract class BaseActivity extends AppCompatActivity {
             windowInsetsController.hide(WindowInsetsCompat.Type.systemBars());
             windowInsetsController.setSystemBarsBehavior(
                     WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
+        }
+    }
+    public void showGameMessage(String message) {
+        View rootView = findViewById(android.R.id.content);
+
+        Snackbar snackbar = Snackbar.make(rootView, message, Snackbar.LENGTH_SHORT);
+
+        snackbar.setBackgroundTint(Color.parseColor("#901418"));
+        snackbar.setTextColor(Color.parseColor("#E5E2E1"));
+
+        snackbar.show();
+    }
+    public void showAchievementNotification(List<Achievement> unlocked) {
+        if (unlocked == null || unlocked.isEmpty()) {
+            return;
+        }
+        for (Achievement ach : unlocked) {
+            showGameMessage("🏆 업적 달성: " + ach.getName());
         }
     }
 }

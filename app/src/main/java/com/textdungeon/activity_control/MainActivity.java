@@ -2,9 +2,13 @@ package com.textdungeon.activity_control;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 import com.example.textdungeon.R;
 import com.textdungeon.data.DataControlTower;
+import com.textdungeon.model.Achievement;
+
+import java.util.List;
 
 public class MainActivity extends BaseActivity {
     private DataControlTower dt;
@@ -38,8 +42,13 @@ public class MainActivity extends BaseActivity {
 
         btnShop.setOnClickListener(this::moveShop);
         btnOption.setOnClickListener(this::moveOption);
-    }
 
+        View btnAchievement = findViewById(R.id.btn_achievement);
+        btnAchievement.setOnClickListener(v -> {
+            setSfx(v);
+            startActivity(new Intent(MainActivity.this, AchievementActivity.class));
+        });
+    }
     public void moveCharacter() {
         if (dt.getPlayer() != null) {
             new android.app.AlertDialog.Builder(this)

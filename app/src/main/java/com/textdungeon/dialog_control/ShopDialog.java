@@ -11,9 +11,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.textdungeon.R;
+import com.google.android.material.snackbar.Snackbar;
 import com.textdungeon.data.DataControl;
 import com.textdungeon.model.Item;
 import com.textdungeon.player.Player;
@@ -95,12 +95,12 @@ public class ShopDialog extends Dialog {
 
     private void onBuyItem(Item item, int price) {
         if (player.getStat().getGold() < price) {
-            Toast.makeText(getContext(), "골드가 부족합니다!", Toast.LENGTH_SHORT).show();
+            showBar("골드가 부족합니다!");
             return;
         }
 
         if (player.getInventory().isFullItem()) {
-            Toast.makeText(getContext(), "인벤토리가 가득 찼습니다!", Toast.LENGTH_SHORT).show();
+            showBar("인벤토리가 가득 찼습니다!");
             return;
         }
 
@@ -108,10 +108,27 @@ public class ShopDialog extends Dialog {
         player.getInventory().addItem(item);
 
         updateGoldDisplay();
-        Toast.makeText(getContext(), item.getName() + "을(를) 구매했습니다!", Toast.LENGTH_SHORT).show();
+
+        showBar(item.getName() + "을(를) 구매했습니다!");
     }
 
     private void updateGoldDisplay() {
         tvGold.setText("💰 보유 골드: " + player.getStat().getGold() + " G");
+    }
+
+    private void showBar(String message) {
+        View activityRootView = null;
+        if (getContext() instanceof android.app.Activity) {
+            activityRootView = ((android.app.Activity) getContext()).findViewById(android.R.id.content);
+        } else if (getWindow() != null) {
+            activityRootView = getWindow().getDecorView();
+        }
+
+        if (activityRootView != null) {
+            Snackbar snackbar = Snackbar.make(activityRootView, message, Snackbar.LENGTH_SHORT);
+            snackbar.setBackgroundTint(Color.parseColor("#901418"));
+            snackbar.setTextColor(Color.parseColor("#E5E2E1"));
+            snackbar.show();
+        }
     }
 }

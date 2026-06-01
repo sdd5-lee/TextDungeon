@@ -1,10 +1,12 @@
 package com.textdungeon.system;
 
 
+import com.textdungeon.model.Achievement;
 import com.textdungeon.model.Job;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,11 +17,19 @@ public class UserRecord {
     private final Map<String, Integer> upgradeLevels;
     private int killCount;
     private int clearCount;
+    private List<Achievement> achievements;
+    private final Set<String> discoveredItems;
+    private final Set<String> discoveredMonsters;
+    private final Set<String> discoveredEvents;
     public UserRecord(){
         this.gem = 0;
         this.unlockJobName = new HashSet<>();
         this.unlockTraitName = new HashSet<>();
         this.upgradeLevels = new HashMap<>();
+
+        this.discoveredItems = new HashSet<>();
+        this.discoveredMonsters = new HashSet<>();
+        this.discoveredEvents = new HashSet<>();
         for (Job job: Job.values()) {
             if (job.defaultUnlocked){
                 unlockJobName.add(job.name);
@@ -79,5 +89,36 @@ public class UserRecord {
     public int getGem() { return gem; }
     public void deductGem(int gem) { this.gem -= gem; }
     public void addGem(int gem) { this.gem += gem; }
+    public List<Achievement> getAchievements() { return achievements; }
+    public void setAchievements(List<Achievement> achievements) { this.achievements = achievements; }
+    public boolean discoverItem(String itemId) {
+        return discoveredItems.add(itemId);
+    }
+    public int getDiscoveredItemsCount() {
+        return discoveredItems.size();
+    }
+    public Set<String> getDiscoveredItems() {
+        return discoveredItems;
+    }
+
+    public boolean discoverMonster(String monsterId) {
+        return discoveredMonsters.add(monsterId);
+    }
+    public int getDiscoveredMonstersCount() {
+        return discoveredMonsters.size();
+    }
+    public Set<String> getDiscoveredMonsters() {
+        return discoveredMonsters;
+    }
+
+    public boolean discoverEvent(String eventId) {
+        return discoveredEvents.add(eventId);
+    }
+    public int getDiscoveredEventsCount() {
+        return discoveredEvents.size();
+    }
+    public Set<String> getDiscoveredEvents() {
+        return discoveredEvents;
+    }
 
 }

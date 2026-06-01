@@ -1,5 +1,6 @@
 package com.textdungeon.dialog_control;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
@@ -12,10 +13,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.textdungeon.R;
+import com.google.android.material.snackbar.Snackbar;
+import com.textdungeon.activity_control.BaseActivity;
 import com.textdungeon.data.DataControl;
+import com.textdungeon.data.DataControlTower;
+import com.textdungeon.model.Achievement;
 import com.textdungeon.model.Magic;
 import com.textdungeon.player.Player;
 
@@ -97,6 +101,7 @@ public class MagicLearnDialog extends Dialog {
 
             tvName.setText(magic.getName());
             tvReqWisdom.setText("요구 지혜: " + reqWisdom);
+
             if(player.getMagicScroll().hasMagic(magic.getId())){
                 tvReqWisdom.setTextColor(0xFFE57373);
                 tvName.setTextColor(0xFFE57373);
@@ -106,12 +111,15 @@ public class MagicLearnDialog extends Dialog {
             else if (currentWisdom >= reqWisdom) {
                 tvReqWisdom.setTextColor(0xFF81C784);
                 btnLearn.setBackgroundColor(0xFF9C27B0);
+
+                // 🌟 정상적으로 마법을 배울 때
                 btnLearn.setOnClickListener(v -> onLearnMagic(magic));
             } else {
                 tvReqWisdom.setTextColor(0xFFE57373);
                 btnLearn.setBackgroundColor(0xFF666666);
+
                 btnLearn.setOnClickListener(v ->
-                        Toast.makeText(getContext(), "지혜가 부족하여 해독할 수 없습니다.", Toast.LENGTH_SHORT).show()
+                        showBar("지혜가 부족하여 해독할 수 없습니다.")
                 );
             }
 
@@ -121,7 +129,28 @@ public class MagicLearnDialog extends Dialog {
 
     private void onLearnMagic(Magic magic) {
         player.getMagicScroll().addMagic(magic.getId(), magic.getMaxCount());
-        Toast.makeText(getContext(), magic.getName() + " 마법의 이치를 깨달았습니다!", Toast.LENGTH_SHORT).show();
+        showBar(magic.getName() + " 마법의 이치를 깨달았습니다!");
+        List<Achievement> unlocked = DataControlTower.getInstance(getContext()).getAchievementManager().updateProgress("magic_learn", 1, true);
+
+        if (getContext() instanceof BaseActivity) {
+            ((BaseActivity) getContext()).showAchievementNotification(unlocked);
+        }
         dismiss();
+    }
+    private void showBar(String message) {
+        View activityRootView = null;
+        if (getContext() instanceof Activity) {
+            activityRootView = ((Activity) getContext()).findViewById(android.R.id.content);
+        } else if (getWindow() != null) {
+            activityRootView = getWindow().getDecorView();
+        }
+
+        if (activityRootView != null) {
+            Snackbar snackbar = Snackbar.make(activityRootView, message, Snackbar.LENGTH_SHORT);
+            snackbar.setBackgroundTint(Color.parseColor("#901418"));
+            snackbar.setTextColor(Color.parseColor("#E5E2E1"));
+
+            snackbar.show();
+        }
     }
 }

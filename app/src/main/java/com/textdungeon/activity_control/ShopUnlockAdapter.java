@@ -1,18 +1,20 @@
 package com.textdungeon.activity_control;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.textdungeon.R;
+import com.google.android.material.snackbar.Snackbar;
+import com.textdungeon.model.Achievement;
 import com.textdungeon.model.Job;
 import com.textdungeon.model.Trait;
 import com.textdungeon.system.ShopSystem;
@@ -68,8 +70,14 @@ public class ShopUnlockAdapter extends RecyclerView.Adapter<ShopUnlockAdapter.Vi
             holder.unlockButton.setOnClickListener(view -> {
                 SoundManager.getInstance(context).playButtonSfx();
                 String resultMsg = shopSystem.buyJob(job.name());
-                Toast.makeText(context, resultMsg, Toast.LENGTH_SHORT).show();
-                if (resultMsg.contains("해금되었습니다")) onSuccessCallback.run();
+                showBar(view, resultMsg);
+                if (resultMsg.contains("해금되었습니다")){
+                    List<Achievement> unlocked = com.textdungeon.data.DataControlTower.getInstance(context).getAchievementManager().updateProgress("shop_unlock", 1, true);
+                    if (context instanceof com.textdungeon.activity_control.BaseActivity) {
+                        ((com.textdungeon.activity_control.BaseActivity) context).showAchievementNotification(unlocked);
+                    }
+                    onSuccessCallback.run();
+                }
             });
         }
         // 2. 특성(Trait) 처리
@@ -85,8 +93,14 @@ public class ShopUnlockAdapter extends RecyclerView.Adapter<ShopUnlockAdapter.Vi
             holder.unlockButton.setOnClickListener(view -> {
                 SoundManager.getInstance(context).playButtonSfx();
                 String resultMsg = shopSystem.buyTrait(trait.name());
-                Toast.makeText(context, resultMsg, Toast.LENGTH_SHORT).show();
-                if (resultMsg.contains("해금되었습니다")) onSuccessCallback.run();
+                showBar(view, resultMsg);
+                if (resultMsg.contains("해금되었습니다")){
+                    List<Achievement> unlocked = com.textdungeon.data.DataControlTower.getInstance(context).getAchievementManager().updateProgress("shop_unlock", 1, true);
+                    if (context instanceof com.textdungeon.activity_control.BaseActivity) {
+                        ((com.textdungeon.activity_control.BaseActivity) context).showAchievementNotification(unlocked);
+                    }
+                    onSuccessCallback.run();
+                }
             });
         }
 
@@ -123,5 +137,13 @@ public class ShopUnlockAdapter extends RecyclerView.Adapter<ShopUnlockAdapter.Vi
             unlockButton = itemView.findViewById(R.id.btn_unlock);
             unlockStatus = itemView.findViewById(R.id.unlock_status);
         }
+    }
+    private void showBar(View view, String message) {
+        Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_SHORT);
+
+        snackbar.setBackgroundTint(Color.parseColor("#901418"));
+        snackbar.setTextColor(Color.parseColor("#E5E2E1"));
+
+        snackbar.show();
     }
 }

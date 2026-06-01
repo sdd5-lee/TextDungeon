@@ -20,9 +20,12 @@ import com.textdungeon.dialog_control.MagicLearnDialog;
 import com.textdungeon.dialog_control.PlayerInfoDialog;
 import com.textdungeon.dialog_control.StatDialog;
 import com.textdungeon.event.GameEvent;
+import com.textdungeon.model.Achievement;
 import com.textdungeon.model.Monster;
 import com.textdungeon.player.Player;
 import com.textdungeon.system.EventManager;
+
+import java.util.List;
 
 public class EventActivity extends BaseActivity {
 
@@ -201,8 +204,23 @@ public class EventActivity extends BaseActivity {
     private void renderEventImage() {
         ImageView eventImage = findViewById(R.id.event_image);
         eventImage.setAlpha(1.0f);
+
         String imageName = currentEvent.getImgId();
-        int imageResId = getResources().getIdentifier(imageName, "drawable", getPackageName());
+        int imageResId = 0;
+
+        if (imageName != null && !imageName.isEmpty()) {
+            imageResId = getResources().getIdentifier(
+                    imageName, "drawable", getPackageName());
+        }
+
+        if (imageResId == 0 && currentEvent.getEnemyId() != null) {
+            Monster monster = eventManager.spawnMonster(currentEvent.getEnemyId());
+            if (monster != null && monster.getImgId() != null) {
+                imageResId = getResources().getIdentifier(
+                        monster.getImgId(), "drawable", getPackageName());
+            }
+        }
+
         eventImage.setImageResource(imageResId != 0 ? imageResId : R.drawable.mon_test);
     }
 
@@ -261,6 +279,13 @@ public class EventActivity extends BaseActivity {
         int levelSnapshot = eventManager.snapshotLevel();
         String result = eventManager.applyReward(currentEvent, choiceIndex);
 
+        if (currentEvent != null && currentEvent.getId() != null) {
+            dt.getUserRecord().getDiscoveredEvents().add(currentEvent.getId());
+
+            int itemsCount = dt.getUserRecord().getDiscoveredItems().size();
+            List<Achievement> unlocked = dt.getAchievementManager().updateProgress("collection_item", itemsCount, false);
+            showAchievementNotification(unlocked);
+        }
         if (result.equals("full")) {
             appendDesc("인벤토리가 가득 찼습니다. 버릴 아이템을 선택해주세요.");
             startTypingAnimation();
@@ -284,6 +309,8 @@ public class EventActivity extends BaseActivity {
 
         appendDesc("결과 : " + result);
         updatePlayerHeader();
+
+
         if (currentEvent.isRetry(choiceIndex)) {
             renderRetryButtons();
         }
@@ -406,12 +433,22 @@ public class EventActivity extends BaseActivity {
             } else if(escapeState[0]) {
                 applyEscapeResult();
             } else {
+                dt.getUserRecord().getDiscoveredMonsters().add(monsterId);
+
+                int monsterCount = dt.getUserRecord().getDiscoveredMonsters().size();
+                List<Achievement> unlocked = dt.getAchievementManager().updateProgress("collection_monster", monsterCount, false);
+                showAchievementNotification(unlocked);
+
                 dt.getUserRecord().addKillCount();
+                List<Achievement> killUnlocked = dt.getAchievementManager().updateProgress("kill", 1, true);
+                showAchievementNotification(killUnlocked);
+
                 applyEventResult(choiceIndex);
             }
         });
         battleDialog.show();
     }
+
 
     private void showLevelUpDialog() {
         appendDesc("레벨업! " + player.getLevel() + "레벨이 되었습니다!");
@@ -435,6 +472,10 @@ public class EventActivity extends BaseActivity {
     private void showNextFloorButton() {
         eventManager.goNextFloor();
         choiceButtons.removeAllViews();
+
+        int currentFloor = eventManager.getCurrentFloor();
+        List<Achievement> unlocked = dt.getAchievementManager().updateProgress("floor", currentFloor, false);
+        showAchievementNotification(unlocked);
 
         if (eventManager.getCurrentFloor() > 50){
             appendDesc("던전안에 숨어있던 마왕을 쓰러트렸습니다.\n더 이상의 적은 없다.");

@@ -34,6 +34,7 @@
         <activity android:name="com.textdungeon.activity_control.ShopActivity" />
         <activity android:name="com.textdungeon.activity_control.ClearActivity" />
         <activity android:name="com.textdungeon.activity_control.DiedActivity" />
+        <activity android:name="com.textdungeon.activity_control.AchievementActivity" />
     </application>
 
 </manifest>
