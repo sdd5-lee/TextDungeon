@@ -8,11 +8,9 @@ public class Monster {
     private int hp;
     private int maxHp;
     private int attack;
-
+    private String imgId;
+    private String description;
     private Monster() {}
-    public static Monster createFromJson(String json) {
-        return new Gson().fromJson(json, Monster.class);
-    }
 
     public void takeDamage(int damage) {
         this.hp -= damage;
@@ -27,6 +25,10 @@ public class Monster {
     public int getHp() { return hp; }
     public int getMaxHp() { return maxHp; }
     public int getAttack() { return attack; }
-
+    public String getImgId() { return imgId; }
     public String getId() { return id; }
+
+    public String getDescription() {
+        return description;
+    }
 }

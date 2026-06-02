@@ -10,12 +10,9 @@ public class Magic {
     private int maxCount;
     private int magicDamage;
     private int value;
+    private String img;
 
     public Magic(){}
-    public static Magic createFromJson(String json) {
-        return new Gson().fromJson(json, Magic.class);
-    }
-
     public int getMaxCount() {
         return maxCount;
     }
@@ -35,5 +32,9 @@ public class Magic {
 
     public int getValue() {
         return value;
+    }
+
+    public String getImg() {
+        return img;
     }
 }

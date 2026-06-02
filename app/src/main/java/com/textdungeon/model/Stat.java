@@ -134,19 +134,15 @@ public class Stat {
         wisdom += point;
     }
 
-    //골드 추가 부분
     public int getGold() {
         return gold;
     }
-
     public void setGold(int gold) {
         this.gold = gold;
     }
-    //골드 추가 부분
-
     public void addGold(int amount) {
         this.gold += amount;
-        if (this.gold < 0) this.gold = 0; // 골드가 마이너스가 되지 않도록 방지
+        if (this.gold < 0) this.gold = 0;
     }
 
     public void gainStat(String type, int value) {
@@ -167,16 +163,20 @@ public class Stat {
                 this.exp += value;
                 break;
             case "데미지":
-                this.hp -= value;
+                int damage = Math.max(0,getHp() - value);
+                setHp(damage);
                 break;
             case "회복":
-                this.hp += value;
+                int heal = Math.min(getMaxHp(),getHp() + value);
+                setHp(heal);
                 break;
-            case "골드": // [추가] 골드 사용
+            case "골드":
                 this.addGold(value);
                 break;
         }
-
+    }
+    public void gainStatExp(int value,int expBonus) {
+        this.exp += value * expBonus;
     }
 
     public void setExp(int exp) {
@@ -185,4 +185,5 @@ public class Stat {
     public void setMaxExp(int maxExp) {
         this.maxExp = maxExp;
     }
+
 }

@@ -1,8 +1,11 @@
 package com.textdungeon.system;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.Gson;
+import com.textdungeon.data.Difficulty;
+import com.textdungeon.event.GameEvent;
 import com.textdungeon.model.ShopUpgrade;
 import com.textdungeon.model.Stat;
 import com.textdungeon.player.Player;
@@ -11,23 +14,34 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
+import java.util.Map;
 
 public class GameSave {
     private static final String RUN_FILE = "run_save.json";
     private static final String META_FILE = "user_record.json";
     private int currentFloor;
     private final Player player;
-    public GameSave(Player player, int currentFloor) {
+    private final Difficulty difficulty;
+    private Map<Integer, GameEvent> aiEvents;
+
+    public GameSave(Player player, int currentFloor, Difficulty difficulty,Map<Integer, GameEvent> aiEvents) {
         this.player = player;
         this.currentFloor = currentFloor;
+        this.difficulty = difficulty;
+        this.aiEvents = aiEvents;
     }
-    public GameSave(Player player) {
-        this.player = player;
-    }
-    public static Player createNewPlayer(UserRecord record, String name, com.textdungeon.model.Job job){
+    public static Player createNewPlayer(UserRecord record, String name, com.textdungeon.model.Job job, String traitName){
         Player newPlayer = new Player(name,job);
         Stat stat = newPlayer.getStat();
 
+        com.textdungeon.model.Trait customTrait = com.textdungeon.model.Trait.valueOf(traitName);
+        if (customTrait.modifyBaseStat()) {
+            int bonus = customTrait.modifyStatBonus();
+            stat.addStrength(bonus);
+            stat.addAgility(bonus);
+            stat.addHealth(bonus);
+            stat.addWisdom(bonus);
+        }
         for (ShopUpgrade upgrade : ShopUpgrade.values()) {
             int currentLevel = record.getUpgradeLevel(upgrade.name());
             if (currentLevel <= 0) continue;
@@ -40,10 +54,11 @@ public class GameSave {
                 case "WIS": stat.addWisdom(totalBonus); break;
                 case "STAT_POINT": stat.addStatPoint(totalBonus); break;
                 case "GOLD": stat.addGold(totalBonus); break;
-                case "DICE": newPlayer.addDiceChane(totalBonus); break;
+                case "DICE_Chane": newPlayer.addDiceChane(totalBonus); break;
             }
         }
         stat.updateBattleStat(newPlayer.getLevel());
+        newPlayer.getStat().setHp(newPlayer.getMaxHp());
         return newPlayer;
     }
     public static void saveUserRecord(Context context, UserRecord record) {
@@ -87,9 +102,11 @@ public class GameSave {
     }
 
     public int getCurrentFloor() { return currentFloor; }
-    public void setCurrentFloor(int floor) { currentFloor = floor; }
 
     public Player getPlayer() {
         return player;
+    }
+    public Difficulty getDifficulty() {
+        return difficulty;
     }
 }

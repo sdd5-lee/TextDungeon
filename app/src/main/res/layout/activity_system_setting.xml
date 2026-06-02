@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -45,15 +46,15 @@
             android:shadowDx="2"
             android:shadowDy="2"
             android:shadowRadius="4"
-            android:text="SYSTEM SETTING"
+            android:text="시스템 설정"
             android:textColor="#E9C176"
             android:textSize="30sp"
             android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="280dp"
-        android:layout_height="wrap_content"
+        android:layout_width="371dp"
+        android:layout_height="173dp"
         android:alpha="0.8"
         android:gravity="start"
         android:orientation="vertical"
@@ -66,68 +67,70 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:fontFamily="serif"
-            android:text="VOLUME"
+            android:text="음량"
             android:textColor="#BBBBBB"
             android:textSize="14sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp"/>
+            android:textStyle="bold" />
 
         <SeekBar
             android:id="@+id/sb_volume"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
             android:max="100"
             android:progress="50"
             android:progressTint="#E9C176"
-            android:thumbTint="#E9C176"
-            android:layout_marginBottom="32dp"/>
+            android:thumbTint="#E9C176" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
             android:fontFamily="serif"
-            android:text="FONT SIZE"
+            android:text="글자 크기"
             android:textColor="#BBBBBB"
             android:textSize="14sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="12dp"/>
+            android:textStyle="bold" />
 
         <RadioGroup
             android:id="@+id/rg_font_size"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/rb_font_small"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="SMALL"
+                android:buttonTint="#E9C176"
                 android:fontFamily="serif"
-                android:textColor="#FFFFFF"
-                android:buttonTint="#E9C176"/>
+                android:text="작게"
+                android:textColor="#FFFFFF" />
+
             <RadioButton
                 android:id="@+id/rb_font_medium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="NORMAL"
-                android:fontFamily="serif"
+                android:buttonTint="#E9C176"
                 android:checked="true"
-                android:textColor="#FFFFFF"
-                android:buttonTint="#E9C176"/>
+                android:fontFamily="serif"
+                android:text="중간"
+                android:textColor="#FFFFFF" />
+
             <RadioButton
                 android:id="@+id/rb_font_large"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="LARGE"
+                android:buttonTint="#E9C176"
                 android:fontFamily="serif"
-                android:textColor="#FFFFFF"
-                android:buttonTint="#E9C176"/>
+                android:text="크게"
+                android:textColor="#FFFFFF" />
         </RadioGroup>
     </LinearLayout>
 
@@ -151,7 +154,7 @@
             android:layout_gravity="center"
             android:fontFamily="serif"
             android:letterSpacing="0.1"
-            android:text="BACK TO GAME"
+            android:text="게임으로 돌아가기"
             android:textColor="#E5E2E1"
             android:textSize="14sp"
             android:textStyle="bold" />

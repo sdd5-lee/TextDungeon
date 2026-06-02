@@ -1,9 +1,10 @@
 package com.textdungeon.system;
 
+import android.util.Log;
+
 import com.textdungeon.data.DataControl;
 import com.textdungeon.data.DataControlTower;
 import com.textdungeon.data.DungeonControl;
-import com.textdungeon.event.BattleEvent;
 import com.textdungeon.event.GameEvent;
 import com.textdungeon.model.Monster;
 import com.textdungeon.player.Player;
@@ -16,11 +17,13 @@ public class EventManager {
     private final DataControlTower dt;
     private final Player player;
     private final DungeonControl dungeonControl;
+    private int aiCount;
 
     public EventManager(DataControlTower dt) {
         this.dt = dt;
         this.player = dt.getPlayer();
         this.dungeonControl = dt.getDungeonControl();
+        this.aiCount = dt.getDifficulty().eventCount;
     }
 
     // ─────────────────────────────────────────
@@ -29,6 +32,12 @@ public class EventManager {
     public GameEvent pickRandomEvent() {
         int currentFloor = dungeonControl.getCurrentFloor();
         DataControl<GameEvent> eventList = dt.getEventManager();
+
+        if (dt.getAiEvents().containsKey(currentFloor)) {
+            GameEvent aiEvent = dt.getAiEvents().get(currentFloor);
+            dt.getAiEvents().remove(currentFloor);
+            return aiEvent;
+        }
 
         List<GameEvent> possibleEvents = eventList.getAll().stream()
                 .filter(e -> currentFloor >= e.getMinFloor() && currentFloor <= e.getMaxFloor())
@@ -40,15 +49,20 @@ public class EventManager {
 
         return possibleEvents.get(new Random().nextInt(possibleEvents.size()));
     }
-
     // ─────────────────────────────────────────
     // 이벤트 결과 처리
     // ─────────────────────────────────────────
     public String applyReward(GameEvent event, int choiceIndex) {
-         if (player.getInventory().isFullItem()) {
-             return null;
-         }
-        String result = event.execute(player, choiceIndex, dt.getItemManager());
+        if (event.hasItemReward(choiceIndex) && player.getInventory().isFullItem()) {
+            return "full";
+        }
+        String result = event.execute(player, choiceIndex, dt.getItemManager(),dt.getDifficulty());
+
+        if (player.getInventory() != null && player.getInventory().getItemMap() != null) {
+            for (String itemId : player.getInventory().getItemMap().keySet()) {
+                dt.getUserRecord().getDiscoveredItems().add(itemId);
+            }
+        }
         dt.saveGame();
         return result;
     }
@@ -88,4 +102,5 @@ public class EventManager {
     public boolean isPlayerDead() {
         return player.getStat().getHp() <= 0;
     }
+
 }

@@ -1,248 +1,335 @@
 [
   {
-    "id" : "monster_1",
-    "name" : "슬라임",
-    "hp" :  34,
-    "maxHp" : 34,
-    "attack" : 8
-  },
-
-  {
-    "id" : "monster_2",
-    "name" : "고블린",
-    "hp" :  42,
-    "maxHp" : 42,
-    "attack" : 10
+    "id": "monster_1",
+    "name": "슬라임",
+    "hp": 34,
+    "maxHp": 34,
+    "attack": 8,
+    "imgId": "mon_slime",
+    "description": "던전 입구에서 흔히 볼 수 있는 끈적이는 형태의 생명체입니다. 물리 공격에 내성이 있을 것 같지만 사실 아주 약합니다.\n\n[나오는 층수] 1층 ~ 3층"
   },
   {
-    "id" : "monster_3",
-    "name" : "늑대",
-    "hp" :  50,
-    "maxHp" : 50,
-    "attack" : 13
+    "id": "monster_2",
+    "name": "고블린",
+    "hp": 42,
+    "maxHp": 42,
+    "attack": 10,
+    "imgId": "mon_goblin",
+    "description": "작고 교활한 인간형 몬스터입니다. 무리를 지어 다니며 초보 모험가들의 장비와 식량을 노립니다.\n\n[나오는 층수] 2층 ~ 5층"
   },
-
   {
-    "id" : "monster_4",
-    "name" : "박쥐",
-    "hp" :  40,
-    "maxHp" : 40,
-    "attack" : 12
+    "id": "monster_3",
+    "name": "늑대",
+    "hp": 50,
+    "maxHp": 50,
+    "attack": 13,
+    "imgId": "mon_wolf",
+    "description": "날카로운 송곳니를 가진 야생 늑대입니다. 민첩한 움직임으로 사냥감을 추적하고 빈틈을 노립니다.\n\n[나오는 층수] 3층 ~ 6층"
   },
-
   {
-    "id" : "monster_5",
-    "name" : "홉고블린",
-    "hp" :  180,
-    "maxHp" : 180,
-    "attack" : 20
+    "id": "monster_4",
+    "name": "박쥐",
+    "hp": 40,
+    "maxHp": 40,
+    "attack": 12,
+    "imgId": "mon_bat",
+    "description": "어두운 동굴 천장에 매달려 있다가 기습하는 박쥐입니다. 방심한 모험가의 피를 노립니다.\n\n[나오는 층수] 2층 ~ 4층"
   },
-
   {
-    "id" : "monster_6",
-    "name" : "해골 전사",
-    "hp" :  100,
-    "maxHp" : 100,
-    "attack" : 18
+    "id": "monster_5",
+    "name": "홉고블린",
+    "hp": 180,
+    "maxHp": 180,
+    "attack": 20,
+    "imgId": "mon_hobgoblin",
+    "description": "일반 고블린보다 훨씬 거대하고 잔인한 변종입니다. 무거운 둔기를 휘두르며 뼈를 부숩니다.\n\n[나오는 층수] 16층 ~ 20층"
   },
-
   {
-    "id" : "monster_7",
-    "name" : "해골 궁수",
-    "hp" :  85,
-    "maxHp" : 85,
-    "attack" : 24
+    "id": "monster_6",
+    "name": "해골 전사",
+    "hp": 100,
+    "maxHp": 100,
+    "attack": 18,
+    "imgId": "mon_skeleton_warrior",
+    "description": "흑마법으로 되살아난 언데드 전사입니다. 녹슨 검을 들고 살아있는 모든 생명체를 증오하며 공격합니다.\n\n[나오는 층수] 7층 ~ 10층"
   },
-
   {
-    "id" : "monster_8",
-    "name" : "해골 기사",
-    "hp" :  130,
-    "maxHp" : 130,
-    "attack" : 22
+    "id": "monster_7",
+    "name": "해골 궁수",
+    "hp": 85,
+    "maxHp": 85,
+    "attack": 24,
+    "imgId": "mon_skeleton_archer",
+    "description": "어둠 속에서 뼈로 만든 화살을 쏘아대는 언데드입니다. 체력은 약하지만 원거리 공격이 까다롭습니다.\n\n[나오는 층수] 6층 ~ 9층"
   },
-
   {
-    "id" : "monster_9",
-    "name" : "위습",
-    "hp" :  90,
-    "maxHp" : 90,
-    "attack" : 24
+    "id": "monster_8",
+    "name": "해골 기사",
+    "hp": 130,
+    "maxHp": 130,
+    "attack": 22,
+    "imgId": "mon_skeleton_knight",
+    "description": "생전에 기사였던 자의 뼈에 낡은 갑옷을 입힌 몬스터입니다. 여전히 날카로운 검술의 기억을 가지고 있습니다.\n\n[나오는 층수] 11층 ~ 15층"
   },
-
   {
-    "id" : "monster_10",
-    "name" : "고블린 로드",
-    "hp" :  300,
-    "maxHp" : 300,
-    "attack" : 32
+    "id": "monster_9",
+    "name": "위습",
+    "hp": 90,
+    "maxHp": 90,
+    "attack": 24,
+    "imgId": "mon_wisp",
+    "description": "공중에 떠다니는 푸른 빛의 영체입니다. 마법 공격을 주로 사용하며 물리적인 타격을 피하는 데 능숙합니다.\n\n[나오는 층수] 8층 ~ 12층"
   },
-
   {
-    "id" : "monster_11",
-    "name" : "오크 전사",
-    "hp" :  190,
-    "maxHp" : 190,
-    "attack" : 28
+    "id": "monster_10",
+    "name": "고블린 로드",
+    "hp": 300,
+    "maxHp": 300,
+    "attack": 32,
+    "imgId": "mon_goblin_lord",
+    "description": "수많은 고블린을 거느리는 우두머리입니다. 약탈한 화려한 장식과 강력한 무기로 무장하고 있습니다.\n\n[나오는 층수] 30층 (보스)"
   },
-
   {
-    "id" : "monster_12",
-    "name" : "오크 마법사",
-    "hp" :  165,
-    "maxHp" : 165,
-    "attack" : 35
+    "id": "monster_11",
+    "name": "오크 전사",
+    "hp": 190,
+    "maxHp": 190,
+    "attack": 28,
+    "imgId": "mon_orc_warrior",
+    "description": "근육질의 거대한 몸집을 가진 호전적인 종족입니다. 무식하지만 파괴적인 힘과 강인한 체력을 자랑합니다.\n\n[나오는 층수] 18층 ~ 23층"
   },
-
   {
-    "id" : "monster_13",
-    "name" : "가고일",
-    "hp" :  240,
-    "maxHp" : 240,
-    "attack" : 25
+    "id": "monster_12",
+    "name": "오크 마법사",
+    "hp": 165,
+    "maxHp": 165,
+    "attack": 35,
+    "imgId": "mon_orc_mage",
+    "description": "오크 중에서도 드물게 마법을 다루는 개체입니다. 파괴적인 화염 주문을 외워 다수의 적을 불태웁니다.\n\n[나오는 층수] 15층 ~ 20층"
   },
-
   {
-    "id" : "monster_14",
-    "name" : "실버 울프",
-    "hp" :  170,
-    "maxHp" : 170,
-    "attack" : 32
+    "id": "monster_13",
+    "name": "가고일",
+    "hp": 240,
+    "maxHp": 240,
+    "attack": 25,
+    "imgId": "mon_gargoyle",
+    "description": "평소에는 석상처럼 굳어 있다가 침입자가 나타나면 깨어나는 마수입니다. 피부가 돌처럼 단단해 공격하기 까다롭습니다.\n\n[나오는 층수] 26층 ~ 30층"
   },
-
   {
-    "id" : "monster_15",
-    "name" : "오크 로드",
-    "hp" :  430,
-    "maxHp" : 430,
-    "attack" : 45
+    "id": "monster_14",
+    "name": "실버 울프",
+    "hp": 170,
+    "maxHp": 170,
+    "attack": 32,
+    "imgId": "mon_silver_wolf",
+    "description": "은빛 털을 휘날리며 달리는 마수 늑대입니다. 바람처럼 빠른 속도로 다가와 적의 목을 노립니다.\n\n[나오는 층수] 16층 ~ 22층"
   },
-
   {
-    "id" : "monster_16",
-    "name" : "리자드맨",
-    "hp" :  260,
-    "maxHp" : 260,
-    "attack" : 38
+    "id": "monster_15",
+    "name": "오크 로드",
+    "hp": 430,
+    "maxHp": 430,
+    "attack": 45,
+    "imgId": "mon_orc_lord",
+    "description": "오크 부족 전체를 통치하는 거대한 폭군입니다. 웬만한 공격에는 끄떡도 하지 않는 엄청난 맷집을 지녔습니다.\n\n[나오는 층수] 60층 (보스)"
   },
-
   {
-    "id" : "monster_17",
-    "name" : "샤먼 리자드",
-    "hp" :  230,
-    "maxHp" : 230,
-    "attack" : 48
+    "id": "monster_16",
+    "name": "리자드맨",
+    "hp": 260,
+    "maxHp": 260,
+    "attack": 38,
+    "imgId": "mon_lizardman",
+    "description": "늪지대에 서식하는 파충류 인간입니다. 창술에 능하며 신체의 상처가 매우 빠르게 회복되는 특징이 있습니다.\n\n[나오는 층수] 28층 ~ 33층"
   },
-
   {
-    "id" : "monster_18",
-    "name" : "트롤",
-    "hp" :  330,
-    "maxHp" : 330,
-    "attack" : 40
+    "id": "monster_17",
+    "name": "샤먼 리자드",
+    "hp": 230,
+    "maxHp": 230,
+    "attack": 48,
+    "imgId": "mon_shaman_lizard",
+    "description": "자연의 힘을 빌려 저주와 독 마법을 사용하는 리자드맨 주술사입니다. 교묘한 마법으로 적을 서서히 말려 죽입니다.\n\n[나오는 층수] 24층 ~ 29층"
   },
-
   {
-    "id" : "monster_19",
-    "name" : "키메라",
-    "hp" :  280,
-    "maxHp" : 280,
-    "attack" : 50
+    "id": "monster_18",
+    "name": "트롤",
+    "hp": 330,
+    "maxHp": 330,
+    "attack": 40,
+    "imgId": "mon_troll",
+    "description": "가공할 만한 재생력을 가진 거인 몬스터입니다. 불이나 산성 공격으로 피부를 태우지 않으면 죽이기 매우 어렵습니다.\n\n[나오는 층수] 41층 ~ 48층"
   },
-
   {
-    "id" : "monster_20",
-    "name" : "골렘",
-    "hp" :  600,
-    "maxHp" : 600,
-    "attack" : 65
+    "id": "monster_19",
+    "name": "키메라",
+    "hp": 280,
+    "maxHp": 280,
+    "attack": 50,
+    "imgId": "mon_chimera",
+    "description": "사자, 염소, 뱀 등 여러 맹수의 특징이 기괴하게 섞인 마법의 혼종 생명체입니다. 예측할 수 없는 다중 공격을 퍼붓습니다.\n\n[나오는 층수] 35층 ~ 42층"
   },
-
   {
-    "id" : "monster_21",
-    "name" : "드래곤",
-    "hp" :  420,
-    "maxHp" : 420,
-    "attack" : 70
+    "id": "monster_20",
+    "name": "골렘",
+    "hp": 600,
+    "maxHp": 600,
+    "attack": 65,
+    "imgId": "mon_golem",
+    "description": "마법사의 명령에 따라 움직이는 거대한 흙과 돌의 덩어리입니다. 행동은 둔하지만 묵직한 공격력과 압도적인 내구력을 지녔습니다.\n\n[나오는 층수] 81층 ~ 89층"
   },
-
   {
-    "id" : "monster_22",
-    "name" : "리치",
-    "hp" :  360,
-    "maxHp" : 360,
-    "attack" : 85
+    "id": "monster_21",
+    "name": "드래곤",
+    "hp": 420,
+    "maxHp": 420,
+    "attack": 70,
+    "imgId": "mon_dragon",
+    "description": "전설 속에서나 등장할 법한 거대한 고대의 파충류입니다. 입에서 뿜어내는 강력한 브레스는 모든 것을 잿더미로 만듭니다.\n\n[나오는 층수] 61층 ~ 70층"
   },
-
   {
-    "id" : "monster_23",
-    "name" : "미노타우로스",
-    "hp" :  480,
-    "maxHp" : 480,
-    "attack" : 60
+    "id": "monster_22",
+    "name": "리치",
+    "hp": 360,
+    "maxHp": 360,
+    "attack": 85,
+    "imgId": "mon_lich",
+    "description": "마법의 극의와 영생을 위해 스스로 언데드가 된 대마법사입니다. 뼈만 남은 손끝에서 상상을 초월하는 고위 마법을 구사합니다.\n\n[나오는 층수] 51층 ~ 60층"
   },
-
   {
-    "id" : "monster_24",
-    "name" : "타락한 용사",
-    "hp" :  450,
-    "maxHp" : 450,
-    "attack" : 80
+    "id": "monster_23",
+    "name": "미노타우로스",
+    "hp": 480,
+    "maxHp": 480,
+    "attack": 60,
+    "imgId": "mon_minotaur",
+    "description": "황소의 머리와 거인의 몸을 한 반인반수입니다. 거대한 도끼를 휘두르며 미궁의 침입자를 무자비하게 찢어발깁니다.\n\n[나오는 층수] 71층 ~ 80층"
   },
-
   {
-    "id" : "monster_25",
-    "name" : "마왕",
-    "hp" :  1000,
-    "maxHp" : 1000,
-    "attack" : 95
+    "id": "monster_24",
+    "name": "타락한 용사",
+    "hp": 450,
+    "maxHp": 450,
+    "attack": 80,
+    "imgId": "mon_fallen_hero",
+    "description": "한때 세상을 구하려 했으나 끝내 어둠의 유혹에 굴복한 비운의 전사입니다. 아직도 영웅 시절의 강력한 검술을 잊지 않았습니다.\n\n[나오는 층수] 75층 ~ 85층"
   },
-
   {
-    "id" : "test_monster",
-    "name" : "테스트용 허수아비",
-    "hp" :  20000000,
-    "maxHp" : 20000000,
-    "attack" : 1
+    "id": "monster_25",
+    "name": "마왕",
+    "hp": 1000,
+    "maxHp": 1000,
+    "attack": 95,
+    "imgId": "mon_demon_king",
+    "description": "세상을 어둠으로 물들이려 하는 절대적인 악의 군주입니다. 모든 마족들의 정점에 서 있으며, 범접할 수 없는 어둠의 마기를 뿜어냅니다.\n\n[나오는 층수] 100층 (최종 보스)"
   },
-
   {
-    "id" : "monster_26",
-    "name" : "거대 쥐",
-    "hp" :  30,
-    "maxHp" : 30,
-    "attack" : 7
+    "id": "test_monster",
+    "name": "테스트용 허수아비",
+    "hp": 20000000,
+    "maxHp": 20000000,
+    "attack": 1,
+    "imgId": "mon_test",
+    "description": "전투력을 측정하기 위해 마법으로 특수 제작된 튼튼한 훈련용 허수아비입니다. 반격은 하지 않지만 부수기는 거의 불가능합니다.\n\n[나오는 층수] 훈련장 / 테스트룸"
   },
-
   {
-    "id" : "monster_27",
-    "name" : "좀비",
-    "hp" :  115,
-    "maxHp" : 115,
-    "attack" : 15
+    "id": "monster_26",
+    "name": "거대 쥐",
+    "hp": 30,
+    "maxHp": 30,
+    "attack": 7,
+    "imgId": "mon_giant_rat",
+    "description": "하수구나 어두운 지하실의 마기를 먹고 비정상적으로 커진 쥐입니다. 치명적인 질병을 옮길 수 있으니 주의해야 합니다.\n\n[나오는 층수] 1층 ~ 2층"
   },
-
   {
-    "id" : "monster_28",
-    "name" : "그리폰",
-    "hp" :  210,
-    "maxHp" : 210,
-    "attack" : 30
+    "id": "monster_27",
+    "name": "좀비",
+    "hp": 115,
+    "maxHp": 115,
+    "attack": 15,
+    "imgId": "mon_zombie",
+    "description": "부패가 진행 중인 시체들이 원한을 품고 움직이는 형태입니다. 이동 속도는 끔찍하게 느리지만 고통을 느끼지 못해 끈질깁니다.\n\n[나오는 층수] 9층 ~ 14층"
   },
-
   {
-    "id" : "monster_29",
-    "name" : "메두사",
-    "hp" :  290,
-    "maxHp" : 290,
-    "attack" : 45
+    "id": "monster_28",
+    "name": "그리폰",
+    "hp": 210,
+    "maxHp": 210,
+    "attack": 30,
+    "imgId": "mon_griffin",
+    "description": "독수리의 머리와 날개, 사자의 몸통을 가진 긍지 높은 맹수입니다. 높은 하늘에서 날카로운 발톱을 세우고 급강하하며 사냥감을 낚아챕니다.\n\n[나오는 층수] 21층 ~ 25층"
   },
-
   {
-    "id" : "monster_30",
-    "name" : "서큐버스",
-    "hp" :  380,
-    "maxHp" : 380,
-    "attack" : 75
+    "id": "monster_29",
+    "name": "메두사",
+    "hp": 290,
+    "maxHp": 290,
+    "attack": 45,
+    "imgId": "mon_medusa",
+    "description": "수많은 뱀으로 이루어진 머리카락을 가진 마물입니다. 그녀의 섬뜩한 눈동자와 정면으로 마주치는 순간 몸이 돌로 굳어버릴 수 있습니다.\n\n[나오는 층수] 38층 ~ 45층"
+  },
+  {
+    "id": "monster_30",
+    "name": "서큐버스",
+    "hp": 380,
+    "maxHp": 380,
+    "attack": 75,
+    "imgId": "mon_succubus",
+    "description": "치명적으로 아름다운 외모와 환술로 모험가들을 유혹하는 고위 악마입니다. 황홀한 꿈속에서 생명력과 영혼을 모두 빨아먹습니다.\n\n[나오는 층수] 48층 ~ 55층"
+  },
+  {
+    "id": "monster_31",
+    "name": "변이된 거대 박쥐",
+    "hp": 100,
+    "maxHp": 100,
+    "attack": 25,
+    "imgId": "mon_mutant_bat",
+    "description": "짙은 마기에 오랜 시간 노출되어 끔찍한 모습으로 변이된 거대 박쥐입니다. 귀를 찢는 듯한 초음파로 적의 정신을 어지럽히고 마비시킵니다.\n\n[나오는 층수] 8층 ~ 13층"
+  },
+  {
+    "id": "monster_32",
+    "name": "망령 기사단장",
+    "hp": 260,
+    "maxHp": 260,
+    "attack": 45,
+    "imgId": "mon_wraith_commander",
+    "description": "과거 전장을 호령하며 무수한 적을 베었던 기사단장의 원혼입니다. 죽어서도 멸망한 제국을 지키겠다는 일념 하나로 폐허를 맴돌고 있습니다.\n\n[나오는 층수] 31층 ~ 38층"
+  },
+  {
+    "id": "monster_33",
+    "name": "피에 물든 사신",
+    "hp": 520,
+    "maxHp": 520,
+    "attack": 90,
+    "imgId": "mon_bloody_reaper",
+    "description": "생명체의 영혼을 거두는 거대한 낫을 든 죽음의 화신입니다. 공중에 떠다니는 그가 지나간 자리에는 서늘한 냉기와 핏빛 흔적만이 남습니다.\n\n[나오는 층수] 85층 ~ 95층"
+  },
+  {
+    "id": "monster_34",
+    "name": "오크 워로드",
+    "hp": 380,
+    "maxHp": 380,
+    "attack": 60,
+    "imgId": "mon_orc_warlord",
+    "description": "수많은 피비린내 나는 전쟁에서 살아남아 증명된 오크들의 영웅입니다. 그의 우렁찬 포효는 아군을 광분하게 만들고 적을 얼어붙게 합니다.\n\n[나오는 층수] 50층 (보스)"
+  },
+  {
+    "id": "monster_35",
+    "name": "늪지대 군주",
+    "hp": 600,
+    "maxHp": 600,
+    "attack": 90,
+    "imgId": "mon_swamp_lord",
+    "description": "맹독과 악취가 진동하는 거대한 늪지대 그 자체를 지배하는 마수입니다. 뿜어내는 독기둥에 스치기만 해도 살점이 검게 녹아내립니다.\n\n[나오는 층수] 90층 (보스)"
+  },
+  {
+    "id": "monster_36",
+    "name": "태초의 골렘",
+    "hp": 1200,
+    "maxHp": 1200,
+    "attack": 180,
+    "imgId": "mon_primordial_golem",
+    "description": "세상이 만들어질 때부터 존재했다고 전해지는 잊혀진 고대의 거대 병기입니다. 자연의 힘이 깃든 압도적인 크기와 재앙 수준의 파괴력을 가졌습니다.\n\n[나오는 층수] 99층 (히든 보스)"
   }
 ]

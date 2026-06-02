@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#131313">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btn_embark">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="캐릭터 선택"
+                android:textColor="#E9C176"
+                android:textSize="12sp"
+                android:letterSpacing="0.2"
+                android:fontFamily="serif"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="24dp"/>
+
+            <EditText
+                android:id="@+id/edit_player_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginBottom="32dp"
+                android:background="#2A2A2A"
+                android:hint="모험가의 이름을 입력하세요"
+                android:textColorHint="#888888"
+                android:textColor="#E5E2E1"
+                android:textSize="14sp"
+                android:padding="16dp"
+                android:fontFamily="serif"
+                android:maxLines="1"
+                android:inputType="textPersonName"
+                android:gravity="center"/>
+
+            <GridLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:columnCount="3"
+                android:rowCount="3"
+                android:layout_marginBottom="32dp">
+
+                <LinearLayout android:id="@+id/job_knight" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
+                    <ImageView android:layout_width="60dp" android:layout_height="60dp" android:scaleType="centerCrop" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="serif"
+                        android:letterSpacing="0.1"
+                        android:text="기사"
+                        android:textColor="#E5E2E1"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/job_rogue" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
+                    <ImageView android:layout_width="60dp" android:layout_height="60dp" android:scaleType="centerCrop" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="serif"
+                        android:letterSpacing="0.1"
+                        android:text="도적"
+                        android:textColor="#E5E2E1"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/job_mage" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
+                    <ImageView android:layout_width="60dp" android:layout_height="60dp" android:scaleType="centerCrop" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="serif"
+                        android:letterSpacing="0.1"
+                        android:text="마법사"
+                        android:textColor="#E5E2E1"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/job_warrior" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
+                    <ImageView android:layout_width="60dp" android:layout_height="60dp" android:scaleType="centerCrop" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="serif"
+                        android:letterSpacing="0.1"
+                        android:text="전사"
+                        android:textColor="#E5E2E1"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/job_paladin" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
+                    <ImageView android:layout_width="60dp" android:layout_height="60dp" android:scaleType="centerCrop" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="serif"
+                        android:letterSpacing="0.1"
+                        android:text="성기사"
+                        android:textColor="#E5E2E1"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/job_ranger" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
+                    <ImageView android:layout_width="60dp" android:layout_height="60dp" android:scaleType="centerCrop" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="serif"
+                        android:letterSpacing="0.1"
+                        android:text="궁수"
+                        android:textColor="#E5E2E1"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/job_hero" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
+                    <ImageView android:layout_width="60dp" android:layout_height="60dp" android:scaleType="centerCrop" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="serif"
+                        android:letterSpacing="0.1"
+                        android:text="용사"
+                        android:textColor="#E5E2E1"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/job_warlock" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
+                    <ImageView android:layout_width="60dp" android:layout_height="60dp" android:scaleType="centerCrop" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="serif"
+                        android:letterSpacing="0.1"
+                        android:text="전투 마법사"
+                        android:textColor="#E5E2E1"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/job_monk" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
+                    <ImageView android:layout_width="60dp" android:layout_height="60dp" android:scaleType="centerCrop" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="serif"
+                        android:letterSpacing="0.1"
+                        android:text="수도사"
+                        android:textColor="#E5E2E1"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </GridLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="4"
+                android:layout_marginBottom="24dp">
+
+                <LinearLayout android:layout_width="0dp" android:layout_height="110dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical">
+                    <View android:layout_width="match_parent" android:layout_height="2dp" android:background="#FF4444"/> <!-- 빨강 -->
+                    <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_compass" app:tint="#E5E2E1" android:layout_marginTop="12dp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="힘" android:textColor="#58413E" android:textSize="11sp" android:letterSpacing="0.1" android:layout_marginTop="8dp" android:textStyle="bold"/>
+                    <TextView android:id="@+id/stat_str" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="18" android:textColor="#E5E2E1" android:textSize="18sp" android:fontFamily="serif" android:layout_marginTop="2dp"/>
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="0dp" android:layout_height="110dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical">
+                    <View android:layout_width="match_parent" android:layout_height="2dp" android:background="#4CAF50"/> <!-- 초록 -->
+                    <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_slideshow" app:tint="#E5E2E1" android:layout_marginTop="12dp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="민첩" android:textColor="#58413E" android:textSize="11sp" android:letterSpacing="0.1" android:layout_marginTop="8dp" android:textStyle="bold"/>
+                    <TextView android:id="@+id/stat_agi" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="12" android:textColor="#E5E2E1" android:textSize="18sp" android:fontFamily="serif" android:layout_marginTop="2dp"/>
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="0dp" android:layout_height="110dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical">
+                    <View android:layout_width="match_parent" android:layout_height="2dp" android:background="#FFD700"/> <!-- 노랑 -->
+                    <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_view" app:tint="#E5E2E1" android:layout_marginTop="12dp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="지혜" android:textColor="#58413E" android:textSize="11sp" android:letterSpacing="0.1" android:layout_marginTop="8dp" android:textStyle="bold"/>
+                    <TextView android:id="@+id/stat_wis" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="09" android:textColor="#E5E2E1" android:textSize="18sp" android:fontFamily="serif" android:layout_marginTop="2dp"/>
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="0dp" android:layout_height="110dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical">
+                    <View android:layout_width="match_parent" android:layout_height="2dp" android:background="#000000"/> <!-- 검정 -->
+                    <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_compass" app:tint="#E5E2E1" android:layout_marginTop="12dp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="체력" android:textColor="#58413E" android:textSize="11sp" android:letterSpacing="0.1" android:layout_marginTop="8dp" android:textStyle="bold"/>
+                    <TextView android:id="@+id/stat_hp" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="100" android:textColor="#E5E2E1" android:textSize="18sp" android:fontFamily="serif" android:layout_marginTop="2dp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- 특성 선택 아코디언 메뉴 -->
+            <LinearLayout
+                android:id="@+id/btn_trait_toggle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="장착 특성:"
+                    android:textColor="#A0A0A0"
+                    android:textSize="14sp"
+                    android:fontFamily="serif"
+                    android:layout_marginEnd="8dp"/>
+
+                <TextView
+                    android:id="@+id/tv_selected_trait"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="직업을 선택하세요"
+                    android:textColor="#E9C176"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:fontFamily="serif"/>
+
+                <ImageView
+                    android:id="@+id/iv_trait_arrow"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@android:drawable/arrow_down_float"
+                    app:tint="#A0A0A0" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/trait_scroll_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#1A1A1A"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"
+                android:padding="8dp">
+
+                <GridLayout
+                    android:id="@+id/trait_grid_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:columnCount="4"
+                    android:alignmentMode="alignBounds" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#2A2A2A"
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:layout_marginBottom="32dp">
+
+                <TextView
+                    android:id="@+id/character_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="캐릭터 설명"
+                    android:textColor="#E5E2E1"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="4dp"
+                    android:fontFamily="serif"
+                    android:letterSpacing="0.05"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/btn_embark"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="#901418"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="게임 시작"
+            android:textColor="#E5E2E1"
+            android:textSize="14sp"
+            android:letterSpacing="0.25"
+            android:fontFamily="serif"
+            android:textStyle="bold"/>
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

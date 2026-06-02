@@ -45,7 +45,7 @@
             android:shadowDx="2"
             android:shadowDy="2"
             android:shadowRadius="4"
-            android:text="SELECT DIFFICULTY"
+            android:text="난이도 선택"
             android:textColor="#E9C176"
             android:textSize="30sp"
             android:textStyle="bold" />
@@ -64,6 +64,27 @@
         app:layout_constraintVertical_bias="0.55">
 
         <FrameLayout
+            android:id="@+id/btn_no_ai_easy"
+            android:layout_width="149dp"
+            android:layout_height="57dp"
+            android:layout_marginBottom="16dp"
+            android:background="#2A2A2A"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="serif"
+                android:letterSpacing="0.2"
+                android:text="No_Ai_Start"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+
+        <FrameLayout
             android:id="@+id/btn_easy"
             android:layout_width="150dp"
             android:layout_height="56dp"
@@ -78,7 +99,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="serif"
                 android:letterSpacing="0.2"
-                android:text="EASY"
+                android:text="쉬움"
                 android:textColor="#E5E2E1"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -99,7 +120,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="serif"
                 android:letterSpacing="0.2"
-                android:text="NORMAL"
+                android:text="보통"
                 android:textColor="#E9C176"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -119,7 +140,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="serif"
                 android:letterSpacing="0.2"
-                android:text="HARD"
+                android:text="어려움"
                 android:textColor="#FF4444"
                 android:textSize="14sp"
                 android:textStyle="bold" />
