@@ -1,12 +1,10 @@
 package com.textdungeon.activity_control;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,16 +18,22 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
 
     private final Context context;
     private final List<CollectionData> collectionList;
+    private final OnItemClickListener listener;
 
-    public CollectionAdapter(Context context, List<CollectionData> collectionList) {
+    public interface OnItemClickListener {
+        void onItemClick(CollectionData data);
+    }
+
+    public CollectionAdapter(Context context, List<CollectionData> collectionList, OnItemClickListener listener) {
         this.context = context;
         this.collectionList = collectionList;
+        this.listener = listener;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.row_collection_card, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.row_collection_grid, parent, false);
         return new ViewHolder(view);
     }
 
@@ -38,21 +42,23 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
         CollectionData data = collectionList.get(position);
 
         if (data.isDiscovered()) {
-            holder.name.setText(data.getName());
-            holder.desc.setText(data.getDesc());
-            holder.status.setText("기록됨");
-            holder.status.setTextColor(Color.parseColor("#E9C176"));
-
             int resId = context.getResources().getIdentifier(data.getImgId(), "drawable", context.getPackageName());
-            if (resId != 0) holder.image.setImageResource(resId);
-            else holder.image.setImageResource(R.drawable.mon_goblin);
+            if (resId != 0) {
+                holder.image.setImageResource(resId);
+            } else {
+                holder.image.setImageResource(R.drawable.mon_goblin);
+            }
+            holder.image.setAlpha(1.0f);
         } else {
-            holder.name.setText("???");
-            holder.desc.setText("아직 발견하지 못한 대상입니다.");
-            holder.status.setText("미발견");
-            holder.status.setTextColor(Color.parseColor("#A0A0A0"));
             holder.image.setImageResource(android.R.drawable.ic_menu_help);
+            holder.image.setAlpha(0.3f);
         }
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onItemClick(data);
+            }
+        });
     }
 
     @Override
@@ -60,14 +66,9 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
 
     class ViewHolder extends RecyclerView.ViewHolder {
         ImageView image;
-        TextView name, desc, status;
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            image = itemView.findViewById(R.id.char_image);
-            name = itemView.findViewById(R.id.char_name);
-            desc = itemView.findViewById(R.id.char_desc);
-            status = itemView.findViewById(R.id.unlock_status);
+            image = itemView.findViewById(R.id.grid_image);
         }
     }
 }

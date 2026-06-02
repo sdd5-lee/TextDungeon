@@ -282,13 +282,6 @@ public class EventActivity extends BaseActivity {
         int levelSnapshot = eventManager.snapshotLevel();
         String result = eventManager.applyReward(currentEvent, choiceIndex);
 
-        if (currentEvent != null && currentEvent.getId() != null) {
-            dt.getUserRecord().getDiscoveredEvents().add(currentEvent.getId());
-
-            int itemsCount = dt.getUserRecord().getDiscoveredItems().size();
-            List<Achievement> unlocked = dt.getAchievementManager().updateProgress("collection_item", itemsCount, false);
-            showAchievementNotification(unlocked);
-        }
         if (result.equals("full")) {
             appendDesc("인벤토리가 가득 찼습니다. 버릴 아이템을 선택해주세요.");
             startTypingAnimation();
@@ -305,6 +298,13 @@ public class EventActivity extends BaseActivity {
             return;
         }
 
+        if (currentEvent != null && currentEvent.getId() != null) {
+            dt.getUserRecord().getDiscoveredEvents().add(currentEvent.getId());
+
+            int itemsCount = dt.getUserRecord().getDiscoveredItems().size();
+            List<Achievement> unlocked = dt.getAchievementManager().updateProgress("collection_item", itemsCount, false);
+            showAchievementNotification(unlocked);
+        }
         appendDesc("결과 : " + result);
         updatePlayerHeader();
 
@@ -312,12 +312,11 @@ public class EventActivity extends BaseActivity {
         if (currentEvent.isRetry(choiceIndex)) {
             renderRetryButtons();
         }
-        if (eventManager.didLevelUp(levelSnapshot)) {
+        else if (eventManager.didLevelUp(levelSnapshot)) {
             showLevelUpDialog();
         } else {
             showNextFloorButton();
         }
-
         startTypingAnimation();
     }
 

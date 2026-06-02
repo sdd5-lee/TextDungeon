@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- ViewPager2 필수 조건: 최상단은 무조건 match_parent -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="30dp"> <!-- 카드 양옆 여백 -->
+    android:padding="30dp">
 
-    <!-- 실제 눈에 보이는 카드 영역 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,7 +35,7 @@
             android:textStyle="bold"
             android:text="직업 이름" />
 
-        <!-- 가격 정보 (G를 붙여서 직관적으로 표현하려면 Adapter에서 수정해도 됩니다) -->
+        <!-- 가격 정보 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -74,7 +72,7 @@
             android:textSize="14sp"
             android:text="여기에 직업 설명이 들어갑니다." />
 
-        <!-- 구매 버튼 (Java 코드에서 LinearLayout으로 선언되었으므로 동일하게 맞춤) -->
+        <!-- 구매 버튼  -->
         <LinearLayout
             android:id="@+id/btn_unlock"
             android:layout_width="match_parent"

@@ -58,47 +58,137 @@
 
                 <LinearLayout android:id="@+id/job_knight" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
                     <ImageView android:layout_width="60dp" android:layout_height="60dp" android:scaleType="centerCrop" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="KNIGHT" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="serif"
+                        android:letterSpacing="0.1"
+                        android:text="기사"
+                        android:textColor="#E5E2E1"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout android:id="@+id/job_rogue" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
                     <ImageView android:layout_width="60dp" android:layout_height="60dp" android:scaleType="centerCrop" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="ROGUE" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="serif"
+                        android:letterSpacing="0.1"
+                        android:text="도적"
+                        android:textColor="#E5E2E1"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout android:id="@+id/job_mage" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
                     <ImageView android:layout_width="60dp" android:layout_height="60dp" android:scaleType="centerCrop" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="MAGE" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="serif"
+                        android:letterSpacing="0.1"
+                        android:text="마법사"
+                        android:textColor="#E5E2E1"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout android:id="@+id/job_warrior" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
                     <ImageView android:layout_width="60dp" android:layout_height="60dp" android:scaleType="centerCrop" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="WARRIOR" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" />
-                </LinearLayout>
 
-                <LinearLayout android:id="@+id/job_cleric" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
-                    <ImageView android:layout_width="60dp" android:layout_height="60dp" android:scaleType="centerCrop" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="CLERIC" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" />
-                </LinearLayout>
-
-                <LinearLayout android:id="@+id/job_ranger" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
-                    <ImageView android:layout_width="60dp" android:layout_height="60dp" android:scaleType="centerCrop" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="ARCHER" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="serif"
+                        android:letterSpacing="0.1"
+                        android:text="전사"
+                        android:textColor="#E5E2E1"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout android:id="@+id/job_paladin" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
                     <ImageView android:layout_width="60dp" android:layout_height="60dp" android:scaleType="centerCrop" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="HERO" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="serif"
+                        android:letterSpacing="0.1"
+                        android:text="성기사"
+                        android:textColor="#E5E2E1"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/job_ranger" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
+                    <ImageView android:layout_width="60dp" android:layout_height="60dp" android:scaleType="centerCrop" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="serif"
+                        android:letterSpacing="0.1"
+                        android:text="궁수"
+                        android:textColor="#E5E2E1"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/job_hero" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
+                    <ImageView android:layout_width="60dp" android:layout_height="60dp" android:scaleType="centerCrop" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="serif"
+                        android:letterSpacing="0.1"
+                        android:text="용사"
+                        android:textColor="#E5E2E1"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout android:id="@+id/job_warlock" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
                     <ImageView android:layout_width="60dp" android:layout_height="60dp" android:scaleType="centerCrop" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="WARLOCK" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="serif"
+                        android:letterSpacing="0.1"
+                        android:text="전투 마법사"
+                        android:textColor="#E5E2E1"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout android:id="@+id/job_monk" android:layout_width="100dp" android:layout_height="100dp" android:layout_margin="6dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
                     <ImageView android:layout_width="60dp" android:layout_height="60dp" android:scaleType="centerCrop" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="MONK" android:textColor="#E5E2E1" android:textSize="10sp" android:letterSpacing="0.1" android:fontFamily="serif" android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="serif"
+                        android:letterSpacing="0.1"
+                        android:text="수도사"
+                        android:textColor="#E5E2E1"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
             </GridLayout>
@@ -111,32 +201,33 @@
                 android:layout_marginBottom="24dp">
 
                 <LinearLayout android:layout_width="0dp" android:layout_height="110dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical">
-                    <View android:layout_width="match_parent" android:layout_height="2dp" android:background="#901418"/>
+                    <View android:layout_width="match_parent" android:layout_height="2dp" android:background="#FF4444"/> <!-- 빨강 -->
                     <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_compass" app:tint="#E5E2E1" android:layout_marginTop="12dp"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="VIT" android:textColor="#58413E" android:textSize="11sp" android:letterSpacing="0.1" android:layout_marginTop="8dp" android:textStyle="bold"/>
-                    <TextView android:id="@+id/stat_hp" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="100" android:textColor="#E5E2E1" android:textSize="18sp" android:fontFamily="serif" android:layout_marginTop="2dp"/>
-                </LinearLayout>
-
-                <LinearLayout android:layout_width="0dp" android:layout_height="110dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical">
-                    <View android:layout_width="match_parent" android:layout_height="2dp" android:background="#E5E2E1"/>
-                    <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_compass" app:tint="#E5E2E1" android:layout_marginTop="12dp"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="STR" android:textColor="#58413E" android:textSize="11sp" android:letterSpacing="0.1" android:layout_marginTop="8dp" android:textStyle="bold"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="힘" android:textColor="#58413E" android:textSize="11sp" android:letterSpacing="0.1" android:layout_marginTop="8dp" android:textStyle="bold"/>
                     <TextView android:id="@+id/stat_str" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="18" android:textColor="#E5E2E1" android:textSize="18sp" android:fontFamily="serif" android:layout_marginTop="2dp"/>
                 </LinearLayout>
 
                 <LinearLayout android:layout_width="0dp" android:layout_height="110dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical">
-                    <View android:layout_width="match_parent" android:layout_height="2dp" android:background="#A0A0A0"/>
+                    <View android:layout_width="match_parent" android:layout_height="2dp" android:background="#4CAF50"/> <!-- 초록 -->
                     <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_slideshow" app:tint="#E5E2E1" android:layout_marginTop="12dp"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="AGI" android:textColor="#58413E" android:textSize="11sp" android:letterSpacing="0.1" android:layout_marginTop="8dp" android:textStyle="bold"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="민첩" android:textColor="#58413E" android:textSize="11sp" android:letterSpacing="0.1" android:layout_marginTop="8dp" android:textStyle="bold"/>
                     <TextView android:id="@+id/stat_agi" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="12" android:textColor="#E5E2E1" android:textSize="18sp" android:fontFamily="serif" android:layout_marginTop="2dp"/>
                 </LinearLayout>
 
                 <LinearLayout android:layout_width="0dp" android:layout_height="110dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical">
-                    <View android:layout_width="match_parent" android:layout_height="2dp" android:background="#E9C176"/>
+                    <View android:layout_width="match_parent" android:layout_height="2dp" android:background="#FFD700"/> <!-- 노랑 -->
                     <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_view" app:tint="#E5E2E1" android:layout_marginTop="12dp"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="WIS" android:textColor="#58413E" android:textSize="11sp" android:letterSpacing="0.1" android:layout_marginTop="8dp" android:textStyle="bold"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="지혜" android:textColor="#58413E" android:textSize="11sp" android:letterSpacing="0.1" android:layout_marginTop="8dp" android:textStyle="bold"/>
                     <TextView android:id="@+id/stat_wis" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="09" android:textColor="#E5E2E1" android:textSize="18sp" android:fontFamily="serif" android:layout_marginTop="2dp"/>
                 </LinearLayout>
+
+                <LinearLayout android:layout_width="0dp" android:layout_height="110dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#2A2A2A" android:gravity="center" android:orientation="vertical">
+                    <View android:layout_width="match_parent" android:layout_height="2dp" android:background="#000000"/> <!-- 검정 -->
+                    <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_compass" app:tint="#E5E2E1" android:layout_marginTop="12dp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="체력" android:textColor="#58413E" android:textSize="11sp" android:letterSpacing="0.1" android:layout_marginTop="8dp" android:textStyle="bold"/>
+                    <TextView android:id="@+id/stat_hp" android:layout_width="wrap_content" android:layout_height="wrap_content" tools:text="100" android:textColor="#E5E2E1" android:textSize="18sp" android:fontFamily="serif" android:layout_marginTop="2dp"/>
+                </LinearLayout>
+
             </LinearLayout>
 
             <!-- 특성 선택 아코디언 메뉴 -->

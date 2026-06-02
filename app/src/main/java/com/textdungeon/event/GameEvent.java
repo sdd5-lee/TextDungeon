@@ -42,7 +42,6 @@ public class GameEvent {
         return rewards;
     }
 
-
     public String getImgId() {
         return imgId;
     }

@@ -60,9 +60,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:alpha="0.3"
-                android:padding="12dp"
+                android:padding="4dp"
                 android:src="@drawable/ic_weapon"
-                app:tint="#ffffff"
+                android:scaleType="fitCenter"
                 tools:ignore="ContentDescription" />
         </FrameLayout>
 
@@ -77,9 +77,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:alpha="0.3"
-                android:padding="12dp"
+                android:padding="4dp"
                 android:src="@drawable/ic_armor"
-                app:tint="#ffffff"
+                android:scaleType="fitCenter"
                 tools:ignore="ContentDescription" />
         </FrameLayout>
 
@@ -94,9 +94,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:alpha="0.3"
-                android:padding="12dp"
+                android:padding="4dp"
                 android:src="@drawable/ic_artifact"
-                app:tint="#ffffff"
+                android:scaleType="fitCenter"
                 tools:ignore="ContentDescription" />
         </FrameLayout>
 
@@ -111,9 +111,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:alpha="0.3"
-                android:padding="12dp"
+                android:padding="4dp"
                 android:src="@drawable/ic_artifact"
-                app:tint="#ffffff"
+                android:scaleType="fitCenter"
                 tools:ignore="ContentDescription" />
         </FrameLayout>
     </LinearLayout>
@@ -190,6 +190,7 @@
             android:textSize="14sp"
             android:textStyle="bold" />
     </GridLayout>
+
     <ScrollView
         android:id="@+id/bag_scroll"
         android:layout_width="0dp"
@@ -204,9 +205,9 @@
 
         <GridLayout
             android:id="@+id/bag_grid"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="top|center_horizontal"
+            android:layout_gravity="center_horizontal"
             android:columnCount="5"
             android:padding="4dp"/>
     </ScrollView>

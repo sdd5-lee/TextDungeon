@@ -54,7 +54,7 @@ public class MagicLearnDialog extends Dialog {
         magicContainer = findViewById(R.id.magic_container);
         Button btnClose = findViewById(R.id.btn_shop_close);
 
-        tvCurrentWisdom.setText("💡 나의 현재 지혜: " + player.getStat().getWisdom());
+        tvCurrentWisdom.setText("나의 현재 지혜: " + player.getStat().getWisdom());
         // 마법 목록 렌더링
         renderMagics();
 
@@ -111,8 +111,6 @@ public class MagicLearnDialog extends Dialog {
             else if (currentWisdom >= reqWisdom) {
                 tvReqWisdom.setTextColor(0xFF81C784);
                 btnLearn.setBackgroundColor(0xFF9C27B0);
-
-                // 🌟 정상적으로 마법을 배울 때
                 btnLearn.setOnClickListener(v -> onLearnMagic(magic));
             } else {
                 tvReqWisdom.setTextColor(0xFFE57373);

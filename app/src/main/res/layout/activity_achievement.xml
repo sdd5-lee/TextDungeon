@@ -79,22 +79,15 @@
             android:dividerHeight="8dp"
             android:padding="8dp"/>
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/collection_pager"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/collection_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:padding="8dp"
+            android:clipToPadding="false"
             android:visibility="gone"/>
 
     </FrameLayout>
-
-    <TextView
-        android:id="@+id/page_indicator"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#A0A0A0"
-        android:gravity="center"
-        android:layout_marginBottom="8dp"
-        android:visibility="gone"/>
 
     <Button
         android:id="@+id/btn_back"

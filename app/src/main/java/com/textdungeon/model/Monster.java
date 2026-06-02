@@ -9,6 +9,7 @@ public class Monster {
     private int maxHp;
     private int attack;
     private String imgId;
+    private String description;
     private Monster() {}
 
     public void takeDamage(int damage) {
@@ -26,4 +27,8 @@ public class Monster {
     public int getAttack() { return attack; }
     public String getImgId() { return imgId; }
     public String getId() { return id; }
+
+    public String getDescription() {
+        return description;
+    }
 }

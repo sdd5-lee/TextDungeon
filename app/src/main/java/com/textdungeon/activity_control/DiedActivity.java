@@ -9,6 +9,7 @@ import com.textdungeon.data.DataControlTower;
 import com.textdungeon.model.Item;
 import com.textdungeon.model.Stat;
 import com.textdungeon.player.Player;
+import com.textdungeon.system.GameSave;
 
 public class DiedActivity extends BaseActivity {
     private TextView tvClearDesc;
@@ -62,6 +63,7 @@ public class DiedActivity extends BaseActivity {
         gems += dt.getUserRecord().getKillCount();
 
         dt.getUserRecord().addGem(gems);
+        GameSave.saveUserRecord(this, dt.getUserRecord());
         return gems;
     }
 }

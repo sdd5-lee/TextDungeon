@@ -18,9 +18,9 @@ public class UserRecord {
     private int killCount;
     private int clearCount;
     private List<Achievement> achievements;
-    private final Set<String> discoveredItems;
-    private final Set<String> discoveredMonsters;
-    private final Set<String> discoveredEvents;
+    private Set<String> discoveredItems;
+    private Set<String> discoveredMonsters;
+    private Set<String> discoveredEvents;
     public UserRecord(){
         this.gem = 0;
         this.unlockJobName = new HashSet<>();
@@ -98,6 +98,7 @@ public class UserRecord {
         return discoveredItems.size();
     }
     public Set<String> getDiscoveredItems() {
+        if (discoveredItems == null) return new HashSet<>();
         return discoveredItems;
     }
 
@@ -108,6 +109,7 @@ public class UserRecord {
         return discoveredMonsters.size();
     }
     public Set<String> getDiscoveredMonsters() {
+        if (discoveredItems == null) return new HashSet<>();
         return discoveredMonsters;
     }
 
@@ -118,6 +120,7 @@ public class UserRecord {
         return discoveredEvents.size();
     }
     public Set<String> getDiscoveredEvents() {
+        if (discoveredItems == null) return new HashSet<>();
         return discoveredEvents;
     }
 

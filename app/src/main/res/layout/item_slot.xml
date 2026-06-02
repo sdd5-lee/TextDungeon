@@ -3,10 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/action_item_root"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_columnWeight="1"
-    android:layout_margin="4dp"
+    android:layout_width="60dp"
+    android:layout_height="60dp"
+    android:layout_margin="5dp"
     android:background="@drawable/item_background"
     android:clickable="true"
     android:focusable="true">
@@ -15,14 +14,11 @@
         android:id="@+id/action_icon"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="12dp"
-        app:layout_constraintDimensionRatio="1:1"
+        android:layout_margin="2dp"
+        android:scaleType="fitCenter"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:contentDescription="Icon"
-        android:src="@android:drawable/ic_menu_gallery"
-        app:tint="#E9C176" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -184,7 +184,7 @@
                 android:focusable="true"
                 android:gravity="center"
                 android:letterSpacing="0.1"
-                android:text="ATTACK"
+                android:text="공격"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp" />
 
@@ -199,7 +199,7 @@
                 android:focusable="true"
                 android:gravity="center"
                 android:letterSpacing="0.1"
-                android:text="GUARD"
+                android:text="방어"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp" />
 
@@ -214,7 +214,7 @@
                 android:focusable="true"
                 android:gravity="center"
                 android:letterSpacing="0.1"
-                android:text="ESCAPE"
+                android:text="도망"
                 android:textColor="#FDFDFD"
                 android:textSize="12sp" />
         </LinearLayout>

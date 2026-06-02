@@ -46,7 +46,7 @@
             android:shadowDx="2"
             android:shadowDy="2"
             android:shadowRadius="4"
-            android:text="SYSTEM SETTING"
+            android:text="시스템 설정"
             android:textColor="#E9C176"
             android:textSize="30sp"
             android:textStyle="bold" />
@@ -69,7 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:fontFamily="serif"
-            android:text="VOLUME"
+            android:text="음량"
             android:textColor="#BBBBBB"
             android:textSize="14sp"
             android:textStyle="bold" />
@@ -89,7 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:fontFamily="serif"
-            android:text="FONT SIZE"
+            android:text="글자 크기"
             android:textColor="#BBBBBB"
             android:textSize="14sp"
             android:textStyle="bold" />
@@ -108,7 +108,7 @@
                 android:layout_weight="1"
                 android:buttonTint="#E9C176"
                 android:fontFamily="serif"
-                android:text="SMALL"
+                android:text="작게"
                 android:textColor="#FFFFFF" />
 
             <RadioButton
@@ -119,7 +119,7 @@
                 android:buttonTint="#E9C176"
                 android:checked="true"
                 android:fontFamily="serif"
-                android:text="NORMAL"
+                android:text="중간"
                 android:textColor="#FFFFFF" />
 
             <RadioButton
@@ -129,7 +129,7 @@
                 android:layout_weight="1"
                 android:buttonTint="#E9C176"
                 android:fontFamily="serif"
-                android:text="LARGE"
+                android:text="크게"
                 android:textColor="#FFFFFF" />
         </RadioGroup>
     </LinearLayout>
@@ -154,7 +154,7 @@
             android:layout_gravity="center"
             android:fontFamily="serif"
             android:letterSpacing="0.1"
-            android:text="BACK TO GAME"
+            android:text="게임으로 돌아가기"
             android:textColor="#E5E2E1"
             android:textSize="14sp"
             android:textStyle="bold" />
