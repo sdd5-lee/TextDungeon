@@ -203,7 +203,6 @@ public class AchievementActivity extends BaseActivity {
             for (Monster mon : dt.getMonsterManager().getAll()) {
                 boolean discovered = disMonsters.contains(mon.getId());
                 String desc = mon.getDescription() + "\n\n[기본 스탯]\n공격력: " + mon.getAttack() + " / 체력: " + mon.getMaxHp();
-                // 💡 여기서 미리 resId를 찾아둠
                 int resId = getCachedResId(mon.getImgId(), "mon_goblin");
                 currentCollectionList.add(new CollectionData(
                         mon.getName(), desc, resId, discovered));
@@ -211,7 +210,6 @@ public class AchievementActivity extends BaseActivity {
         } else if (category.equals("이벤트")) {
             for (GameEvent ev : dt.getEventManager().getAll()) {
                 boolean discovered = disEvents.contains(ev.getId());
-                // 💡 여기서 미리 resId를 찾아둠 (이벤트용 기본 이미지가 있다면 변경 가능)
                 int resId = getCachedResId(ev.getImgId(), "ic_event");
                 currentCollectionList.add(new CollectionData(
                         ev.getName(), ev.getDescription(), resId, discovered));
