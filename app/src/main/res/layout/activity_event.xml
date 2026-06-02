@@ -376,7 +376,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:clickable="false"
-                android:src="@android:drawable/ic_menu_manage"
+                android:src="@drawable/ic_system"
                 app:tint="#E9C176" />
 
             <TextView
