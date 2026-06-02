@@ -58,7 +58,7 @@
         android:alpha="0.8"
         android:gravity="start"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/btn_back"
+        app:layout_constraintBottom_toTopOf="@+id/btn_admin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_container"
@@ -133,6 +133,32 @@
                 android:textColor="#FFFFFF" />
         </RadioGroup>
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/btn_admin"
+        android:layout_width="180dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="16dp"
+        android:background="#4A0E12"
+        android:clickable="true"
+        android:focusable="true"
+        android:alpha="0.8"
+        app:layout_constraintBottom_toTopOf="@+id/btn_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="serif"
+            android:letterSpacing="0.1"
+            android:clickable="false"
+            android:text="관리자 패널"
+            android:textColor="#E9C176"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </FrameLayout>
 
     <FrameLayout
         android:id="@+id/btn_back"

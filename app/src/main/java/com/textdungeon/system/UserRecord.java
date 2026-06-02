@@ -123,5 +123,28 @@ public class UserRecord {
         if (discoveredItems == null) return new HashSet<>();
         return discoveredEvents;
     }
+    public void clearAll() {
+        this.gem = 0;
+        this.killCount = 0;
+        this.clearCount = 0;
 
+        this.upgradeLevels.clear();
+        this.discoveredItems.clear();
+        this.discoveredMonsters.clear();
+        this.discoveredEvents.clear();
+
+        if (this.achievements != null) {
+            this.achievements.clear();
+        }
+
+        this.unlockJobName.clear();
+        this.unlockTraitName.clear();
+
+        for (Job job : Job.values()) {
+            if (job.defaultUnlocked) {
+                this.unlockJobName.add(job.name);
+                this.unlockTraitName.add(job.trait.name());
+            }
+        }
+    }
 }

@@ -35,6 +35,7 @@
         <activity android:name="com.textdungeon.activity_control.ClearActivity" />
         <activity android:name="com.textdungeon.activity_control.DiedActivity" />
         <activity android:name="com.textdungeon.activity_control.AchievementActivity" />
+        <activity android:name="com.textdungeon.activity_control.AdminActivity" />
     </application>
 
 </manifest>

@@ -1,29 +1,19 @@
 package com.textdungeon.data;
 
 public class CollectionData {
-    String name, desc, imgId;
-    boolean discovered;
+    private String name, desc;
+    private int imgResId;
+    private boolean discovered;
 
-    public CollectionData(String name, String desc, String imgId, boolean discovered) {
+    public CollectionData(String name, String desc, int imgResId, boolean discovered) {
         this.name = name;
         this.desc = desc;
-        this.imgId = imgId;
+        this.imgResId = imgResId;
         this.discovered = discovered;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getDesc() {
-        return desc;
-    }
-
-    public String getImgId() {
-        return imgId;
-    }
-
-    public boolean isDiscovered() {
-        return discovered;
-    }
+    public String getName() { return name; }
+    public String getDesc() { return desc; }
+    public int getImgResId() { return imgResId; }
+    public boolean isDiscovered() { return discovered; }
 }

@@ -1,9 +1,11 @@
 package com.textdungeon.activity_control; // 패키지명 확인 요망
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
@@ -72,6 +74,10 @@ public class SystemSettingActivity extends BaseActivity {
                 recreate();
             }
         });
+
+        FrameLayout adminButton = findViewById(R.id.btn_admin);
+        adminButton.setOnClickListener(view ->
+                startActivity(new Intent(this, AdminActivity.class)));
 
         btnBack.setOnClickListener(v -> finish());
     }
