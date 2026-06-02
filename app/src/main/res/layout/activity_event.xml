@@ -126,7 +126,7 @@
                 <ImageView
                     android:layout_width="18dp"
                     android:layout_height="18dp"
-                    android:src="@android:drawable/ic_menu_compass"
+                    android:src="@drawable/ic_strength"
                     app:tint="#E0BFBA" />
 
                 <TextView
@@ -147,7 +147,7 @@
                 <ImageView
                     android:layout_width="18dp"
                     android:layout_height="18dp"
-                    android:src="@android:drawable/ic_menu_view"
+                    android:src="@drawable/ic_wisdom"
                     app:tint="#E0BFBA" />
 
                 <TextView
@@ -168,7 +168,7 @@
                 <ImageView
                     android:layout_width="18dp"
                     android:layout_height="18dp"
-                    android:src="@android:drawable/ic_menu_mylocation"
+                    android:src="@drawable/ic_health"
                     app:tint="#E0BFBA" />
 
                 <TextView
@@ -189,7 +189,7 @@
                 <ImageView
                     android:layout_width="18dp"
                     android:layout_height="18dp"
-                    android:src="@android:drawable/ic_menu_slideshow"
+                    android:src="@drawable/ic_dexterity"
                     app:tint="#E0BFBA" />
 
                 <TextView
@@ -314,7 +314,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:clickable="false"
-                android:src="@android:drawable/ic_menu_agenda"
+                android:src="@drawable/ic_magic"
                 app:tint="#E9C176" />
 
             <TextView
@@ -345,7 +345,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:clickable="false"
-                android:src="@android:drawable/ic_menu_save"
+                android:src="@drawable/ic_bag"
                 app:tint="#E9C176" />
 
             <TextView

@@ -101,7 +101,7 @@
             android:letterSpacing="0.2"
             android:paddingHorizontal="12dp"
             android:paddingVertical="6dp"
-            android:text="COMBAT"
+            android:text="전투 스텟"
             android:textColor="#E9C176"
             android:textSize="11sp"/>
 
@@ -197,7 +197,7 @@
             android:letterSpacing="0.2"
             android:paddingHorizontal="12dp"
             android:paddingVertical="6dp"
-            android:text="STATS"
+            android:text="스텟"
             android:textColor="#E9C176"
             android:textSize="11sp"/>
 
@@ -333,7 +333,7 @@
             android:letterSpacing="0.2"
             android:paddingHorizontal="12dp"
             android:paddingVertical="6dp"
-            android:text="MISC"
+            android:text="골드 및 스탯 포인트"
             android:textColor="#E9C176"
             android:textSize="11sp"/>
 
@@ -405,7 +405,7 @@
             android:letterSpacing="0.2"
             android:paddingHorizontal="12dp"
             android:paddingVertical="6dp"
-            android:text="EQUIPMENT"
+            android:text="장비"
             android:textColor="#E9C176"
             android:textSize="11sp"/>
 

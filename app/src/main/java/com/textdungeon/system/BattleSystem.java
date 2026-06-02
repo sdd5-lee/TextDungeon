@@ -99,7 +99,6 @@ public class BattleSystem {
                     Magic magic = DataControlTower.getInstance(context).getMagicManager().spawn(lm.getMagicId());
                     int magicDamage = player.castMagic(magic);
                     int finalDamage = magicDamage + ((magicDamage/10) * battleTurn);
-                    enemyHp -= finalDamage;
                     if (applyVampiricTouch()){
                         player.heal(finalDamage/10);
                     }
@@ -107,10 +106,11 @@ public class BattleSystem {
                         finalDamage = applyTraitCritDamage(finalDamage);
                         log.append("크리티컬!   \n");
                     }
-                    if (finalDamage > 0) {
-                        enemyHp -= finalDamage;
-                        log.append(magic.getName()).append(" 발동! ").append(enemyName).append("에게 ").append(finalDamage).append("의 데미지!\n");
+                    enemyHp -= finalDamage;
+                    if (applyVampiricTouch()){
+                        player.heal(finalDamage/10);
                     }
+                    log.append(magic.getName()).append(" 발동! ").append(enemyName).append("에게 ").append(finalDamage).append("의 데미지!\n");
                     break;
                 }
         }
