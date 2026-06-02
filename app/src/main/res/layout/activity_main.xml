@@ -87,7 +87,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="serif"
                 android:letterSpacing="0.2"
-                android:text="START"
+                android:text="새 게임"
                 android:textColor="#E9C176"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -108,7 +108,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="serif"
                 android:letterSpacing="0.2"
-                android:text="LOADGAME"
+                android:text="이어하기"
                 android:textColor="#E9C176"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -129,7 +129,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="serif"
                 android:letterSpacing="0.2"
-                android:text="SHOP"
+                android:text="상점"
                 android:textColor="#E5E2E1"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -150,7 +150,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="serif"
                 android:letterSpacing="0.2"
-                android:text="ACHIEVEMENT"
+                android:text="도전과제 및 도감"
                 android:textColor="#E5E2E1"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -170,7 +170,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="serif"
                 android:letterSpacing="0.2"
-                android:text="OPTION"
+                android:text="옵션"
                 android:textColor="#E5E2E1"
                 android:textSize="14sp"
                 android:textStyle="bold" />

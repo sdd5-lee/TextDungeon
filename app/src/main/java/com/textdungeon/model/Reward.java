@@ -30,10 +30,18 @@ public class Reward {
         }
         if (statRewards != null) {
             for (RewardStat statReward : statRewards) {
-                if (player.getTrait() != null && player.getTrait().modifyExp() > 1){
-                    player.getStat().gainStatExp(statReward.getValue(),player.getTrait().modifyExp());
-                }else {
-                    player.getStat().gainStat(statReward.getStatType(), statReward.getValue());
+                String type = statReward.getStatType();
+                int value = statReward.getValue();
+                if ("회복".equals(type)) {
+                    player.heal(value);
+                } else if ("데미지".equals(type)) {
+                    player.takeDamage(value);
+                } else {
+                    if (player.getTrait() != null && player.getTrait().modifyExp() > 1) {
+                        player.getStat().gainStatExp(value, player.getTrait().modifyExp());
+                    } else {
+                        player.getStat().gainStat(type, value);
+                    }
                 }
             }
             player.levelUp();

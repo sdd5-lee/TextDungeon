@@ -54,9 +54,9 @@ public class CharacterActivity extends BaseActivity {
         LinearLayout jobRogue = findViewById(R.id.job_rogue);
         LinearLayout jobMage = findViewById(R.id.job_mage);
         LinearLayout jobWarrior = findViewById(R.id.job_warrior);
-        LinearLayout jobCleric = findViewById(R.id.job_cleric);
+        LinearLayout jobPaladin = findViewById(R.id.job_paladin);
         LinearLayout jobRanger = findViewById(R.id.job_ranger);
-        LinearLayout jobHero = findViewById(R.id.job_paladin);
+        LinearLayout jobHero = findViewById(R.id.job_hero);
         LinearLayout jobWarlock = findViewById(R.id.job_warlock);
         LinearLayout jobMonk = findViewById(R.id.job_monk);
 
@@ -65,7 +65,7 @@ public class CharacterActivity extends BaseActivity {
         jobViews.put(Job.ROGUE, jobRogue);
         jobViews.put(Job.MAGE, jobMage);
         jobViews.put(Job.WARRIOR, jobWarrior);
-        jobViews.put(Job.PALADIN, jobCleric);
+        jobViews.put(Job.PALADIN, jobPaladin);
         jobViews.put(Job.ARCHER, jobRanger);
         jobViews.put(Job.HERO, jobHero);
         jobViews.put(Job.WARLOCK, jobWarlock);
@@ -86,17 +86,17 @@ public class CharacterActivity extends BaseActivity {
         traitScrollArea = findViewById(R.id.trait_scroll_area);
         traitGridContainer = findViewById(R.id.trait_grid_container);
 
-        setSfx(jobKnight, jobRogue, jobMage, jobWarrior, jobCleric, jobRanger, jobHero, jobWarlock, jobMonk, btnEmbark, btnTraitToggle);
+        setSfx(jobKnight, jobRogue, jobMage, jobWarrior, jobPaladin, jobRanger, jobHero, jobWarlock, jobMonk, btnEmbark, btnTraitToggle);
 
         initJobCards();
 
-        jobRogue.setOnClickListener(v -> updateUI(Job.ROGUE));
-        jobMage.setOnClickListener(v -> updateUI(Job.MAGE));
-        jobWarrior.setOnClickListener(v -> updateUI(Job.WARRIOR));
-        jobRanger.setOnClickListener(v -> updateUI(Job.ARCHER));
+        jobRogue.setOnClickListener(v -> handleJobClick(v, Job.ROGUE));
+        jobMage.setOnClickListener(v -> handleJobClick(v, Job.MAGE));
+        jobWarrior.setOnClickListener(v -> handleJobClick(v, Job.WARRIOR));
+        jobRanger.setOnClickListener(v -> handleJobClick(v, Job.ARCHER));
 
         jobKnight.setOnClickListener(v -> handleJobClick(v, Job.KNIGHT));
-        jobCleric.setOnClickListener(v -> handleJobClick(v, Job.PALADIN));
+        jobPaladin.setOnClickListener(v -> handleJobClick(v, Job.PALADIN));
         jobHero.setOnClickListener(v -> handleJobClick(v, Job.HERO));
         jobWarlock.setOnClickListener(v -> handleJobClick(v, Job.WARLOCK));
         jobMonk.setOnClickListener(v -> handleJobClick(v, Job.MONK));

@@ -30,6 +30,7 @@ public class Player {
         this.stat = new Stat(job.strength, job.agility, job.health,job.wisdom );
 
         stat.updateBattleStat(level);
+        stat.setHp(getMaxHp());
     }
 
     public void levelUp() {
@@ -48,6 +49,7 @@ public class Player {
 
             magicScroll.updateCounts(stat.getWisdom());
         }
+        refreshHp();
     }
 
 
@@ -158,7 +160,9 @@ public class Player {
     }
     public int getMaxHp() {
         int maxHp = stat.getMaxHp() + equipment.getTotalHp();
-        if (getTrait() != null) maxHp = getTrait().modifyMaxHp(this, maxHp);
+        if (getTrait() != null){
+            maxHp = getTrait().modifyMaxHp(this, maxHp);
+        }
         return maxHp;
     }
     public int getTotalCrit() {

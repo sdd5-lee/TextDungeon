@@ -58,6 +58,7 @@ public class GameSave {
             }
         }
         stat.updateBattleStat(newPlayer.getLevel());
+        newPlayer.getStat().setHp(newPlayer.getMaxHp());
         return newPlayer;
     }
     public static void saveUserRecord(Context context, UserRecord record) {

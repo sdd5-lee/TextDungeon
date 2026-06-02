@@ -111,8 +111,6 @@ public class MagicLearnDialog extends Dialog {
             else if (currentWisdom >= reqWisdom) {
                 tvReqWisdom.setTextColor(0xFF81C784);
                 btnLearn.setBackgroundColor(0xFF9C27B0);
-
-                // 🌟 정상적으로 마법을 배울 때
                 btnLearn.setOnClickListener(v -> onLearnMagic(magic));
             } else {
                 tvReqWisdom.setTextColor(0xFFE57373);

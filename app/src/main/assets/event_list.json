@@ -1,7 +1,7 @@
 [
   {
     "id": "event_0",
-    "name": "치유의 샘",
+    "name": "신비로운 치유의 샘",
     "description": "동굴 한복판에서 맑은 샘물을 발견했습니다. 물을 마시겠습니까?",
     "imgId": "healing_fountain",
     "minFloor": 1,
@@ -29,13 +29,13 @@
   },
   {
     "id": "event_1",
-    "name": "슬라임",
-    "description": "슬라임이 천천히 다가오고있습니다.",
+    "name": "탐욕스러운 슬라임의 출현",
+    "description": "거대한 슬라임이 다가옵니다. 반투명한 점액질 몸체 속에 누군가 떨어뜨린 듯한 활이 온전한 상태로 보입니다.",
     "imgId": "mon_slime",
     "minFloor": 1,
     "maxFloor": 9,
     "enemyId": "monster_1",
-    "choices": ["싸운다(끈적끈적한활)", "그냥 지나간다"],
+    "choices": ["점액질을 가르고 활을 꺼낸다", "점액이 묻기 전에 도망친다"],
     "rewards": [
       {
         "itemId": "item_5",
@@ -57,13 +57,13 @@
   },
   {
     "id": "event_2",
-    "name": "고블린",
-    "description": "길을 지나던 중 몽둥이를 든 고블린과 마주쳤습니다!",
+    "name": "기습하는 고블린 무리",
+    "description": "길을 지나던 중 조잡한 몽둥이를 든 고블린과 마주쳤습니다!",
     "imgId": "mon_goblin",
     "minFloor": 1,
     "maxFloor": 9,
     "enemyId": "monster_2",
-    "choices": ["싸운다(고블린의 몽둥이)", "겁을 주어 쫓아낸다"],
+    "choices": ["고블린을 제압하고 몽둥이를 뺏어 든다", "겁을 주어 쫓아낸다"],
     "rewards": [
       {
         "itemId": "item_6",
@@ -85,13 +85,13 @@
   },
   {
     "id": "event_3",
-    "name": "늑대의 습격",
-    "description": "굶주린 늑대가 당신을 노립니다.",
+    "name": "굶주린 늑대의 습격",
+    "description": "거대한 늑대가 무기가 될 만큼 날카로운 송곳니를 드러내며 당신을 노립니다.",
     "imgId": "mon_wolf",
     "minFloor": 1,
     "maxFloor": 9,
     "enemyId": "monster_3",
-    "choices": ["싸운다(늑대의 송곳니)", "도망친다"],
+    "choices": ["늑대의 숨통을 끊고 송곳니를 뽑아낸다", "도망친다"],
     "rewards": [
       {
         "itemId": "item_7",
@@ -113,13 +113,13 @@
   },
   {
     "id": "event_4",
-    "name": "박쥐",
-    "description": "커다란 박쥐가 달려듭니다.",
+    "name": "어둠 속 거대 박쥐의 맹공",
+    "description": "어둠 속에서 완드를 발톱에 쥔 기이한 박쥐가 날카로운 소리를 내며 달려듭니다.",
     "imgId": "mon_bat",
     "minFloor": 1,
     "maxFloor": 9,
     "enemyId": "monster_4",
-    "choices": ["싸운다(박쥐 완드)", "회피한다"],
+    "choices": ["박쥐를 격추시키고 발톱에 쥔 완드를 챙긴다", "회피한다"],
     "rewards": [
       {
         "itemId": "item_8",
@@ -141,8 +141,8 @@
   },
   {
     "id": "event_5",
-    "name": "버려진 도서관",
-    "description": "먼지 쌓인 책들 중 두 권이 유독 빛나고 있습니다. 그리고 수상한 돌이 있습니다",
+    "name": "잊혀진 도서관의 비밀",
+    "description": "먼지 쌓인 책들 중 두 권이 유독 빛나고 있습니다. 그 곁에는 마력이 감도는 수상한 돌이 놓여 있습니다.",
     "imgId": "abandoned_library",
     "minFloor": 7,
     "maxFloor": 7,
@@ -175,13 +175,13 @@
   },
   {
     "id": "event_6",
-    "name": "홉고블린",
-    "description": "홉고블린이 기분나쁘게 웃고있습니다.",
+    "name": "교활한 홉고블린의 함정",
+    "description": "질긴 가죽옷을 입은 홉고블린이 기분 나쁘게 웃고 있습니다.",
     "imgId": "mon_hobgoblin",
     "minFloor": 10,
     "maxFloor": 10,
     "enemyId": "monster_5",
-    "choices": ["싸운다(홉고블린의 가죽옷)", "회피한다"],
+    "choices": ["홉고블린을 베어버리고 가죽옷을 벗겨낸다", "회피한다"],
     "rewards": [
       {
         "itemId": "item_26",
@@ -202,13 +202,13 @@
   },
   {
     "id": "event_7",
-    "name": "해골 전사",
-    "description": "갑옷을 입은 해골이 공격해옵니다.",
+    "name": "깨어난 해골 전사",
+    "description": "녹슨 갑옷을 입고 오래된 검을 쥔 해골 전사가 다가옵니다.",
     "imgId": "mon_goblin",
     "minFloor": 11,
     "maxFloor": 19,
     "enemyId": "monster_6",
-    "choices": ["싸운다(오래된 검)", "회피한다"],
+    "choices": ["해골 전사를 부수고 오래된 검을 줍는다", "회피한다"],
     "rewards": [
       {
         "itemId": "item_9",
@@ -230,13 +230,13 @@
   },
   {
     "id": "event_8",
-    "name": "해골 궁수",
-    "description": "해골이 당신에게 활을 조준하고 있습니다.",
+    "name": "어둠 속의 저격, 해골 궁수",
+    "description": "어둠 속에서 오래된 활을 든 해골 궁수가 당신을 조준하고 있습니다.",
     "imgId": "mon_goblin",
     "minFloor": 11,
     "maxFloor": 19,
     "enemyId": "monster_7",
-    "choices": ["싸운다(오래된 활)", "회피한다"],
+    "choices": ["해골 궁수를 박살 내고 활을 챙긴다", "회피한다"],
     "rewards": [
       {
         "itemId": "item_10",
@@ -258,13 +258,13 @@
   },
   {
     "id": "event_9",
-    "name": "해골 기사",
-    "description": "해골 기사가 당신에게 결투를 신청합니다.",
+    "name": "망자 기사의 결투 신청",
+    "description": "기품 있는 단검을 찬 해골 기사가 당신에게 정중히 결투를 신청합니다.",
     "imgId": "mon_goblin",
     "minFloor": 11,
     "maxFloor": 19,
     "enemyId": "monster_8",
-    "choices": ["싸운다(기사의 단검)", "회피한다"],
+    "choices": ["결투를 받아들여 기사를 꺾고 단검을 얻는다", "무시하고 도망친다"],
     "rewards": [
       {
         "itemId": "item_11",
@@ -286,13 +286,13 @@
   },
   {
     "id": "event_10",
-    "name": "위습",
-    "description": "위습의 사념이 느껴집니다.",
+    "name": "떠도는 원혼, 위습",
+    "description": "해골 모양의 기괴한 스태프 주위를 맴도는 위습의 사념이 느껴집니다.",
     "imgId": "mon_goblin",
     "minFloor": 11,
     "maxFloor": 19,
     "enemyId": "monster_9",
-    "choices": ["싸운다(해골 스태프)", "회피한다"],
+    "choices": ["위습의 사념을 흩어내고 스태프를 쥔다", "회피한다"],
     "rewards": [
       {
         "itemId": "item_12",
@@ -314,13 +314,13 @@
   },
   {
     "id": "event_11",
-    "name": "고블린 로드",
-    "description": "고블린 로드가 분노하고 있습니다.",
+    "name": "고블린 로드의 분노",
+    "description": "견고한 갑옷으로 무장한 고블린 로드가 분노하며 돌진합니다.",
     "imgId": "mob_goblin",
     "minFloor": 20,
     "maxFloor": 20,
     "enemyId": "monster_10",
-    "choices": ["싸운다(고블린로드의 갑옷)", "회피한다"],
+    "choices": ["고블린 로드를 참수하고 갑옷을 챙긴다", "회피한다"],
     "rewards": [
       {
         "itemId": "item_27",
@@ -342,7 +342,7 @@
   {
     "id": "event_12",
     "type": "shop",
-    "name": "수상한 상인",
+    "name": "어둠 속의 수상한 상인",
     "description": "어두운 길목에서 상인을 만났습니다. 그가 수상한 웃음을 지으며 물건을 내밉니다.",
     "imgId": "suspicious_merchant",
     "minFloor": 11,
@@ -360,8 +360,8 @@
   },
   {
     "id": "event_13",
-    "name": "빈 고블린 오두막",
-    "description": "비어있는 고블린 오두막에서 물건들이 보입니다 ",
+    "name": "적막한 고블린 오두막",
+    "description": "비어있는 고블린 오두막에서 쓸만한 물건들이 보입니다.",
     "imgId": "abandoned_library",
     "minFloor": 15,
     "maxFloor": 15,
@@ -394,13 +394,13 @@
   },
   {
     "id": "event_14",
-    "name": "오크 전사",
-    "description": "오크 전사가 빛바랜 검을 휘두르며 달려옵니다.",
+    "name": "피에 굶주린 오크 전사",
+    "description": "오크 전사가 빛바랜 검을 위협적으로 휘두르며 달려옵니다.",
     "imgId": "mon_goblin",
     "minFloor": 21,
     "maxFloor": 29,
     "enemyId": "monster_11",
-    "choices": ["싸운다(오크의 빛바랜 검)", "회피한다"],
+    "choices": ["오크 전사의 맹공을 뚫고 검을 빼앗는다", "회피한다"],
     "rewards": [
       {
         "itemId": "item_13",
@@ -422,13 +422,13 @@
   },
   {
     "id": "event_15",
-    "name": "오크 마법사",
-    "description": "오크 마법사가 주문을 외웁니다.",
+    "name": "불길한 오크 주술사의 저주",
+    "description": "기괴한 지팡이를 든 오크 마법사가 치명적인 주문을 외우기 시작합니다.",
     "imgId": "mon_goblin",
     "minFloor": 21,
     "maxFloor": 29,
     "enemyId": "monster_12",
-    "choices": ["싸운다(오크의 지팡이)", "회피한다"],
+    "choices": ["주문이 완성되기 전에 베어버리고 지팡이를 챙긴다", "회피한다"],
     "rewards": [
       {
         "itemId": "item_14",
@@ -450,13 +450,13 @@
   },
   {
     "id": "event_16",
-    "name": "가고일",
-    "description": "당신을 바라보던 석상이 움직입니다.",
+    "name": "살아 움직이는 가고일 석상",
+    "description": "당신을 바라보던 석상이 거대한 돌 활을 쥔 채 깨어납니다.",
     "imgId": "mon_goblin",
     "minFloor": 21,
     "maxFloor": 29,
     "enemyId": "monster_13",
-    "choices": ["싸운다(석상의 활)", "회피한다"],
+    "choices": ["석상을 파괴하고 거대한 돌 활을 손에 넣는다", "회피한다"],
     "rewards": [
       {
         "itemId": "item_15",
@@ -478,13 +478,13 @@
   },
   {
     "id": "event_17",
-    "name": "실버 울프",
-    "description": "거대한 은빛 늑대입니다.",
+    "name": "은빛 늑대왕의 위협",
+    "description": "은빛 털을 흩날리는 늑대들의 왕이 길을 가로막습니다.",
     "imgId": "mon_goblin",
     "minFloor": 21,
     "maxFloor": 29,
     "enemyId": "monster_14",
-    "choices": ["싸운다(늑대의 왕)", "회피한다"],
+    "choices": ["은빛 늑대의 목을 베고 왕의 전리품을 취한다", "회피한다"],
     "rewards": [
       {
         "itemId": "item_16",
@@ -506,13 +506,13 @@
   },
   {
     "id": "event_18",
-    "name": "오크 로드",
-    "description": "거대한 오크 로드가 나타났습니다.",
+    "name": "오크 로드의 무자비한 돌진",
+    "description": "두꺼운 철갑옷으로 무장한 거대한 오크 로드가 포효합니다.",
     "imgId": "mon_goblin",
     "minFloor": 30,
     "maxFloor": 30,
     "enemyId": "monster_15",
-    "choices": ["싸운다(오크로드의 철갑옷)", "회피한다"],
+    "choices": ["오크 로드의 거구를 무너뜨리고 철갑옷을 뜯어낸다", "회피한다"],
     "rewards": [
       {
         "itemId": "item_28",
@@ -533,7 +533,7 @@
   },
   {
     "id": "event_19",
-    "name": "함정",
+    "name": "숨겨진 치명적 함정",
     "description": "바닥에 숨겨진 함정을 밟았습니다.",
     "imgId": "hidden_trap",
     "minFloor": 21,
@@ -563,7 +563,7 @@
   {
     "id": "event_20",
     "type": "shop",
-    "name": "수상한 상인",
+    "name": "어둠 속의 수상한 상인",
     "description": "어두운 길목에서 상인을 만났습니다. 회복약들을 보여주며 다가옵니다.",
     "imgId": "suspicious_merchant",
     "minFloor": 21,
@@ -581,7 +581,7 @@
   },
   {
     "id": "event_21",
-    "name": "오크 부족의 주술사",
+    "name": "오크 주술사의 은밀한 제안",
     "description": "오크 부족의 주술을 받을 수 있습니다. 어떤 주술을 받겠습니까?",
     "imgId": "abandoned_library",
     "minFloor": 22,
@@ -615,13 +615,13 @@
   },
   {
     "id": "event_22",
-    "name": "리자드맨",
-    "description": "리자드맨이 활을 당기며 경고합니다.",
+    "name": "냉혹한 리자드맨의 경계",
+    "description": "정교한 활을 든 리자드맨이 시위를 당기며 경고합니다.",
     "imgId": "mon_goblin",
     "minFloor": 31,
     "maxFloor": 39,
     "enemyId": "monster_16",
-    "choices": ["싸운다(리자드 활)", "회피한다"],
+    "choices": ["리자드맨의 화살을 튕겨내고 활을 빼앗는다", "회피한다"],
     "rewards": [
       {
         "itemId": "item_17",
@@ -643,13 +643,13 @@
   },
   {
     "id": "event_23",
-    "name": "샤먼 리자드",
-    "description": "샤먼 리자드가 주문을 외웁니다.",
+    "name": "샤먼 리자드의 고대 주문",
+    "description": "화려한 스태프를 든 샤먼 리자드가 고대의 주문을 외웁니다.",
     "imgId": "mon_goblin",
     "minFloor": 31,
     "maxFloor": 39,
     "enemyId": "monster_17",
-    "choices": ["싸운다(리자드 스태프)", "회피한다"],
+    "choices": ["주문을 파훼하고 화려한 스태프를 뺏어 든다", "회피한다"],
     "rewards": [
       {
         "itemId": "item_18",
@@ -671,13 +671,13 @@
   },
   {
     "id": "event_24",
-    "name": "트롤",
-    "description": "거대한 트롤이 길을 막고 있습니다.",
+    "name": "거대 트롤의 길막기",
+    "description": "거대한 몽둥이를 든 트롤이 침을 흘리며 길을 막고 있습니다.",
     "imgId": "mon_goblin",
     "minFloor": 31,
     "maxFloor": 39,
     "enemyId": "monster_18",
-    "choices": ["싸운다(트롤의 몽둥이)", "회피한다"],
+    "choices": ["트롤의 무릎을 꿇리고 거대한 몽둥이를 탈취한다", "회피한다"],
     "rewards": [
       {
         "itemId": "item_19",
@@ -699,13 +699,13 @@
   },
   {
     "id": "event_25",
-    "name": "키메라",
-    "description": "온갖 생물이 섞여있는 괴물입니다.",
+    "name": "끔찍한 혼종, 키메라의 포효",
+    "description": "몸에 불길한 기운이 감도는 단검이 꽂혀 있는, 온갖 생물이 섞인 키메라가 울부짖습니다.",
     "imgId": "mon_goblin",
     "minFloor": 31,
     "maxFloor": 39,
     "enemyId": "monster_19",
-    "choices": ["싸운다(불길한 단검)", "회피한다"],
+    "choices": ["괴물을 제압하고 몸에 꽂힌 단검을 뽑아낸다", "회피한다"],
     "rewards": [
       {
         "itemId": "item_20",
@@ -727,13 +727,13 @@
   },
   {
     "id": "event_26",
-    "name": "골렘",
-    "description": "골렘이 당신을 적으로 인식합니다.",
+    "name": "폭주하는 고대 골렘",
+    "description": "고대의 갑옷을 덧입은 거대한 골렘이 당신을 침입자로 인식하고 다가옵니다.",
     "imgId": "mon_goblin",
     "minFloor": 40,
     "maxFloor": 40,
     "enemyId": "monster_20",
-    "choices": ["싸운다(고대의 갑옷)", "회피한다"],
+    "choices": ["골렘의 동력을 끊고 고대의 갑옷을 벗겨낸다", "회피한다"],
     "rewards": [
       {
         "itemId": "item_29",
@@ -755,7 +755,7 @@
   {
     "id": "event_27",
     "type": "shop",
-    "name": "수상한 상인",
+    "name": "어둠 속의 수상한 상인",
     "description": "어두운 길목에서 상인을 만났습니다. 귀한 포션들을 늘어놓습니다.",
     "imgId": "suspicious_merchant",
     "minFloor": 31,
@@ -773,7 +773,7 @@
   },
   {
     "id": "event_28",
-    "name": "버려진 연구실",
+    "name": "잊혀진 골렘 연구실",
     "description": "골렘을 연구한 흔적이 있는 연구실입니다.",
     "imgId": "abandoned_library",
     "minFloor": 32,
@@ -807,7 +807,7 @@
   },
   {
     "id": "event_29",
-    "name": "빛나는 치유의 샘",
+    "name": "성스러운 빛의 치유 샘",
     "description": "동굴 한복판에서 맑고 빛나는 샘물을 발견했습니다. 물을 마시겠습니까?",
     "imgId": "healing_fountain",
     "minFloor": 31,
@@ -835,13 +835,13 @@
   },
   {
     "id": "event_30",
-    "name": "드래곤",
-    "description": "드래곤이 불을 뿜으며 달려듭니다.",
+    "name": "화염을 품은 고룡의 강림",
+    "description": "전설 속의 드래곤이 불을 뿜으며 달려듭니다. 용을 쓰러뜨리면 전설의 무기 '용살활'을 얻을 수 있을지도 모릅니다.",
     "imgId": "mon_goblin",
     "minFloor": 41,
     "maxFloor": 49,
     "enemyId": "monster_21",
-    "choices": ["싸운다(용살활)", "회피한다"],
+    "choices": ["전설의 무기를 위해 드래곤의 역린을 찌른다", "회피한다"],
     "rewards": [
       {
         "itemId": "item_21",
@@ -863,13 +863,13 @@
   },
   {
     "id": "event_31",
-    "name": "리치",
-    "description": "리치가 당신의 절망을 바랍니다.",
+    "name": "심연에서 온 리치의 저주",
+    "description": "네크로맨서의 힘을 품은 리치가 어둠 속에서 당신의 영혼을 노립니다.",
     "imgId": "mon_goblin",
     "minFloor": 41,
     "maxFloor": 49,
     "enemyId": "monster_22",
-    "choices": ["싸운다(네크로맨서)", "회피한다"],
+    "choices": ["언데드의 군주를 소멸시키고 네크로맨서의 힘을 취한다", "회피한다"],
     "rewards": [
       {
         "itemId": "item_22",
@@ -891,13 +891,13 @@
   },
   {
     "id": "event_32",
-    "name": "미노타우로스",
-    "description": "거대한 미노타우로스가 포효합니다.",
+    "name": "미궁의 지배자, 미노타우로스",
+    "description": "고대의 단검을 목에 걸고 있는 거대한 미노타우로스가 붉은 눈으로 포효합니다.",
     "imgId": "mon_goblin",
     "minFloor": 41,
     "maxFloor": 49,
     "enemyId": "monster_23",
-    "choices": ["싸운다(고대의 단검)", "회피한다"],
+    "choices": ["미노타우로스의 뿔을 꺾고 고대의 단검을 줍는다", "회피한다"],
     "rewards": [
       {
         "itemId": "item_23",
@@ -919,13 +919,13 @@
   },
   {
     "id": "event_33",
-    "name": "타락한 용사",
-    "description": "희망이던 용사는 이젠 절망이 되었습니다.",
+    "name": "절망에 빠진 타락한 용사",
+    "description": "과거의 희망이었던 용사가 타락한 성검을 쥔 채 절망이 되어 막아섭니다.",
     "imgId": "mon_goblin",
     "minFloor": 41,
     "maxFloor": 49,
     "enemyId": "monster_24",
-    "choices": ["싸운다(타락한 성검)", "회피한다"],
+    "choices": ["용사에게 안식을 주고 타락한 성검을 거둔다", "회피한다"],
     "rewards": [
       {
         "itemId": "item_24",
@@ -947,13 +947,13 @@
   },
   {
     "id": "event_34",
-    "name": "마왕",
+    "name": "운명의 결전, 마왕 강림",
     "description": "당신은 결의를 다집니다.",
     "imgId": "mon_goblin",
     "minFloor": 50,
     "maxFloor": 50,
     "enemyId": "monster_25",
-    "choices": ["싸운다", "회피한다"],
+    "choices": ["모든 것을 걸고 마왕의 목을 친다", "회피한다"],
     "rewards": [
       {
         "itemId": "item_42",
@@ -972,7 +972,7 @@
   {
     "id": "event_35",
     "type": "shop",
-    "name": "수상한 상인",
+    "name": "어둠 속의 수상한 상인",
     "description": "어두운 길목에서 상인을 만났습니다. 최고급 포션들이 진열되어 있습니다.",
     "imgId": "suspicious_merchant",
     "minFloor": 41,
@@ -990,7 +990,7 @@
   },
   {
     "id": "event_36",
-    "name": "갑옷 전시대",
+    "name": "오래된 전당의 갑옷 전시대",
     "description": "갑옷들이 전시되어 있습니다. 무엇을 선택하시겠습니까?",
     "imgId": "abandoned_library",
     "minFloor": 46,
@@ -1031,13 +1031,13 @@
   },
   {
     "id": "event_37",
-    "name": "거대 쥐",
-    "description": "쥐들의 왕이 당신을 위협합니다.",
+    "name": "거대 쥐 떼의 습격",
+    "description": "어둠 속에서 거대한 쥐들의 왕이 날카로운 이빨을 드러내며 당신을 위협합니다.",
     "imgId": "mob_goblin",
     "minFloor": 1,
     "maxFloor": 9,
     "enemyId": "monster_26",
-    "choices": ["싸운다", "그냥 지나간다"],
+    "choices": ["거대 쥐들의 왕을 도륙한다", "그냥 지나간다"],
     "rewards": [
       {
         "itemId": null,
@@ -1059,13 +1059,13 @@
   },
   {
     "id": "event_38",
-    "name": "좀비",
-    "description": "좀비가 당신의 살을 원합니다.",
+    "name": "굶주린 좀비의 습격",
+    "description": "썩은 내를 풍기는 좀비가 당신의 살을 원하며 기괴하게 다가옵니다.",
     "imgId": "mob_goblin",
     "minFloor": 11,
     "maxFloor": 19,
     "enemyId": "monster_27",
-    "choices": ["싸운다", "그냥 지나간다"],
+    "choices": ["달려드는 좀비의 머리를 박살 낸다", "그냥 지나간다"],
     "rewards": [
       {
         "itemId": null,
@@ -1087,13 +1087,13 @@
   },
   {
     "id": "event_39",
-    "name": "그리폰",
-    "description": "신화속 상상의 동물이 눈 앞에 있습니다.",
+    "name": "창공의 포식자, 그리폰의 하강",
+    "description": "하늘을 지배하던 신화 속 맹수, 그리폰이 당신을 향해 날카롭게 하강합니다.",
     "imgId": "mob_goblin",
     "minFloor": 21,
     "maxFloor": 29,
     "enemyId": "monster_28",
-    "choices": ["싸운다", "그냥 지나간다"],
+    "choices": ["맹수의 발톱에 맞서 검을 휘두른다", "그냥 지나간다"],
     "rewards": [
       {
         "itemId": null,
@@ -1105,7 +1105,7 @@
       },
       {
         "itemId": null,
-        "description": "그리폰에게 들키지 않게 지나갔습니다. (경험치 +100)",
+        "description": "그리폰에게 들키지 않게 조용히 지나갔습니다. (경험치 +100)",
         "statRewards": [
           { "type": "경험치", "value": 100 }
         ]
@@ -1115,13 +1115,13 @@
   },
   {
     "id": "event_40",
-    "name": "메두사",
-    "description": "석상들 사이에서 메두사가 모습을 드러냅니다.",
+    "name": "석화의 시선, 메두사의 유혹",
+    "description": "수많은 돌 석상들 사이에서, 뱀의 머리카락을 한 메두사가 흉측한 모습을 드러냅니다.",
     "imgId": "mob_goblin",
     "minFloor": 31,
     "maxFloor": 39,
     "enemyId": "monster_29",
-    "choices": ["싸운다", "그냥 지나간다"],
+    "choices": ["시선을 피하며 메두사의 목을 노린다", "그냥 지나간다"],
     "rewards": [
       {
         "itemId": null,
@@ -1133,7 +1133,7 @@
       },
       {
         "itemId": null,
-        "description": "석상들 사이로 숨어서 도망쳤습니다. (경험치 +125)",
+        "description": "석상들 사이로 숨어서 간신히 도망쳤습니다. (경험치 +125)",
         "statRewards": [
           { "type": "경험치", "value": 125 }
         ]
@@ -1143,17 +1143,17 @@
   },
   {
     "id": "event_41",
-    "name": "서큐버스",
-    "description": "서큐버스가 당신을 유혹합니다.",
+    "name": "파멸로 이끄는 서큐버스의 속삭임",
+    "description": "치명적인 매력을 뿜어내는 서큐버스가 달콤한 목소리로 당신을 유혹합니다.",
     "imgId": "mob_goblin",
     "minFloor": 41,
     "maxFloor": 49,
     "enemyId": "monster_30",
-    "choices": ["싸운다", "그냥 지나간다"],
+    "choices": ["유혹을 떨쳐내고 무기를 고쳐 잡는다", "그냥 지나간다"],
     "rewards": [
       {
         "itemId": null,
-        "description": "당신은 유혹을 이겨냈습니다. (경험치 +330, 골드 +410).",
+        "description": "당신은 유혹을 이겨내고 승리했습니다. (경험치 +330, 골드 +410).",
         "statRewards": [
           { "type": "경험치", "value": 330 },
           { "type": "골드", "value": 410 }
@@ -1161,7 +1161,7 @@
       },
       {
         "itemId": null,
-        "description": "유혹을 뿌리치고 서둘러 도망쳤습니다. (경험치 +165)",
+        "description": "유혹을 애써 뿌리치고 서둘러 도망쳤습니다. (경험치 +165)",
         "statRewards": [
           { "type": "경험치", "value": 165 }
         ]
@@ -1171,7 +1171,7 @@
   },
   {
     "id": "event_43",
-    "name": "도박사",
+    "name": "운명을 건 도박사의 제안",
     "description": "도박사가 동전 던지기를 제안합니다.",
     "imgId": "suspicious_merchant",
     "minFloor": 11,
@@ -1203,8 +1203,8 @@
   },
   {
     "id": "event_44",
-    "name": "미로",
-    "description": "당신은 미로에 빠져 헤매던 중 탈출구를 가르키는 조각상을 발견합니다.",
+    "name": "출구 없는 미로 속의 조각상",
+    "description": "당신은 미로에 빠져 헤매던 중 탈출구를 가리키는 조각상을 발견합니다.",
     "imgId": "suspicious_merchant",
     "minFloor": 21,
     "maxFloor": 29,
@@ -1231,13 +1231,13 @@
   },
   {
     "id": "event_45",
-    "name": "천장에 숨은 그림자",
-    "description": "동굴 천장에서 거대한 그림자가 당신을 덮칩니다!",
+    "name": "천장에서 덮쳐오는 거대 박쥐",
+    "description": "동굴 천장에서 거대한 박쥐가 날개옷처럼 펄럭이는 거대한 날개를 펼치며 당신을 덮칩니다!",
     "imgId": "mon_bat",
     "minFloor": 10,
     "maxFloor": 10,
     "enemyId": "monster_31",
-    "choices": ["싸운다(거대 박쥐의 날개옷)", "회피한다"],
+    "choices": ["거대 박쥐를 격추시키고 날개옷을 뜯어낸다", "회피한다"],
     "rewards": [
       {
         "itemId": "item_43",
@@ -1258,13 +1258,13 @@
   },
   {
     "id": "event_46",
-    "name": "망령 기사단장",
-    "description": "푸른 불꽃을 뿜는 언데드 기사단장이 앞을 가로막습니다.",
+    "name": "원한 서린 망령 기사단장의 앞길",
+    "description": "푸른 불꽃을 뿜는 언데드 기사단장이 묵직한 망령의 대검을 쥐고 앞을 가로막습니다.",
     "imgId": "mon_goblin",
     "minFloor": 20,
     "maxFloor": 20,
     "enemyId": "monster_32",
-    "choices": ["싸운다(망령의 대검)", "회피한다"],
+    "choices": ["푸른 불꽃을 잠재우고 망령의 대검을 쥔다", "회피한다"],
     "rewards": [
       {
         "itemId": "item_44",
@@ -1285,13 +1285,13 @@
   },
   {
     "id": "event_47",
-    "name": "피의 수확자",
-    "description": "주변이 차갑게 얼어붙고, 거대한 낫을 든 사신이 강림합니다.",
+    "name": "얼어붙은 공포, 피의 수확자 강림",
+    "description": "주변이 차갑게 얼어붙고, 서늘한 기운을 뿜어내는 사신의 낫을 든 사신이 강림합니다.",
     "imgId": "mon_goblin",
     "minFloor": 20,
     "maxFloor": 20,
     "enemyId": "monster_33",
-    "choices": ["싸운다(사신의 낫)", "영혼을 바치고 도망친다"],
+    "choices": ["얼어붙은 공기를 가르고 사신의 낫을 빼앗는다", "영혼을 바치고 도망친다"],
     "rewards": [
       {
         "itemId": "item_45",
@@ -1313,13 +1313,13 @@
   },
   {
     "id": "event_48",
-    "name": "오크 워로드",
-    "description": "오크들의 포효 소리와 함께 거대한 워로드가 도끼를 치켜듭니다.",
+    "name": "피바람을 부르는 오크 워로드",
+    "description": "오크들의 포효 소리와 함께 거대한 워로드가 육중한 워로드의 도끼를 치켜듭니다.",
     "imgId": "mon_goblin",
     "minFloor": 30,
     "maxFloor": 30,
     "enemyId": "monster_34",
-    "choices": ["싸운다(워로드의 도끼)", "회피한다"],
+    "choices": ["워로드를 꺾고 거대한 도끼를 전리품으로 챙긴다", "회피한다"],
     "rewards": [
       {
         "itemId": "item_46",
@@ -1340,13 +1340,13 @@
   },
   {
     "id": "event_49",
-    "name": "늪지대 군주",
-    "description": "끈적한 진흙 속에서 리자드맨 군주가 모습을 드러냅니다.",
+    "name": "진흙 속 늪지대 군주의 기습",
+    "description": "끈적한 진흙 속에서 날카로운 삼지창을 거머쥔 리자드맨 군주가 모습을 드러냅니다.",
     "imgId": "mon_goblin",
     "minFloor": 40,
     "maxFloor": 40,
     "enemyId": "monster_35",
-    "choices": ["싸운다(군주의 삼지창)", "회피한다"],
+    "choices": ["진흙탕 속으로 뛰어들어 삼지창을 뺏어 든다", "회피한다"],
     "rewards": [
       {
         "itemId": "item_47",
@@ -1367,13 +1367,13 @@
   },
   {
     "id": "event_50",
-    "name": "고대의 각성",
-    "description": "던전의 벽 전체가 흔들리며 태초의 골렘이 깨어납니다!",
+    "name": "태초의 골렘, 거대한 각성",
+    "description": "던전의 벽 전체가 흔들리며, 가슴 한가운데 신비로운 빛을 뿜는 태초의 동력원을 품은 거대 골렘이 깨어납니다!",
     "imgId": "mon_goblin",
     "minFloor": 40,
     "maxFloor": 40,
     "enemyId": "monster_36",
-    "choices": ["싸운다(태초의 동력원)", "회피한다"],
+    "choices": ["거대 골렘을 파괴하고 빛나는 동력원을 적출한다", "회피한다"],
     "rewards": [
       {
         "itemId": "item_48",
@@ -1395,7 +1395,7 @@
   {
     "id": "event_42_1",
     "type": "shop",
-    "name": "상점",
+    "name": "휴식처, 던전 상점",
     "description": "여러 물건을 파는 상점입니다.",
     "imgId": "suspicious_merchant",
     "minFloor": 1,
@@ -1408,7 +1408,7 @@
   {
     "id": "event_42_2",
     "type": "shop",
-    "name": "상점",
+    "name": "휴식처, 던전 상점",
     "description": "여러 물건을 파는 상점입니다.",
     "imgId": "suspicious_merchant",
     "minFloor": 11,
@@ -1421,7 +1421,7 @@
   {
     "id": "event_42_3",
     "type": "shop",
-    "name": "상점",
+    "name": "휴식처, 던전 상점",
     "description": "여러 물건을 파는 상점입니다.",
     "imgId": "suspicious_merchant",
     "minFloor": 21,
@@ -1434,7 +1434,7 @@
   {
     "id": "event_42_4",
     "type": "shop",
-    "name": "상점",
+    "name": "휴식처, 던전 상점",
     "description": "여러 물건을 파는 상점입니다.",
     "imgId": "suspicious_merchant",
     "minFloor": 31,
@@ -1447,7 +1447,7 @@
   {
     "id": "event_42_5",
     "type": "shop",
-    "name": "상점",
+    "name": "휴식처, 던전 상점",
     "description": "여러 물건을 파는 상점입니다.",
     "imgId": "suspicious_merchant",
     "minFloor": 41,
@@ -1460,7 +1460,7 @@
   {
     "id": "event_shop_1_a",
     "type": "shop",
-    "name": "떠돌이 상인",
+    "name": "방랑하는 떠돌이 상인",
     "description": "여행 중인 상인이 당신을 발견하고 다가옵니다. '여행자여, 좋은 물건들을 구경해 보시게!'",
     "imgId": "suspicious_merchant",
     "minFloor": 1,
@@ -1473,7 +1473,7 @@
   {
     "id": "event_shop_1_b",
     "type": "shop",
-    "name": "떠돌이 상인",
+    "name": "방랑하는 떠돌이 상인",
     "description": "여행 중인 상인이 당신을 발견하고 다가옵니다. '여행자여, 좋은 물건들을 구경해 보시게!'",
     "imgId": "suspicious_merchant",
     "minFloor": 11,
@@ -1486,7 +1486,7 @@
   {
     "id": "event_shop_2_a",
     "type": "shop",
-    "name": "대장간",
+    "name": "열기 가득한 던전 대장간",
     "description": "불꽃이 튀는 대장간을 발견했습니다. 대장장이가 땀을 흘리며 작업하고 있습니다. '필요한 게 있으면 구경하게!'",
     "imgId": "suspicious_merchant",
     "minFloor": 16,
@@ -1499,7 +1499,7 @@
   {
     "id": "event_shop_2_b",
     "type": "shop",
-    "name": "대장간",
+    "name": "열기 가득한 던전 대장간",
     "description": "불꽃이 튀는 대장간을 발견했습니다. 대장장이가 땀을 흘리며 작업하고 있습니다. '필요한 게 있으면 구경하게!'",
     "imgId": "suspicious_merchant",
     "minFloor": 21,
@@ -1512,7 +1512,7 @@
   {
     "id": "event_shop_3_a",
     "type": "shop",
-    "name": "고대 유물 상점",
+    "name": "신비로운 고대 유물 상점",
     "description": "낡은 건물에서 신비로운 빛이 새어 나옵니다. 안에는 고대 유물들이 진열되어 있고, 수수께께 같은 상인이 당신을 맞이합니다.",
     "imgId": "suspicious_merchant",
     "minFloor": 31,
@@ -1525,7 +1525,7 @@
   {
     "id": "event_shop_3_b",
     "type": "shop",
-    "name": "고대 유물 상점",
+    "name": "신비로운 고대 유물 상점",
     "description": "낡은 건물에서 신비로운 빛이 새어 나옵니다. 안에는 고대 유물들이 진열되어 있고, 수수께께 같은 상인이 당신을 맞이합니다.",
     "imgId": "suspicious_merchant",
     "minFloor": 41,

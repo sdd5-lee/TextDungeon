@@ -124,7 +124,6 @@ public class InventoryDialog extends Dialog {
         }
 
         for(int i = 0; i < 30-itemMap.size(); i++){
-
             View itemSlot = inflater.inflate(R.layout.item_slot, bagGrid, false);
             ImageView actionIcon = itemSlot.findViewById(R.id.action_icon);
             actionIcon.setImageDrawable(null);
@@ -197,8 +196,8 @@ public class InventoryDialog extends Dialog {
                     player.equipItem(item);
                     itemDialog.dismiss();
                     refreshAllUI();
+                    showBar(item.getName() + "를 장착하였습니다");
                 }
-                showBar(item.getName() + "를 장착하였습니다");
             });
         }
 
@@ -210,11 +209,6 @@ public class InventoryDialog extends Dialog {
                         player.getInventory().removeItem(item.getId());
                         itemDialog.dismiss();
                         refreshAllUI();
-                        if (onUpdateCallback != null) {
-                            onUpdateCallback.run();
-                        }
-
-                        dismiss();
                         showBar(item.getName() + "을(를) 버렸습니다.");
                     })
                     .setNegativeButton("취소", null)
@@ -293,6 +287,7 @@ public class InventoryDialog extends Dialog {
                     player.equipArtifact(which, item);
                     parentDialog.dismiss();
                     refreshAllUI();
+                    showBar(item.getName() + "를 장착하였습니다");
                 })
                 .setNegativeButton("취소", null)
                 .show();
@@ -313,7 +308,10 @@ public class InventoryDialog extends Dialog {
         }
     }
     private void getItemIcon(Item item,ImageView icon){
-        String imgName = getIconNameByType(item.getType());
+        String imgName = item.getImgId();
+        if (imgName == null || imgName.trim().isEmpty()) {
+            imgName = getIconNameByType(item.getType());
+        }
         int imgResId = getContext().getResources().getIdentifier(imgName, "drawable", getContext().getPackageName());
         if (imgResId != 0) icon.setImageResource(imgResId);
     }

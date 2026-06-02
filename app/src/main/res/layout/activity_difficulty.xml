@@ -99,7 +99,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="serif"
                 android:letterSpacing="0.2"
-                android:text="EASY"
+                android:text="쉬움"
                 android:textColor="#E5E2E1"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -120,7 +120,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="serif"
                 android:letterSpacing="0.2"
-                android:text="NORMAL"
+                android:text="보통"
                 android:textColor="#E9C176"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -140,7 +140,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="serif"
                 android:letterSpacing="0.2"
-                android:text="HARD"
+                android:text="어려움"
                 android:textColor="#FF4444"
                 android:textSize="14sp"
                 android:textStyle="bold" />

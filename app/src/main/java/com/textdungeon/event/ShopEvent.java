@@ -2,7 +2,6 @@ package com.textdungeon.event;
 
 import android.content.Context;
 
-import com.google.gson.Gson;
 import com.textdungeon.data.DataControl;
 import com.textdungeon.dialog_control.ShopDialog;
 import com.textdungeon.model.Item;
