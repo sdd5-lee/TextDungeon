@@ -57,6 +57,12 @@ public class EventManager {
             return "full";
         }
         String result = event.execute(player, choiceIndex, dt.getItemManager(),dt.getDifficulty());
+
+        if (player.getInventory() != null && player.getInventory().getItemMap() != null) {
+            for (String itemId : player.getInventory().getItemMap().keySet()) {
+                dt.getUserRecord().getDiscoveredItems().add(itemId);
+            }
+        }
         dt.saveGame();
         return result;
     }

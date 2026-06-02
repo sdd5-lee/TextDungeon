@@ -11,10 +11,6 @@ public class MagicScroll {
     public MagicScroll() {
         learnedMagicList = new ArrayList<>();
     }
-
-    public List<LearnedMagic> getLearnedMagicList() {
-        return learnedMagicList;
-    }
     public void addMagic(String magicId, int maxCount) {
         if (!hasMagic(magicId)) {
             learnedMagicList.add(new LearnedMagic(magicId, maxCount));

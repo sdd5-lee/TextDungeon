@@ -1,248 +1,298 @@
 [
   {
-    "id" : "monster_1",
-    "name" : "슬라임",
-    "hp" :  34,
-    "maxHp" : 34,
-    "attack" : 8
-  },
-
-  {
-    "id" : "monster_2",
-    "name" : "고블린",
-    "hp" :  42,
-    "maxHp" : 42,
-    "attack" : 10
+    "id": "monster_1",
+    "name": "슬라임",
+    "hp": 34,
+    "maxHp": 34,
+    "attack": 8,
+    "imgId": "mon_slime"
   },
   {
-    "id" : "monster_3",
-    "name" : "늑대",
-    "hp" :  50,
-    "maxHp" : 50,
-    "attack" : 13
+    "id": "monster_2",
+    "name": "고블린",
+    "hp": 42,
+    "maxHp": 42,
+    "attack": 10,
+    "imgId": "mon_goblin"
   },
-
   {
-    "id" : "monster_4",
-    "name" : "박쥐",
-    "hp" :  40,
-    "maxHp" : 40,
-    "attack" : 12
+    "id": "monster_3",
+    "name": "늑대",
+    "hp": 50,
+    "maxHp": 50,
+    "attack": 13,
+    "imgId": "mon_wolf"
   },
-
   {
-    "id" : "monster_5",
-    "name" : "홉고블린",
-    "hp" :  180,
-    "maxHp" : 180,
-    "attack" : 20
+    "id": "monster_4",
+    "name": "박쥐",
+    "hp": 40,
+    "maxHp": 40,
+    "attack": 12,
+    "imgId": "mon_bat"
   },
-
   {
-    "id" : "monster_6",
-    "name" : "해골 전사",
-    "hp" :  100,
-    "maxHp" : 100,
-    "attack" : 18
+    "id": "monster_5",
+    "name": "홉고블린",
+    "hp": 180,
+    "maxHp": 180,
+    "attack": 20,
+    "imgId": "mon_hobgoblin"
   },
-
   {
-    "id" : "monster_7",
-    "name" : "해골 궁수",
-    "hp" :  85,
-    "maxHp" : 85,
-    "attack" : 24
+    "id": "monster_6",
+    "name": "해골 전사",
+    "hp": 100,
+    "maxHp": 100,
+    "attack": 18,
+    "imgId": "mon_skeleton_warrior"
   },
-
   {
-    "id" : "monster_8",
-    "name" : "해골 기사",
-    "hp" :  130,
-    "maxHp" : 130,
-    "attack" : 22
+    "id": "monster_7",
+    "name": "해골 궁수",
+    "hp": 85,
+    "maxHp": 85,
+    "attack": 24,
+    "imgId": "mon_skeleton_archer"
   },
-
   {
-    "id" : "monster_9",
-    "name" : "위습",
-    "hp" :  90,
-    "maxHp" : 90,
-    "attack" : 24
+    "id": "monster_8",
+    "name": "해골 기사",
+    "hp": 130,
+    "maxHp": 130,
+    "attack": 22,
+    "imgId": "mon_skeleton_knight"
   },
-
   {
-    "id" : "monster_10",
-    "name" : "고블린 로드",
-    "hp" :  300,
-    "maxHp" : 300,
-    "attack" : 32
+    "id": "monster_9",
+    "name": "위습",
+    "hp": 90,
+    "maxHp": 90,
+    "attack": 24,
+    "imgId": "mon_wisp"
   },
-
   {
-    "id" : "monster_11",
-    "name" : "오크 전사",
-    "hp" :  190,
-    "maxHp" : 190,
-    "attack" : 28
+    "id": "monster_10",
+    "name": "고블린 로드",
+    "hp": 300,
+    "maxHp": 300,
+    "attack": 32,
+    "imgId": "mon_goblin_lord"
   },
-
   {
-    "id" : "monster_12",
-    "name" : "오크 마법사",
-    "hp" :  165,
-    "maxHp" : 165,
-    "attack" : 35
+    "id": "monster_11",
+    "name": "오크 전사",
+    "hp": 190,
+    "maxHp": 190,
+    "attack": 28,
+    "imgId": "mon_orc_warrior"
   },
-
   {
-    "id" : "monster_13",
-    "name" : "가고일",
-    "hp" :  240,
-    "maxHp" : 240,
-    "attack" : 25
+    "id": "monster_12",
+    "name": "오크 마법사",
+    "hp": 165,
+    "maxHp": 165,
+    "attack": 35,
+    "imgId": "mon_orc_mage"
   },
-
   {
-    "id" : "monster_14",
-    "name" : "실버 울프",
-    "hp" :  170,
-    "maxHp" : 170,
-    "attack" : 32
+    "id": "monster_13",
+    "name": "가고일",
+    "hp": 240,
+    "maxHp": 240,
+    "attack": 25,
+    "imgId": "mon_gargoyle"
   },
-
   {
-    "id" : "monster_15",
-    "name" : "오크 로드",
-    "hp" :  430,
-    "maxHp" : 430,
-    "attack" : 45
+    "id": "monster_14",
+    "name": "실버 울프",
+    "hp": 170,
+    "maxHp": 170,
+    "attack": 32,
+    "imgId": "mon_silver_wolf"
   },
-
   {
-    "id" : "monster_16",
-    "name" : "리자드맨",
-    "hp" :  260,
-    "maxHp" : 260,
-    "attack" : 38
+    "id": "monster_15",
+    "name": "오크 로드",
+    "hp": 430,
+    "maxHp": 430,
+    "attack": 45,
+    "imgId": "mon_orc_lord"
   },
-
   {
-    "id" : "monster_17",
-    "name" : "샤먼 리자드",
-    "hp" :  230,
-    "maxHp" : 230,
-    "attack" : 48
+    "id": "monster_16",
+    "name": "리자드맨",
+    "hp": 260,
+    "maxHp": 260,
+    "attack": 38,
+    "imgId": "mon_lizardman"
   },
-
   {
-    "id" : "monster_18",
-    "name" : "트롤",
-    "hp" :  330,
-    "maxHp" : 330,
-    "attack" : 40
+    "id": "monster_17",
+    "name": "샤먼 리자드",
+    "hp": 230,
+    "maxHp": 230,
+    "attack": 48,
+    "imgId": "mon_shaman_lizard"
   },
-
   {
-    "id" : "monster_19",
-    "name" : "키메라",
-    "hp" :  280,
-    "maxHp" : 280,
-    "attack" : 50
+    "id": "monster_18",
+    "name": "트롤",
+    "hp": 330,
+    "maxHp": 330,
+    "attack": 40,
+    "imgId": "mon_troll"
   },
-
   {
-    "id" : "monster_20",
-    "name" : "골렘",
-    "hp" :  600,
-    "maxHp" : 600,
-    "attack" : 65
+    "id": "monster_19",
+    "name": "키메라",
+    "hp": 280,
+    "maxHp": 280,
+    "attack": 50,
+    "imgId": "mon_chimera"
   },
-
   {
-    "id" : "monster_21",
-    "name" : "드래곤",
-    "hp" :  420,
-    "maxHp" : 420,
-    "attack" : 70
+    "id": "monster_20",
+    "name": "골렘",
+    "hp": 600,
+    "maxHp": 600,
+    "attack": 65,
+    "imgId": "mon_golem"
   },
-
   {
-    "id" : "monster_22",
-    "name" : "리치",
-    "hp" :  360,
-    "maxHp" : 360,
-    "attack" : 85
+    "id": "monster_21",
+    "name": "드래곤",
+    "hp": 420,
+    "maxHp": 420,
+    "attack": 70,
+    "imgId": "mon_dragon"
   },
-
   {
-    "id" : "monster_23",
-    "name" : "미노타우로스",
-    "hp" :  480,
-    "maxHp" : 480,
-    "attack" : 60
+    "id": "monster_22",
+    "name": "리치",
+    "hp": 360,
+    "maxHp": 360,
+    "attack": 85,
+    "imgId": "mon_lich"
   },
-
   {
-    "id" : "monster_24",
-    "name" : "타락한 용사",
-    "hp" :  450,
-    "maxHp" : 450,
-    "attack" : 80
+    "id": "monster_23",
+    "name": "미노타우로스",
+    "hp": 480,
+    "maxHp": 480,
+    "attack": 60,
+    "imgId": "mon_minotaur"
   },
-
   {
-    "id" : "monster_25",
-    "name" : "마왕",
-    "hp" :  1000,
-    "maxHp" : 1000,
-    "attack" : 95
+    "id": "monster_24",
+    "name": "타락한 용사",
+    "hp": 450,
+    "maxHp": 450,
+    "attack": 80,
+    "imgId": "mon_fallen_hero"
   },
-
   {
-    "id" : "test_monster",
-    "name" : "테스트용 허수아비",
-    "hp" :  20000000,
-    "maxHp" : 20000000,
-    "attack" : 1
+    "id": "monster_25",
+    "name": "마왕",
+    "hp": 1000,
+    "maxHp": 1000,
+    "attack": 95,
+    "imgId": "mon_demon_king"
   },
-
   {
-    "id" : "monster_26",
-    "name" : "거대 쥐",
-    "hp" :  30,
-    "maxHp" : 30,
-    "attack" : 7
+    "id": "test_monster",
+    "name": "테스트용 허수아비",
+    "hp": 20000000,
+    "maxHp": 20000000,
+    "attack": 1,
+    "imgId": "mon_test"
   },
-
   {
-    "id" : "monster_27",
-    "name" : "좀비",
-    "hp" :  115,
-    "maxHp" : 115,
-    "attack" : 15
+    "id": "monster_26",
+    "name": "거대 쥐",
+    "hp": 30,
+    "maxHp": 30,
+    "attack": 7,
+    "imgId": "mon_giant_rat"
   },
-
   {
-    "id" : "monster_28",
-    "name" : "그리폰",
-    "hp" :  210,
-    "maxHp" : 210,
-    "attack" : 30
+    "id": "monster_27",
+    "name": "좀비",
+    "hp": 115,
+    "maxHp": 115,
+    "attack": 15,
+    "imgId": "mon_zombie"
   },
-
   {
-    "id" : "monster_29",
-    "name" : "메두사",
-    "hp" :  290,
-    "maxHp" : 290,
-    "attack" : 45
+    "id": "monster_28",
+    "name": "그리폰",
+    "hp": 210,
+    "maxHp": 210,
+    "attack": 30,
+    "imgId": "mon_griffin"
   },
-
   {
-    "id" : "monster_30",
-    "name" : "서큐버스",
-    "hp" :  380,
-    "maxHp" : 380,
-    "attack" : 75
+    "id": "monster_29",
+    "name": "메두사",
+    "hp": 290,
+    "maxHp": 290,
+    "attack": 45,
+    "imgId": "mon_medusa"
+  },
+  {
+    "id": "monster_30",
+    "name": "서큐버스",
+    "hp": 380,
+    "maxHp": 380,
+    "attack": 75,
+    "imgId": "mon_succubus"
+  },
+  {
+    "id": "monster_31",
+    "name": "변이된 거대 박쥐",
+    "hp": 100,
+    "maxHp": 100,
+    "attack": 25,
+    "imgId": "mon_mutant_bat"
+  },
+  {
+    "id": "monster_32",
+    "name": "망령 기사단장",
+    "hp": 260,
+    "maxHp": 260,
+    "attack": 45,
+    "imgId": "mon_wraith_commander"
+  },
+  {
+    "id": "monster_33",
+    "name": "피에 물든 사신",
+    "hp": 520,
+    "maxHp": 520,
+    "attack": 90,
+    "imgId": "mon_bloody_reaper"
+  },
+  {
+    "id": "monster_34",
+    "name": "오크 워로드",
+    "hp": 380,
+    "maxHp": 380,
+    "attack": 60,
+    "imgId": "mon_orc_warlord"
+  },
+  {
+    "id": "monster_35",
+    "name": "늪지대 군주",
+    "hp": 600,
+    "maxHp": 600,
+    "attack": 90,
+    "imgId": "mon_swamp_lord"
+  },
+  {
+    "id": "monster_36",
+    "name": "태초의 골렘",
+    "hp": 1200,
+    "maxHp": 1200,
+    "attack": 180,
+    "imgId": "mon_primordial_golem"
   }
 ]

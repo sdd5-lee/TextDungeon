@@ -19,10 +19,14 @@ import com.textdungeon.dialog_control.InventoryDialog;
 import com.textdungeon.dialog_control.MagicLearnDialog;
 import com.textdungeon.dialog_control.PlayerInfoDialog;
 import com.textdungeon.dialog_control.StatDialog;
+import com.textdungeon.event.BattleEvent;
 import com.textdungeon.event.GameEvent;
+import com.textdungeon.model.Achievement;
 import com.textdungeon.model.Monster;
 import com.textdungeon.player.Player;
 import com.textdungeon.system.EventManager;
+
+import java.util.List;
 
 public class EventActivity extends BaseActivity {
 
@@ -39,10 +43,6 @@ public class EventActivity extends BaseActivity {
     private StringBuilder typingBuffer = new StringBuilder();
     private String currentTypingText = "";
     private int currentTypingIndex = 0;
-
-    // ─────────────────────────────────────────────────────────────
-    // 생명주기
-    // ─────────────────────────────────────────────────────────────
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,12 +92,7 @@ public class EventActivity extends BaseActivity {
                         EventActivity.this,
                         player,
                         dt.getItemManager(),
-                        new Runnable() {
-                            @Override
-                            public void run() {
-                                runOnUiThread(() -> updatePlayerHeader());
-                            }
-                        }
+                        () -> runOnUiThread(this::updatePlayerHeader)
                 );
                 updatePlayerHeader();
                 dialog.show();
@@ -205,8 +200,26 @@ public class EventActivity extends BaseActivity {
     private void renderEventImage() {
         ImageView eventImage = findViewById(R.id.event_image);
         eventImage.setAlpha(1.0f);
+
         String imageName = currentEvent.getImgId();
-        int imageResId = getResources().getIdentifier(imageName, "drawable", getPackageName());
+        int imageResId = 0;
+
+        if (imageName != null && !imageName.isEmpty()) {
+            imageResId = getResources().getIdentifier(
+                    imageName, "drawable", getPackageName());
+        }
+
+        if (imageResId == 0 && currentEvent instanceof BattleEvent) {
+            BattleEvent battleEvent = (BattleEvent) currentEvent;
+            if (battleEvent.getEnemyId() != null) {
+                Monster monster = eventManager.spawnMonster(battleEvent.getEnemyId());
+                if (monster != null && monster.getImgId() != null) {
+                    imageResId = getResources().getIdentifier(
+                            monster.getImgId(), "drawable", getPackageName());
+                }
+            }
+        }
+
         eventImage.setImageResource(imageResId != 0 ? imageResId : R.drawable.mon_test);
     }
 
@@ -229,7 +242,7 @@ public class EventActivity extends BaseActivity {
         ChoiceButton diceButton = new ChoiceButton(this);
         setSfx(diceButton);
 
-        diceButton.setTextView("혼돈의 주사위 사용하기 (" + player.getDiceChane() + "개)");
+        diceButton.setTextView("혼돈의 주사위 사용하기 (" + player.getDiceChance() + "개)");
         diceButton.setLayoutParams(matchParentWrapContent());
         diceButton.setOnClickListener(v -> onDiceSelected());
         choiceButtons.addView(diceButton);
@@ -254,18 +267,28 @@ public class EventActivity extends BaseActivity {
             return;
         }
 
-        String monsterId = currentEvent.getEnemyId();
-        if (monsterId != null && !monsterId.isEmpty()) {
-            showBattleDialog(monsterId, index);
-        } else {
-            applyEventResult(index);
-        }
-    }
+        if (currentEvent instanceof BattleEvent) {
+            BattleEvent battleEvent = (BattleEvent) currentEvent;
+            String monsterId = battleEvent.getEnemyId();
 
+            if (monsterId != null && !monsterId.isEmpty()) {
+                showBattleDialog(monsterId, index);
+                return;
+            }
+        }
+        applyEventResult(index);
+    }
     private void applyEventResult(int choiceIndex) {
         int levelSnapshot = eventManager.snapshotLevel();
         String result = eventManager.applyReward(currentEvent, choiceIndex);
 
+        if (currentEvent != null && currentEvent.getId() != null) {
+            dt.getUserRecord().getDiscoveredEvents().add(currentEvent.getId());
+
+            int itemsCount = dt.getUserRecord().getDiscoveredItems().size();
+            List<Achievement> unlocked = dt.getAchievementManager().updateProgress("collection_item", itemsCount, false);
+            showAchievementNotification(unlocked);
+        }
         if (result.equals("full")) {
             appendDesc("인벤토리가 가득 찼습니다. 버릴 아이템을 선택해주세요.");
             startTypingAnimation();
@@ -273,15 +296,10 @@ public class EventActivity extends BaseActivity {
                     EventActivity.this,
                     player,
                     dt.getItemManager(),
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            runOnUiThread(() -> {
-                                updatePlayerHeader();
-                                applyEventResult(choiceIndex);
-                            });
-                        }
-                    }
+                    () -> runOnUiThread(() -> {
+                        updatePlayerHeader();
+                        applyEventResult(choiceIndex);
+                    })
             );
             dialog.show();
             return;
@@ -290,6 +308,10 @@ public class EventActivity extends BaseActivity {
         appendDesc("결과 : " + result);
         updatePlayerHeader();
 
+
+        if (currentEvent.isRetry(choiceIndex)) {
+            renderRetryButtons();
+        }
         if (eventManager.didLevelUp(levelSnapshot)) {
             showLevelUpDialog();
         } else {
@@ -299,8 +321,39 @@ public class EventActivity extends BaseActivity {
         startTypingAnimation();
     }
 
+    private void applyEscapeResult() {
+        int levelSnapshot = eventManager.snapshotLevel();
+
+        appendDesc("결과 : 당신은 전투를 피해 도망쳤습니다");
+        updatePlayerHeader();
+        if (eventManager.didLevelUp(levelSnapshot)) {
+            showLevelUpDialog();
+        } else {
+            showNextFloorButton();
+        }
+        startTypingAnimation();
+    }
+
+    private void renderRetryButtons() {
+        choiceButtons.removeAllViews();
+        int index = 0;
+        for (String choiceText : currentEvent.getChoices()) {
+            if (!currentEvent.isRetry(index)) {
+                ChoiceButton button = new ChoiceButton(this);
+                setSfx(button);
+                button.setTextView(choiceText);
+                button.setLayoutParams(matchParentWrapContent());
+
+                int finalIndex = index;
+                button.setOnClickListener(v -> onChoiceSelected(finalIndex));
+                choiceButtons.addView(button);
+            }
+            index++;
+        }
+    }
+
     private void onDiceSelected() {
-        if (player.getDiceChane() <= 0) return;
+        if (player.getDiceChance() <= 0) return;
         isDiceUsed = true;
         player.useDice();
 
@@ -352,10 +405,13 @@ public class EventActivity extends BaseActivity {
             startTypingAnimation();
             return;
         }
-        BattleDialog battleDialog = new BattleDialog(this, player, monster, dt.getDifficulty());
+        final boolean[] escapeState = {false};
+        BattleDialog battleDialog = new BattleDialog(this, player, monster, dt.getDifficulty(),
+                () -> escapeState[0] = true);
         battleDialog.setOnDismissListener(dialog -> {
             if (eventManager.isPlayerDead()) {
                 appendDesc("당신은 사망하였습니다.");
+
                 ChoiceButton button = new ChoiceButton(this);
                 setSfx(button);
 
@@ -368,17 +424,30 @@ public class EventActivity extends BaseActivity {
                 });
                 choiceButtons.addView(button);
                 startTypingAnimation();
+            } else if(escapeState[0]) {
+                applyEscapeResult();
             } else {
+                dt.getUserRecord().getDiscoveredMonsters().add(monsterId);
+
+                int monsterCount = dt.getUserRecord().getDiscoveredMonsters().size();
+                List<Achievement> unlocked = dt.getAchievementManager().updateProgress("collection_monster", monsterCount, false);
+                showAchievementNotification(unlocked);
+
                 dt.getUserRecord().addKillCount();
+                List<Achievement> killUnlocked = dt.getAchievementManager().updateProgress("kill", 1, true);
+                showAchievementNotification(killUnlocked);
+
                 applyEventResult(choiceIndex);
             }
         });
         battleDialog.show();
     }
 
+
     private void showLevelUpDialog() {
         appendDesc("레벨업! " + player.getLevel() + "레벨이 되었습니다!");
-        StatDialog levelUpDialog = new StatDialog(this, player);
+        StatDialog levelUpDialog = new StatDialog(this, player,
+                () -> runOnUiThread(this::updatePlayerHeader));
         levelUpDialog.setOnDismissListener(dialog -> {
             showNextFloorButton();
             startTypingAnimation();
@@ -393,6 +462,10 @@ public class EventActivity extends BaseActivity {
     private void showNextFloorButton() {
         eventManager.goNextFloor();
         choiceButtons.removeAllViews();
+
+        int currentFloor = eventManager.getCurrentFloor();
+        List<Achievement> unlocked = dt.getAchievementManager().updateProgress("floor", currentFloor, false);
+        showAchievementNotification(unlocked);
 
         if (eventManager.getCurrentFloor() > 50){
             appendDesc("던전안에 숨어있던 마왕을 쓰러트렸습니다.\n더 이상의 적은 없다.");
@@ -456,7 +529,6 @@ public class EventActivity extends BaseActivity {
             if (typingRunnable != null) {
                 typingHandler.removeCallbacks(typingRunnable);
                 typingRunnable = null;
-                // 버퍼에 남은 텍스트 즉시 전체 출력
                 if (currentTypingIndex < currentTypingText.length()) {
                     eventDesc.append(currentTypingText.substring(currentTypingIndex));
                 }
@@ -484,18 +556,15 @@ public class EventActivity extends BaseActivity {
             choiceButtons.setVisibility(View.INVISIBLE);
         }
 
-        typingRunnable = new Runnable() {
-            @Override
-            public void run() {
-                if (currentTypingIndex < currentTypingText.length()) {
-                    eventDesc.append(String.valueOf(currentTypingText.charAt(currentTypingIndex)));
-                    currentTypingIndex++;
-                    typingHandler.postDelayed(this, 30);
-                } else {
-                    typingRunnable = null;
-                    if (choiceButtons != null) {
-                        choiceButtons.setVisibility(View.VISIBLE);
-                    }
+        typingRunnable = () -> {
+            if (currentTypingIndex < currentTypingText.length()) {
+                eventDesc.append(String.valueOf(currentTypingText.charAt(currentTypingIndex)));
+                currentTypingIndex++;
+                typingHandler.postDelayed(typingRunnable, 30);
+            } else {
+                typingRunnable = null;
+                if (choiceButtons != null) {
+                    choiceButtons.setVisibility(View.VISIBLE);
                 }
             }
         };

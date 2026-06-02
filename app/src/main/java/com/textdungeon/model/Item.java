@@ -8,6 +8,7 @@ public class Item {
     private String description;
     private String id;
     private String type;
+    private String imgId;
     private int hp;
     private int atk;
     private int value;
@@ -53,5 +54,9 @@ public class Item {
     }
     public int getCrit() {
         return crit;
+    }
+
+    public String getImgId() {
+        return imgId;
     }
 }

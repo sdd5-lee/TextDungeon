@@ -5,7 +5,6 @@ import com.textdungeon.model.Item;
 public class Equipment {
     private Item weapon;
     private Item armor;
-    private Item consumables;
     private Item[] artifact = new Item[2];
 
 
@@ -111,9 +110,6 @@ public class Equipment {
     }
     public Item getArmor() {
         return armor;
-    }
-    public Item getConsumables() {
-        return consumables;
     }
 
     public Item getWeapon() {

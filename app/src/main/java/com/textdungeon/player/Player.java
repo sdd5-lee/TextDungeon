@@ -16,12 +16,12 @@ public class Player {
     private final Inventory inventory;
     private final MagicScroll magicScroll;
     private final Equipment equipment;
-    private int diceChane;
+    private int diceChance;
 
     public Player(String name, Job job){
         this.name = name;
         level = 1;
-        diceChane = 1;
+        diceChance = 1;
         inventory = new Inventory();
         equipment = new Equipment();
         magicScroll = new MagicScroll();
@@ -43,7 +43,7 @@ public class Player {
             stat.setMaxExp(80 + this.level * 25);
             stat.addStatPoint(5);
 
-            //레벨 반영
+
             stat.updateBattleStat(level);
 
             magicScroll.updateCounts(stat.getWisdom());
@@ -143,8 +143,8 @@ public class Player {
     }
 
     public void useDice() {
-        if (diceChane > 0) {
-            diceChane--;
+        if (diceChance > 0) {
+            diceChance--;
         }
     }
 
@@ -195,11 +195,11 @@ public class Player {
     public MagicScroll getMagicScroll() {
         return magicScroll;
     }
-    public int getDiceChane() {
-        return diceChane;
+    public int getDiceChance() {
+        return diceChance;
     }
     public void addDiceChane(int diceChane) {
-        this.diceChane += diceChane;
+        this.diceChance += diceChane;
     }
     public String getTraitId() { return traitId; }
     public void setTraitId(String traitId) { this.traitId = traitId; }

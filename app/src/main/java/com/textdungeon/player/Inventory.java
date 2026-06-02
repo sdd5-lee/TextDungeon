@@ -2,7 +2,6 @@ package com.textdungeon.player;
 
 import com.textdungeon.model.Item;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 

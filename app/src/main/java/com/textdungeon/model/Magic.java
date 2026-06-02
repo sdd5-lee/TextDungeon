@@ -13,10 +13,6 @@ public class Magic {
     private String img;
 
     public Magic(){}
-    public static Magic createFromJson(String json) {
-        return new Gson().fromJson(json, Magic.class);
-    }
-
     public int getMaxCount() {
         return maxCount;
     }

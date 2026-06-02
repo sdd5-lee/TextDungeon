@@ -2,6 +2,7 @@ package com.textdungeon.data;
 
 import android.util.Log;
 
+import com.textdungeon.event.BattleEvent;
 import com.textdungeon.event.GameEvent;
 import com.textdungeon.model.Item;
 import com.textdungeon.model.Monster;
@@ -17,7 +18,7 @@ public class DataValidator {
     public static boolean validateAll(
             List<Monster> monsters,
             List<Item> items,
-            List<? extends GameEvent> events   // 🔥 여기 수정
+            List<? extends GameEvent> events
     ) {
         boolean isValid = true;
 
@@ -149,8 +150,10 @@ public class DataValidator {
                         + ", rewards=" + rewards.size());
                 isValid = false;
             }
-
-            String enemyId = event.getEnemyId();
+            String enemyId = null;
+            if (event instanceof BattleEvent) {
+                enemyId = ((BattleEvent) event).getEnemyId();
+            }
             if (enemyId != null && !enemyId.trim().isEmpty() && !monsterIds.contains(enemyId)) {
                 Log.e(TAG, "존재하지 않는 enemyId 참조. eventId=" + event.getId()
                         + ", enemyId=" + enemyId);

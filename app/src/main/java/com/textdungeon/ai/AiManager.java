@@ -6,11 +6,11 @@ import com.textdungeon.model.Monster;
 import com.textdungeon.model.Stat;
 import java.util.List;
 
-public class aiManager {
+public class AiManager {
     private final ChaosDice chaosDice;
     private final EventGenerator generator;
 
-    public aiManager() {
+    public AiManager() {
         this.generator = new EventGenerator();
         this.chaosDice = new ChaosDice();
     }

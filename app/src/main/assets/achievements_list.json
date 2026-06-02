@@ -1,0 +1,90 @@
+[
+  {
+    "id": "ach_floor_10",
+    "category": "도달층수",
+    "name": "초보 탐험가",
+    "description": "던전 10층에 도달하세요.",
+    "targetType": "floor",
+    "targetValue": 10
+  },
+  {
+    "id": "ach_floor_30",
+    "category": "도달층수",
+    "name": "깊은 어둠 속으로",
+    "description": "던전 30층에 도달하세요.",
+    "targetType": "floor",
+    "targetValue": 30
+  },
+  {
+    "id": "ach_floor_50",
+    "category": "도달층수",
+    "name": "심연의 정복자",
+    "description": "던전 50층 마왕의 방에 도달하세요.",
+    "targetType": "floor",
+    "targetValue": 50
+  },
+  {
+    "id": "ach_col_item_5",
+    "category": "아이템",
+    "name": "골동품 수집가",
+    "description": "아이템 도감을 5개 이상 채우세요.",
+    "targetType": "collection_item",
+    "targetValue": 5
+  },
+  {
+    "id": "ach_col_item_15",
+    "category": "아이템",
+    "name": "수집가",
+    "description": "아이템 도감을 15개 이상 채우세요.",
+    "targetType": "collection_item",
+    "targetValue": 15
+  },
+  {
+    "id": "ach_col_item_30",
+    "category": "아이템",
+    "name": "진정한 수집가",
+    "description": "아이템 도감을 30개 이상 채우세요.",
+    "targetType": "collection_item",
+    "targetValue": 30
+  },
+  {
+    "id": "ach_shop_job_1",
+    "category": "전체",
+    "name": "새로운 시작",
+    "description": "첫 번째 직업을 해금하세요.",
+    "targetType": "shop_unlock",
+    "targetValue": 1
+  },
+  {
+    "id": "ach_shop_job_3",
+    "category": "전체",
+    "name": "다재다능한 모험가",
+    "description": "직업 및 특성을 3개 이상 해금하세요.",
+    "targetType": "shop_unlock",
+    "targetValue": 3
+  },
+  {
+    "id": "ach_battle_kill_100",
+    "category": "전투",
+    "name": "피에 굶주린 자",
+    "description": "몬스터를 누적 100마리 처치하세요.",
+    "targetType": "kill",
+    "targetValue": 100
+  },
+  {
+    "id": "ach_magic_learn_5",
+    "category": "전투",
+    "name": "대마법사의 자질",
+    "description": "마법을 5회 이상 배우세요.",
+    "targetType": "magic_learn",
+    "targetValue": 5
+  },
+  {
+    "id": "ach_shop_upgrade_10",
+    "category": "전체",
+    "name": "자본주의의 맛",
+    "description": "상점 업그레이드를 10회 이상 진행하세요.",
+    "targetType": "shop_upgrade",
+    "targetValue": 10
+  }
+]

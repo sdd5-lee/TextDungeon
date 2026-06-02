@@ -101,12 +101,10 @@ public class GameSave {
     }
 
     public int getCurrentFloor() { return currentFloor; }
-    public void setCurrentFloor(int floor) { currentFloor = floor; }
 
     public Player getPlayer() {
         return player;
     }
-
     public Difficulty getDifficulty() {
         return difficulty;
     }

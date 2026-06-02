@@ -54,7 +54,7 @@ public enum Trait {
         }
         @Override
         public boolean triggerMoreStrike() {
-            return new Random().nextInt(100) < 20;
+            return new Random().nextInt(100) > 80;
         }
         @Override
         public int modifyStrikeCount() {

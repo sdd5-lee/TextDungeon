@@ -1,8 +1,5 @@
 package com.textdungeon.event;
 
-import android.util.Log;
-import android.widget.Toast;
-
 import com.google.gson.annotations.SerializedName;
 import com.textdungeon.data.DataControl;
 import com.textdungeon.data.Difficulty;
@@ -22,7 +19,6 @@ public class GameEvent {
     @SerializedName("rewards") protected List<Reward> rewards;
     @SerializedName("choices") protected List<String> choices;
     @SerializedName("type") protected String type;
-    protected String enemyId;
 
     public GameEvent() {}
 
@@ -46,9 +42,6 @@ public class GameEvent {
         return rewards;
     }
 
-    public String getEnemyId() {
-        return enemyId;
-    }
 
     public String getImgId() {
         return imgId;
@@ -72,9 +65,17 @@ public class GameEvent {
             reward.apply(player, itemManager);
             player.getStat().updateBattleStat(player.getLevel());
         }
+        if (reward.getDescription() == null || reward.getDescription().isEmpty()) {
+            return "신비로운 힘이 당신의 몸을 감싸다 지나갔습니다.";
+        }
         return reward.getDescription();
     }
-
+    public boolean isRetry(int choiceIndex) {
+        if (rewards != null && choiceIndex < rewards.size()) {
+            return rewards.get(choiceIndex).isRetry();
+        }
+        return false;
+    }
     public boolean hasItemReward(int choiceIndex) {
         return getItemId(choiceIndex) != null;
     }

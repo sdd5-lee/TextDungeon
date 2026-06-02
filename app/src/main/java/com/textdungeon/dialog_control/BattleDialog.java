@@ -44,14 +44,17 @@ public class BattleDialog extends Dialog {
     private View playerHpBar, monsterHpBar;
     private ScrollView magicScrollView, itemsScrollView;
     private Difficulty difficulty;
+    private Runnable onUpdateCallback;
 
-    public BattleDialog(Context context, Player player, Monster monster, Difficulty difficulty) {
+    public BattleDialog(Context context, Player player, Monster monster, Difficulty difficulty,Runnable onUpdateCallback) {
         super(context);
         this.context = context;
         this.player = player;
         this.monster = monster;
         this.difficulty = difficulty;
+        this.onUpdateCallback = onUpdateCallback;
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -210,15 +213,20 @@ public class BattleDialog extends Dialog {
 
     // 전투 액션 실행 및 화면 갱신
     private void executeAction(int choice, String magicId) {
-        if (battleSystem.isBattleOver()) {
+        if (battleSystem.isBattleOver() || battleSystem.isEscapeState()) {
+            if (battleSystem.isEscapeState()){
+                onUpdateCallback.run();
+            }
             dismiss();
             return;
         }
         String resultLog = battleSystem.playerAction(choice, magicId);
         appendLog(resultLog);
         updateUI();
-
-        if (battleSystem.isBattleOver()) {
+        if (battleSystem.isEscapeState()){
+            appendLog("\n[도망에 성공하였습니다. 2초 뒤 돌아갑니다...]");
+        }
+        else if (battleSystem.isBattleOver()) {
             appendLog("\n[전투가 종료되었습니다. 2초 뒤 돌아갑니다...]");
 
             findViewById(R.id.actions_area).setVisibility(View.GONE);
