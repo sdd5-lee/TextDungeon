@@ -214,7 +214,6 @@ public class InventoryDialog extends Dialog {
                             onUpdateCallback.run();
                         }
 
-                        itemDialog.dismiss();
                         dismiss();
                         showBar(item.getName() + "을(를) 버렸습니다.");
                     })

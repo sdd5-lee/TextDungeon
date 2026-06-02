@@ -14,7 +14,7 @@ public class ClearActivity extends BaseActivity {
     private TextView tvClearDesc;
     private TextView tvScoreValue;
     private TextView btnExit;
-    DataControlTower dt = DataControlTower.getInstance(this);
+    DataControlTower dt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +26,7 @@ public class ClearActivity extends BaseActivity {
 
         btnExit = findViewById(R.id.btn_exit);
 
+        dt = DataControlTower.getInstance(this);
         int count = dt.getUserRecord().getClearCount();
         tvClearDesc.setText(String.format("당신은 신들의 축복을 받으며 던전 최심부에 도달하고\n 최종적으로 마왕을 쓰러트렸습니다 수고하셨습니다.\n\n당신은 지금까지 %d번 던전을 클리어했습니다.",count));
         tvScoreValue.setText(String.valueOf(clearGem()));

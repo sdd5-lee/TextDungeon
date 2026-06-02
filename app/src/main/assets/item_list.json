@@ -9,7 +9,8 @@
     "crit": 3,
     "isConsumable": false,
     "value": 60,
-    "description": "초보 모험가들이 흔히 사용하는 평범한 나무 검입니다.\n\n[획득 방법] 떠돌이 상인에게서 구매"
+    "description": "초보 모험가들이 흔히 사용하는 평범한 나무 검입니다.\n\n[획득 방법] 떠돌이 상인에게서 구매",
+    "imgId": "ic_weapon"
   },
   {
     "id": "item_2",
@@ -21,7 +22,8 @@
     "crit": 15,
     "isConsumable": false,
     "value": 60,
-    "description": "오래되어 시위가 느슨해진 낡은 활입니다.\n\n[획득 방법] 떠돌이 상인에게서 구매"
+    "description": "오래되어 시위가 느슨해진 낡은 활입니다.\n\n[획득 방법] 떠돌이 상인에게서 구매",
+    "imgId": "ic_weapon"
   },
   {
     "id": "item_3",
@@ -33,7 +35,8 @@
     "crit": 10,
     "isConsumable": false,
     "value": 50,
-    "description": "가볍고 다루기 쉬운 나무 재질의 단검입니다.\n\n[획득 방법] 떠돌이 상인에게서 구매"
+    "description": "가볍고 다루기 쉬운 나무 재질의 단검입니다.\n\n[획득 방법] 떠돌이 상인에게서 구매",
+    "imgId": "ic_weapon"
   },
   {
     "id": "item_4",
@@ -45,7 +48,8 @@
     "crit": 7,
     "isConsumable": false,
     "value": 40,
-    "description": "모서리가 닳은 책입니다. 무기로 쓰기엔 적합하지 않아 보입니다.\n\n[획득 방법] 떠돌이 상인에게서 구매"
+    "description": "모서리가 닳은 책입니다. 무기로 쓰기엔 적합하지 않아 보입니다.\n\n[획득 방법] 떠돌이 상인에게서 구매",
+    "imgId": "ic_weapon"
   },
   {
     "id": "item_5",
@@ -57,7 +61,8 @@
     "crit": 18,
     "isConsumable": false,
     "value": 0,
-    "description": "슬라임의 점액이 묻어 불쾌하지만 탄성은 제법 좋습니다.\n\n[획득 방법] 전투: 슬라임 처치 시 획득"
+    "description": "슬라임의 점액이 묻어 불쾌하지만 탄성은 제법 좋습니다.\n\n[획득 방법] 전투: 슬라임 처치 시 획득",
+    "imgId": "ic_weapon"
   },
   {
     "id": "item_6",
@@ -69,7 +74,8 @@
     "crit": 3,
     "isConsumable": false,
     "value": 0,
-    "description": "고블린들이 즐겨 쓰는 조잡하고 무식한 몽둥이입니다.\n\n[획득 방법] 전투: 고블린 처치 시 획득"
+    "description": "고블린들이 즐겨 쓰는 조잡하고 무식한 몽둥이입니다.\n\n[획득 방법] 전투: 고블린 처치 시 획득",
+    "imgId": "ic_weapon"
   },
   {
     "id": "item_7",
@@ -81,7 +87,8 @@
     "crit": 12,
     "isConsumable": false,
     "value": 0,
-    "description": "사나운 늑대의 송곳니를 가공하여 만든 날카로운 무기입니다.\n\n[획득 방법] 전투: 늑대의 습격에서 승리 시 획득"
+    "description": "사나운 늑대의 송곳니를 가공하여 만든 날카로운 무기입니다.\n\n[획득 방법] 전투: 늑대의 습격에서 승리 시 획득",
+    "imgId": "ic_weapon"
   },
   {
     "id": "item_8",
@@ -93,7 +100,8 @@
     "crit": 8,
     "isConsumable": false,
     "value": 0,
-    "description": "거대 박쥐의 뼈로 장식된 불길한 느낌의 완드입니다.\n\n[획득 방법] 전투: 박쥐 처치 시 획득"
+    "description": "거대 박쥐의 뼈로 장식된 불길한 느낌의 완드입니다.\n\n[획득 방법] 전투: 박쥐 처치 시 획득",
+    "imgId": "ic_weapon"
   },
   {
     "id": "item_9",
@@ -105,7 +113,8 @@
     "crit": 5,
     "isConsumable": false,
     "value": 150,
-    "description": "녹이 슬었지만 옛 전사의 혼이 담겨 묵직한 검입니다.\n\n[획득 방법] 전투: 해골 전사 처치 / 대장간에서 구매"
+    "description": "녹이 슬었지만 옛 전사의 혼이 담겨 묵직한 검입니다.\n\n[획득 방법] 전투: 해골 전사 처치 / 대장간에서 구매",
+    "imgId": "ic_weapon"
   },
   {
     "id": "item_10",
@@ -117,7 +126,8 @@
     "crit": 15,
     "isConsumable": false,
     "value": 150,
-    "description": "해골들이 사용하던 낡은 활입니다.\n\n[획득 방법] 전투: 해골 궁수 처치 / 대장간에서 구매"
+    "description": "해골들이 사용하던 낡은 활입니다.\n\n[획득 방법] 전투: 해골 궁수 처치 / 대장간에서 구매",
+    "imgId": "ic_weapon"
   },
   {
     "id": "item_11",
@@ -129,7 +139,8 @@
     "crit": 12,
     "isConsumable": false,
     "value": 140,
-    "description": "과거 기사단에서 사용했던 예리한 단검입니다.\n\n[획득 방법] 전투: 해골 기사 처치 / 대장간에서 구매"
+    "description": "과거 기사단에서 사용했던 예리한 단검입니다.\n\n[획득 방법] 전투: 해골 기사 처치 / 대장간에서 구매",
+    "imgId": "ic_weapon"
   },
   {
     "id": "item_12",
@@ -141,7 +152,8 @@
     "crit": 8,
     "isConsumable": false,
     "value": 120,
-    "description": "위습의 사념과 마력이 깃든 해골 모양의 스태프입니다.\n\n[획득 방법] 전투: 위습 처치 / 대장간에서 구매"
+    "description": "위습의 사념과 마력이 깃든 해골 모양의 스태프입니다.\n\n[획득 방법] 전투: 위습 처치 / 대장간에서 구매",
+    "imgId": "ic_weapon"
   },
   {
     "id": "item_13",
@@ -153,7 +165,8 @@
     "crit": 5,
     "isConsumable": false,
     "value": 0,
-    "description": "오크 전사가 애용하던 투박하고 무거운 양손검입니다.\n\n[획득 방법] 전투: 오크 전사 처치 시 획득"
+    "description": "오크 전사가 애용하던 투박하고 무거운 양손검입니다.\n\n[획득 방법] 전투: 오크 전사 처치 시 획득",
+    "imgId": "ic_weapon"
   },
   {
     "id": "item_14",
@@ -165,7 +178,8 @@
     "crit": 8,
     "isConsumable": false,
     "value": 0,
-    "description": "오크 마법사의 강력한 주술이 깃든 나무 지팡이입니다.\n\n[획득 방법] 전투: 오크 마법사 처치 시 획득"
+    "description": "오크 마법사의 강력한 주술이 깃든 나무 지팡이입니다.\n\n[획득 방법] 전투: 오크 마법사 처치 시 획득",
+    "imgId": "ic_weapon"
   },
   {
     "id": "item_15",
@@ -177,7 +191,8 @@
     "crit": 15,
     "isConsumable": false,
     "value": 0,
-    "description": "가고일 석상이 쥐고 있던 단단한 돌 재질의 활입니다.\n\n[획득 방법] 전투: 가고일 처치 시 획득"
+    "description": "가고일 석상이 쥐고 있던 단단한 돌 재질의 활입니다.\n\n[획득 방법] 전투: 가고일 처치 시 획득",
+    "imgId": "ic_weapon"
   },
   {
     "id": "item_16",
@@ -189,7 +204,8 @@
     "crit": 15,
     "isConsumable": false,
     "value": 0,
-    "description": "은빛 늑대의 이빨을 정교하게 깎아 만든 최상급 단검입니다.\n\n[획득 방법] 전투: 실버 울프 처치 시 획득"
+    "description": "은빛 늑대의 이빨을 정교하게 깎아 만든 최상급 단검입니다.\n\n[획득 방법] 전투: 실버 울프 처치 시 획득",
+    "imgId": "ic_weapon"
   },
   {
     "id": "item_17",
@@ -201,7 +217,8 @@
     "crit": 20,
     "isConsumable": false,
     "value": 300,
-    "description": "리자드맨이 정교하게 다듬어 낸 살상력 높은 활입니다.\n\n[획득 방법] 전투: 리자드맨 처치 / 고대 유물 상점 구매"
+    "description": "리자드맨이 정교하게 다듬어 낸 살상력 높은 활입니다.\n\n[획득 방법] 전투: 리자드맨 처치 / 고대 유물 상점 구매",
+    "imgId": "ic_weapon"
   },
   {
     "id": "item_18",
@@ -213,7 +230,8 @@
     "crit": 8,
     "isConsumable": false,
     "value": 250,
-    "description": "샤먼 리자드의 의식이 치러진 신비로운 마력 스태프입니다.\n\n[획득 방법] 전투: 샤먼 리자드 처치 / 고대 유물 상점 구매"
+    "description": "샤먼 리자드의 의식이 치러진 신비로운 마력 스태프입니다.\n\n[획득 방법] 전투: 샤먼 리자드 처치 / 고대 유물 상점 구매",
+    "imgId": "ic_weapon"
   },
   {
     "id": "item_19",
@@ -225,7 +243,8 @@
     "crit": 5,
     "isConsumable": false,
     "value": 280,
-    "description": "트롤이 들고 다니던 통나무입니다. 엄청난 파괴력을 자랑합니다.\n\n[획득 방법] 전투: 트롤 처치 / 고대 유물 상점 구매"
+    "description": "트롤이 들고 다니던 통나무입니다. 엄청난 파괴력을 자랑합니다.\n\n[획득 방법] 전투: 트롤 처치 / 고대 유물 상점 구매",
+    "imgId": "ic_weapon"
   },
   {
     "id": "item_20",
@@ -237,7 +256,8 @@
     "crit": 15,
     "isConsumable": false,
     "value": 290,
-    "description": "키메라의 혈액이 묻어 기분 나쁜 오라를 뿜어내는 단검입니다.\n\n[획득 방법] 전투: 키메라 처치 / 고대 유물 상점 구매"
+    "description": "키메라의 혈액이 묻어 기분 나쁜 오라를 뿜어내는 단검입니다.\n\n[획득 방법] 전투: 키메라 처치 / 고대 유물 상점 구매",
+    "imgId": "ic_weapon"
   },
   {
     "id": "item_21",
@@ -249,7 +269,8 @@
     "crit": 25,
     "isConsumable": false,
     "value": 0,
-    "description": "드래곤의 비늘마저 뚫어버린다는 전설 속의 활입니다.\n\n[획득 방법] 전투: 드래곤 처치 시 획득"
+    "description": "드래곤의 비늘마저 뚫어버린다는 전설 속의 활입니다.\n\n[획득 방법] 전투: 드래곤 처치 시 획득",
+    "imgId": "ic_weapon"
   },
   {
     "id": "item_22",
@@ -261,7 +282,8 @@
     "crit": 8,
     "isConsumable": false,
     "value": 0,
-    "description": "리치의 절망적인 마력이 응축된 금단의 지팡이입니다.\n\n[획득 방법] 전투: 리치 처치 시 획득"
+    "description": "리치의 절망적인 마력이 응축된 금단의 지팡이입니다.\n\n[획득 방법] 전투: 리치 처치 시 획득",
+    "imgId": "ic_weapon"
   },
   {
     "id": "item_23",
@@ -273,7 +295,8 @@
     "crit": 18,
     "isConsumable": false,
     "value": 0,
-    "description": "미노타우로스가 숨기고 있던 고대 문명의 치명적인 단검입니다.\n\n[획득 방법] 전투: 미노타우로스 처치 시 획득"
+    "description": "미노타우로스가 숨기고 있던 고대 문명의 치명적인 단검입니다.\n\n[획득 방법] 전투: 미노타우로스 처치 시 획득",
+    "imgId": "ic_weapon"
   },
   {
     "id": "item_24",
@@ -285,7 +308,8 @@
     "crit": 7,
     "isConsumable": false,
     "value": 0,
-    "description": "과거의 영웅이 쥐고 있던 빛바랜, 그러나 가장 강력한 성검입니다.\n\n[획득 방법] 전투: 타락한 용사 처치 시 획득"
+    "description": "과거의 영웅이 쥐고 있던 빛바랜, 그러나 가장 강력한 성검입니다.\n\n[획득 방법] 전투: 타락한 용사 처치 시 획득",
+    "imgId": "ic_weapon"
   },
   {
     "id": "item_25",
@@ -297,7 +321,8 @@
     "crit": 0,
     "isConsumable": false,
     "value": 0,
-    "description": "방어력은 약하지만 활동하기 편안한 가장 기초적인 갑옷입니다.\n\n[획득 방법] 기본 아이템"
+    "description": "방어력은 약하지만 활동하기 편안한 가장 기초적인 갑옷입니다.\n\n[획득 방법] 기본 아이템",
+    "imgId": "ic_armor"
   },
   {
     "id": "item_26",
@@ -309,7 +334,8 @@
     "crit": 0,
     "isConsumable": false,
     "value": 60,
-    "description": "홉고블린들이 입는 질긴 가죽으로 만든 옷입니다.\n\n[획득 방법] 전투: 홉고블린 처치 / 대장간 구매"
+    "description": "홉고블린들이 입는 질긴 가죽으로 만든 옷입니다.\n\n[획득 방법] 전투: 홉고블린 처치 / 대장간 구매",
+    "imgId": "ic_armor"
   },
   {
     "id": "item_27",
@@ -321,7 +347,8 @@
     "crit": 0,
     "isConsumable": false,
     "value": 0,
-    "description": "고블린들의 지배자만이 입을 수 있는 단단한 갑옷입니다.\n\n[획득 방법] 보스 전투: 고블린 로드 처치 시 획득"
+    "description": "고블린들의 지배자만이 입을 수 있는 단단한 갑옷입니다.\n\n[획득 방법] 보스 전투: 고블린 로드 처치 시 획득",
+    "imgId": "ic_armor"
   },
   {
     "id": "item_28",
@@ -333,7 +360,8 @@
     "crit": 0,
     "isConsumable": false,
     "value": 255,
-    "description": "오크 로드의 거대한 체구를 덮고 있던 육중한 철갑옷입니다.\n\n[획득 방법] 전투: 오크 로드 처치 / 고대 유물 상점 구매"
+    "description": "오크 로드의 거대한 체구를 덮고 있던 육중한 철갑옷입니다.\n\n[획득 방법] 전투: 오크 로드 처치 / 고대 유물 상점 구매",
+    "imgId": "ic_armor"
   },
   {
     "id": "item_29",
@@ -345,7 +373,8 @@
     "crit": 0,
     "isConsumable": false,
     "value": 0,
-    "description": "골렘의 단단한 외피를 가공하여 만든 엄청난 내구도의 갑옷입니다.\n\n[획득 방법] 보스 전투: 골렘 처치 시 획득"
+    "description": "골렘의 단단한 외피를 가공하여 만든 엄청난 내구도의 갑옷입니다.\n\n[획득 방법] 보스 전투: 골렘 처치 시 획득",
+    "imgId": "ic_armor"
   },
   {
     "id": "item_30",
@@ -357,7 +386,8 @@
     "crit": 0,
     "isConsumable": false,
     "value": 0,
-    "description": "검게 물든 용사의 피와 의지가 서려 있는 비운의 갑옷입니다.\n\n[획득 방법] 이벤트: 갑옷 전시대에서 선택"
+    "description": "검게 물든 용사의 피와 의지가 서려 있는 비운의 갑옷입니다.\n\n[획득 방법] 이벤트: 갑옷 전시대에서 선택",
+    "imgId": "ic_armor"
   },
   {
     "id": "item_31",
@@ -369,7 +399,8 @@
     "crit": 0,
     "isConsumable": false,
     "value": 0,
-    "description": "드래곤의 비늘을 엮어 만든, 그 어떤 마법도 튕겨내는 전설의 갑주입니다.\n\n[획득 방법] 이벤트: 갑옷 전시대에서 선택"
+    "description": "드래곤의 비늘을 엮어 만든, 그 어떤 마법도 튕겨내는 전설의 갑주입니다.\n\n[획득 방법] 이벤트: 갑옷 전시대에서 선택",
+    "imgId": "ic_armor"
   },
   {
     "id": "item_32",
@@ -381,7 +412,8 @@
     "crit": 0,
     "isConsumable": false,
     "value": 0,
-    "description": "리치의 어두운 마력이 직물 사이로 흘러내리는 저주받은 로브입니다.\n\n[획득 방법] 이벤트: 갑옷 전시대에서 선택"
+    "description": "리치의 어두운 마력이 직물 사이로 흘러내리는 저주받은 로브입니다.\n\n[획득 방법] 이벤트: 갑옷 전시대에서 선택",
+    "imgId": "ic_armor"
   },
   {
     "id": "item_33",
@@ -393,7 +425,8 @@
     "crit": 0,
     "isConsumable": false,
     "value": 0,
-    "description": "수천 년의 시간 동안 훼손되지 않은 신비로운 망토입니다.\n\n[획득 방법] 이벤트: 갑옷 전시대에서 선택"
+    "description": "수천 년의 시간 동안 훼손되지 않은 신비로운 망토입니다.\n\n[획득 방법] 이벤트: 갑옷 전시대에서 선택",
+    "imgId": "ic_armor"
   },
   {
     "id": "item_34",
@@ -405,7 +438,8 @@
     "crit": 0,
     "isConsumable": true,
     "value": 80,
-    "description": "사용 시 체력을 소량(40) 회복시켜주는 물약입니다.\n\n[획득 방법] 상점 또는 수상한 상인에게서 구매"
+    "description": "사용 시 체력을 소량(40) 회복시켜주는 물약입니다.\n\n[획득 방법] 상점 또는 수상한 상인에게서 구매",
+    "imgId": "ic_health"
   },
   {
     "id": "item_35",
@@ -417,7 +451,8 @@
     "crit": 0,
     "isConsumable": true,
     "value": 200,
-    "description": "사용 시 체력을 제법(100) 회복시켜주는 쓸만한 물약입니다.\n\n[획득 방법] 수상한 상인 또는 대장간에서 구매"
+    "description": "사용 시 체력을 제법(100) 회복시켜주는 쓸만한 물약입니다.\n\n[획득 방법] 수상한 상인 또는 대장간에서 구매",
+    "imgId": "ic_health"
   },
   {
     "id": "item_36",
@@ -429,7 +464,8 @@
     "crit": 0,
     "isConsumable": true,
     "value": 300,
-    "description": "사용 시 체력을 크게(150) 회복시켜주는 비싼 물약입니다.\n\n[획득 방법] 수상한 상인 또는 고대 유물 상점에서 구매"
+    "description": "사용 시 체력을 크게(150) 회복시켜주는 비싼 물약입니다.\n\n[획득 방법] 수상한 상인 또는 고대 유물 상점에서 구매",
+    "imgId": "ic_health"
   },
   {
     "id": "item_37",
@@ -441,7 +477,8 @@
     "crit": 0,
     "isConsumable": true,
     "value": 440,
-    "description": "사용 시 빈사 상태에서도 일어날 수 있게 해주는 기적의 물약입니다.\n\n[획득 방법] 심층의 수상한 상인 또는 고대 유물 상점에서 구매"
+    "description": "사용 시 빈사 상태에서도 일어날 수 있게 해주는 기적의 물약입니다.\n\n[획득 방법] 심층의 수상한 상인 또는 고대 유물 상점에서 구매",
+    "imgId": "ic_health"
   },
   {
     "id": "item_38",
@@ -453,7 +490,8 @@
     "crit": 2,
     "isConsumable": false,
     "value": 100,
-    "description": "주머니에 넣고 있으면 이상하게 기운이 나는 정체불명의 돌입니다.\n\n[획득 방법] 이벤트: 버려진 도서관 탐색 시 획득"
+    "description": "주머니에 넣고 있으면 이상하게 기운이 나는 정체불명의 돌입니다.\n\n[획득 방법] 이벤트: 버려진 도서관 탐색 시 획득",
+    "imgId": "ic_artifact"
   },
   {
     "id": "item_39",
@@ -465,7 +503,8 @@
     "crit": 3,
     "isConsumable": false,
     "value": 200,
-    "description": "조잡하지만 기이한 마력이 느껴지는 고블린 모양의 인형입니다.\n\n[획득 방법] 이벤트: 빈 고블린 오두막 탐색 시 획득"
+    "description": "조잡하지만 기이한 마력이 느껴지는 고블린 모양의 인형입니다.\n\n[획득 방법] 이벤트: 빈 고블린 오두막 탐색 시 획득",
+    "imgId": "ic_artifact"
   },
   {
     "id": "item_40",
@@ -477,7 +516,8 @@
     "crit": 5,
     "isConsumable": false,
     "value": 350,
-    "description": "오크 주술사가 뼈와 가죽으로 엮어 만든 주술 목걸이입니다.\n\n[획득 방법] 이벤트: 오크 부족의 주술사에게서 획득"
+    "description": "오크 주술사가 뼈와 가죽으로 엮어 만든 주술 목걸이입니다.\n\n[획득 방법] 이벤트: 오크 부족의 주술사에게서 획득",
+    "imgId": "ic_artifact"
   },
   {
     "id": "item_41",
@@ -489,7 +529,8 @@
     "crit": 5,
     "isConsumable": false,
     "value": 500,
-    "description": "가슴속에서 불타고 있는 동력원으로, 신비한 힘을 제공합니다.\n\n[획득 방법] 이벤트: 버려진 연구실 탐색 시 획득"
+    "description": "가슴속에서 불타고 있는 동력원으로, 신비한 힘을 제공합니다.\n\n[획득 방법] 이벤트: 버려진 연구실 탐색 시 획득",
+    "imgId": "ic_artifact"
   },
   {
     "id": "item_42",
@@ -501,20 +542,22 @@
     "crit": 10,
     "isConsumable": false,
     "value": 0,
-    "description": "마왕이 소멸한 뒤 남겨진 어둠의 파편입니다.\n\n[획득 방법] 보스 전투: 마왕 처치 시 획득"
+    "description": "마왕이 소멸한 뒤 남겨진 어둠의 파편입니다.\n\n[획득 방법] 보스 전투: 마왕 처치 시 획득",
+    "imgId": "ic_artifact"
   },
   {
-  "id": "item_43",
-  "name": "거대 박쥐의 날개옷",
-  "type": "armor",
-  "hp": 35,
-  "atk": 0,
-  "magicDamage": 0,
-  "crit": 5,
-  "isConsumable": false,
-  "value": 0,
-  "description": "변이된 거대 박쥐의 질긴 가죽으로 만든 옷입니다.\n\n[획득 방법] 보스 전투: 거대 박쥐 처치 시 획득"
-},
+    "id": "item_43",
+    "name": "거대 박쥐의 날개옷",
+    "type": "armor",
+    "hp": 35,
+    "atk": 0,
+    "magicDamage": 0,
+    "crit": 5,
+    "isConsumable": false,
+    "value": 0,
+    "description": "변이된 거대 박쥐의 질긴 가죽으로 만든 옷입니다.\n\n[획득 방법] 보스 전투: 거대 박쥐 처치 시 획득",
+    "imgId": "ic_armor"
+  },
   {
     "id": "item_44",
     "name": "망령의 대검",
@@ -525,7 +568,8 @@
     "crit": 10,
     "isConsumable": false,
     "value": 0,
-    "description": "망령 기사단장이 휘두르던 저주받은 대검입니다.\n\n[획득 방법] 보스 전투: 망령 기사단장 처치 시 획득"
+    "description": "망령 기사단장이 휘두르던 저주받은 대검입니다.\n\n[획득 방법] 보스 전투: 망령 기사단장 처치 시 획득",
+    "imgId": "ic_weapon"
   },
   {
     "id": "item_45",
@@ -537,7 +581,8 @@
     "crit": 20,
     "isConsumable": false,
     "value": 0,
-    "description": "피에 물든 사신이 영혼을 수확할 때 쓰던 끔찍한 낫입니다.\n\n[획득 방법] 히든 보스 전투: 사신 처치 시 획득"
+    "description": "피에 물든 사신이 영혼을 수확할 때 쓰던 끔찍한 낫입니다.\n\n[획득 방법] 히든 보스 전투: 사신 처치 시 획득",
+    "imgId": "ic_weapon"
   },
   {
     "id": "item_46",
@@ -549,7 +594,8 @@
     "crit": 15,
     "isConsumable": false,
     "value": 0,
-    "description": "오크 워로드가 전장을 휩쓸던 거대한 양손 도끼입니다.\n\n[획득 방법] 보스 전투: 오크 워로드 처치 시 획득"
+    "description": "오크 워로드가 전장을 휩쓸던 거대한 양손 도끼입니다.\n\n[획득 방법] 보스 전투: 오크 워로드 처치 시 획득",
+    "imgId": "ic_weapon"
   },
   {
     "id": "item_47",
@@ -561,7 +607,8 @@
     "crit": 15,
     "isConsumable": false,
     "value": 0,
-    "description": "늪지대 군주가 다루던 매서운 삼지창입니다.\n\n[획득 방법] 보스 전투: 늪지대 군주 처치 시 획득"
+    "description": "늪지대 군주가 다루던 매서운 삼지창입니다.\n\n[획득 방법] 보스 전투: 늪지대 군주 처치 시 획득",
+    "imgId": "ic_weapon"
   },
   {
     "id": "item_48",
@@ -573,6 +620,7 @@
     "crit": 15,
     "isConsumable": false,
     "value": 0,
-    "description": "태초의 골렘을 움직이던 무한한 마력의 핵입니다.\n\n[획득 방법] 히든 보스 전투: 태초의 골렘 처치 시 획득"
+    "description": "태초의 골렘을 움직이던 무한한 마력의 핵입니다.\n\n[획득 방법] 히든 보스 전투: 태초의 골렘 처치 시 획득",
+    "imgId": "ic_artifact"
   }
 ]

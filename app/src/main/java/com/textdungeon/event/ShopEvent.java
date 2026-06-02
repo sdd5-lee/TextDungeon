@@ -15,13 +15,6 @@ public class ShopEvent extends GameEvent {
     public ShopEvent() {
         super();
     }
-
-    public static ShopEvent createFromJson(String json) {
-        return new Gson().fromJson(json, ShopEvent.class);
-    }
-    public List<String> getShopItems() {
-        return shopItems;
-    }
     public void openShop(Context context, Player player, DataControl<Item> itemManager) {
         ShopDialog dialog = new ShopDialog(context, player, itemManager, shopItems);
         dialog.show();

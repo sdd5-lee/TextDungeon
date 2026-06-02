@@ -19,7 +19,6 @@ public class GameEvent {
     @SerializedName("rewards") protected List<Reward> rewards;
     @SerializedName("choices") protected List<String> choices;
     @SerializedName("type") protected String type;
-    protected String enemyId;
 
     public GameEvent() {}
 
@@ -43,9 +42,6 @@ public class GameEvent {
         return rewards;
     }
 
-    public String getEnemyId() {
-        return enemyId;
-    }
 
     public String getImgId() {
         return imgId;

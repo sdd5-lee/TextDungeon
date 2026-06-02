@@ -33,7 +33,7 @@ public class PlayerTest {
 
     @Test
     public void 초기_diceChane는_1() {
-        assertEquals(1, player.getDiceChane());
+        assertEquals(1, player.getDiceChance());
     }
 
     @Test
@@ -204,20 +204,20 @@ public class PlayerTest {
     @Test
     public void useDice_감소() {
         player.useDice();
-        assertEquals(0, player.getDiceChane());
+        assertEquals(0, player.getDiceChance());
     }
 
     @Test
     public void useDice_0일때_추가감소_없음() {
         player.useDice(); // 1→0
         player.useDice(); // 0에서 시도
-        assertEquals(0, player.getDiceChane());
+        assertEquals(0, player.getDiceChance());
     }
 
     @Test
     public void addDiceChane_증가() {
         player.addDiceChane(2);
-        assertEquals(3, player.getDiceChane());
+        assertEquals(3, player.getDiceChance());
     }
 
     // ── levelUp ──────────────────────────────────────────────

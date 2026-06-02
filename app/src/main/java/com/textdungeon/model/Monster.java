@@ -10,9 +10,6 @@ public class Monster {
     private int attack;
     private String imgId;
     private Monster() {}
-    public static Monster createFromJson(String json) {
-        return new Gson().fromJson(json, Monster.class);
-    }
 
     public void takeDamage(int damage) {
         this.hp -= damage;

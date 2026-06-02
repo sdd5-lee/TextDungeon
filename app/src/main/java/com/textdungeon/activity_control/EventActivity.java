@@ -19,6 +19,7 @@ import com.textdungeon.dialog_control.InventoryDialog;
 import com.textdungeon.dialog_control.MagicLearnDialog;
 import com.textdungeon.dialog_control.PlayerInfoDialog;
 import com.textdungeon.dialog_control.StatDialog;
+import com.textdungeon.event.BattleEvent;
 import com.textdungeon.event.GameEvent;
 import com.textdungeon.model.Achievement;
 import com.textdungeon.model.Monster;
@@ -91,12 +92,7 @@ public class EventActivity extends BaseActivity {
                         EventActivity.this,
                         player,
                         dt.getItemManager(),
-                        new Runnable() {
-                            @Override
-                            public void run() {
-                                runOnUiThread(() -> updatePlayerHeader());
-                            }
-                        }
+                        () -> runOnUiThread(this::updatePlayerHeader)
                 );
                 updatePlayerHeader();
                 dialog.show();
@@ -213,11 +209,14 @@ public class EventActivity extends BaseActivity {
                     imageName, "drawable", getPackageName());
         }
 
-        if (imageResId == 0 && currentEvent.getEnemyId() != null) {
-            Monster monster = eventManager.spawnMonster(currentEvent.getEnemyId());
-            if (monster != null && monster.getImgId() != null) {
-                imageResId = getResources().getIdentifier(
-                        monster.getImgId(), "drawable", getPackageName());
+        if (imageResId == 0 && currentEvent instanceof BattleEvent) {
+            BattleEvent battleEvent = (BattleEvent) currentEvent;
+            if (battleEvent.getEnemyId() != null) {
+                Monster monster = eventManager.spawnMonster(battleEvent.getEnemyId());
+                if (monster != null && monster.getImgId() != null) {
+                    imageResId = getResources().getIdentifier(
+                            monster.getImgId(), "drawable", getPackageName());
+                }
             }
         }
 
@@ -243,7 +242,7 @@ public class EventActivity extends BaseActivity {
         ChoiceButton diceButton = new ChoiceButton(this);
         setSfx(diceButton);
 
-        diceButton.setTextView("혼돈의 주사위 사용하기 (" + player.getDiceChane() + "개)");
+        diceButton.setTextView("혼돈의 주사위 사용하기 (" + player.getDiceChance() + "개)");
         diceButton.setLayoutParams(matchParentWrapContent());
         diceButton.setOnClickListener(v -> onDiceSelected());
         choiceButtons.addView(diceButton);
@@ -268,12 +267,16 @@ public class EventActivity extends BaseActivity {
             return;
         }
 
-        String monsterId = currentEvent.getEnemyId();
-        if (monsterId != null && !monsterId.isEmpty()) {
-            showBattleDialog(monsterId, index);
-        } else {
-            applyEventResult(index);
+        if (currentEvent instanceof BattleEvent) {
+            BattleEvent battleEvent = (BattleEvent) currentEvent;
+            String monsterId = battleEvent.getEnemyId();
+
+            if (monsterId != null && !monsterId.isEmpty()) {
+                showBattleDialog(monsterId, index);
+                return;
+            }
         }
+        applyEventResult(index);
     }
     private void applyEventResult(int choiceIndex) {
         int levelSnapshot = eventManager.snapshotLevel();
@@ -293,15 +296,10 @@ public class EventActivity extends BaseActivity {
                     EventActivity.this,
                     player,
                     dt.getItemManager(),
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            runOnUiThread(() -> {
-                                updatePlayerHeader();
-                                applyEventResult(choiceIndex);
-                            });
-                        }
-                    }
+                    () -> runOnUiThread(() -> {
+                        updatePlayerHeader();
+                        applyEventResult(choiceIndex);
+                    })
             );
             dialog.show();
             return;
@@ -355,7 +353,7 @@ public class EventActivity extends BaseActivity {
     }
 
     private void onDiceSelected() {
-        if (player.getDiceChane() <= 0) return;
+        if (player.getDiceChance() <= 0) return;
         isDiceUsed = true;
         player.useDice();
 
@@ -409,11 +407,7 @@ public class EventActivity extends BaseActivity {
         }
         final boolean[] escapeState = {false};
         BattleDialog battleDialog = new BattleDialog(this, player, monster, dt.getDifficulty(),
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        escapeState[0] = true;
-                    }});
+                () -> escapeState[0] = true);
         battleDialog.setOnDismissListener(dialog -> {
             if (eventManager.isPlayerDead()) {
                 appendDesc("당신은 사망하였습니다.");
@@ -452,12 +446,8 @@ public class EventActivity extends BaseActivity {
 
     private void showLevelUpDialog() {
         appendDesc("레벨업! " + player.getLevel() + "레벨이 되었습니다!");
-        StatDialog levelUpDialog = new StatDialog(this, player, new Runnable() {
-                    @Override
-                    public void run() {
-                        runOnUiThread(() -> updatePlayerHeader());
-                    }
-                });
+        StatDialog levelUpDialog = new StatDialog(this, player,
+                () -> runOnUiThread(this::updatePlayerHeader));
         levelUpDialog.setOnDismissListener(dialog -> {
             showNextFloorButton();
             startTypingAnimation();
@@ -566,18 +556,15 @@ public class EventActivity extends BaseActivity {
             choiceButtons.setVisibility(View.INVISIBLE);
         }
 
-        typingRunnable = new Runnable() {
-            @Override
-            public void run() {
-                if (currentTypingIndex < currentTypingText.length()) {
-                    eventDesc.append(String.valueOf(currentTypingText.charAt(currentTypingIndex)));
-                    currentTypingIndex++;
-                    typingHandler.postDelayed(this, 30);
-                } else {
-                    typingRunnable = null;
-                    if (choiceButtons != null) {
-                        choiceButtons.setVisibility(View.VISIBLE);
-                    }
+        typingRunnable = () -> {
+            if (currentTypingIndex < currentTypingText.length()) {
+                eventDesc.append(String.valueOf(currentTypingText.charAt(currentTypingIndex)));
+                currentTypingIndex++;
+                typingHandler.postDelayed(typingRunnable, 30);
+            } else {
+                typingRunnable = null;
+                if (choiceButtons != null) {
+                    choiceButtons.setVisibility(View.VISIBLE);
                 }
             }
         };

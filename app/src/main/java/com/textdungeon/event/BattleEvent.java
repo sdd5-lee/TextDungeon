@@ -1,31 +1,12 @@
 package com.textdungeon.event;
 
-import android.content.Context;
-
-import com.google.gson.Gson;
-import com.textdungeon.data.DataControl;
-import com.textdungeon.data.Difficulty;
-import com.textdungeon.model.Monster;
-import com.textdungeon.player.Player;
-import com.textdungeon.system.BattleSystem;
 public class BattleEvent extends GameEvent {
+    protected String enemyId;
     public BattleEvent() {
         super();
     }
-    public static BattleEvent createFromJson(String json) {
-        return new Gson().fromJson(json, BattleEvent.class);
-    }
-
-    public BattleSystem startBattle(Player player, DataControl<Monster> monsterManager, Context context, Difficulty difficulty) {
-        Monster enemy = spawnEnemy(monsterManager);
-        if (enemy == null) return null;
-
-        return new BattleSystem(player, enemy,context, difficulty);
-    }
-
-    public Monster spawnEnemy(DataControl<Monster> monsterManager) {
-        if (enemyId == null || enemyId.isEmpty()) return null;
-        return monsterManager.spawn(enemyId);
+    public String getEnemyId() {
+        return enemyId;
     }
 
 }

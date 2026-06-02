@@ -1,7 +1,6 @@
 package com.textdungeon.system;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.textdungeon.data.DataControlTower;
 import com.textdungeon.data.Difficulty;
@@ -25,8 +24,7 @@ public class BattleSystem {
     private int battleTurn;
     private boolean isPlayerTurn = true;
     private boolean isBattleOver = false;
-    private boolean EscapeState = false;
-
+    private boolean escapeState = false;
     private Random random = new Random();
 
     public BattleSystem(Player player, Monster monster, Context context, Difficulty difficulty) {
@@ -43,7 +41,7 @@ public class BattleSystem {
     // 플레이어 액션 (1: 공격, 2: 방어, 3: 도망, 4: 마법)
     // =========================
     public String playerAction(int choice, String magicId) {
-        if (EscapeState) return "당신은 도망쳤습니다!";
+        if (escapeState) return "당신은 도망쳤습니다!";
         if (isBattleOver) return "전투가 이미 종료되었습니다.";
         if (!isPlayerTurn) return "적의 턴을 기다려주세요.";
         StringBuilder log = new StringBuilder();
@@ -84,7 +82,7 @@ public class BattleSystem {
 
             case 3: // 도망
                 if (isAlwaysEscape() || random.nextInt(100) < 40) {
-                    EscapeState = true;
+                    escapeState = true;
                     return "성공적으로 도망쳤습니다!";
                 } else {
                     log.append("도망에 실패했습니다!\n");
@@ -217,7 +215,7 @@ public class BattleSystem {
     // 게터
     // =========================
     public boolean isBattleOver() { return isBattleOver; }
-    public boolean isEscapeState(){return EscapeState;}
+    public boolean isEscapeState(){return escapeState;}
     public String getEnemyName() { return enemyName; }
     public int getEnemyHp() { return enemyHp; }
 }

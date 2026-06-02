@@ -1,11 +1,10 @@
 package com.textdungeon.data;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.textdungeon.ai.aiManager;
+import com.textdungeon.ai.AiManager;
 import com.textdungeon.event.BattleEvent;
 import com.textdungeon.event.GameEvent;
 import com.textdungeon.event.ShopEvent;
@@ -31,7 +30,7 @@ public class DataControlTower {
     private Player player;
     private UserRecord userRecord;
     private DungeonControl dungeonControl;
-    private aiManager aiManager;
+    private AiManager aiManager;
     private Difficulty difficulty;
     private Map<Integer, GameEvent> aiEvents;
 
@@ -39,7 +38,7 @@ public class DataControlTower {
 
     private DataControlTower(Context context){
         this.appContext = context.getApplicationContext();
-        this.aiManager = new aiManager();
+        this.aiManager = new AiManager();
         this.aiEvents = new HashMap<>();
 
         loadGameData();
@@ -156,7 +155,7 @@ public class DataControlTower {
     public UserRecord getUserRecord() { return userRecord; }
     public DungeonControl getDungeonControl() { return dungeonControl; }
     public void setPlayer(Player player) { this.player = player; }
-    public aiManager getAiManager() { return aiManager; }
+    public AiManager getAiManager() { return aiManager; }
     public void setUserRecord(UserRecord userRecord) { this.userRecord = userRecord; }
     public void setDifficulty(String difficultyName) { difficulty = Difficulty.valueOf(difficultyName); }
     public Difficulty getDifficulty() { return difficulty; }

@@ -20,12 +20,13 @@ import java.util.List;
 
 public class DifficultyActivity extends BaseActivity {
     private AlertDialog loadingDialog;
-    DataControlTower dt = DataControlTower.getInstance(this);
+    DataControlTower dt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_difficulty);
+        dt = DataControlTower.getInstance(this);
 
         FrameLayout btnEasy = findViewById(R.id.btn_easy);
         FrameLayout btnNormal = findViewById(R.id.btn_normal);

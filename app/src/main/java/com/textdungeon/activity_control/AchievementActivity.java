@@ -18,7 +18,6 @@ import com.textdungeon.event.GameEvent;
 import com.textdungeon.model.Achievement;
 import com.textdungeon.model.Item;
 import com.textdungeon.model.Monster;
-import com.textdungeon.system.UserRecord;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +26,6 @@ import java.util.Set;
 public class AchievementActivity extends BaseActivity {
 
     private DataControlTower dt;
-    private UserRecord userRecord;
 
     private Button btnMainAchieve, btnMainCollection;
     private LinearLayout subTabContainer;
@@ -52,7 +50,6 @@ public class AchievementActivity extends BaseActivity {
         setContentView(R.layout.activity_achievement);
 
         dt = DataControlTower.getInstance(this);
-        userRecord = dt.getUserRecord();
 
         btnMainAchieve = findViewById(R.id.btn_main_achieve);
         btnMainCollection = findViewById(R.id.btn_main_collection);
@@ -165,9 +162,9 @@ public class AchievementActivity extends BaseActivity {
     private void loadCollectionCategory(String category) {
         currentCollectionList.clear();
 
-        Set<String> disItems = userRecord.getDiscoveredItems();
-        Set<String> disMonsters = userRecord.getDiscoveredMonsters();
-        Set<String> disEvents = userRecord.getDiscoveredEvents();
+        Set<String> disItems = dt.getUserRecord().getDiscoveredItems();
+        Set<String> disMonsters = dt.getUserRecord().getDiscoveredMonsters();
+        Set<String> disEvents = dt.getUserRecord().getDiscoveredEvents();
 
         if (category.equals("아이템")) {
             for (Item item : dt.getItemManager().getAll()) {
@@ -182,7 +179,7 @@ public class AchievementActivity extends BaseActivity {
                 boolean discovered = disMonsters.contains(mon.getId());
                 String desc = "공격력: " + mon.getAttack() + " / 체력: " + mon.getMaxHp();
                 currentCollectionList.add(new CollectionData(
-                        mon.getName(), desc, "mob_goblin", discovered));
+                        mon.getName(), desc, mon.getImgId(), discovered));
             }
         } else if (category.equals("이벤트")) {
             for (GameEvent ev : dt.getEventManager().getAll()) {
