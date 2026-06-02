@@ -235,7 +235,7 @@
         android:padding="1dp"
         android:scaleType="centerCrop"
         android:alpha="1.0"
-        tools:src="@drawable/wisp"
+        tools:src="@drawable/mon_goblin"
         app:layout_constraintTop_toBottomOf="@id/floor_number"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
