@@ -1,15 +1,19 @@
 package com.textdungeon.activity_control;
 
+import android.app.AlertDialog;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.viewpager2.widget.ViewPager2;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.textdungeon.R;
 import com.textdungeon.data.CollectionData;
@@ -30,8 +34,7 @@ public class AchievementActivity extends BaseActivity {
     private Button btnMainAchieve, btnMainCollection;
     private LinearLayout subTabContainer;
     private ListView achievementList;
-    private ViewPager2 collectionPager;
-    private TextView pageIndicator;
+    private RecyclerView collectionRecycler;
 
     private boolean isCollectionMode = false;
 
@@ -55,8 +58,10 @@ public class AchievementActivity extends BaseActivity {
         btnMainCollection = findViewById(R.id.btn_main_collection);
         subTabContainer = findViewById(R.id.sub_tab_container);
         achievementList = findViewById(R.id.achievement_list);
-        collectionPager = findViewById(R.id.collection_pager);
-        pageIndicator = findViewById(R.id.page_indicator);
+        collectionRecycler = findViewById(R.id.collection_recycler);
+
+        collectionRecycler.setLayoutManager(new GridLayoutManager(this, 4));
+
         Button btnBack = findViewById(R.id.btn_back);
 
         setSfx(btnBack, btnMainAchieve, btnMainCollection);
@@ -64,15 +69,6 @@ public class AchievementActivity extends BaseActivity {
         btnMainAchieve.setOnClickListener(v -> switchMainMode(false));
         btnMainCollection.setOnClickListener(v -> switchMainMode(true));
         btnBack.setOnClickListener(v -> finish());
-
-        collectionPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                if (isCollectionMode) {
-                    pageIndicator.setText((position + 1) + " / " + currentCollectionList.size());
-                }
-            }
-        });
 
         switchMainMode(false);
     }
@@ -84,8 +80,7 @@ public class AchievementActivity extends BaseActivity {
         btnMainCollection.setTextColor(Color.parseColor(isCollectionMode ? "#E9C176" : "#A0A0A0"));
 
         achievementList.setVisibility(!isCollectionMode ? View.VISIBLE : View.GONE);
-        collectionPager.setVisibility(isCollectionMode ? View.VISIBLE : View.GONE);
-        pageIndicator.setVisibility(isCollectionMode ? View.VISIBLE : View.GONE);
+        collectionRecycler.setVisibility(isCollectionMode ? View.VISIBLE : View.GONE);
 
         buildSubTabs();
     }
@@ -177,7 +172,9 @@ public class AchievementActivity extends BaseActivity {
         } else if (category.equals("몬스터")) {
             for (Monster mon : dt.getMonsterManager().getAll()) {
                 boolean discovered = disMonsters.contains(mon.getId());
-                String desc = "공격력: " + mon.getAttack() + " / 체력: " + mon.getMaxHp();
+
+                String desc = mon.getDescription() + "\n\n[기본 스탯]\n공격력: " + mon.getAttack() + " / 체력: " + mon.getMaxHp();
+
                 currentCollectionList.add(new CollectionData(
                         mon.getName(), desc, mon.getImgId(), discovered));
             }
@@ -190,13 +187,60 @@ public class AchievementActivity extends BaseActivity {
         }
 
         if (collectionAdapter == null) {
-            collectionAdapter = new CollectionAdapter(this, currentCollectionList);
-            collectionPager.setAdapter(collectionAdapter);
+            collectionAdapter = new CollectionAdapter(this, currentCollectionList, data -> showCollectionDetail(data));
+            collectionRecycler.setAdapter(collectionAdapter);
         } else {
             collectionAdapter.notifyDataSetChanged();
         }
+    }
 
-        pageIndicator.setText("1 / " + currentCollectionList.size());
-        collectionPager.setCurrentItem(0, false);
+    private void showCollectionDetail(CollectionData data) {
+        View cardView = getLayoutInflater().inflate(R.layout.row_collection_card, null);
+
+        ImageView charImage = cardView.findViewById(R.id.char_image);
+        TextView charName = cardView.findViewById(R.id.char_name);
+        TextView charDesc = cardView.findViewById(R.id.char_desc);
+        TextView unlockStatus = cardView.findViewById(R.id.unlock_status);
+        LinearLayout btnUnlock = cardView.findViewById(R.id.btn_unlock);
+
+        if (data.isDiscovered()) {
+            charName.setText(data.getName());
+            charName.setTextColor(Color.parseColor("#E9C176"));
+            charDesc.setText(data.getDesc());
+
+            unlockStatus.setText("닫기");
+            unlockStatus.setTextColor(Color.parseColor("#E9C176"));
+
+            int resId = getResources().getIdentifier(data.getImgId(), "drawable", getPackageName());
+            if (resId != 0) {
+                charImage.setImageResource(resId);
+            } else {
+                charImage.setImageResource(R.drawable.mon_goblin);
+            }
+        } else {
+            charName.setText("???");
+            charName.setTextColor(Color.parseColor("#A0A0A0"));
+            charDesc.setText("아직 발견하지 못한 대상입니다.");
+
+            unlockStatus.setText("닫기");
+            unlockStatus.setTextColor(Color.parseColor("#A0A0A0"));
+            charImage.setImageResource(android.R.drawable.ic_menu_help);
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(cardView);
+        AlertDialog dialog = builder.create();
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+
+        // 하단 버튼 클릭 시 팝업 닫기
+        btnUnlock.setOnClickListener(v -> {
+            setSfx(btnUnlock);
+            dialog.dismiss();
+        });
+
+        dialog.show();
     }
 }

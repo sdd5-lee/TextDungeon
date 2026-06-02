@@ -111,7 +111,7 @@ public class InventoryDialog extends Dialog {
             ImageView actionIcon = itemSlot.findViewById(R.id.action_icon);
 
             Item item = itemLibrary.spawn(itemId);
-            String iconName = getIconNameByType(item.getType());
+            String iconName = item.getImgId();
 
             int imgResId = getContext().getResources().getIdentifier(iconName, "drawable", getContext().getPackageName());
             if (imgResId != 0){
