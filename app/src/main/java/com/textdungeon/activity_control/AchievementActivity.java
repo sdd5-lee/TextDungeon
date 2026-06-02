@@ -24,7 +24,9 @@ import com.textdungeon.model.Item;
 import com.textdungeon.model.Monster;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class AchievementActivity extends BaseActivity {
@@ -47,6 +49,9 @@ public class AchievementActivity extends BaseActivity {
     private List<CollectionData> currentCollectionList = new ArrayList<>();
     private CollectionAdapter collectionAdapter;
 
+    // 💡 렉 방지용: 이미지 리소스 ID 캐시(기억) 저장소
+    private final Map<String, Integer> imageCache = new HashMap<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +67,10 @@ public class AchievementActivity extends BaseActivity {
 
         collectionRecycler.setLayoutManager(new GridLayoutManager(this, 4));
 
+        // 💡 렉 방지용: 리사이클러뷰 성능 강제 최적화 옵션
+        collectionRecycler.setHasFixedSize(true);
+        collectionRecycler.setItemViewCacheSize(30);
+
         Button btnBack = findViewById(R.id.btn_back);
 
         setSfx(btnBack, btnMainAchieve, btnMainCollection);
@@ -71,6 +80,27 @@ public class AchievementActivity extends BaseActivity {
         btnBack.setOnClickListener(v -> finish());
 
         switchMainMode(false);
+    }
+
+    // 💡 렉 방지용: 문자열 이름으로 리소스를 한 번만 찾고 재사용하는 헬퍼 메서드
+    private int getCachedResId(String imgName, String defaultImgName) {
+        if (imgName == null || imgName.trim().isEmpty()) {
+            imgName = defaultImgName;
+        }
+
+        // 이미 찾아본 적이 있으면 바로 반환
+        if (imageCache.containsKey(imgName)) {
+            return imageCache.get(imgName);
+        }
+
+        // 처음 찾는 거라면 검색 후 저장
+        int resId = getResources().getIdentifier(imgName, "drawable", getPackageName());
+        if (resId == 0) {
+            resId = getResources().getIdentifier(defaultImgName, "drawable", getPackageName());
+        }
+
+        imageCache.put(imgName, resId);
+        return resId;
     }
 
     private void switchMainMode(boolean toCollection) {
@@ -164,25 +194,25 @@ public class AchievementActivity extends BaseActivity {
         if (category.equals("아이템")) {
             for (Item item : dt.getItemManager().getAll()) {
                 boolean discovered = disItems.contains(item.getId());
+                // 💡 여기서 미리 resId를 찾아둠
+                int resId = getCachedResId(item.getImgId(), "ic_weapon");
                 currentCollectionList.add(new CollectionData(
-                        item.getName(), item.getDescription(),
-                        item.getImgId() != null ? item.getImgId() : "ic_weapon",
-                        discovered));
+                        item.getName(), item.getDescription(), resId, discovered));
             }
         } else if (category.equals("몬스터")) {
             for (Monster mon : dt.getMonsterManager().getAll()) {
                 boolean discovered = disMonsters.contains(mon.getId());
-
                 String desc = mon.getDescription() + "\n\n[기본 스탯]\n공격력: " + mon.getAttack() + " / 체력: " + mon.getMaxHp();
-
+                int resId = getCachedResId(mon.getImgId(), "mon_goblin");
                 currentCollectionList.add(new CollectionData(
-                        mon.getName(), desc, mon.getImgId(), discovered));
+                        mon.getName(), desc, resId, discovered));
             }
         } else if (category.equals("이벤트")) {
             for (GameEvent ev : dt.getEventManager().getAll()) {
                 boolean discovered = disEvents.contains(ev.getId());
+                int resId = getCachedResId(ev.getImgId(), "ic_event");
                 currentCollectionList.add(new CollectionData(
-                        ev.getName(), ev.getDescription(), ev.getImgId(), discovered));
+                        ev.getName(), ev.getDescription(), resId, discovered));
             }
         }
 
@@ -211,12 +241,8 @@ public class AchievementActivity extends BaseActivity {
             unlockStatus.setText("닫기");
             unlockStatus.setTextColor(Color.parseColor("#E9C176"));
 
-            int resId = getResources().getIdentifier(data.getImgId(), "drawable", getPackageName());
-            if (resId != 0) {
-                charImage.setImageResource(resId);
-            } else {
-                charImage.setImageResource(R.drawable.mon_goblin);
-            }
+            // 💡 getIdentifier 대신 미리 구해놓은 번호를 즉시 삽입!
+            charImage.setImageResource(data.getImgResId());
         } else {
             charName.setText("???");
             charName.setTextColor(Color.parseColor("#A0A0A0"));
@@ -235,7 +261,6 @@ public class AchievementActivity extends BaseActivity {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }
 
-        // 하단 버튼 클릭 시 팝업 닫기
         btnUnlock.setOnClickListener(v -> {
             setSfx(btnUnlock);
             dialog.dismiss();

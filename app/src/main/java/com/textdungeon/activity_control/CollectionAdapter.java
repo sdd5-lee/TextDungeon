@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+// 💡 Glide 클래스 임포트 추가
+import com.bumptech.glide.Glide;
 import com.example.textdungeon.R;
 import com.textdungeon.data.CollectionData;
 
@@ -42,15 +44,16 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
         CollectionData data = collectionList.get(position);
 
         if (data.isDiscovered()) {
-            int resId = context.getResources().getIdentifier(data.getImgId(), "drawable", context.getPackageName());
-            if (resId != 0) {
-                holder.image.setImageResource(resId);
-            } else {
-                holder.image.setImageResource(R.drawable.mon_goblin);
-            }
+            Glide.with(context)
+                    .load(data.getImgResId())
+                    .into(holder.image);
+
             holder.image.setAlpha(1.0f);
         } else {
-            holder.image.setImageResource(android.R.drawable.ic_menu_help);
+            Glide.with(context)
+                    .load(android.R.drawable.ic_menu_help)
+                    .into(holder.image);
+
             holder.image.setAlpha(0.3f);
         }
 
@@ -66,6 +69,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
 
     class ViewHolder extends RecyclerView.ViewHolder {
         ImageView image;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.grid_image);
