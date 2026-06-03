@@ -220,7 +220,7 @@ public class EventActivity extends BaseActivity {
             }
         }
 
-        eventImage.setImageResource(imageResId != 0 ? imageResId : R.drawable.mon_test);
+        eventImage.setImageResource(imageResId != 0 ? imageResId : R.drawable.mon_god);
     }
 
     private void renderChoiceButtons() {

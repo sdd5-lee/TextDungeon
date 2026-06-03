@@ -44,7 +44,6 @@ public class Player {
             stat.setMaxExp(80 + this.level * 25);
             stat.addStatPoint(5);
 
-
             stat.updateBattleStat(level);
 
             magicScroll.updateCounts(stat.getWisdom());
@@ -127,7 +126,7 @@ public class Player {
     }
     public void refreshHp() {
         int max = getMaxHp();
-        if (stat.getHp() > max) {
+        if (stat.getHp() < max) {
             stat.setHp(max);
         }
     }

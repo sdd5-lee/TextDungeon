@@ -57,7 +57,7 @@
   },
   {
     "id": "event_2",
-    "name": "기습하는 고블린 무리",
+    "name": "기습하는 고블린",
     "description": "길을 지나던 중 조잡한 몽둥이를 든 고블린과 마주쳤습니다!",
     "imgId": "mon_goblin",
     "minFloor": 1,

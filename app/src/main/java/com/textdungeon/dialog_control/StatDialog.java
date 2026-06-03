@@ -155,6 +155,7 @@ public class StatDialog extends Dialog {
         dialogStat.setWisdom(wis);
         dialogStat.setStatPoint(count);
         dialogStat.updateBattleStat(player.getLevel());
+        player.refreshHp();
         if (onUpdateCallback != null) {
             onUpdateCallback.run();
         }
