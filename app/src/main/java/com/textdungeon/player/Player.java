@@ -44,8 +44,12 @@ public class Player {
             stat.setMaxExp(80 + this.level * 25);
             stat.addStatPoint(5);
 
+            int equipHp = equipment.getTotalHp();
+            stat.setHp(Math.max(0, stat.getHp() - equipHp));
+
             stat.updateBattleStat(level);
 
+            stat.setHp(stat.getHp() + equipHp);
             magicScroll.updateCounts(stat.getWisdom());
         }
         refreshHp();
