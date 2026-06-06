@@ -1,5 +1,6 @@
 package com.textdungeon.activity_control;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -506,13 +507,19 @@ public class EventActivity extends BaseActivity {
                 new androidx.activity.OnBackPressedCallback(true) {
                     @Override
                     public void handleOnBackPressed() {
-                        new android.app.AlertDialog.Builder(EventActivity.this)
-                                .setTitle("게임 종료")
-                                .setMessage("게임을 종료하시겠습니까?\n(현재 층수: "
+                        new AlertDialog.Builder(EventActivity.this)
+                                .setTitle("게임 일시정지")
+                                .setMessage("게임을 저장하시고 종료하시겠습니까?\n(현재 층수: "
                                         + eventManager.getCurrentFloor() + "F)")
-                                .setPositiveButton("저장 후 종료", (dialog, which) -> {
+                                .setPositiveButton("게임종료", (dialog, which) -> {
                                     dt.saveGame();
                                     finishAffinity();
+                                })
+                                .setNeutralButton("메인 화면으로",(dialog,which)->{
+                                    dt.saveGame();
+                                    Intent intent = new Intent(EventActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                    finish();
                                 })
                                 .setNegativeButton("취소", null)
                                 .show();

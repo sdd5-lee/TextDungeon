@@ -79,6 +79,17 @@ public class SystemSettingActivity extends BaseActivity {
         adminButton.setOnClickListener(view ->
                 startActivity(new Intent(this, AdminActivity.class)));
 
-        btnBack.setOnClickListener(v -> finish());
+        btnBack.setOnClickListener(v -> moveMain());
+    }
+    @Override
+    public void onBackPressed() {
+        moveMain();
+    }
+    private void moveMain() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+        startActivity(intent);
+        finish();
     }
 }
