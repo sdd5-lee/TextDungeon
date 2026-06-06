@@ -499,7 +499,7 @@ public class EventActivity extends BaseActivity {
     }
 
     // ─────────────────────────────────────────────────────────────
-    // 뒤로가기 처리
+    // 뒤로가기
     // ─────────────────────────────────────────────────────────────
 
     private void setupBackButton() {
@@ -528,7 +528,7 @@ public class EventActivity extends BaseActivity {
     }
 
     // ─────────────────────────────────────────────────────────────
-    // 유틸 (타이핑 로직)
+    // 유틸
     // ─────────────────────────────────────────────────────────────
     private void setupSkipListener() {
         eventDesc = findViewById(R.id.event_description);

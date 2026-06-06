@@ -28,7 +28,6 @@ public class CharacterActivity extends BaseActivity {
     TextView characterDesc, statHp, statStr, statAgi, statWis;
     EditText editPlayerName;
 
-    // 특성 아코디언 관련 뷰
     LinearLayout btnTraitToggle;
     GridLayout traitGridContainer;
     TextView tvSelectedTrait;
@@ -60,7 +59,6 @@ public class CharacterActivity extends BaseActivity {
         LinearLayout jobWarlock = findViewById(R.id.job_warlock);
         LinearLayout jobMonk = findViewById(R.id.job_monk);
 
-        // Map에 직업 뷰 등록 (성기사 매핑 유지)
         jobViews.put(Job.KNIGHT, jobKnight);
         jobViews.put(Job.ROGUE, jobRogue);
         jobViews.put(Job.MAGE, jobMage);
@@ -79,7 +77,6 @@ public class CharacterActivity extends BaseActivity {
         characterDesc = findViewById(R.id.character_description);
         btnEmbark = findViewById(R.id.btn_embark);
 
-        // 아코디언 뷰 초기화
         btnTraitToggle = findViewById(R.id.btn_trait_toggle);
         tvSelectedTrait = findViewById(R.id.tv_selected_trait);
         ivTraitArrow = findViewById(R.id.iv_trait_arrow);
@@ -101,7 +98,6 @@ public class CharacterActivity extends BaseActivity {
         jobWarlock.setOnClickListener(v -> handleJobClick(v, Job.WARLOCK));
         jobMonk.setOnClickListener(v -> handleJobClick(v, Job.MONK));
 
-        // 아코디언 토글 이벤트
         btnTraitToggle.setOnClickListener(v -> toggleTraitMenu());
 
         statHp.setText("");

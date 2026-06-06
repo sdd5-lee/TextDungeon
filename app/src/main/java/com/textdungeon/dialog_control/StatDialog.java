@@ -42,7 +42,7 @@ public class StatDialog extends Dialog {
 
         dialogStat = player.getStat();
         statPoint = findViewById(R.id.tv_remain_points);
-        // 힘 민첩 체력 지능 업 버튼
+        // 힘 민첩 체력 지능 버튼
         ImageButton buttonStr = findViewById(R.id.btn_str_up);
         buttonStr.setOnClickListener(new View.OnClickListener() {
             @Override

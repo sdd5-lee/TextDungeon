@@ -150,7 +150,7 @@ public class BattleSystem {
         player.takeDamage(damage);
         log += enemyName + "의 공격! 플레이어에게 " + damage + "의 피해.";
 
-        // 반격으로 몬스터 사망 체크
+        // 반격 사망 체크
         if (enemyHp <= 0) {
             enemyHp = 0;
             isBattleOver = true;

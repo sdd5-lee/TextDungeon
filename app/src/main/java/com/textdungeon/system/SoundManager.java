@@ -10,12 +10,12 @@ public class SoundManager {
     private MediaPlayer bgmPlayer;
     private SoundPool soundPool;
     private int sfxButtonId;
-    private float sfxVolume = 1.0f; //효과음 볼륨 변수
+    private float sfxVolume = 1.0f;
 
     private SoundManager(Context context) {
         // BGM 설정
         bgmPlayer = MediaPlayer.create(context, R.raw.bgm_main);
-        if (bgmPlayer != null) { // ★ 파일이 정상적으로 로드되었을 때만 세팅
+        if (bgmPlayer != null) {
             bgmPlayer.setLooping(true);
         }
 

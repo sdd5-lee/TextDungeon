@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.FrameLayout;
 
 import com.example.textdungeon.R;
@@ -65,10 +64,10 @@ public class DifficultyActivity extends BaseActivity {
 
         List<AiType> shuffledGods = new ArrayList<>(Arrays.asList(AiType.values()));
         Collections.shuffle(shuffledGods);
-
+        //1층 21층 40층에서 생성된 이벤트 출현
         for (int i = 0; i < targetCount; i++) {
             AiType randomGod = shuffledGods.get(i % shuffledGods.size());
-            int targetFloor = (i * 10) + 1;
+            int targetFloor = (i * 20) + 1;
             String eventType = "normal";
             if (randomGod == AiType.STRUGGLE) eventType = "battle";
             else if (randomGod == AiType.TREASURE) eventType = "shop";
@@ -77,7 +76,7 @@ public class DifficultyActivity extends BaseActivity {
             final int finalFloor = targetFloor;
             new android.os.Handler(android.os.Looper.getMainLooper()).postDelayed(() ->
                             generateWithRetry(finalFloor, randomGod, finalEventType, completedCount, targetCount, 0),
-                    i * 3000L
+                    i * 15000L
             );
         }
     }

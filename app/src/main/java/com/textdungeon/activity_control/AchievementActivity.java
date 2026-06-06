@@ -49,7 +49,6 @@ public class AchievementActivity extends BaseActivity {
     private List<CollectionData> currentCollectionList = new ArrayList<>();
     private CollectionAdapter collectionAdapter;
 
-    // 💡 렉 방지용: 이미지 리소스 ID 캐시(기억) 저장소
     private final Map<String, Integer> imageCache = new HashMap<>();
 
     @Override

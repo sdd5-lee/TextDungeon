@@ -47,7 +47,7 @@ public class DiedActivity extends BaseActivity {
         if (player == null) return 0; // 추가
         int gems = 0;
 
-        //스텟 총합 +레벨 +돈
+        //스텟 총합 + 레벨 +돈
         gems = gems+(stat.getStrength()+stat.getWisdom()+stat.getHealth()+stat.getAgility()+stat.getGold()+player.getLevel());
 
         //아이템 밸류합

@@ -97,7 +97,7 @@ public class EventManager {
     }
 
     // ─────────────────────────────────────────
-    // 게임오버 판단 (2번 구현 시 여기에 추가)
+    // 게임오버 판단
     // ─────────────────────────────────────────
     public boolean isPlayerDead() {
         return player.getStat().getHp() <= 0;

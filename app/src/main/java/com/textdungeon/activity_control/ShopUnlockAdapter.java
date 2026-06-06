@@ -55,7 +55,7 @@ public class ShopUnlockAdapter extends RecyclerView.Adapter<ShopUnlockAdapter.Vi
         int price = 0;
         boolean isUnlocked = false;
 
-        // 1. 직업(Job) 처리
+        // 직업
         if (item instanceof Job) {
             Job job = (Job) item;
             name = job.name;
@@ -80,7 +80,7 @@ public class ShopUnlockAdapter extends RecyclerView.Adapter<ShopUnlockAdapter.Vi
                 }
             });
         }
-        // 2. 특성(Trait) 처리
+        // 특성
         else if (item instanceof Trait) {
             Trait trait = (Trait) item;
             name = trait.displayName;
@@ -104,7 +104,7 @@ public class ShopUnlockAdapter extends RecyclerView.Adapter<ShopUnlockAdapter.Vi
             });
         }
 
-        // 3. 공통 UI 업데이트
+        // 공통 UI 업데이트
         holder.unlockName.setText(name);
         holder.unlockDesc.setText(desc);
         holder.unlockPrice.setText(String.valueOf(price));
