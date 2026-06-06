@@ -11,9 +11,7 @@ import android.graphics.Typeface;
 import com.example.textdungeon.R;
 
 public class ChoiceButton extends FrameLayout {
-    int choice;
     TextView textView;
-    boolean buttonState = true;
 
     public ChoiceButton(Context context) {
         super(context);

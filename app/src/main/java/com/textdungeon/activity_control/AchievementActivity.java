@@ -49,7 +49,6 @@ public class AchievementActivity extends BaseActivity {
     private List<CollectionData> currentCollectionList = new ArrayList<>();
     private CollectionAdapter collectionAdapter;
 
-    // 💡 렉 방지용: 이미지 리소스 ID 캐시(기억) 저장소
     private final Map<String, Integer> imageCache = new HashMap<>();
 
     @Override
@@ -67,7 +66,6 @@ public class AchievementActivity extends BaseActivity {
 
         collectionRecycler.setLayoutManager(new GridLayoutManager(this, 4));
 
-        // 💡 렉 방지용: 리사이클러뷰 성능 강제 최적화 옵션
         collectionRecycler.setHasFixedSize(true);
         collectionRecycler.setItemViewCacheSize(30);
 
@@ -82,18 +80,15 @@ public class AchievementActivity extends BaseActivity {
         switchMainMode(false);
     }
 
-    // 💡 렉 방지용: 문자열 이름으로 리소스를 한 번만 찾고 재사용하는 헬퍼 메서드
     private int getCachedResId(String imgName, String defaultImgName) {
         if (imgName == null || imgName.trim().isEmpty()) {
             imgName = defaultImgName;
         }
 
-        // 이미 찾아본 적이 있으면 바로 반환
         if (imageCache.containsKey(imgName)) {
             return imageCache.get(imgName);
         }
 
-        // 처음 찾는 거라면 검색 후 저장
         int resId = getResources().getIdentifier(imgName, "drawable", getPackageName());
         if (resId == 0) {
             resId = getResources().getIdentifier(defaultImgName, "drawable", getPackageName());
@@ -240,8 +235,6 @@ public class AchievementActivity extends BaseActivity {
 
             unlockStatus.setText("닫기");
             unlockStatus.setTextColor(Color.parseColor("#E9C176"));
-
-            // 💡 getIdentifier 대신 미리 구해놓은 번호를 즉시 삽입!
             charImage.setImageResource(data.getImgResId());
         } else {
             charName.setText("???");

@@ -44,9 +44,12 @@ public class Player {
             stat.setMaxExp(80 + this.level * 25);
             stat.addStatPoint(5);
 
+            int equipHp = equipment.getTotalHp();
+            stat.setHp(Math.max(0, stat.getHp() - equipHp));
 
             stat.updateBattleStat(level);
 
+            stat.setHp(stat.getHp() + equipHp);
             magicScroll.updateCounts(stat.getWisdom());
         }
         refreshHp();
@@ -126,9 +129,9 @@ public class Player {
         stat.setHp(newHp);
     }
     public void refreshHp() {
-        int max = getMaxHp();
-        if (stat.getHp() > max) {
-            stat.setHp(max);
+        int maxHp = getMaxHp();
+        if (stat.getHp() > maxHp) {
+            stat.setHp(maxHp);
         }
     }
     public int castMagic(Magic magic) {

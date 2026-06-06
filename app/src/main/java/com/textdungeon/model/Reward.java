@@ -11,7 +11,11 @@ public class Reward {
     private String itemId;
     private List<RewardStat> statRewards;
     private boolean retry;
+    private String action;
 
+    public String getAction() {
+        return action;
+    }
     public boolean isRetry() {
         return retry;
     }
@@ -37,7 +41,7 @@ public class Reward {
                 } else if ("데미지".equals(type)) {
                     player.takeDamage(value);
                 } else {
-                    if (player.getTrait() != null && player.getTrait().modifyExp() > 1) {
+                    if ("경험치".equals(type) && player.getTrait() != null && player.getTrait().modifyExp() > 1) {
                         player.getStat().gainStatExp(value, player.getTrait().modifyExp());
                     } else {
                         player.getStat().gainStat(type, value);

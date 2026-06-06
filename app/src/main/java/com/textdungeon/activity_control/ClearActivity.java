@@ -49,7 +49,7 @@ public class ClearActivity extends BaseActivity {
         Player player = dt.getPlayer();
         Stat stat = player.getStat();
 
-        //클리어 했으니까 1000 * 난이도
+        //클리어 1000 * 난이도
         gems = 1000*dt.getDifficulty().rewardMultiplier;
 
         //스텟 총합 + 레벨 + 돈

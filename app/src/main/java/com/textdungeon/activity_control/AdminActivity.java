@@ -46,7 +46,7 @@ public class AdminActivity extends BaseActivity {
                 dt.getUserRecord().getDiscoveredEvents().add(ev.getId());
             }
             Toast.makeText(this, "모든 도감 데이터가 해금되었습니다.", Toast.LENGTH_SHORT).show();
-            dt.saveGame(); // 저장 필요시 주석 해제
+            dt.saveGame();
         });
 
         btnLockAll.setOnClickListener(v -> {
@@ -55,16 +55,16 @@ public class AdminActivity extends BaseActivity {
             dt.getUserRecord().getDiscoveredEvents().clear();
 
             Toast.makeText(this, "도감 데이터가 초기화(잠금) 되었습니다.", Toast.LENGTH_SHORT).show();
-            dt.saveGame(); // 저장 필요시 주석 해제
+            dt.saveGame();
         });
 
-        // 4. 게임 전체 초기화 버튼
+        //게임 전체 초기화 버튼
         btnResetGame.setOnClickListener(v -> {
             dt.getUserRecord().clearAll();
             Toast.makeText(this, "게임 전체 데이터가 초기화되었습니다. 앱을 재시작하세요.", Toast.LENGTH_LONG).show();
         });
 
-        // 5. 닫기 버튼
+        // 닫기 버튼
         btnClose.setOnClickListener(v -> finish());
     }
 }

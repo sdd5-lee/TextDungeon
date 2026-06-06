@@ -22,6 +22,7 @@ import com.textdungeon.model.Item;
 import com.textdungeon.model.LearnedMagic;
 import com.textdungeon.model.Magic;
 import com.textdungeon.model.Monster;
+import com.textdungeon.model.Trait;
 import com.textdungeon.player.MagicScroll;
 import com.textdungeon.player.Player;
 import com.textdungeon.system.BattleSystem;
@@ -72,7 +73,7 @@ public class BattleDialog extends Dialog {
         monsterMaxHp = monster.getMaxHp() * difficulty.statMultiplier;
 
         // 전투 시스템 초기화
-        battleSystem = new BattleSystem(player, monster, context,DataControlTower.getInstance(getContext()).getDifficulty());
+        battleSystem = new BattleSystem(player, monster, context,difficulty);
 
         initViews();
         setupListeners();
@@ -109,7 +110,8 @@ public class BattleDialog extends Dialog {
         TextView playerName = findViewById(R.id.player_name);
         TextView monsterName = findViewById(R.id.monster_name);
 
-        playerName.setText(player.getTrait().displayName+" "+player.getName());
+        Trait t = player.getTrait();
+        playerName.setText((t != null ? t.displayName + " " : "") + player.getName());
         monsterName.setText(battleSystem.getEnemyName());
     }
 
@@ -213,24 +215,19 @@ public class BattleDialog extends Dialog {
 
     // 전투 액션 실행 및 화면 갱신
     private void executeAction(int choice, String magicId) {
-        if (battleSystem.isBattleOver() || battleSystem.isEscapeState()) {
-            if (battleSystem.isEscapeState()){
-                onUpdateCallback.run();
-            }
-            dismiss();
-            return;
-        }
         String resultLog = battleSystem.playerAction(choice, magicId);
         appendLog(resultLog);
         updateUI();
         if (battleSystem.isEscapeState()){
             appendLog("\n[도망에 성공하였습니다. 2초 뒤 돌아갑니다...]");
+            findViewById(R.id.actions_area).setVisibility(View.GONE);
+            onUpdateCallback.run();
+            new Handler(Looper.getMainLooper()).postDelayed(this::dismiss, 2000);
         }
         else if (battleSystem.isBattleOver()) {
             appendLog("\n[전투가 종료되었습니다. 2초 뒤 돌아갑니다...]");
 
             findViewById(R.id.actions_area).setVisibility(View.GONE);
-
             new Handler(Looper.getMainLooper()).postDelayed(this::dismiss, 2000);
         }
     }

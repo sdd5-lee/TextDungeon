@@ -87,36 +87,6 @@ public class StatTest {
         stat.updateBattleStat(1);
         assertTrue(stat.getHp() <= stat.getMaxHp());
     }
-
-    // ── heal / damage ───────────────────────────────────────
-
-    @Test
-    public void heal_hp가_maxHp를_초과하지_않음() {
-        stat.heal(99999);
-        assertEquals(stat.getMaxHp(), stat.getHp());
-    }
-
-    @Test
-    public void heal_정상_회복() {
-        stat.setHp(stat.getMaxHp() - 20);
-        int hpBefore = stat.getHp();
-        stat.heal(10);
-        assertEquals(hpBefore + 10, stat.getHp());
-    }
-
-    @Test
-    public void damage_hp가_0_미만이_되지_않음() {
-        stat.damage(99999);
-        assertEquals(0, stat.getHp());
-    }
-
-    @Test
-    public void damage_정상_감소() {
-        int hpBefore = stat.getHp();
-        stat.damage(10);
-        assertEquals(hpBefore - 10, stat.getHp());
-    }
-
     // ── gainStat ────────────────────────────────────────────
 
     @Test

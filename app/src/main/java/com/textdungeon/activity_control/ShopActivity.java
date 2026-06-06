@@ -29,7 +29,7 @@ public class ShopActivity extends BaseActivity {
     private UserRecord record;
 
     private TextView tabUnlock, tabTrait, tabUpgrade;
-    private TextView pageIndicator; // ★ 추가됨
+    private TextView pageIndicator;
     private ViewPager2 unlockViewPager, unlockTraitViewPager;
     private View upgradeScroll;
     private LinearLayout upgradeContainer;
@@ -45,7 +45,6 @@ public class ShopActivity extends BaseActivity {
         dt = DataControlTower.getInstance(this);
         shopSystem = new ShopSystem(dt);
         record = dt.getUserRecord();
-        record.addGem(10000000);
 
         playerGem = findViewById(R.id.player_gem);
 
@@ -97,7 +96,6 @@ public class ShopActivity extends BaseActivity {
                 pageIndicator.setText((unlockTraitViewPager.getCurrentItem() + 1) + " / " + traitAdapter.getItemCount());
             }
         } else {
-            // 업그레이드 탭에서는 인디케이터 숨김
             pageIndicator.setVisibility(View.INVISIBLE);
         }
     }

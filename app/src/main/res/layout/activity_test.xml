@@ -35,7 +35,7 @@
             android:layout_width="250dp"
             android:layout_height="60dp"
             android:layout_margin="8dp"
-            android:text="돈(Gold) +10,000 추가"
+            android:text="돈(Gem) +10,000 추가"
             android:textColor="#111111"
             android:backgroundTint="#E9C176"
             android:textStyle="bold"/>

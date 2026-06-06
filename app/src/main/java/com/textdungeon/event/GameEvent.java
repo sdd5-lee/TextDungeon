@@ -58,11 +58,9 @@ public class GameEvent {
         if (difficulty != null) {
             for (int i = 0; i < difficulty.rewardMultiplier; i++){
                 reward.apply(player, itemManager);
-                player.getStat().updateBattleStat(player.getLevel());
             }
         }else{
             reward.apply(player, itemManager);
-            player.getStat().updateBattleStat(player.getLevel());
         }
         if (reward.getDescription() == null || reward.getDescription().isEmpty()) {
             return "신비로운 힘이 당신의 몸을 감싸다 지나갔습니다.";

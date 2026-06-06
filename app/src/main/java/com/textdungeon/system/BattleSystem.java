@@ -99,9 +99,7 @@ public class BattleSystem {
                     Magic magic = DataControlTower.getInstance(context).getMagicManager().spawn(lm.getMagicId());
                     int magicDamage = player.castMagic(magic);
                     int finalDamage = magicDamage + ((magicDamage/10) * battleTurn);
-                    if (applyVampiricTouch()){
-                        player.heal(finalDamage/10);
-                    }
+                    
                     if (random.nextInt(100) < player.getTotalCrit()) {
                         finalDamage = applyTraitCritDamage(finalDamage);
                         log.append("크리티컬!   \n");
@@ -150,7 +148,7 @@ public class BattleSystem {
         player.takeDamage(damage);
         log += enemyName + "의 공격! 플레이어에게 " + damage + "의 피해.";
 
-        // 반격으로 몬스터 사망 체크
+        // 반격 사망 체크
         if (enemyHp <= 0) {
             enemyHp = 0;
             isBattleOver = true;

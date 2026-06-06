@@ -1,5 +1,6 @@
 package com.textdungeon.activity_control;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,6 +24,7 @@ import com.textdungeon.event.BattleEvent;
 import com.textdungeon.event.GameEvent;
 import com.textdungeon.model.Achievement;
 import com.textdungeon.model.Monster;
+import com.textdungeon.model.Reward;
 import com.textdungeon.player.Player;
 import com.textdungeon.system.EventManager;
 
@@ -220,7 +222,7 @@ public class EventActivity extends BaseActivity {
             }
         }
 
-        eventImage.setImageResource(imageResId != 0 ? imageResId : R.drawable.mon_test);
+        eventImage.setImageResource(imageResId != 0 ? imageResId : R.drawable.mon_god);
     }
 
     private void renderChoiceButtons() {
@@ -267,15 +269,19 @@ public class EventActivity extends BaseActivity {
             return;
         }
 
-        if (currentEvent instanceof BattleEvent) {
-            BattleEvent battleEvent = (BattleEvent) currentEvent;
-            String monsterId = battleEvent.getEnemyId();
+        Reward selectedReward = currentEvent.getRewards().get(index);
+        if ("battle".equals(selectedReward.getAction())) {
+            if (currentEvent instanceof BattleEvent) {
+                BattleEvent battleEvent = (BattleEvent) currentEvent;
+                String monsterId = battleEvent.getEnemyId();
 
-            if (monsterId != null && !monsterId.isEmpty()) {
-                showBattleDialog(monsterId, index);
-                return;
+                if (monsterId != null && !monsterId.isEmpty()) {
+                    showBattleDialog(monsterId, index);
+                    return;
+                }
             }
         }
+
         applyEventResult(index);
     }
     private void applyEventResult(int choiceIndex) {
@@ -409,6 +415,7 @@ public class EventActivity extends BaseActivity {
                 () -> escapeState[0] = true);
         battleDialog.setOnDismissListener(dialog -> {
             if (eventManager.isPlayerDead()) {
+                updatePlayerHeader();
                 appendDesc("당신은 사망하였습니다.");
 
                 ChoiceButton button = new ChoiceButton(this);
@@ -436,6 +443,7 @@ public class EventActivity extends BaseActivity {
                 List<Achievement> killUnlocked = dt.getAchievementManager().updateProgress("kill", 1, true);
                 showAchievementNotification(killUnlocked);
 
+                updatePlayerHeader();
                 applyEventResult(choiceIndex);
             }
         });
@@ -497,7 +505,7 @@ public class EventActivity extends BaseActivity {
     }
 
     // ─────────────────────────────────────────────────────────────
-    // 뒤로가기 처리
+    // 뒤로가기
     // ─────────────────────────────────────────────────────────────
 
     private void setupBackButton() {
@@ -505,13 +513,19 @@ public class EventActivity extends BaseActivity {
                 new androidx.activity.OnBackPressedCallback(true) {
                     @Override
                     public void handleOnBackPressed() {
-                        new android.app.AlertDialog.Builder(EventActivity.this)
-                                .setTitle("게임 종료")
-                                .setMessage("게임을 종료하시겠습니까?\n(현재 층수: "
+                        new AlertDialog.Builder(EventActivity.this)
+                                .setTitle("게임 일시정지")
+                                .setMessage("게임을 저장하시고 종료하시겠습니까?\n(현재 층수: "
                                         + eventManager.getCurrentFloor() + "F)")
-                                .setPositiveButton("저장 후 종료", (dialog, which) -> {
+                                .setPositiveButton("게임종료", (dialog, which) -> {
                                     dt.saveGame();
                                     finishAffinity();
+                                })
+                                .setNeutralButton("메인 화면으로",(dialog,which)->{
+                                    dt.saveGame();
+                                    Intent intent = new Intent(EventActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                    finish();
                                 })
                                 .setNegativeButton("취소", null)
                                 .show();
@@ -520,7 +534,7 @@ public class EventActivity extends BaseActivity {
     }
 
     // ─────────────────────────────────────────────────────────────
-    // 유틸 (타이핑 로직)
+    // 유틸
     // ─────────────────────────────────────────────────────────────
     private void setupSkipListener() {
         eventDesc = findViewById(R.id.event_description);
