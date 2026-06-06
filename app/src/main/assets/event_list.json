@@ -38,6 +38,7 @@
     "choices": ["점액질을 가르고 활을 꺼낸다", "점액이 묻기 전에 도망친다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": "item_5",
         "description": "슬라임 몸속에서 끈적끈적한 활을 얻었습니다! (경험치 +50, 골드 +10).",
         "statRewards": [
@@ -46,6 +47,7 @@
         ]
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "무시하고 지나갔습니다. (경험치 +25)",
         "statRewards": [
@@ -66,6 +68,7 @@
     "choices": ["고블린을 제압하고 몽둥이를 뺏어 든다", "겁을 주어 쫓아낸다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": "item_6",
         "description": "고블린을 물리치고 전리품을 챙겼습니다. (경험치 +55, 골드 + 12)",
         "statRewards": [
@@ -74,6 +77,7 @@
         ]
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "빠르게 위협해서 고블린을 쫓아냈습니다. (경험치 +25)",
         "statRewards": [
@@ -94,6 +98,7 @@
     "choices": ["늑대의 숨통을 끊고 송곳니를 뽑아낸다", "도망친다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": "item_7",
         "description": "늑대를 물리쳤습니다! 늑대의 이빨은 쓸만한 무기가 될 것 같습니다. (경험치 +60, 골드 +18)",
         "statRewards": [
@@ -102,6 +107,7 @@
         ]
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "겨우 도망쳤습니다. (경험치 +30)",
         "statRewards": [
@@ -122,6 +128,7 @@
     "choices": ["박쥐를 격추시키고 발톱에 쥔 완드를 챙긴다", "회피한다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": "item_8",
         "description": "박쥐가 도망간 자리에서 박쥐 완드를 얻었습니다. (경험치 +60, 골드 +15)",
         "statRewards": [
@@ -130,6 +137,7 @@
         ]
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "타이밍을 노려 안전하게 빠져나왔습니다. (경험치 +30)",
         "statRewards": [
@@ -184,6 +192,7 @@
     "choices": ["홉고블린을 베어버리고 가죽옷을 벗겨낸다", "회피한다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": "item_26",
         "description": "홉고블린이 쓰러지며 더 이상 움직이지 않습니다.(경험치 +80, 골드 +150)",
         "statRewards": [
@@ -192,6 +201,7 @@
         ]
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "어느순간 고블린들에게 둘러쌓여 도망갈수 없습니다.",
         "statRewards": [],
@@ -211,6 +221,7 @@
     "choices": ["해골 전사를 부수고 오래된 검을 줍는다", "회피한다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": "item_9",
         "description": "해골이 가지고 있던 오래된 검을 획득했습니다.(경험치 +110, 골드 +30)",
         "statRewards": [
@@ -219,6 +230,7 @@
         ]
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "공격을 간신히 피하며 도망쳤습니다. (경험치 + 55)",
         "statRewards": [
@@ -239,6 +251,7 @@
     "choices": ["해골 궁수를 박살 내고 활을 챙긴다", "회피한다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": "item_10",
         "description": "날아오는 화살을 피하고 해골 궁수를 물리쳤습니다.(경험치 +120, 골드 +30)",
         "statRewards": [
@@ -247,6 +260,7 @@
         ]
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "화살을 피하며 도망쳤습니다. (경험치 +60)",
         "statRewards": [
@@ -267,6 +281,7 @@
     "choices": ["결투를 받아들여 기사를 꺾고 단검을 얻는다", "무시하고 도망친다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": "item_11",
         "description": "해골 기사는 패배를 인정하고 자신의 단검을 두고 사라집니다.(경험치 +150, 골드 +45)",
         "statRewards": [
@@ -275,6 +290,7 @@
         ]
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "겁쟁이처럼 도망쳤습니다. (경험치 + 75)",
         "statRewards": [
@@ -295,6 +311,7 @@
     "choices": ["위습의 사념을 흩어내고 스태프를 쥔다", "회피한다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": "item_12",
         "description": "위습이 사라진 자리엔 해골 모양의 스태프가 남아있습니다.(경험치 +130, 골드 +38)",
         "statRewards": [
@@ -303,6 +320,7 @@
         ]
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "위습의 울음소리를 뒤로 도망쳤습니다. (경험치 + 65)",
         "statRewards": [
@@ -323,6 +341,7 @@
     "choices": ["고블린 로드를 참수하고 갑옷을 챙긴다", "회피한다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": "item_27",
         "description": "고블린 무리의 지배자를 처치했습니다! (경험치 + 180, 골드 +400)",
         "statRewards": [
@@ -331,6 +350,7 @@
         ]
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "어느순간 고블린들에게 둘러쌓여 도망갈수 없습니다.",
         "statRewards": [],
@@ -352,6 +372,7 @@
     "choices": ["상점 둘러보기"],
     "rewards": [
       {
+        "action": "shop",
         "itemId": null,
         "description": "포션을 구경했습니다.",
         "statRewards": []
@@ -403,6 +424,7 @@
     "choices": ["오크 전사의 맹공을 뚫고 검을 빼앗는다", "회피한다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": "item_13",
         "description": "오크의 빛바랜 검을 얻었습니다. (경험치 +170, 골드 +80)",
         "statRewards": [
@@ -411,6 +433,7 @@
         ]
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "힘으로는 상대가 되지 않아 도망갔습니다. (경험치 + 100)",
         "statRewards": [
@@ -431,6 +454,7 @@
     "choices": ["주문이 완성되기 전에 베어버리고 지팡이를 챙긴다", "회피한다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": "item_14",
         "description": "주문이 끊기며 오크 마법사가 쓰러졌습니다. (경험치 +180, 골드 +85)",
         "statRewards": [
@@ -439,6 +463,7 @@
         ]
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "날아드는 마법을 피해 간신히 빠져나왔습니다. (경험치 +100)",
         "statRewards": [
@@ -459,6 +484,7 @@
     "choices": ["석상을 파괴하고 거대한 돌 활을 손에 넣는다", "회피한다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": "item_15",
         "description": "움직이던 석상이 다시 돌로 굳어버렸습니다. (경험치 +195, 골드 +95)",
         "statRewards": [
@@ -467,6 +493,7 @@
         ]
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "움직이는 석상을 피해 조심스럽게 빠져나왔습니다. (경험치 +100)",
         "statRewards": [
@@ -487,6 +514,7 @@
     "choices": ["은빛 늑대의 목을 베고 왕의 전리품을 취한다", "회피한다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": "item_16",
         "description": "은빛 늑대가 조용히 쓰러졌습니다. (경험치 +180, 골드 +110)",
         "statRewards": [
@@ -495,6 +523,7 @@
         ]
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "숨소리를 죽이며 겨우 따돌렸습니다. (경험치 +100)",
         "statRewards": [
@@ -515,6 +544,7 @@
     "choices": ["오크 로드의 거구를 무너뜨리고 철갑옷을 뜯어낸다", "회피한다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": "item_28",
         "description": "거대한 오크 로드가 땅을 울리며 쓰러졌습니다. (경험치 +300, 골드 +850)",
         "statRewards": [
@@ -523,6 +553,7 @@
         ]
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "오크 로드의 빈틈이 보이지 않습니다.",
         "statRewards": [],
@@ -573,6 +604,7 @@
     "choices": ["상점 둘러보기"],
     "rewards": [
       {
+        "action": "shop",
         "itemId": null,
         "description": "포션을 구경했습니다.",
         "statRewards": []
@@ -624,6 +656,7 @@
     "choices": ["리자드맨의 화살을 튕겨내고 활을 빼앗는다", "회피한다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": "item_17",
         "description": "리자드맨이 몸을 떨다 쓰러졌습니다. (경험치 +230, 골드 +210)",
         "statRewards": [
@@ -632,6 +665,7 @@
         ]
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "리자드맨의 날카로운 시선을 피해 빠져나왔습니다. (경험치 +125)",
         "statRewards": [
@@ -652,6 +686,7 @@
     "choices": ["주문을 파훼하고 화려한 스태프를 뺏어 든다", "회피한다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": "item_18",
         "description": "주문이 끊기며 샤먼 리자드가 쓰러졌습니다. (경험치 +245, 골드 +200)",
         "statRewards": [
@@ -660,6 +695,7 @@
         ]
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "주문이 끝나기 전에 도망쳤습니다. (경험치 +125)",
         "statRewards": [
@@ -680,6 +716,7 @@
     "choices": ["트롤의 무릎을 꿇리고 거대한 몽둥이를 탈취한다", "회피한다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": "item_19",
         "description": "트롤이 비명을 지르며 쓰러졌습니다. (경험치 +265, 골드 +225)",
         "statRewards": [
@@ -688,6 +725,7 @@
         ]
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "거대한 트롤의 공격을 피해 간신히 도망쳤습니다. (경험치 +125)",
         "statRewards": [
@@ -708,6 +746,7 @@
     "choices": ["괴물을 제압하고 몸에 꽂힌 단검을 뽑아낸다", "회피한다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": "item_20",
         "description": "뒤섞인 괴물이 괴성을 남기고 무너졌습니다. (경험치 +280, 골드 +220)",
         "statRewards": [
@@ -716,6 +755,7 @@
         ]
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "괴물의 울음소리를 뒤로하고 간신히 도망쳤습니다. (경험치 +125)",
         "statRewards": [
@@ -736,6 +776,7 @@
     "choices": ["골렘의 동력을 끊고 고대의 갑옷을 벗겨낸다", "회피한다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": "item_29",
         "description": "골렘이 균열을 내며 완전히 붕괴되었습니다. (경험치 +400, 골드 +1500)",
         "statRewards": [
@@ -744,6 +785,7 @@
         ]
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "골렘의 거대한 팔이 도망갈 길을 막습니다.",
         "statRewards": [],
@@ -765,6 +807,7 @@
     "choices": ["상점 둘러보기"],
     "rewards": [
       {
+        "action": "shop",
         "itemId": null,
         "description": "포션을 구경했습니다.",
         "statRewards": []
@@ -844,6 +887,7 @@
     "choices": ["전설의 무기를 위해 드래곤의 역린을 찌른다", "회피한다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": "item_21",
         "description": "전설의 용을 쓰러뜨렸습니다! (경험치 +330, 골드 +450)",
         "statRewards": [
@@ -852,6 +896,7 @@
         ]
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "불길을 피해 가까스로 목숨을 건졌습니다. (경험치 +180)",
         "statRewards": [
@@ -872,6 +917,7 @@
     "choices": ["언데드의 군주를 소멸시키고 네크로맨서의 힘을 취한다", "회피한다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": "item_22",
         "description": "리치의 마력이 사라지며 육신이 무너졌습니다. (경험치 +320, 골드 +460)",
         "statRewards": [
@@ -880,6 +926,7 @@
         ]
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "리치의 마력을 피해 서둘러 자리를 벗어났습니다. (경험치 +180)",
         "statRewards": [
@@ -900,6 +947,7 @@
     "choices": ["미노타우로스의 뿔을 꺾고 고대의 단검을 줍는다", "회피한다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": "item_23",
         "description": "거대한 미노타우로스가 쓰러졌습니다. (경험치 +300, 골드 +430)",
         "statRewards": [
@@ -908,6 +956,7 @@
         ]
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "거대한 발걸음을 피해 간신히 빠져나왔습니다. (경험치 +180)",
         "statRewards": [
@@ -928,6 +977,7 @@
     "choices": ["용사에게 안식을 주고 타락한 성검을 거둔다", "회피한다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": "item_24",
         "description": "타락한 용사가 마지막 힘을 다해 쓰러졌습니다. (경험치 +360, 골드 +500)",
         "statRewards": [
@@ -936,6 +986,7 @@
         ]
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "그 압도적인 기세에 밀려 물러났습니다. (경험치 +180)",
         "statRewards": [
@@ -956,11 +1007,13 @@
     "choices": ["모든 것을 걸고 마왕의 목을 친다", "회피한다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": "item_42",
         "description": "마왕이 무너지며 어둠이 사라집니다.",
         "statRewards": []
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "당신의 운명에서 벗어날수 없습니다.",
         "statRewards": [],
@@ -982,6 +1035,7 @@
     "choices": ["상점 둘러보기"],
     "rewards": [
       {
+        "action": "shop",
         "itemId": null,
         "description": "포션을 구경했습니다.",
         "statRewards": []
@@ -1040,6 +1094,7 @@
     "choices": ["거대 쥐들의 왕을 도륙한다", "그냥 지나간다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": null,
         "description": "거대 쥐는 쓰러졌습니다! (경험치 +50, 골드 +12).",
         "statRewards": [
@@ -1048,6 +1103,7 @@
         ]
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "쥐떼들을 피해서 도망쳤습니다. (경험치 +25)",
         "statRewards": [
@@ -1068,6 +1124,7 @@
     "choices": ["달려드는 좀비의 머리를 박살 낸다", "그냥 지나간다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": null,
         "description": "좀비의 목이 떨어져 움직이지 않습니다 (경험치 +125, 골드 +40).",
         "statRewards": [
@@ -1076,6 +1133,7 @@
         ]
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "느린 좀비를 손쉽게 따돌렸습니다. (경험치 +60)",
         "statRewards": [
@@ -1096,6 +1154,7 @@
     "choices": ["맹수의 발톱에 맞서 검을 휘두른다", "그냥 지나간다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": null,
         "description": "그리폰은 힘없이 쓰러졌습니다. (경험치 +175, 골드 +95).",
         "statRewards": [
@@ -1104,6 +1163,7 @@
         ]
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "그리폰에게 들키지 않게 조용히 지나갔습니다. (경험치 +100)",
         "statRewards": [
@@ -1124,6 +1184,7 @@
     "choices": ["시선을 피하며 메두사의 목을 노린다", "그냥 지나간다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": null,
         "description": "메두사가 돌처럼 굳어 무너져내렸습니다! (경험치 +240, 골드 +220).",
         "statRewards": [
@@ -1132,6 +1193,7 @@
         ]
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "석상들 사이로 숨어서 간신히 도망쳤습니다. (경험치 +125)",
         "statRewards": [
@@ -1152,6 +1214,7 @@
     "choices": ["유혹을 떨쳐내고 무기를 고쳐 잡는다", "그냥 지나간다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": null,
         "description": "당신은 유혹을 이겨내고 승리했습니다. (경험치 +330, 골드 +410).",
         "statRewards": [
@@ -1160,6 +1223,7 @@
         ]
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "유혹을 애써 뿌리치고 서둘러 도망쳤습니다. (경험치 +165)",
         "statRewards": [
@@ -1240,6 +1304,7 @@
     "choices": ["거대 박쥐를 격추시키고 날개옷을 뜯어낸다", "회피한다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": "item_43",
         "description": "박쥐가 떨어지며 전리품을 남겼습니다. (경험치 +100, 골드 +50)",
         "statRewards": [
@@ -1248,6 +1313,7 @@
         ]
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "거대한 날갯짓을 피해 간신히 도망쳤습니다.",
         "statRewards": [],
@@ -1267,6 +1333,7 @@
     "choices": ["푸른 불꽃을 잠재우고 망령의 대검을 쥔다", "회피한다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": "item_44",
         "description": "기사단장이 푸른 재가 되어 흩어집니다. (경험치 +200, 골드 +150)",
         "statRewards": [
@@ -1275,6 +1342,7 @@
         ]
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "기사단장의 살기에 짓눌려 도망칠 수 없습니다.",
         "statRewards": [],
@@ -1294,6 +1362,7 @@
     "choices": ["얼어붙은 공기를 가르고 사신의 낫을 빼앗는다", "영혼을 바치고 도망친다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": "item_45",
         "description": "사신을 물리치고 끔찍한 무기를 쟁취했습니다! (경험치 +400, 골드 +300)",
         "statRewards": [
@@ -1302,6 +1371,7 @@
         ]
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "생명력을 대가로 지불하고 도망쳤습니다.",
         "statRewards": [
@@ -1322,6 +1392,7 @@
     "choices": ["워로드를 꺾고 거대한 도끼를 전리품으로 챙긴다", "회피한다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": "item_46",
         "description": "워로드의 거구가 땅을 울리며 쓰러졌습니다. (경험치 +300, 골드 +250)",
         "statRewards": [
@@ -1330,6 +1401,7 @@
         ]
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "워로드의 위압감에 도망칠 수 없습니다.",
         "statRewards": [],
@@ -1349,6 +1421,7 @@
     "choices": ["진흙탕 속으로 뛰어들어 삼지창을 뺏어 든다", "회피한다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": "item_47",
         "description": "군주가 진흙 속으로 영원히 가라앉았습니다. (경험치 +450, 골드 +400)",
         "statRewards": [
@@ -1357,6 +1430,7 @@
         ]
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "진흙탕에 발이 묶여 도망갈 수 없습니다.",
         "statRewards": [],
@@ -1376,6 +1450,7 @@
     "choices": ["거대 골렘을 파괴하고 빛나는 동력원을 적출한다", "회피한다"],
     "rewards": [
       {
+        "action": "battle",
         "itemId": "item_48",
         "description": "기적적으로 태초의 골렘을 파괴했습니다! (경험치 +900, 골드 +800)",
         "statRewards": [
@@ -1384,6 +1459,7 @@
         ]
       },
       {
+        "action": "escape",
         "itemId": null,
         "description": "거대한 바위 주먹이 퇴로를 막아버렸습니다.",
         "statRewards": [],
@@ -1403,7 +1479,14 @@
     "enemyId": null,
     "shopItems": ["item_34", "item_35", "item_36", "item_37"],
     "choices": ["상점 둘러보기"],
-    "rewards": [{"itemId": null, "description": "포션들을 구경했습니다.", "statRewards": []}]
+    "rewards": [
+      {
+        "action": "shop",
+        "itemId": null,
+        "description": "포션들을 구경했습니다.",
+        "statRewards": []
+      }
+    ]
   },
   {
     "id": "event_42_2",
@@ -1416,7 +1499,14 @@
     "enemyId": null,
     "shopItems": ["item_34", "item_35", "item_36", "item_37"],
     "choices": ["상점 둘러보기"],
-    "rewards": [{"itemId": null, "description": "포션들을 구경했습니다.", "statRewards": []}]
+    "rewards": [
+      {
+        "action": "shop",
+        "itemId": null,
+        "description": "포션들을 구경했습니다.",
+        "statRewards": []
+      }
+    ]
   },
   {
     "id": "event_42_3",
@@ -1429,7 +1519,14 @@
     "enemyId": null,
     "shopItems": ["item_34", "item_35", "item_36", "item_37"],
     "choices": ["상점 둘러보기"],
-    "rewards": [{"itemId": null, "description": "포션들을 구경했습니다.", "statRewards": []}]
+    "rewards": [
+      {
+        "action": "shop",
+        "itemId": null,
+        "description": "포션들을 구경했습니다.",
+        "statRewards": []
+      }
+    ]
   },
   {
     "id": "event_42_4",
@@ -1442,7 +1539,14 @@
     "enemyId": null,
     "shopItems": ["item_34", "item_35", "item_36", "item_37"],
     "choices": ["상점 둘러보기"],
-    "rewards": [{"itemId": null, "description": "포션들을 구경했습니다.", "statRewards": []}]
+    "rewards": [
+      {
+        "action": "shop",
+        "itemId": null,
+        "description": "포션들을 구경했습니다.",
+        "statRewards": []
+      }
+    ]
   },
   {
     "id": "event_42_5",
@@ -1455,7 +1559,14 @@
     "enemyId": null,
     "shopItems": ["item_34", "item_35", "item_36", "item_37"],
     "choices": ["상점 둘러보기"],
-    "rewards": [{"itemId": null, "description": "포션들을 구경했습니다.", "statRewards": []}]
+    "rewards": [
+      {
+        "action": "shop",
+        "itemId": null,
+        "description": "포션들을 구경했습니다.",
+        "statRewards": []
+      }
+    ]
   },
   {
     "id": "event_shop_1_a",
@@ -1468,7 +1579,14 @@
     "enemyId": null,
     "shopItems": ["item_1", "item_2", "item_3", "item_4", "item_34", "item_38"],
     "choices": ["상점 둘러보기"],
-    "rewards": [{"itemId": null, "description": "상점에서 물건을 구경했습니다.", "statRewards": []}]
+    "rewards": [
+      {
+        "action": "shop",
+        "itemId": null,
+        "description": "상점에서 물건을 구경했습니다.",
+        "statRewards": []
+      }
+    ]
   },
   {
     "id": "event_shop_1_b",
@@ -1481,7 +1599,14 @@
     "enemyId": null,
     "shopItems": ["item_1", "item_2", "item_3", "item_4", "item_34", "item_38"],
     "choices": ["상점 둘러보기"],
-    "rewards": [{"itemId": null, "description": "상점에서 물건을 구경했습니다.", "statRewards": []}]
+    "rewards": [
+      {
+        "action": "shop",
+        "itemId": null,
+        "description": "상점에서 물건을 구경했습니다.",
+        "statRewards": []
+      }
+    ]
   },
   {
     "id": "event_shop_2_a",
@@ -1494,7 +1619,14 @@
     "enemyId": null,
     "shopItems": ["item_9", "item_10", "item_11", "item_12", "item_26", "item_35", "item_39"],
     "choices": ["상점 둘러보기"],
-    "rewards": [{"itemId": null, "description": "대장간의 물건들을 구경했습니다.", "statRewards": []}]
+    "rewards": [
+      {
+        "action": "shop",
+        "itemId": null,
+        "description": "대장간의 물건들을 구경했습니다.",
+        "statRewards": []
+      }
+    ]
   },
   {
     "id": "event_shop_2_b",
@@ -1507,7 +1639,14 @@
     "enemyId": null,
     "shopItems": ["item_9", "item_10", "item_11", "item_12", "item_26", "item_35", "item_39"],
     "choices": ["상점 둘러보기"],
-    "rewards": [{"itemId": null, "description": "대장간의 물건들을 구경했습니다.", "statRewards": []}]
+    "rewards": [
+      {
+        "action": "shop",
+        "itemId": null,
+        "description": "대장간의 물건들을 구경했습니다.",
+        "statRewards": []
+      }
+    ]
   },
   {
     "id": "event_shop_3_a",
@@ -1520,7 +1659,14 @@
     "enemyId": null,
     "shopItems": ["item_17", "item_18", "item_19", "item_20", "item_28", "item_36", "item_37", "item_40", "item_41"],
     "choices": ["상점 둘러보기"],
-    "rewards": [{"itemId": null, "description": "고대 유물들을 구경했습니다.", "statRewards": []}]
+    "rewards": [
+      {
+        "action": "shop",
+        "itemId": null,
+        "description": "고대 유물들을 구경했습니다.",
+        "statRewards": []
+      }
+    ]
   },
   {
     "id": "event_shop_3_b",
@@ -1533,6 +1679,13 @@
     "enemyId": null,
     "shopItems": ["item_17", "item_18", "item_19", "item_20", "item_28", "item_36", "item_37", "item_40", "item_41"],
     "choices": ["상점 둘러보기"],
-    "rewards": [{"itemId": null, "description": "고대 유물들을 구경했습니다.", "statRewards": []}]
+    "rewards": [
+      {
+        "action": "shop",
+        "itemId": null,
+        "description": "고대 유물들을 구경했습니다.",
+        "statRewards": []
+      }
+    ]
   }
 ]

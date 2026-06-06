@@ -24,6 +24,7 @@ import com.textdungeon.event.BattleEvent;
 import com.textdungeon.event.GameEvent;
 import com.textdungeon.model.Achievement;
 import com.textdungeon.model.Monster;
+import com.textdungeon.model.Reward;
 import com.textdungeon.player.Player;
 import com.textdungeon.system.EventManager;
 
@@ -268,15 +269,19 @@ public class EventActivity extends BaseActivity {
             return;
         }
 
-        if (currentEvent instanceof BattleEvent) {
-            BattleEvent battleEvent = (BattleEvent) currentEvent;
-            String monsterId = battleEvent.getEnemyId();
+        Reward selectedReward = currentEvent.getRewards().get(index);
+        if ("battle".equals(selectedReward.getAction())) {
+            if (currentEvent instanceof BattleEvent) {
+                BattleEvent battleEvent = (BattleEvent) currentEvent;
+                String monsterId = battleEvent.getEnemyId();
 
-            if (monsterId != null && !monsterId.isEmpty()) {
-                showBattleDialog(monsterId, index);
-                return;
+                if (monsterId != null && !monsterId.isEmpty()) {
+                    showBattleDialog(monsterId, index);
+                    return;
+                }
             }
         }
+
         applyEventResult(index);
     }
     private void applyEventResult(int choiceIndex) {
@@ -438,6 +443,7 @@ public class EventActivity extends BaseActivity {
                 List<Achievement> killUnlocked = dt.getAchievementManager().updateProgress("kill", 1, true);
                 showAchievementNotification(killUnlocked);
 
+                updatePlayerHeader();
                 applyEventResult(choiceIndex);
             }
         });

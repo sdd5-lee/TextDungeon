@@ -99,9 +99,7 @@ public class BattleSystem {
                     Magic magic = DataControlTower.getInstance(context).getMagicManager().spawn(lm.getMagicId());
                     int magicDamage = player.castMagic(magic);
                     int finalDamage = magicDamage + ((magicDamage/10) * battleTurn);
-                    if (applyVampiricTouch()){
-                        player.heal(finalDamage/10);
-                    }
+                    
                     if (random.nextInt(100) < player.getTotalCrit()) {
                         finalDamage = applyTraitCritDamage(finalDamage);
                         log.append("크리티컬!   \n");

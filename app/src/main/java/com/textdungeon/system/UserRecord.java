@@ -109,7 +109,7 @@ public class UserRecord {
         return discoveredMonsters.size();
     }
     public Set<String> getDiscoveredMonsters() {
-        if (discoveredItems == null) return new HashSet<>();
+        if (discoveredMonsters == null) return new HashSet<>();
         return discoveredMonsters;
     }
 
@@ -120,7 +120,7 @@ public class UserRecord {
         return discoveredEvents.size();
     }
     public Set<String> getDiscoveredEvents() {
-        if (discoveredItems == null) return new HashSet<>();
+        if (discoveredEvents == null) return new HashSet<>();
         return discoveredEvents;
     }
     public void clearAll() {

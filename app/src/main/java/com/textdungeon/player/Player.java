@@ -125,9 +125,9 @@ public class Player {
         stat.setHp(newHp);
     }
     public void refreshHp() {
-        int totalHp = stat.getHp() + equipment.getTotalHp();
-        if (stat.getHp() < totalHp) {
-            stat.setHp(totalHp);
+        int maxHp = getMaxHp();
+        if (stat.getHp() > maxHp) {
+            stat.setHp(maxHp);
         }
     }
     public int castMagic(Magic magic) {

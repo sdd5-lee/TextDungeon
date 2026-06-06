@@ -76,6 +76,13 @@ public class MainActivity extends BaseActivity {
     }
 
     public void moveOption(View v) {
-        startActivity(new Intent(this, SystemSettingActivity.class));
+        startActivityForResult(new Intent(this, SystemSettingActivity.class), 100);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100) {
+            recreate();
+        }
     }
 }
