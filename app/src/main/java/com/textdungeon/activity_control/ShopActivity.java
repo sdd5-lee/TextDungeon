@@ -96,7 +96,6 @@ public class ShopActivity extends BaseActivity {
                 pageIndicator.setText((unlockTraitViewPager.getCurrentItem() + 1) + " / " + traitAdapter.getItemCount());
             }
         } else {
-            // 업그레이드 탭에서는 인디케이터 숨김
             pageIndicator.setVisibility(View.INVISIBLE);
         }
     }

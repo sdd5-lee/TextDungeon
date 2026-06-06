@@ -213,18 +213,14 @@ public class BattleDialog extends Dialog {
 
     // 전투 액션 실행 및 화면 갱신
     private void executeAction(int choice, String magicId) {
-        if (battleSystem.isBattleOver() || battleSystem.isEscapeState()) {
-            if (battleSystem.isEscapeState()){
-                onUpdateCallback.run();
-            }
-            dismiss();
-            return;
-        }
         String resultLog = battleSystem.playerAction(choice, magicId);
         appendLog(resultLog);
         updateUI();
         if (battleSystem.isEscapeState()){
             appendLog("\n[도망에 성공하였습니다. 2초 뒤 돌아갑니다...]");
+            findViewById(R.id.actions_area).setVisibility(View.GONE);
+            onUpdateCallback.run();
+            new Handler(Looper.getMainLooper()).postDelayed(this::dismiss, 2000);
         }
         else if (battleSystem.isBattleOver()) {
             appendLog("\n[전투가 종료되었습니다. 2초 뒤 돌아갑니다...]");

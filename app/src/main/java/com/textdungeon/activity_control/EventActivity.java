@@ -409,6 +409,7 @@ public class EventActivity extends BaseActivity {
                 () -> escapeState[0] = true);
         battleDialog.setOnDismissListener(dialog -> {
             if (eventManager.isPlayerDead()) {
+                updatePlayerHeader();
                 appendDesc("당신은 사망하였습니다.");
 
                 ChoiceButton button = new ChoiceButton(this);
