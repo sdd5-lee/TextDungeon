@@ -154,7 +154,12 @@ public class StatDialog extends Dialog {
         dialogStat.setHealth(vit);
         dialogStat.setWisdom(wis);
         dialogStat.setStatPoint(count);
+
+        int equipHp = player.getEquipment().getTotalHp();
+        dialogStat.setHp(Math.max(0, dialogStat.getHp() - equipHp));
         dialogStat.updateBattleStat(player.getLevel());
+        dialogStat.setHp(dialogStat.getHp() + equipHp);
+
         player.refreshHp();
         if (onUpdateCallback != null) {
             onUpdateCallback.run();
