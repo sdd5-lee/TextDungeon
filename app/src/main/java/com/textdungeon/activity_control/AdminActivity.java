@@ -1,10 +1,17 @@
 package com.textdungeon.activity_control;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.textdungeon.R;
+import com.textdungeon.ai.ApiKeyManager;
 import com.textdungeon.data.DataControlTower;
 import com.textdungeon.event.GameEvent;
 import com.textdungeon.model.Item;
@@ -26,6 +33,9 @@ public class AdminActivity extends BaseActivity {
         Button btnResetGame = findViewById(R.id.btn_admin_reset_game);
         Button btnClose = findViewById(R.id.btn_close_admin);
 
+        Button btnApiKey = findViewById(R.id.btn_admin_api_key);
+
+        setSfx(btnApiKey);
         setSfx(btnAddGold, btnUnlockAll, btnLockAll, btnResetGame, btnClose);
 
         btnAddGold.setOnClickListener(v -> {
@@ -66,5 +76,39 @@ public class AdminActivity extends BaseActivity {
 
         // 닫기 버튼
         btnClose.setOnClickListener(v -> finish());
+        btnApiKey.setOnClickListener(v -> showApiKeyDialog());
+
+    }
+    private void showApiKeyDialog() {
+        SharedPreferences prefs = getSharedPreferences("ApiKeys", Context.MODE_PRIVATE);
+
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.setPadding(48, 32, 48, 0);
+
+        EditText etMain = new EditText(this);
+        etMain.setHint("GEMINI_API_KEY");
+        etMain.setText(prefs.getString("GEMINI_API_KEY", ""));
+
+        EditText etGods = new EditText(this);
+        etGods.setHint("GEMINI_API_KEY_GODS");
+        etGods.setText(prefs.getString("GEMINI_API_KEY_GODS", ""));
+
+        layout.addView(etMain);
+        layout.addView(etGods);
+
+        new android.app.AlertDialog.Builder(this)
+                .setTitle("API 키 설정")
+                .setView(layout)
+                .setPositiveButton("저장", (dialog, which) -> {
+                    prefs.edit()
+                            .putString("GEMINI_API_KEY", etMain.getText().toString().trim())
+                            .putString("GEMINI_API_KEY_GODS", etGods.getText().toString().trim())
+                            .apply();
+                    ApiKeyManager.init(this);
+                    Toast.makeText(this, "API 키가 저장되었습니다.", Toast.LENGTH_SHORT).show();
+                })
+                .setNegativeButton("취소", null)
+                .show();
     }
 }

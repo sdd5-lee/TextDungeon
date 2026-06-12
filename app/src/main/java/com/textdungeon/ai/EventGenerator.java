@@ -2,7 +2,6 @@ package com.textdungeon.ai;
 
 import android.util.Log;
 
-import com.example.textdungeon.BuildConfig;
 import com.google.ai.client.generativeai.GenerativeModel;
 import com.google.ai.client.generativeai.java.GenerativeModelFutures;
 import com.google.ai.client.generativeai.type.Content;
@@ -41,7 +40,7 @@ public class EventGenerator {
 
         GenerativeModel gm = new GenerativeModel(
                 "gemini-3-flash-preview",
-                BuildConfig.GEMINI_API_KEY_GODS,
+                ApiKeyManager.getGeminiGodsKey(),
                 config.build()
         );
 

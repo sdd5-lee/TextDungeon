@@ -5,6 +5,7 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.textdungeon.ai.AiManager;
+import com.textdungeon.ai.ApiKeyManager;
 import com.textdungeon.event.BattleEvent;
 import com.textdungeon.event.GameEvent;
 import com.textdungeon.event.ShopEvent;
@@ -41,6 +42,7 @@ public class DataControlTower {
         this.aiManager = new AiManager();
         this.aiEvents = new HashMap<>();
 
+        ApiKeyManager.init(appContext);
         loadGameData();
 
         this.achievementManager = new AchievementManager(appContext);

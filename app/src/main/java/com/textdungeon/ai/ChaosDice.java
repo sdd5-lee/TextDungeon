@@ -1,6 +1,5 @@
 package com.textdungeon.ai;
 
-import com.example.textdungeon.BuildConfig;
 import com.google.ai.client.generativeai.GenerativeModel;
 import com.google.ai.client.generativeai.java.GenerativeModelFutures;
 import com.google.ai.client.generativeai.type.Content;
@@ -30,7 +29,7 @@ public class ChaosDice {
 
         GenerativeModel gm = new GenerativeModel(
                 "gemini-3-flash-preview",
-                BuildConfig.GEMINI_API_KEY,
+                ApiKeyManager.getGeminiKey(),
                 config.build()
         );
 

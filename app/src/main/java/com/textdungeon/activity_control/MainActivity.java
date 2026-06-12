@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.textdungeon.R;
+import com.textdungeon.ai.ApiKeyManager;
 import com.textdungeon.data.DataControlTower;
 import com.textdungeon.model.Achievement;
 
@@ -17,7 +18,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        ApiKeyManager.init(this.getApplicationContext());
         dt = DataControlTower.getInstance(this);
 
         View btnNewGame = findViewById(R.id.btn_start);
