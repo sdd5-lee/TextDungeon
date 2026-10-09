@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.textdungeon.R;
+import com.textdungeon.buttons.SingleClickListener;
 import com.textdungeon.data.DataControlTower;
 import com.textdungeon.model.Achievement;
 
@@ -12,7 +13,6 @@ import java.util.List;
 
 public class MainActivity extends BaseActivity {
     private DataControlTower dt;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,13 +31,7 @@ public class MainActivity extends BaseActivity {
 
         if (btnContinue != null) {
             setSfx(btnContinue);
-
-            if (dt.getPlayer() != null) {
-                btnContinue.setVisibility(View.VISIBLE);
-                btnContinue.setOnClickListener(v -> moveEvent());
-            } else {
-                btnContinue.setVisibility(View.GONE);
-            }
+            btnContinue.setOnClickListener(SingleClickListener.wrap(v -> moveEvent()));
         }
 
         btnShop.setOnClickListener(this::moveShop);
@@ -49,6 +43,16 @@ public class MainActivity extends BaseActivity {
             startActivity(new Intent(MainActivity.this, AchievementActivity.class));
         });
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // 게임 중 '메인 화면으로' 돌아오거나 정산 후 돌아왔을 때도 이어하기 버튼이 맞게 보이도록 매번 갱신
+        View btnContinue = findViewById(R.id.btn_continue);
+        if (btnContinue != null) {
+            btnContinue.setVisibility(dt.getPlayer() != null ? View.VISIBLE : View.GONE);
+        }
+    }
+
     public void moveCharacter() {
         if (dt.getPlayer() != null) {
             new android.app.AlertDialog.Builder(this)

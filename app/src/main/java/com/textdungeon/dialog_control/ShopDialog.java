@@ -99,7 +99,7 @@ public class ShopDialog extends Dialog {
             return;
         }
 
-        if (player.getInventory().isFullItem()) {
+        if (!player.getInventory().canAdd(item.getId())) {
             showBar("인벤토리가 가득 찼습니다!");
             return;
         }

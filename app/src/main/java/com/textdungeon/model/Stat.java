@@ -162,13 +162,13 @@ public class Stat {
             case "경험치":
                 this.exp += value;
                 break;
+            // 보상의 데미지/회복은 Reward.apply()에서 Player.takeDamage/heal로 처리된다 (장비 HP 포함).
+            // 아래는 직접 호출됐을 때를 위한 안전한 처리 (예전 식은 HP를 value로 덮어쓰거나 두 배로 만들었음)
             case "데미지":
-                int damage = Math.max(0,getHp() - value);
-                addHp(-damage);
+                this.hp = Math.max(0, this.hp - Math.abs(value));
                 break;
             case "회복":
-                int heal = Math.min(getMaxHp(),getHp() + value);
-                addHp(heal);
+                this.hp = Math.min(this.maxHp, this.hp + Math.abs(value));
                 break;
             case "골드":
                 this.addGold(value);

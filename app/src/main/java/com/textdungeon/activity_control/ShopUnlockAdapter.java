@@ -73,8 +73,8 @@ public class ShopUnlockAdapter extends RecyclerView.Adapter<ShopUnlockAdapter.Vi
                 showBar(view, resultMsg);
                 if (resultMsg.contains("해금되었습니다")){
                     List<Achievement> unlocked = com.textdungeon.data.DataControlTower.getInstance(context).getAchievementManager().updateProgress("shop_unlock", 1, true);
-                    if (context instanceof com.textdungeon.activity_control.BaseActivity) {
-                        ((com.textdungeon.activity_control.BaseActivity) context).showAchievementNotification(unlocked);
+                    if (context instanceof BaseActivity) {
+                        ((BaseActivity) context).showAchievementNotification(unlocked);
                     }
                     onSuccessCallback.run();
                 }
@@ -96,8 +96,8 @@ public class ShopUnlockAdapter extends RecyclerView.Adapter<ShopUnlockAdapter.Vi
                 showBar(view, resultMsg);
                 if (resultMsg.contains("해금되었습니다")){
                     List<Achievement> unlocked = com.textdungeon.data.DataControlTower.getInstance(context).getAchievementManager().updateProgress("shop_unlock", 1, true);
-                    if (context instanceof com.textdungeon.activity_control.BaseActivity) {
-                        ((com.textdungeon.activity_control.BaseActivity) context).showAchievementNotification(unlocked);
+                    if (context instanceof BaseActivity) {
+                        ((BaseActivity) context).showAchievementNotification(unlocked);
                     }
                     onSuccessCallback.run();
                 }

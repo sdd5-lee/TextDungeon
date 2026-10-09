@@ -14,6 +14,9 @@ public class ShopEvent extends GameEvent {
     public ShopEvent() {
         super();
     }
+    public List<String> getShopItemIds() {
+        return shopItems;
+    }
     public void openShop(Context context, Player player, DataControl<Item> itemManager) {
         ShopDialog dialog = new ShopDialog(context, player, itemManager, shopItems);
         dialog.show();

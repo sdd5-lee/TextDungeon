@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.textdungeon.R;
 import com.google.android.material.snackbar.Snackbar;
+import com.textdungeon.buttons.SingleClickListener;
 import com.textdungeon.data.DataControlTower;
 import com.textdungeon.model.Job;
 import com.textdungeon.model.Trait;
@@ -107,7 +108,7 @@ public class CharacterActivity extends BaseActivity {
         characterDesc.setText("직업을 선택하세요");
         playerJob = null;
 
-        btnEmbark.setOnClickListener(this::startGame);
+        btnEmbark.setOnClickListener(SingleClickListener.wrap(this::startGame)); // 연타 시 새 게임이 두 번 시작되는 것 방지
     }
 
     private void initJobCards() {

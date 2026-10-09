@@ -1,7 +1,6 @@
 package com.textdungeon.activity_control;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -26,11 +25,10 @@ public class SystemSettingActivity extends BaseActivity {
         SeekBar sbVolume = findViewById(R.id.sb_volume);
         RadioGroup rgFontSize = findViewById(R.id.rg_font_size);
         FrameLayout btnBack = findViewById(R.id.btn_back);
-        FrameLayout adminButton = findViewById(R.id.btn_admin);
         FrameLayout btnOpenSource = findViewById(R.id.btn_opensource);
 
         // 모든 버튼에 효과음 일괄 적용
-        setSfx(btnBack, adminButton, btnOpenSource);
+        setSfx(btnBack, btnOpenSource);
 
         int savedVolume = prefs.getInt("volume", 50);
         sbVolume.setProgress(savedVolume);
@@ -77,9 +75,6 @@ public class SystemSettingActivity extends BaseActivity {
                 recreate();
             }
         });
-
-        adminButton.setOnClickListener(view ->
-                startActivity(new Intent(this, AdminActivity.class)));
 
         btnOpenSource.setOnClickListener(v -> {
             new android.app.AlertDialog.Builder(this)

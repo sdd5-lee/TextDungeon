@@ -193,7 +193,10 @@ public class InventoryDialog extends Dialog {
                 if (item.getType().equalsIgnoreCase("artifact")) {
                     showArtifactSlotDialog(item, itemDialog);
                 } else {
-                    player.equipItem(item);
+                    if (!player.equipItem(item)) {
+                        showBar("가방이 꽉 차서 장비를 교체할 수 없습니다.");
+                        return;
+                    }
                     itemDialog.dismiss();
                     refreshAllUI();
                     showBar(item.getName() + "를 장착하였습니다");
@@ -242,11 +245,10 @@ public class InventoryDialog extends Dialog {
 
         btnMainAction.setText("장착 해제");
         btnMainAction.setOnClickListener(v -> {
-            if (player.getInventory().isFullItem()) {
+            if (!player.unequipItem(type, slotIndex)) {
                 showBar("가방이 꽉 차서 장착을 해제할 수 없습니다.");
                 return;
             }
-            player.unequipItem(type, slotIndex);
             itemDialog.dismiss();
             refreshAllUI();
         });
@@ -284,7 +286,10 @@ public class InventoryDialog extends Dialog {
         new android.app.AlertDialog.Builder(getContext())
                 .setTitle("장착할 슬롯을 선택하세요")
                 .setItems(slots, (dialog, which) -> {
-                    player.equipArtifact(which, item);
+                    if (!player.equipArtifact(which, item)) {
+                        showBar("가방이 꽉 차서 장신구를 교체할 수 없습니다.");
+                        return;
+                    }
                     parentDialog.dismiss();
                     refreshAllUI();
                     showBar(item.getName() + "를 장착하였습니다");
