@@ -54,7 +54,7 @@ public enum Trait {
         }
         @Override
         public boolean triggerMoreStrike() {
-            return new Random().nextInt(100) > 80;
+            return new Random().nextInt(100) < 20; // 설명대로 20% (예전 '> 80'은 81~99로 19%였음)
         }
         @Override
         public int modifyStrikeCount() {

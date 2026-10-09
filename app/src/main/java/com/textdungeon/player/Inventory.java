@@ -45,6 +45,14 @@ public class Inventory {
             itemMap.remove(itemId);
         }
     }
+    /** 이 아이템을 넣을 자리가 있는지. 이미 가진 아이템은 같은 칸에 쌓이므로 가방이 꽉 차도 넣을 수 있다. */
+    public boolean canAdd(String itemId) {
+        return itemMap.containsKey(itemId) || itemMap.size() < MAX_INV;
+    }
+    public int getCount(String itemId) {
+        Integer c = itemMap.get(itemId);
+        return c == null ? 0 : c;
+    }
     public boolean isFullItem() {
         return itemMap.size() >= MAX_INV;
     }

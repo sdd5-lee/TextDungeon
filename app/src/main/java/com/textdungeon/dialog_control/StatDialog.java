@@ -149,13 +149,15 @@ public class StatDialog extends Dialog {
         builder.show();
     }
     private void saveAndDismiss() {
+        int wisdomBefore = dialogStat.getWisdom();
         dialogStat.setStrength(str);
         dialogStat.setAgility(agi);
         dialogStat.setHealth(vit);
         dialogStat.setWisdom(wis);
         dialogStat.setStatPoint(count);
-        dialogStat.updateBattleStat(player.getLevel());
-        player.refreshHp();
+
+        // 재계산 로직은 Player 한 곳에서 관리 (지혜 분배 시 마법 횟수 갱신 누락도 함께 해결)
+        player.recalculateStats(wisdomBefore);
         if (onUpdateCallback != null) {
             onUpdateCallback.run();
         }

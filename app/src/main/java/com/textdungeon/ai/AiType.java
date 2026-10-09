@@ -24,7 +24,9 @@ public enum AiType {
     TREASURE(
             "보물의 신",
             "event_treasure_",
-            "이 이벤트의 type은 반드시 'shop'이어야 한다. 신비로운 상점의 역할을 수행하되, 제공하는 shopItems 목록은 원래 '40층 이상의 심층 던전'에서나 발견할 수 있는 최고 등급의 장비와 아이템들로 3개 선택하라. 단, 보물의 신이 베푸는 은총이므로 이 최고급 아이템들의 구매 가격(골드 요구량)은 말도 안 되게 싸고 저렴하게 책정하여 파격적인 할인을 제공하라."
+            "이 이벤트의 type은 반드시 'normal'이고 shopItems는 null이어야 한다. 보물의 신이 심층 던전의 보물 두 개를 내밀고 플레이어는 그중 하나만 가질 수 있다. " +
+            "choices는 각각 하나의 보물을 고르는 행동이고, 각 rewards의 itemId는 위 아이템 목록(심층 보물만 들어 있음)에서 서로 다른 id를 골라라. " +
+            "rewards.description에는 어떤 보물을 얻었는지 묘사하고, statRewards는 비워 두거나 아주 작게 하라."
     );
 
     private final String godName;

@@ -145,30 +145,33 @@ public class Stat {
         if (this.gold < 0) this.gold = 0;
     }
 
+    /** 기본 스탯 최솟값. 0 이하가 되면 공격력/최대 HP가 0 이하가 되어 전투가 깨진다. */
+    private static final int MIN_BASE_STAT = 1;
+
     public void gainStat(String type, int value) {
         switch (type) {
             case "힘":
-                this.strength += value;
+                this.strength = Math.max(MIN_BASE_STAT, this.strength + value);
                 break;
             case "민첩":
-                this.agility += value;
+                this.agility = Math.max(MIN_BASE_STAT, this.agility + value);
                 break;
             case "체력":
-                this.health += value;
+                this.health = Math.max(MIN_BASE_STAT, this.health + value);
                 break;
             case "지혜":
-                this.wisdom += value;
+                this.wisdom = Math.max(MIN_BASE_STAT, this.wisdom + value);
                 break;
             case "경험치":
-                this.exp += value;
+                this.exp = Math.max(0, this.exp + value);
                 break;
+            // 보상의 데미지/회복은 Reward.apply()에서 Player.takeDamage/heal로 처리된다 (장비 HP 포함).
+            // 아래는 직접 호출됐을 때를 위한 안전한 처리 (예전 식은 HP를 value로 덮어쓰거나 두 배로 만들었음)
             case "데미지":
-                int damage = Math.max(0,getHp() - value);
-                addHp(-damage);
+                this.hp = Math.max(0, this.hp - Math.abs(value));
                 break;
             case "회복":
-                int heal = Math.min(getMaxHp(),getHp() + value);
-                addHp(heal);
+                this.hp = Math.min(this.maxHp, this.hp + Math.abs(value));
                 break;
             case "골드":
                 this.addGold(value);
