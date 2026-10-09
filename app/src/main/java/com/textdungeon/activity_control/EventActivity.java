@@ -328,8 +328,11 @@ public class EventActivity extends BaseActivity {
         appendDesc("결과 : " + result);
         updatePlayerHeader();
 
-
-        if (currentEvent.isRetry(choiceIndex)) {
+        // 이벤트 데미지로 HP가 0이 되면 전투가 아니어도 여기서 끝낸다 (예전엔 HP 0으로 다음 층에 진행됐음)
+        if (eventManager.isPlayerDead()) {
+            showDeathButton();
+        }
+        else if (currentEvent.isRetry(choiceIndex)) {
             renderRetryButtons();
         }
         else if (eventManager.didLevelUp(levelSnapshot)) {
@@ -452,6 +455,25 @@ public class EventActivity extends BaseActivity {
     // 팝업 / 다이얼로그
     // ─────────────────────────────────────────────────────────────
 
+    /** 사망 문구와 "사망 확인" 버튼을 띄운다 (전투/이벤트 공통) */
+    private void showDeathButton() {
+        updatePlayerHeader();
+        appendDesc("당신은 사망하였습니다.");
+        choiceButtons.removeAllViews();
+
+        ChoiceButton button = new ChoiceButton(this);
+        setSfx(button);
+
+        button.setTextView("사망 확인");
+        button.setOnClickListener(SingleClickListener.wrap(v -> {
+            Intent intent = new Intent(this, DiedActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+        }));
+        choiceButtons.addView(button);
+    }
+
     private void showBattleDialog(String monsterId, int choiceIndex) {
         Monster monster = eventManager.spawnMonster(monsterId);
         if (monster == null) {
@@ -464,20 +486,7 @@ public class EventActivity extends BaseActivity {
                 () -> escapeState[0] = true);
         battleDialog.setOnDismissListener(dialog -> {
             if (eventManager.isPlayerDead()) {
-                updatePlayerHeader();
-                appendDesc("당신은 사망하였습니다.");
-
-                ChoiceButton button = new ChoiceButton(this);
-                setSfx(button);
-
-                button.setTextView("사망 확인");
-                button.setOnClickListener(SingleClickListener.wrap(v -> {
-                    Intent intent = new Intent(this, DiedActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    finish();
-                }));
-                choiceButtons.addView(button);
+                showDeathButton();
                 startTypingAnimation();
             } else if(escapeState[0]) {
                 applyEscapeResult();

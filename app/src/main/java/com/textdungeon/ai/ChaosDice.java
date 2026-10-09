@@ -57,14 +57,16 @@ public class ChaosDice {
         backend.generate(prompt, ResponseFormat.TEXT, new LlmCallback() {
             @Override
             public void onResult(String text) {
-                ChoiceDelta delta;
+                ChoiceDelta parsed;
                 try {
-                    delta = ChoiceLineParser.parse(text, validItemIds);
+                    parsed = ChoiceLineParser.parse(text, validItemIds);
                 } catch (ChoiceLineParser.ParseException e) {
                     Log.e(TAG, "파싱 실패(" + e.getMessage() + ") 원문:\n" + text);
                     postError(callback, "혼돈의 결말 해석 실패: " + e.getMessage());
                     return;
                 }
+                // 파서 상한(±9999)은 형식 방어용일 뿐이라, 실제 게임 수치는 층별 상한으로 다시 자른다
+                final ChoiceDelta delta = parsed.withClampedStats(floor);
                 // 이벤트 객체는 UI가 읽고 있으므로 수정은 메인 스레드에서
                 mainHandler.post(() -> {
                     try {

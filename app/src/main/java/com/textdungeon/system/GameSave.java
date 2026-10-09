@@ -4,6 +4,9 @@ import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.textdungeon.data.Difficulty;
 import com.textdungeon.data.EventGson;
 import com.textdungeon.event.GameEvent;
@@ -127,11 +130,23 @@ public class GameSave {
         if (!file.exists()) return null;
         try (FileInputStream fis = new FileInputStream(file);
              InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8)) {
-            return EventGson.create().fromJson(isr, GameSave.class);
+            JsonElement root = JsonParser.parseReader(isr);
+            // 업데이트 전 세이브는 이벤트에 type이 없다. 필드로 종류를 추정해 채워 넣어야
+            // 전투/상점 정보가 살아 있고, 다음 저장부터는 새 형식으로 정상 저장된다.
+            if (root.isJsonObject()) {
+                JsonObject obj = root.getAsJsonObject();
+                if (obj.has("aiEvents") && obj.get("aiEvents").isJsonObject()) {
+                    for (Map.Entry<String, JsonElement> e : obj.getAsJsonObject("aiEvents").entrySet()) {
+                        fillMissingEventType(e.getValue());
+                    }
+                }
+                if (obj.has("currentEvent")) fillMissingEventType(obj.get("currentEvent"));
+            }
+            return EventGson.create().fromJson(root, GameSave.class);
         } catch (Exception e) {
             Log.w(TAG, "새 형식으로 불러오기 실패, 예전 형식으로 재시도", e);
         }
-        // 업데이트 전 세이브는 이벤트 종류(type) 없이 저장돼 있으므로 예전 방식으로 읽는다 (진행 중인 판 유실 방지)
+        // 그래도 실패하면 예전 방식으로 읽는다 (이벤트 종류는 잃지만 진행 중인 판은 살린다)
         try (FileInputStream fis = new FileInputStream(file);
              InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8)) {
             return new Gson().fromJson(isr, GameSave.class);
@@ -141,6 +156,21 @@ public class GameSave {
             return null;
         }
     }
+    /** type이 없는 이벤트 JSON에 enemyId/shopItems 유무로 battle/shop/normal을 채운다 */
+    private static void fillMissingEventType(JsonElement element) {
+        if (element == null || !element.isJsonObject()) return;
+        JsonObject event = element.getAsJsonObject();
+        if (event.has("type") && !event.get("type").isJsonNull()) return;
+
+        String type = "normal";
+        if (event.has("shopItems") && !event.get("shopItems").isJsonNull()) {
+            type = "shop";
+        } else if (event.has("enemyId") && !event.get("enemyId").isJsonNull()) {
+            type = "battle";
+        }
+        event.addProperty("type", type);
+    }
+
     public static void deleteRun(Context context){
         File file = new File(context.getFilesDir(), RUN_FILE);
         if (file.exists()){

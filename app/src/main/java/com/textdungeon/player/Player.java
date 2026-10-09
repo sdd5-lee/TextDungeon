@@ -46,15 +46,31 @@ public class Player {
             stat.setMaxExp(80 + this.level * 25);
             stat.addStatPoint(5);
 
-            int equipHp = equipment.getTotalHp();
-            stat.setHp(Math.max(0, stat.getHp() - equipHp));
-
-            stat.updateBattleStat(level);
-
-            stat.setHp(stat.getHp() + equipHp);
+            updateBattleStatKeepingHp();
             magicScroll.updateCounts(stat.getWisdom());
         }
         refreshHp();
+    }
+
+    /**
+     * 전투 스탯을 다시 계산하면서 현재 HP는 "최대 HP가 늘어난 만큼만" 올린다.
+     * updateBattleStat()은 장비 HP를 모르고 HP를 기본 최대 HP로 잘라내므로, 계산 전 HP를 기준으로 되돌린다.
+     * 예전 방식(장비 HP를 뺐다가 다시 더하기)은 HP가 장비 HP보다 낮으면 0으로 잘린 뒤 장비 HP만큼 채워져서
+     * 공짜 회복이 되고, HP 0(사망)이면 부활하는 버그가 있었다.
+     */
+    private void updateBattleStatKeepingHp() {
+        int hpBefore = stat.getHp();
+        int baseMaxBefore = stat.getMaxHp();
+
+        stat.updateBattleStat(level);
+
+        if (hpBefore <= 0) {
+            stat.setHp(0); // 죽은 상태는 스탯 변화로 되살아나지 않는다
+            return;
+        }
+        int gained = Math.max(0, stat.getMaxHp() - baseMaxBefore);
+        stat.setHp(hpBefore + gained);
+        // 최대 HP를 넘는 부분은 호출부의 refreshHp()가 장비/특성 포함 최대 HP 기준으로 잘라낸다
     }
 
     /**
@@ -65,11 +81,7 @@ public class Player {
      * @param previousWisdom 스탯이 바뀌기 전의 지혜 (마법 횟수를 변화량만큼만 조정하기 위해 필요)
      */
     public void recalculateStats(int previousWisdom) {
-        // updateBattleStat()이 장비 HP를 모르고 HP를 잘라내므로, 장비 HP를 잠시 빼고 계산한다 (levelUp과 같은 방식)
-        int equipHp = equipment.getTotalHp();
-        stat.setHp(Math.max(0, stat.getHp() - equipHp));
-        stat.updateBattleStat(level);
-        stat.setHp(stat.getHp() + equipHp);
+        updateBattleStatKeepingHp();
 
         magicScroll.adjustForWisdomChange(previousWisdom, stat.getWisdom());
         refreshHp();

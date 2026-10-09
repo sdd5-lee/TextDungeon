@@ -31,7 +31,9 @@ public class BattleSystem {
         this.player = player;
         this.monster = monster;
         this.context = context;
-        battleTurn = 1;
+        // 투쟁 특성의 누적 턴 수. 데미지 보너스는 (데미지/10)*battleTurn 이므로 0에서 시작해야
+        // 특성이 없을 때 보너스가 0이 된다 (예전엔 1이라 모든 공격에 +10%가 붙었음)
+        battleTurn = 0;
 
         this.enemyName = monster.getName();
         this.enemyHp = monster.getMaxHp() * difficulty.statMultiplier;

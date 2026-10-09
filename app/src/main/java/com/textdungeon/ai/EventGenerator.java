@@ -76,7 +76,7 @@ public class EventGenerator {
         backend.generate(prompt, ResponseFormat.JSON, new LlmCallback() {
             @Override
             public void onResult(String text) {
-                parseAndCallback(text, itemList, monsterList, aiType, callback);
+                parseAndCallback(text, floor, itemList, monsterList, aiType, callback);
             }
 
             @Override
@@ -86,7 +86,7 @@ public class EventGenerator {
         });
     }
 
-    private void parseAndCallback(String rawText, List<Item> itemList, List<Monster> monsterList,
+    private void parseAndCallback(String rawText, int floor, List<Item> itemList, List<Monster> monsterList,
                                   AiType aiType, AiCallback callback) {
         try {
             String cleanJson = rawText.replaceAll("(?s)```json\\s*|\\s*```", "").trim();
@@ -99,6 +99,9 @@ public class EventGenerator {
             } else {
                 jsonObject = jsonElement.getAsJsonObject();
             }
+
+            // 선택지/보상 개수, 아이템 id, 스탯 수치 정리 (실패하면 예외 → onError → 재시도)
+            normalizeChoicesAndRewards(jsonObject, floor, itemList);
 
             if (aiType == AiType.TREASURE) {
                 // 보물의 신은 상점이 아니라 보물을 골라 받는 일반 이벤트 (타입 판별보다 먼저 정리)
@@ -127,6 +130,85 @@ public class EventGenerator {
         } catch (Exception e) {
             Log.e(TAG, "JSON 파싱 실패! rawText: \n" + rawText, e);
             callback.onError("이벤트 창조 실패: " + e.getMessage());
+        }
+    }
+
+    /**
+     * AI 이벤트의 선택지와 보상을 게임이 안전하게 쓸 수 있는 형태로 맞춘다.
+     *
+     * 1) choices와 rewards 개수가 다르면 EventActivity에서 rewards.get(index)가 터지므로 짧은 쪽에 맞춰 자른다.
+     *    둘 중 하나라도 비었거나 형식이 틀리면 예외를 던져 재시도하게 한다.
+     * 2) 아이템 목록에 없는 itemId는 null로 바꾼다 (없는 아이템인데 "가방이 가득 찼다"고 막히는 것 방지).
+     *    보물의 신은 fixTreasureEvent가 다시 채우므로 여기서 지워져도 괜찮다.
+     * 3) statRewards 수치를 층별 상한(RewardLimits)으로 자르고, 모르는 종류는 뺀다.
+     */
+    private void normalizeChoicesAndRewards(JsonObject event, int floor, List<Item> itemList) {
+        if (!event.has("choices") || !event.get("choices").isJsonArray()
+                || !event.has("rewards") || !event.get("rewards").isJsonArray()) {
+            throw new IllegalStateException("choices/rewards 누락");
+        }
+        JsonArray choices = event.getAsJsonArray("choices");
+        JsonArray rewards = event.getAsJsonArray("rewards");
+
+        int count = Math.min(choices.size(), rewards.size());
+        if (count == 0) {
+            throw new IllegalStateException("선택지 없음");
+        }
+        if (choices.size() != rewards.size()) {
+            Log.w(TAG, "선택지(" + choices.size() + ")와 보상(" + rewards.size() + ") 개수 불일치 → " + count + "개로 맞춤");
+            while (choices.size() > count) choices.remove(choices.size() - 1);
+            while (rewards.size() > count) rewards.remove(rewards.size() - 1);
+        }
+
+        Set<String> validItemIds = new HashSet<>();
+        for (Item item : itemList) {
+            if (item != null && item.getId() != null) validItemIds.add(item.getId());
+        }
+
+        for (int i = 0; i < count; i++) {
+            JsonElement c = choices.get(i);
+            if (c == null || c.isJsonNull() || !c.isJsonPrimitive() || c.getAsString().trim().isEmpty()) {
+                throw new IllegalStateException("빈 선택지 " + i);
+            }
+            if (!rewards.get(i).isJsonObject()) {
+                throw new IllegalStateException("보상 형식 오류 " + i);
+            }
+            JsonObject reward = rewards.get(i).getAsJsonObject();
+
+            if (reward.has("itemId") && !reward.get("itemId").isJsonNull()) {
+                String id = reward.get("itemId").getAsString();
+                if (!validItemIds.contains(id)) {
+                    Log.w(TAG, "목록에 없는 itemId(" + id + ") 제거");
+                    reward.add("itemId", com.google.gson.JsonNull.INSTANCE);
+                }
+            }
+
+            if (reward.has("statRewards") && reward.get("statRewards").isJsonArray()) {
+                JsonArray cleaned = new JsonArray();
+                for (JsonElement s : reward.getAsJsonArray("statRewards")) {
+                    if (!s.isJsonObject()) continue;
+                    JsonObject so = s.getAsJsonObject();
+                    if (!so.has("type") || !so.has("value")) continue;
+                    String type;
+                    int value;
+                    try {
+                        type = so.get("type").getAsString();
+                        value = so.get("value").getAsInt();
+                    } catch (Exception e) {
+                        continue; // "value":"많이" 같은 값은 버린다
+                    }
+                    int clamped = RewardLimits.clamp(type, value, floor);
+                    if (clamped == 0) continue;
+                    if (clamped != value) {
+                        Log.w(TAG, type + " " + value + " → " + clamped + " (층별 상한 적용)");
+                    }
+                    JsonObject fixed = new JsonObject();
+                    fixed.addProperty("type", type);
+                    fixed.addProperty("value", clamped);
+                    cleaned.add(fixed);
+                }
+                reward.add("statRewards", cleaned);
+            }
         }
     }
 
