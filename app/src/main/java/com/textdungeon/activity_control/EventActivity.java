@@ -418,10 +418,11 @@ public class EventActivity extends BaseActivity {
         appendDesc("🎲 운명을 재구성하는 중...");
         startTypingAnimation();
 
+        int floor = eventManager.getCurrentFloor();
         dt.getAiManager().requestChaosChoice(
-                eventManager.getCurrentFloor(),
+                floor,
                 player.getStat(),
-                dt.getItemManager().getAll(),
+                dt.getItemsForFloor(floor - 5, floor + 5), // 이 층대에 실제로 나오는 아이템만 (ChaosDice가 5개를 고른다)
                 currentEvent,
                 new AiCallback() {
                     @Override

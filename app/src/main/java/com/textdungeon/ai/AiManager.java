@@ -20,7 +20,7 @@ import java.util.List;
  * 외부에서 쓰는 메서드 시그니처는 예전과 같아서 Activity 쪽은 바꿀 필요가 없다.
  */
 public class AiManager {
-    private static final String GEMINI_MODEL = "gemini-3-flash-preview";
+    static final String GEMINI_MODEL = "gemini-3-flash-preview";
 
     private final OnDeviceBackend onDeviceBackend;
     private final EventGenerator generator;

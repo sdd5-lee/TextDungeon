@@ -188,6 +188,34 @@ public class DataControlTower {
     }
 
     /**
+     * 해당 층 범위의 이벤트(보상, 상점)에서 나오는 아이템 목록. 혼돈의 주사위 보상 후보로 쓴다.
+     * 아이템 데이터에는 층 정보가 없으므로 getMonstersForFloor처럼 기존 이벤트 데이터로 판단한다.
+     */
+    public java.util.List<Item> getItemsForFloor(int fromFloor, int toFloor) {
+        java.util.LinkedHashSet<String> ids = new java.util.LinkedHashSet<>();
+        for (GameEvent e : eventManager.getAll()) {
+            boolean overlaps = e.getMinFloor() <= toFloor && e.getMaxFloor() >= fromFloor;
+            if (!overlaps) continue;
+            if (e.getRewards() != null) {
+                for (com.textdungeon.model.Reward r : e.getRewards()) {
+                    if (r != null && r.getItemId() != null) ids.add(r.getItemId());
+                }
+            }
+            if (e instanceof com.textdungeon.event.ShopEvent) {
+                java.util.List<String> shop = ((com.textdungeon.event.ShopEvent) e).getShopItemIds();
+                if (shop != null) ids.addAll(shop);
+            }
+        }
+        java.util.List<Item> result = new java.util.ArrayList<>();
+        for (String id : ids) {
+            Item item = itemManager.spawn(id);
+            if (item != null) result.add(item);
+        }
+        // 해당 층 범위에 아이템이 나오는 이벤트가 하나도 없으면 전체 아이템으로 대체
+        return result.isEmpty() ? itemManager.getAll() : result;
+    }
+
+    /**
      * 해당 층 범위에 실제로 등장하는 몬스터 목록.
      * 몬스터 데이터에는 층 정보가 없으므로, 기존 전투 이벤트의 층 범위(minFloor~maxFloor)로 판단한다.
      * AI 이벤트 생성 때 이 목록만 넘겨서 1층에 보스급 몬스터가 나오는 일을 막는다.

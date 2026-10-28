@@ -12,8 +12,11 @@ import com.textdungeon.event.ShopEvent;
 import com.textdungeon.model.Item;
 import com.textdungeon.model.Stat;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -28,6 +31,14 @@ import java.util.stream.Collectors;
  */
 public class ChaosDice {
     private static final String TAG = "ChaosDice";
+    /** 프롬프트에 넣는 아이템 후보 수 */
+    static final int ITEM_CANDIDATES = 5;
+    // 형식을 보여 주는 예시. 모델이 이 선택지를 그대로 베끼면 실패로 처리한다
+    static final String EXAMPLE_CHOICE = "제단의 촛불을 맨손으로 끈다";
+    // HP 변화는 "HP-12"처럼 쓰게 하고 파서가 데미지/회복으로 바꾼다.
+    // "데미지"를 적에게 준 피해로, "체력"을 HP로 쓰는 경우가 많아서 두 단어는 모델에게 보여 주지 않는다
+    private static final String EXAMPLE_DESCRIPTION = "꺼진 심지에서 검은 연기가 피어올라 팔을 태우지만, 근육이 터질 듯 부풀어 오른다. 힘 +5, HP -12";
+    private static final String EXAMPLE_STATS = "힘+5, HP-12";
 
     private final LlmBackend backend;
     private final Handler mainHandler = new Handler(Looper.getMainLooper());
@@ -47,19 +58,18 @@ public class ChaosDice {
             return;
         }
 
+        List<Item> candidates = pickItems(itemList, new Random());
         Set<String> validItemIds = new HashSet<>();
-        for (Item item : itemList) {
-            if (item != null && item.getId() != null) validItemIds.add(item.getId());
-        }
+        for (Item item : candidates) validItemIds.add(item.getId());
 
-        String prompt = buildPrompt(floor, stat, itemList, currentEvent);
+        String prompt = buildPrompt(floor, stat, candidates, currentEvent);
 
         backend.generate(prompt, ResponseFormat.TEXT, new LlmCallback() {
             @Override
             public void onResult(String text) {
                 ChoiceDelta parsed;
                 try {
-                    parsed = ChoiceLineParser.parse(text, validItemIds);
+                    parsed = parseResponse(text, validItemIds, currentEvent);
                 } catch (ChoiceLineParser.ParseException e) {
                     Log.e(TAG, "파싱 실패(" + e.getMessage() + ") 원문:\n" + text);
                     postError(callback, "혼돈의 결말 해석 실패: " + e.getMessage());
@@ -96,42 +106,57 @@ public class ChaosDice {
     }
 
     /**
-     * 이벤트 전체 JSON 대신 필요한 정보만 짧게 넣는다 (입력 토큰도 줄어든다).
+     * 응답을 읽고, 기존 선택지나 프롬프트 예시를 그대로 베낀 경우는 실패로 본다.
+     * 디버그 빌드의 온디바이스 측정 Activity도 같은 기준을 쓰도록 패키지 범위로 열어 둔다.
      */
-    private static String buildPrompt(int floor, Stat stat, List<Item> itemList, GameEvent event) {
+    static ChoiceDelta parseResponse(String text, Set<String> validItemIds, GameEvent event)
+            throws ChoiceLineParser.ParseException {
+        Set<String> forbidden = new HashSet<>();
+        forbidden.add(EXAMPLE_CHOICE);
+        if (event.getChoices() != null) forbidden.addAll(event.getChoices());
+        return ChoiceLineParser.parse(text, validItemIds, forbidden);
+    }
+
+    /** 후보 중 최대 ITEM_CANDIDATES개를 무작위로 고른다. 목록이 길면 소형 모델이 형식을 놓친다 */
+    static List<Item> pickItems(List<Item> itemList, Random random) {
+        List<Item> pool = new ArrayList<>();
+        for (Item item : itemList) {
+            if (item != null && item.getId() != null) pool.add(item);
+        }
+        Collections.shuffle(pool, random);
+        return pool.size() > ITEM_CANDIDATES ? new ArrayList<>(pool.subList(0, ITEM_CANDIDATES)) : pool;
+    }
+
+    /**
+     * 이벤트 전체 JSON 대신 필요한 정보만 짧게 넣는다 (입력 토큰도 줄어든다).
+     * 형식은 "(20자 내외의 행동)" 같은 괄호 안내문 대신 채워진 예시로 보여 준다.
+     * 안내문을 쓰면 소형 온디바이스 모델이 그 문구를 그대로 선택지로 베낀다 (0-A 측정에서 20건 중 19건).
+     */
+    static String buildPrompt(int floor, Stat stat, List<Item> itemList, GameEvent event) {
         String items = itemList.stream()
                 .filter(i -> i != null && i.getId() != null)
                 .map(i -> i.getId() + ":" + i.getName())
                 .collect(Collectors.joining(", "));
-
-        StringBuilder choices = new StringBuilder();
-        List<String> existing = event.getChoices();
-        if (existing != null) {
-            for (int i = 0; i < existing.size(); i++) {
-                choices.append(i + 1).append(") ").append(existing.get(i)).append('\n');
-            }
-        }
+        String choices = event.getChoices() == null ? "" : String.join(" / ", event.getChoices());
 
         return "[혼돈의 신 | " + floor + "층]\n"
                 + "플레이어: 힘 " + stat.getStrength()
                 + ", 민첩 " + stat.getAgility()
-                + ", 체력 " + stat.getHealth()
                 + ", 지혜 " + stat.getWisdom()
-                + ", HP " + stat.getHp() + "/" + stat.getMaxHp()
-                + ", 골드 " + stat.getGold() + "\n"
-                + "아이템 목록(id:이름): " + items + "\n\n"
-                + "현재 이벤트: " + event.getName() + "\n"
+                + ", HP " + stat.getHp() + "/" + stat.getMaxHp() + "\n"
+                + "이벤트: " + event.getName() + "\n"
                 + "상황: " + event.getDescription() + "\n"
-                + "기존 선택지:\n" + choices + "\n"
-                + "이 상황에 어울리는 새로운 선택지 1개를 만들어라. 결과는 최악 또는 최상 중 무작위로 정하라.\n"
-                + "아래 형식 그대로, 다른 말 없이 출력하라.\n\n"
-                + "선택지: (20자 내외의 행동)\n"
-                + "보상설명: (TRPG 서사체로 결과를 묘사하고 수치를 그대로 적는다)\n"
-                + "아이템: (아이템 목록의 id 하나, 없으면 없음)\n"
-                + "스탯: 종류=수치\n\n"
-                + "규칙:\n"
-                + "- 스탯 종류는 힘, 민첩, 체력, 지혜, 경험치, 데미지, 회복 중에서만 고른다. 스탯 줄은 0~3개.\n"
-                + "- 체력이 깎이면 데미지=양수, 체력 회복은 회복=양수로 적는다.\n"
-                + "- 보상설명에 적은 수치와 스탯 줄의 수치를 일치시킨다.";
+                + "기존 선택지: " + choices + "\n"
+                + "아이템 후보: " + (items.isEmpty() ? "없음" : items) + "\n\n"
+                + "기존 선택지와 다른 새 행동 하나와 그 결과를 지어라. 결과는 무작위로 아주 좋거나 아주 나쁘게.\n"
+                + "아래 예시처럼 네 줄로만 답하라.\n\n"
+                + "선택지: " + EXAMPLE_CHOICE + "\n"
+                + "보상설명: " + EXAMPLE_DESCRIPTION + "\n"
+                + "아이템: 없음\n"
+                + "스탯: " + EXAMPLE_STATS + "\n\n"
+                + "규칙: 선택지는 20자 안팎의 행동. 보상설명은 결과 묘사 문장 끝에 스탯 줄과 같은 수치를 붙인다. "
+                + "스탯 줄에는 플레이어에게 생긴 변화량만 부호를 붙여 0~3개 적는다(현재 값이 아니라 늘거나 준 양). "
+                + "쓸 수 있는 것은 힘, 민첩, 지혜, 경험치, HP. 다치면 HP-수치, 회복하면 HP+수치. "
+                + "적에게 준 피해는 적지 않는다. 아이템은 후보 id 하나 또는 없음.";
     }
 }

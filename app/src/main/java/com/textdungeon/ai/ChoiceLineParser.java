@@ -4,6 +4,7 @@ import com.textdungeon.model.RewardStat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -20,6 +21,9 @@ import java.util.regex.Pattern;
  *   스탯: 힘=12
  *   스탯: 경험치=30
  *
+ * 모델은 "체력"을 HP로 이해하는 경우가 많아서, HP 변화는 "HP-12", "HP+10"으로 받고
+ * 게임 키워드로 바꾼다 (HP-12 → 데미지 12, HP+10 → 회복 10).
+ *
  * JSON과 달리 한 줄이 깨져도 그 줄만 버리고 나머지는 살린다.
  * 소형 온디바이스 모델이 형식을 조금 어겨도 버틸 수 있게 하는 게 목적.
  */
@@ -31,10 +35,16 @@ public final class ChoiceLineParser {
 
     private static final int MAX_CHOICE_LENGTH = 40;
     private static final int MAX_ABS_VALUE = 9999;
+    /** 보상설명이 묘사 문장인지 보는 최소 한글 글자 수. "120", "10 회복"처럼 숫자 위주인 설명을 거른다 */
+    private static final int MIN_DESCRIPTION_HANGUL = 6;
+
+    // 프롬프트 안내문을 베낀 선택지: "(20자 내외의 행동)", "(2) 기존 선택지" 처럼 괄호로 시작하거나 글자 수 안내가 들어 있음
+    private static final Pattern PLACEHOLDER_CHOICE =
+            Pattern.compile("^[(\\[<（【].*|.*\\d+\\s*자\\s*(내외|이내|안팎).*");
 
     // "힘=12", "힘 12", "힘:12", "힘 +12" 모두 허용
     private static final Pattern STAT_PATTERN =
-            Pattern.compile("(힘|민첩|체력|지혜|경험치|데미지|회복|골드)\\s*[=:]?\\s*([+-]?\\d+)");
+            Pattern.compile("(힘|민첩|체력|지혜|경험치|데미지|회복|골드|HP|hp|Hp)\\s*[=:]?\\s*([+-]?\\d+)");
 
     private ChoiceLineParser() {}
 
@@ -42,11 +52,17 @@ public final class ChoiceLineParser {
         public ParseException(String message) { super(message); }
     }
 
-    /**
-     * @param raw          AI 응답 원문
-     * @param validItemIds 실제 존재하는 아이템 id 목록 (여기 없는 id는 버린다)
-     */
     public static ChoiceDelta parse(String raw, Set<String> validItemIds) throws ParseException {
+        return parse(raw, validItemIds, Collections.emptySet());
+    }
+
+    /**
+     * @param raw              AI 응답 원문
+     * @param validItemIds     실제 존재하는 아이템 id 목록 (여기 없는 id는 버린다)
+     * @param forbiddenChoices 그대로 나오면 실패로 볼 선택지 (기존 선택지, 프롬프트 예시). 띄어쓰기 차이는 무시한다
+     */
+    public static ChoiceDelta parse(String raw, Set<String> validItemIds, Set<String> forbiddenChoices)
+            throws ParseException {
         if (raw == null || raw.trim().isEmpty()) {
             throw new ParseException("빈 응답");
         }
@@ -95,6 +111,18 @@ public final class ChoiceLineParser {
         if (description == null || description.isEmpty()) {
             throw new ParseException("보상설명 누락");
         }
+        // 형식은 맞아도 게임에 붙이면 안 되는 내용 (소형 모델이 안내문이나 기존 선택지를 베끼는 경우)
+        if (PLACEHOLDER_CHOICE.matcher(choice).matches()) {
+            throw new ParseException("선택지가 안내문 그대로");
+        }
+        for (String forbidden : forbiddenChoices) {
+            if (forbidden != null && withoutSpaces(forbidden).equals(withoutSpaces(choice))) {
+                throw new ParseException("선택지가 기존 선택지나 예시와 같음");
+            }
+        }
+        if (countHangul(description) < MIN_DESCRIPTION_HANGUL) {
+            throw new ParseException("보상설명이 묘사 문장이 아님");
+        }
         if (choice.length() > MAX_CHOICE_LENGTH) {
             choice = choice.substring(0, MAX_CHOICE_LENGTH);
         }
@@ -117,6 +145,19 @@ public final class ChoiceLineParser {
             t = t.substring(1, t.length() - 1).trim();
         }
         return t;
+    }
+
+    private static String withoutSpaces(String s) {
+        return s.replaceAll("\\s+", "");
+    }
+
+    private static int countHangul(String s) {
+        int n = 0;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c >= '가' && c <= '힣') n++;
+        }
+        return n;
     }
 
     private static boolean isQuote(char c) {
@@ -148,6 +189,10 @@ public final class ChoiceLineParser {
                 continue;
             }
             if (amount == 0) continue;
+            // HP 변화는 게임 키워드로: 줄면 데미지, 늘면 회복
+            if (type.equalsIgnoreCase("HP")) {
+                type = amount < 0 ? "데미지" : "회복";
+            }
             // 데미지/회복은 항상 양수로 처리 (Reward.apply 규칙)
             if (type.equals("데미지") || type.equals("회복")) {
                 amount = Math.abs(amount);
