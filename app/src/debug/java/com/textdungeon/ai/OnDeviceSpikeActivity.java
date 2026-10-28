@@ -72,7 +72,7 @@ import java.util.regex.Pattern;
 public class OnDeviceSpikeActivity extends AppCompatActivity {
     private static final String TAG = "SPIKE";
     // 0-A에서 Qwen3-1.7B는 한국어 품질 미달로 탈락, Gemma 4 E2B로 결정
-    private static final String DEFAULT_MODEL = "gemma-4-E2B-it.litertlm";
+    private static final String DEFAULT_MODEL = com.textdungeon.ai.backend.ModelLocator.MODEL_FILE;
     private static final int MAX_OUTPUT_TOKENS = 200;
     // 지금 프롬프트(600자 안팎, 아이템 후보 5개)가 들어가고도 남는 크기. 실제 입력 토큰 수는 결과에 기록된다
     private static final int MAX_NUM_TOKENS = 4096;
@@ -129,8 +129,15 @@ public class OnDeviceSpikeActivity extends AppCompatActivity {
         // --ei maxtokens 0 이면 모델 기본값(null)을 쓴다
         int maxTokens = intent.getIntExtra("maxtokens", MAX_NUM_TOKENS);
         maxNumTokens = maxTokens > 0 ? maxTokens : null;
+        int dice = intent.getIntExtra("dice", 0);
+        boolean waitReady = intent.getBooleanExtra("wait", true);
+        boolean release = intent.getBooleanExtra("release", false);
         new Thread(() -> {
             try {
+                if (dice > 0) {
+                    runDice(dice, waitReady, release);
+                    return;
+                }
                 if (probe != null) {
                     probe(model, backend, probe);
                     return;
@@ -267,6 +274,85 @@ public class OnDeviceSpikeActivity extends AppCompatActivity {
             }
         }
         show("진단 완료");
+    }
+
+    /**
+     * 1단계 확인: 게임과 같은 경로(AiManager → ChaosDice → FallbackBackend → 온디바이스/클라우드)로 주사위를 굴린다.
+     *   --ei dice 3        굴릴 횟수
+     *   --ez wait true     모델이 준비될 때까지 기다린 뒤 굴림 (false면 로딩 중에 바로 굴림)
+     *   --ez release true  끝나면 모델을 내리고 메모리를 다시 잰다
+     * 어느 백엔드가 응답했는지는 Logcat 태그 FallbackBackend. 디버그 플래그는 OnDeviceFlagsActivity로 바꾼다.
+     */
+    private void runDice(int count, boolean waitReady, boolean release) throws Exception {
+        DataControlTower dt = DataControlTower.getInstance(this);
+        AiManager ai = dt.getAiManager();
+        long pssBefore = Debug.getPss();
+        long start = SystemClock.elapsedRealtime();
+        ai.warmUpOnDevice();
+        if (waitReady) {
+            while (isLoading(ai.getOnDeviceState()) && SystemClock.elapsedRealtime() - start < 5 * 60_000) {
+                Thread.sleep(200);
+            }
+        }
+        show("모델 상태: " + ai.getOnDeviceState() + " (" + (SystemClock.elapsedRealtime() - start) + "ms), PSS "
+                + pssBefore / 1024 + "MB → " + Debug.getPss() / 1024 + "MB");
+
+        List<Case> cases = buildCases(dt, count);
+        int[] afterCallback = new int[cases.size()];
+        for (int i = 0; i < cases.size(); i++) {
+            Case c = cases.get(i);
+            int before = c.event.getChoices().size();
+            CountDownLatch latch = new CountDownLatch(1);
+            String[] outcome = new String[1];
+            long t0 = SystemClock.elapsedRealtime();
+            ai.requestChaosChoice(c.floor, statForFloor(c.floor), dt.getItemsForFloor(c.floor - 5, c.floor + 5),
+                    c.event, new AiCallback() {
+                        @Override
+                        public void onSuccess(GameEvent updatedEvent) {
+                            List<String> choices = updatedEvent.getChoices();
+                            outcome[0] = "성공 \"" + choices.get(choices.size() - 1) + "\"";
+                            latch.countDown();
+                        }
+
+                        @Override
+                        public void onError(String errorMessage) {
+                            outcome[0] = "오류 " + errorMessage;
+                            latch.countDown();
+                        }
+                    });
+            boolean done = latch.await(AiTimeouts.DICE_TOTAL_MS + 10_000, TimeUnit.MILLISECONDS);
+            afterCallback[i] = c.event.getChoices().size();
+            show("주사위 " + (i + 1) + "/" + cases.size() + " " + (SystemClock.elapsedRealtime() - t0) + "ms "
+                    + (done ? outcome[0] : "콜백 없음") + ", 선택지 " + before + "→" + afterCallback[i]
+                    + ", 모델 " + modelStatus(ai));
+        }
+
+        // 시간 초과 뒤에 늦게 도착한 응답이 선택지를 더 붙이지 않았는지 확인
+        Thread.sleep(10_000);
+        for (int i = 0; i < cases.size(); i++) {
+            int now = cases.get(i).event.getChoices().size();
+            if (now != afterCallback[i]) show("주사위 " + (i + 1) + ": 콜백 뒤에 선택지가 더 붙음 " + afterCallback[i] + "→" + now);
+        }
+        show("10초 뒤 모델 " + modelStatus(ai) + ", PSS " + Debug.getPss() / 1024 + "MB");
+
+        if (release) {
+            ai.releaseOnDevice();
+            Thread.sleep(3_000);
+            show("해제 뒤 모델 " + ai.getOnDeviceState() + ", PSS " + Debug.getPss() / 1024 + "MB");
+        }
+        show("완료.");
+    }
+
+    /** 상태와, READY인데 앞 요청을 처리 중이라 받을 수 없는지 */
+    private static String modelStatus(AiManager ai) {
+        com.textdungeon.ai.backend.OnDeviceBackend.State state = ai.getOnDeviceState();
+        boolean busy = state == com.textdungeon.ai.backend.OnDeviceBackend.State.READY && !ai.isOnDeviceReady();
+        return state + (busy ? "(추론 중)" : "");
+    }
+
+    private static boolean isLoading(com.textdungeon.ai.backend.OnDeviceBackend.State state) {
+        return state == com.textdungeon.ai.backend.OnDeviceBackend.State.NOT_LOADED
+                || state == com.textdungeon.ai.backend.OnDeviceBackend.State.LOADING;
     }
 
     /**

@@ -32,6 +32,11 @@ android {
     buildFeatures {
         buildConfig true
     }
+
+    // JVM 단위 테스트에서 android.util.Log 같은 안드로이드 API를 부르면 예외 대신 기본값을 돌려준다
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 secrets {

@@ -55,6 +55,7 @@ public class DifficultyActivity extends BaseActivity {
             if (isGenerating) return;
             isGenerating = true;
             setButtonsEnabled(false);
+            dt.getAiManager().warmUpOnDevice(); // 주사위용 모델을 뒤에서 올린다
             dt.setDifficulty("EASY");
             startGame();
         });
@@ -64,6 +65,8 @@ public class DifficultyActivity extends BaseActivity {
         if (isGenerating) return;   // 이미 생성 중이면 무시
         isGenerating = true;
         setButtonsEnabled(false);
+        // 주사위용 모델을 뒤에서 올린다. AI 이벤트 생성을 기다리는 시간과 겹친다
+        dt.getAiManager().warmUpOnDevice();
 
         dt.setDifficulty(difficulty);
         generateEventsAndStart(dt.getDifficulty().eventCount);

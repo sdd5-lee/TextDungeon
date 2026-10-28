@@ -9,6 +9,17 @@ public interface LlmBackend {
 
     void generate(String prompt, ResponseFormat format, LlmCallback callback);
 
+    /**
+     * 응답을 validator로 검사해서 통과한 것만 onResult로 넘기고, 통과하지 못하면 onError로 넘긴다.
+     * FallbackBackend는 우선 백엔드의 응답이 검사를 통과하지 못하면 예비 백엔드로 다시 요청한다.
+     */
+    default void generate(String prompt, ResponseFormat format, ResponseValidator validator, LlmCallback callback) {
+        generate(prompt, format, validator.guard(callback));
+    }
+
+    /** 진행 중인 요청을 멈춘다. 멈출 수 없는 백엔드(클라우드)는 아무것도 하지 않는다 */
+    default void cancel() {}
+
     /** 지금 바로 요청을 받을 수 있는지 (온디바이스: 모델 로드 완료 여부) */
     boolean isReady();
 

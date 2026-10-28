@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# 0-B 실기기 측정: 혼돈의 주사위 프롬프트 20건을 GPU와 CPU로 각각 돌리고 결과를 가져온다.
+# 0-B 실기기 측정: 혼돈의 주사위 프롬프트 20건을 GPU와 CPU로 각각 돌리고,
+# 게임 경로로 주사위를 3번 굴려 본 뒤(1단계 확인) 결과를 가져온다.
 #
 # Git Bash에서 실행:  bash docs/ondevice-0A/0B_실기기_측정.sh
 # 먼저 폰에서 개발자 옵션 → USB 디버깅을 켜고 USB로 연결해 "USB 디버깅 허용"을 누른다.
@@ -70,6 +71,15 @@ for backend in $BACKENDS; do
     run_spike --es backend "$backend" --ei count "$COUNT" || true
     echo "[$backend] 끝 ($(date +%H:%M:%S), 배터리 $(battery_temp))" | tee -a "$OUT/device.txt"
 done
+
+# 1단계 확인: 게임과 같은 경로(AiManager → ChaosDice → FallbackBackend)로 주사위 3번.
+# 디버그 플래그를 기본값으로 돌려서 출시 빌드와 같은 설정(GPU만, 램 검사)으로 돈다
+echo "[게임 경로] 주사위 3번 ($(date +%H:%M:%S))"
+adb shell am start -S -n $PKG/com.textdungeon.ai.OnDeviceFlagsActivity --ez reset true > /dev/null
+sleep 2
+run_spike --ei dice 3 --ez wait true --ez release true > /dev/null || true
+adb logcat -d -v time -s SPIKE:I FallbackBackend:* OnDeviceBackend:* | tr -d '\r' | grep -v -e "^---" -e "	at " \
+    | tee "$OUT/dice.txt" | sed 's/^/  /'
 
 adb pull "$FILES/spike/." "$OUT/" > /dev/null
 echo "결과: $OUT"

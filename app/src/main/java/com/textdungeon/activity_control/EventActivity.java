@@ -580,10 +580,14 @@ public class EventActivity extends BaseActivity {
                                         + eventManager.getCurrentFloor() + "F)")
                                 .setPositiveButton("게임종료", (dialog, which) -> {
                                     dt.saveGame();
+                                    // finishAffinity()는 프로세스를 끝내지 않으므로 모델은 따로 내린다
+                                    dt.getAiManager().releaseOnDevice();
                                     finishAffinity();
                                 })
                                 .setNeutralButton("메인 화면으로",(dialog,which)->{
                                     dt.saveGame();
+                                    // resetRun()을 거치지 않는 경로라 여기서 내린다. 이어하기를 하면 onResume에서 다시 올린다
+                                    dt.getAiManager().releaseOnDevice();
                                     Intent intent = new Intent(EventActivity.this, MainActivity.class);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                     startActivity(intent);
@@ -644,6 +648,14 @@ public class EventActivity extends BaseActivity {
             }
         };
         typingHandler.post(typingRunnable);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // 이어하기, 백그라운드에서 돌아올 때(메모리 부족으로 내렸을 수 있음)도 주사위용 모델을 올린다.
+        // 이미 올라가 있으면 아무것도 하지 않는다
+        if (player != null) dt.getAiManager().warmUpOnDevice();
     }
 
     @Override

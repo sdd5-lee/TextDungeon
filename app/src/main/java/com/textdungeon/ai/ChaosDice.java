@@ -7,6 +7,7 @@ import android.util.Log;
 import com.textdungeon.ai.backend.LlmBackend;
 import com.textdungeon.ai.backend.LlmCallback;
 import com.textdungeon.ai.backend.ResponseFormat;
+import com.textdungeon.ai.backend.ResponseValidator;
 import com.textdungeon.event.GameEvent;
 import com.textdungeon.event.ShopEvent;
 import com.textdungeon.model.Item;
@@ -18,6 +19,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 /**
@@ -64,21 +66,43 @@ public class ChaosDice {
 
         String prompt = buildPrompt(floor, stat, candidates, currentEvent);
 
-        backend.generate(prompt, ResponseFormat.TEXT, new LlmCallback() {
+        // 응답과 전체 시간 초과 중 먼저 온 쪽만 처리한다. 선택지가 두 번 붙는 것을 여기서 최종적으로 막는다
+        AtomicBoolean finished = new AtomicBoolean(false);
+        Runnable timeout = () -> {
+            if (!finished.compareAndSet(false, true)) return;
+            Log.w(TAG, "주사위 전체 시간 초과 (" + AiTimeouts.DICE_TOTAL_MS + "ms)");
+            backend.cancel();
+            callback.onError("혼돈의 신이 응답하지 않습니다 (시간 초과)");
+        };
+        mainHandler.postDelayed(timeout, AiTimeouts.DICE_TOTAL_MS);
+
+        // 검사를 백엔드에 넘겨서, 온디바이스 응답이 통과하지 못하면 클라우드로 다시 요청하게 한다
+        ResponseValidator validator = text -> {
+            try {
+                parseResponse(text, validItemIds, currentEvent);
+                return null;
+            } catch (ChoiceLineParser.ParseException e) {
+                Log.e(TAG, "파싱 실패(" + e.getMessage() + ") 원문:\n" + text);
+                return "혼돈의 결말 해석 실패: " + e.getMessage();
+            }
+        };
+
+        backend.generate(prompt, ResponseFormat.TEXT, validator, new LlmCallback() {
             @Override
             public void onResult(String text) {
                 ChoiceDelta parsed;
                 try {
                     parsed = parseResponse(text, validItemIds, currentEvent);
                 } catch (ChoiceLineParser.ParseException e) {
-                    Log.e(TAG, "파싱 실패(" + e.getMessage() + ") 원문:\n" + text);
-                    postError(callback, "혼돈의 결말 해석 실패: " + e.getMessage());
+                    // validator를 통과한 응답이라 여기로 오지 않는다
+                    onError("혼돈의 결말 해석 실패: " + e.getMessage());
                     return;
                 }
                 // 파서 상한(±9999)은 형식 방어용일 뿐이라, 실제 게임 수치는 층별 상한으로 다시 자른다
                 final ChoiceDelta delta = parsed.withClampedStats(floor);
                 // 이벤트 객체는 UI가 읽고 있으므로 수정은 메인 스레드에서
                 mainHandler.post(() -> {
+                    if (!finish(finished, timeout)) return;
                     try {
                         currentEvent.addChoiceWithReward(delta.getChoiceText(), delta.toReward());
                     } catch (IllegalStateException e) {
@@ -96,9 +120,21 @@ public class ChaosDice {
 
             @Override
             public void onError(String errorMessage) {
-                postError(callback, errorMessage);
+                mainHandler.post(() -> {
+                    if (finish(finished, timeout)) callback.onError(errorMessage);
+                });
             }
         });
+    }
+
+    /** 먼저 끝난 쪽이면 시간 초과 예약을 지우고 true. 메인 스레드에서만 부른다 */
+    private boolean finish(AtomicBoolean finished, Runnable timeout) {
+        if (!finished.compareAndSet(false, true)) {
+            Log.w(TAG, "시간 초과 뒤에 도착한 응답은 버림");
+            return false;
+        }
+        mainHandler.removeCallbacks(timeout);
+        return true;
     }
 
     private void postError(AiCallback callback, String message) {

@@ -33,7 +33,7 @@ public class DataControlTower {
 
     private DataControlTower(Context context){
         this.appContext = context.getApplicationContext();
-        this.aiManager = new AiManager();
+        this.aiManager = new AiManager(appContext);
         this.aiEvents = new HashMap<>();
 
         loadGameData();
@@ -140,6 +140,8 @@ public class DataControlTower {
         getDungeonControl().setCurrentEvent(null);
         this.aiEvents.clear();
         GameSave.deleteRun(appContext);
+        // 판이 끝났으니 온디바이스 모델(1~2GB)을 내린다. 다음 판을 시작할 때 다시 올린다
+        aiManager.releaseOnDevice();
     }
 
     public AchievementManager getAchievementManager() {
