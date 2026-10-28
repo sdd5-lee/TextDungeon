@@ -424,6 +424,9 @@ public class EventActivity extends BaseActivity {
                 player.getStat(),
                 dt.getItemsForFloor(floor - 5, floor + 5), // 이 층대에 실제로 나오는 아이템만 (ChaosDice가 5개를 고른다)
                 currentEvent,
+                // 보상 요약을 실제 적용량으로 쓰기 위해 (GameEvent.execute: difficulty가 없으면 한 번만 적용)
+                dt.getDifficulty() != null ? dt.getDifficulty().rewardMultiplier : 1,
+                com.textdungeon.model.Reward.expMultiplier(player),
                 new AiCallback() {
                     @Override
                     public void onSuccess(GameEvent updatedEvent) {

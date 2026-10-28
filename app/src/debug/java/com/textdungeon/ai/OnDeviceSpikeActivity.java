@@ -305,12 +305,15 @@ public class OnDeviceSpikeActivity extends AppCompatActivity {
             CountDownLatch latch = new CountDownLatch(1);
             String[] outcome = new String[1];
             long t0 = SystemClock.elapsedRealtime();
+            // 보통 난이도(보상 2배), 경험치 특성 없음
             ai.requestChaosChoice(c.floor, statForFloor(c.floor), dt.getItemsForFloor(c.floor - 5, c.floor + 5),
-                    c.event, new AiCallback() {
+                    c.event, 2, 1, new AiCallback() {
                         @Override
                         public void onSuccess(GameEvent updatedEvent) {
                             List<String> choices = updatedEvent.getChoices();
-                            outcome[0] = "성공 \"" + choices.get(choices.size() - 1) + "\"";
+                            List<com.textdungeon.model.Reward> rewards = updatedEvent.getRewards();
+                            outcome[0] = "성공 \"" + choices.get(choices.size() - 1) + "\" → "
+                                    + rewards.get(rewards.size() - 1).getDescription();
                             latch.countDown();
                         }
 

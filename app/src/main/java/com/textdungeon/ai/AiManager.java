@@ -60,8 +60,13 @@ public class AiManager {
         });
     }
 
-    public void requestChaosChoice(int floor, Stat stat, List<Item> itemList, GameEvent currentEvent, AiCallback callback) {
-        chaosDice.roll(floor, stat, itemList, currentEvent, callback);
+    /**
+     * @param rewardMultiplier 난이도 보상 배수 (Difficulty.rewardMultiplier)
+     * @param expMultiplier    특성 경험치 배수 (Reward.expMultiplier(player))
+     */
+    public void requestChaosChoice(int floor, Stat stat, List<Item> itemList, GameEvent currentEvent,
+                                   int rewardMultiplier, int expMultiplier, AiCallback callback) {
+        chaosDice.roll(floor, stat, itemList, currentEvent, rewardMultiplier, expMultiplier, callback);
     }
 
     public void generate(int targetFloor, Stat stat, List<Item> all, List<Monster> monsterList,

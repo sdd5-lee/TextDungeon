@@ -28,6 +28,11 @@ public class ChoiceDelta {
     public String getItemId() { return itemId; }
     public List<RewardStat> getStats() { return stats; }
 
+    /** 보상설명만 바꾼 사본 */
+    public ChoiceDelta withDescription(String description) {
+        return new ChoiceDelta(choiceText, description, itemId, stats);
+    }
+
     /** 스탯 수치를 층별 상한으로 잘라낸 사본 */
     public ChoiceDelta withClampedStats(int floor) {
         return new ChoiceDelta(choiceText, rewardDescription, itemId, RewardLimits.clampAll(stats, floor));

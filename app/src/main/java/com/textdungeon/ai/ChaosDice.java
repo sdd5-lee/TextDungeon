@@ -39,7 +39,8 @@ public class ChaosDice {
     static final String EXAMPLE_CHOICE = "제단의 촛불을 맨손으로 끈다";
     // HP 변화는 "HP-12"처럼 쓰게 하고 파서가 데미지/회복으로 바꾼다.
     // "데미지"를 적에게 준 피해로, "체력"을 HP로 쓰는 경우가 많아서 두 단어는 모델에게 보여 주지 않는다
-    private static final String EXAMPLE_DESCRIPTION = "꺼진 심지에서 검은 연기가 피어올라 팔을 태우지만, 근육이 터질 듯 부풀어 오른다. 힘 +5, HP -12";
+    // 보상설명에는 수치를 쓰지 않게 한다. 실제 적용량은 코드가 끝에 붙인다 (Reward.summary)
+    private static final String EXAMPLE_DESCRIPTION = "꺼진 심지에서 검은 연기가 피어올라 팔을 태우지만, 근육이 터질 듯 부풀어 오른다.";
     private static final String EXAMPLE_STATS = "힘+5, HP-12";
 
     private final LlmBackend backend;
@@ -49,7 +50,12 @@ public class ChaosDice {
         this.backend = backend;
     }
 
-    public void roll(int floor, Stat stat, List<Item> itemList, GameEvent currentEvent, AiCallback callback) {
+    /**
+     * @param rewardMultiplier 난이도 보상 배수, expMultiplier 특성 경험치 배수.
+     *                         보상설명 끝에 붙이는 요약을 실제 적용량으로 만드는 데 쓴다 (Reward.summary)
+     */
+    public void roll(int floor, Stat stat, List<Item> itemList, GameEvent currentEvent,
+                     int rewardMultiplier, int expMultiplier, AiCallback callback) {
         // 상점은 어떤 선택지를 눌러도 상점이 열리므로 선택지를 추가해도 의미가 없다
         if (currentEvent instanceof ShopEvent) {
             postError(callback, "상점 이벤트에는 주사위를 사용할 수 없습니다.");
@@ -99,7 +105,12 @@ public class ChaosDice {
                     return;
                 }
                 // 파서 상한(±9999)은 형식 방어용일 뿐이라, 실제 게임 수치는 층별 상한으로 다시 자른다
-                final ChoiceDelta delta = parsed.withClampedStats(floor);
+                ChoiceDelta clamped = parsed.withClampedStats(floor);
+                // 모델은 수치 없이 상황만 묘사하고, 실제로 적용되는 양(상한, 난이도·특성 배수 반영)은 코드가 붙인다
+                String summary = clamped.toReward().summary(rewardMultiplier, expMultiplier,
+                        itemName(candidates, clamped.getItemId()));
+                final ChoiceDelta delta = summary.isEmpty() ? clamped
+                        : clamped.withDescription(clamped.getRewardDescription() + " " + summary);
                 // 이벤트 객체는 UI가 읽고 있으므로 수정은 메인 스레드에서
                 mainHandler.post(() -> {
                     if (!finish(finished, timeout)) return;
@@ -125,6 +136,14 @@ public class ChaosDice {
                 });
             }
         });
+    }
+
+    private static String itemName(List<Item> candidates, String itemId) {
+        if (itemId == null) return null;
+        for (Item item : candidates) {
+            if (itemId.equals(item.getId())) return item.getName();
+        }
+        return null;
     }
 
     /** 먼저 끝난 쪽이면 시간 초과 예약을 지우고 true. 메인 스레드에서만 부른다 */
@@ -190,8 +209,8 @@ public class ChaosDice {
                 + "보상설명: " + EXAMPLE_DESCRIPTION + "\n"
                 + "아이템: 없음\n"
                 + "스탯: " + EXAMPLE_STATS + "\n\n"
-                + "규칙: 선택지는 20자 안팎의 행동. 보상설명은 결과 묘사 문장 끝에 스탯 줄과 같은 수치를 붙인다. "
-                + "스탯 줄에는 플레이어에게 생긴 변화량만 부호를 붙여 0~3개 적는다(현재 값이 아니라 늘거나 준 양). "
+                + "규칙: 선택지는 20자 안팎의 행동. 보상설명은 결과를 묘사하는 문장이고 숫자는 쓰지 않는다. "
+                + "스탯 줄은 그 묘사와 맞게, 플레이어에게 생긴 변화량만 부호를 붙여 0~3개 적는다(현재 값이 아니라 늘거나 준 양). "
                 + "쓸 수 있는 것은 힘, 민첩, 지혜, 경험치, HP. 다치면 HP-수치, 회복하면 HP+수치. "
                 + "적에게 준 피해는 적지 않는다. 아이템은 후보 id 하나 또는 없음.";
     }
