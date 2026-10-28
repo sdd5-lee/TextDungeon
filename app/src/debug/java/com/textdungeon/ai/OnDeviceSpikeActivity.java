@@ -74,7 +74,7 @@ public class OnDeviceSpikeActivity extends AppCompatActivity {
     // 0-A에서 Qwen3-1.7B는 한국어 품질 미달로 탈락, Gemma 4 E2B로 결정
     private static final String DEFAULT_MODEL = "gemma-4-E2B-it.litertlm";
     private static final int MAX_OUTPUT_TOKENS = 200;
-    // 지금 프롬프트(아이템 48개 포함)가 들어가고도 남는 크기. 실제 입력 토큰 수는 결과에 기록된다
+    // 지금 프롬프트(600자 안팎, 아이템 후보 5개)가 들어가고도 남는 크기. 실제 입력 토큰 수는 결과에 기록된다
     private static final int MAX_NUM_TOKENS = 4096;
     private static final long CLOUD_TIMEOUT_SEC = 60;
     private static final Pattern THINK_BLOCK = Pattern.compile("(?s)<think>.*?(</think>|$)");

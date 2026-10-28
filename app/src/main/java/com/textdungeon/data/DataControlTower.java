@@ -163,39 +163,31 @@ public class DataControlTower {
 
     /**
      * 40층 이상 이벤트(보상, 상점)에서 나오는 장비 목록. 보물의 신 이벤트에서 보상 후보로 쓴다.
-     * 아이템 데이터에는 층 정보가 없으므로 기존 이벤트 데이터로 판단한다. 포션 같은 소모품은 제외.
+     * 포션 같은 소모품은 제외.
      */
     public java.util.List<Item> getDeepFloorGear() {
-        java.util.LinkedHashSet<String> ids = new java.util.LinkedHashSet<>();
-        for (GameEvent e : eventManager.getAll()) {
-            if (e.getMinFloor() < 40) continue;
-            if (e.getRewards() != null) {
-                for (com.textdungeon.model.Reward r : e.getRewards()) {
-                    if (r != null && r.getItemId() != null) ids.add(r.getItemId());
-                }
-            }
-            if (e instanceof com.textdungeon.event.ShopEvent) {
-                java.util.List<String> shop = ((com.textdungeon.event.ShopEvent) e).getShopItemIds();
-                if (shop != null) ids.addAll(shop);
-            }
-        }
-        java.util.List<Item> result = new java.util.ArrayList<>();
-        for (String id : ids) {
-            Item item = itemManager.spawn(id);
-            if (item != null && !"consumables".equals(item.getType())) result.add(item);
-        }
-        return result.isEmpty() ? itemManager.getAll() : result;
+        return getEventItems(e -> e.getMinFloor() >= 40,
+                item -> !"consumables".equals(item.getType()));
     }
 
     /**
      * 해당 층 범위의 이벤트(보상, 상점)에서 나오는 아이템 목록. 혼돈의 주사위 보상 후보로 쓴다.
-     * 아이템 데이터에는 층 정보가 없으므로 getMonstersForFloor처럼 기존 이벤트 데이터로 판단한다.
      */
     public java.util.List<Item> getItemsForFloor(int fromFloor, int toFloor) {
+        return getEventItems(e -> e.getMinFloor() <= toFloor && e.getMaxFloor() >= fromFloor,
+                item -> true);
+    }
+
+    /**
+     * 조건에 맞는 이벤트의 보상과 상점에서 나오는 아이템 목록.
+     * 아이템 데이터에는 층 정보가 없으므로 getMonstersForFloor처럼 기존 이벤트 데이터로 판단한다.
+     * 조건에 맞는 아이템이 하나도 없으면 전체 아이템으로 대체한다.
+     */
+    private java.util.List<Item> getEventItems(java.util.function.Predicate<GameEvent> eventFilter,
+                                               java.util.function.Predicate<Item> itemFilter) {
         java.util.LinkedHashSet<String> ids = new java.util.LinkedHashSet<>();
         for (GameEvent e : eventManager.getAll()) {
-            boolean overlaps = e.getMinFloor() <= toFloor && e.getMaxFloor() >= fromFloor;
-            if (!overlaps) continue;
+            if (!eventFilter.test(e)) continue;
             if (e.getRewards() != null) {
                 for (com.textdungeon.model.Reward r : e.getRewards()) {
                     if (r != null && r.getItemId() != null) ids.add(r.getItemId());
@@ -209,9 +201,8 @@ public class DataControlTower {
         java.util.List<Item> result = new java.util.ArrayList<>();
         for (String id : ids) {
             Item item = itemManager.spawn(id);
-            if (item != null) result.add(item);
+            if (item != null && itemFilter.test(item)) result.add(item);
         }
-        // 해당 층 범위에 아이템이 나오는 이벤트가 하나도 없으면 전체 아이템으로 대체
         return result.isEmpty() ? itemManager.getAll() : result;
     }
 
