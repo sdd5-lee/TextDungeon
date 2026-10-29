@@ -17,6 +17,8 @@ public class Player {
     private final MagicScroll magicScroll;
     private final Equipment equipment;
     private int diceChance;
+    /** 이번 판에 광고로 주사위 +1을 받았는지 (판당 1번). 진행 중인 판 세이브에 같이 저장된다 */
+    private boolean adDiceUsed;
     /** 이번 판에서 처치한 몬스터 수 (정산용). 누적 처치 수는 UserRecord에 따로 있다. */
     private int runKillCount;
 
@@ -275,6 +277,14 @@ public class Player {
     }
     public void addDiceChane(int diceChane) {
         this.diceChance += diceChane;
+    }
+    public boolean isAdDiceUsed() { return adDiceUsed; }
+    /** 광고 보상: 주사위 +1. 판당 1번이라 이미 받았으면 false */
+    public boolean grantAdDice() {
+        if (adDiceUsed) return false;
+        adDiceUsed = true;
+        diceChance++;
+        return true;
     }
     public String getTraitId() { return traitId; }
     public void addRunKill() { runKillCount++; }

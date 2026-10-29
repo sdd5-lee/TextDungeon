@@ -11,6 +11,11 @@ import android.widget.TextView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.textdungeon.R;
+import com.textdungeon.billing.BillingListener;
+import com.textdungeon.billing.BillingManager;
+import com.textdungeon.billing.Entitlements;
+import com.textdungeon.billing.Product;
+import com.textdungeon.billing.ProductOffer;
 import com.textdungeon.data.DataControlTower;
 import com.textdungeon.model.Job;
 import com.textdungeon.model.ShopUpgrade;
@@ -22,17 +27,22 @@ import com.textdungeon.system.UserRecord;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShopActivity extends BaseActivity {
+public class ShopActivity extends BaseActivity implements BillingListener {
+    /** 처음 열 탭 (int). 시나리오 선택에서 잠긴 DLC를 누르면 프리미엄 탭으로 연다 */
+    public static final String EXTRA_TAB = "shop_tab";
+    public static final int TAB_PREMIUM = 3;
+
     private ShopSystem shopSystem;
     private DataControlTower dt;
     private TextView playerGem;
     private UserRecord record;
 
-    private TextView tabUnlock, tabTrait, tabUpgrade;
+    private TextView tabUnlock, tabTrait, tabUpgrade, tabPremium;
     private TextView pageIndicator;
     private ViewPager2 unlockViewPager, unlockTraitViewPager;
-    private View upgradeScroll;
-    private LinearLayout upgradeContainer;
+    private View upgradeScroll, premiumScroll;
+    private LinearLayout upgradeContainer, premiumContainer;
+    private TextView premiumStatus;
 
     private ShopUnlockAdapter jobAdapter;
     private ShopUnlockAdapter traitAdapter;
@@ -51,20 +61,31 @@ public class ShopActivity extends BaseActivity {
         tabUnlock = findViewById(R.id.tab_unlock);
         tabTrait = findViewById(R.id.tab_trait);
         tabUpgrade = findViewById(R.id.tab_upgrade);
+        tabPremium = findViewById(R.id.tab_premium);
         pageIndicator = findViewById(R.id.page_indicator);
 
         unlockViewPager = findViewById(R.id.unlock_viewpager);
         unlockTraitViewPager = findViewById(R.id.unlock_trait_viewpager);
         upgradeScroll = findViewById(R.id.upgrade_scroll);
         upgradeContainer = findViewById(R.id.upgrade_container);
+        premiumScroll = findViewById(R.id.premium_scroll);
+        premiumContainer = findViewById(R.id.premium_container);
+        premiumStatus = findViewById(R.id.premium_status);
+        View btnRestore = findViewById(R.id.btn_premium_restore);
 
         FrameLayout backToMain = findViewById(R.id.bottom_action);
 
-        setSfx(tabUnlock, tabTrait, tabUpgrade, backToMain);
+        setSfx(tabUnlock, tabTrait, tabUpgrade, tabPremium, btnRestore, backToMain);
 
         tabUnlock.setOnClickListener(v -> switchTab(0));
         tabTrait.setOnClickListener(v -> switchTab(1));
         tabUpgrade.setOnClickListener(v -> switchTab(2));
+        tabPremium.setOnClickListener(v -> switchTab(TAB_PREMIUM));
+        // 연결이 안 됐을 때는 다시 연결도 한다
+        btnRestore.setOnClickListener(v -> {
+            dt.getBillingManager().restorePurchases();
+            dt.getBillingManager().queryProducts();
+        });
 
         backToMain.setOnClickListener(this::moveMain);
 
@@ -72,18 +93,36 @@ public class ShopActivity extends BaseActivity {
         unlockJobTabList();
         unlockTraitTabList();
         upgradeTabList();
+        renderPremium();
 
-        switchTab(0);
+        switchTab(getIntent().getIntExtra(EXTRA_TAB, 0));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // 다른 기기 구매, 대기 결제 완료, 환불을 반영한다
+        dt.getBillingManager().addListener(this);
+        dt.getBillingManager().syncPurchases();
+        dt.getBillingManager().queryProducts();
+    }
+
+    @Override
+    protected void onPause() {
+        dt.getBillingManager().removeListener(this);
+        super.onPause();
     }
 
     private void switchTab(int index) {
         unlockViewPager.setVisibility(index == 0 ? View.VISIBLE : View.INVISIBLE);
         unlockTraitViewPager.setVisibility(index == 1 ? View.VISIBLE : View.INVISIBLE);
         upgradeScroll.setVisibility(index == 2 ? View.VISIBLE : View.INVISIBLE);
+        premiumScroll.setVisibility(index == TAB_PREMIUM ? View.VISIBLE : View.INVISIBLE);
 
         tabUnlock.setTextColor(Color.parseColor(index == 0 ? "#E9C176" : "#A0A0A0"));
         tabTrait.setTextColor(Color.parseColor(index == 1 ? "#E9C176" : "#A0A0A0"));
         tabUpgrade.setTextColor(Color.parseColor(index == 2 ? "#E9C176" : "#A0A0A0"));
+        tabPremium.setTextColor(Color.parseColor(index == TAB_PREMIUM ? "#E9C176" : "#A0A0A0"));
 
         if (index == 0) {
             pageIndicator.setVisibility(View.VISIBLE);
@@ -107,9 +146,74 @@ public class ShopActivity extends BaseActivity {
 
     public void updateGemUI(){
         if (playerGem != null) {
-            playerGem.setText("보유 재화: " + record.getGem() + " Gem");
+            // 부스터가 있으면 현재 배율을 작게 붙인다. 무과금이면 표시하지 않는다
+            int boost = dt.getEntitlements().gemBoostMultiplier();
+            playerGem.setText("보유 재화: " + record.getGem() + " Gem" + (boost > 1 ? "  (젬 ×" + boost + ")" : ""));
         }
         GameSave.saveUserRecord(this, record);
+    }
+
+    // ───────────── 프리미엄 탭 (유료 상품) ─────────────
+
+    private void renderPremium() {
+        BillingManager billing = dt.getBillingManager();
+        List<ProductOffer> offers = billing.getOffers();
+        String unavailable = billing.unavailableMessage();
+        premiumStatus.setVisibility(offers.isEmpty() && unavailable != null ? View.VISIBLE : View.GONE);
+        premiumStatus.setText(unavailable);
+
+        premiumContainer.removeAllViews();
+        LayoutInflater inflater = LayoutInflater.from(this);
+        for (ProductOffer offer : offers) {
+            View row = inflater.inflate(R.layout.item_premium_product, premiumContainer, false);
+            TextView name = row.findViewById(R.id.premium_name);
+            TextView desc = row.findViewById(R.id.premium_desc);
+            TextView price = row.findViewById(R.id.premium_price);
+            TextView label = row.findViewById(R.id.premium_button_label);
+            View btnBuy = row.findViewById(R.id.btn_premium_buy);
+
+            name.setText(offer.title);
+            desc.setText(offer.product.effect);
+
+            boolean buyable = false;
+            if (offer.owned) {
+                price.setText("보유 중");
+                label.setVisibility(View.GONE);
+            } else if (offer.pending) {
+                price.setText("결제 대기 중");
+                label.setVisibility(View.GONE);
+            } else if (!offer.purchasable) {
+                Product previous = offer.product.previousTier();
+                price.setText(previous != null ? previous.displayName + " 필요" : offer.priceText);
+                label.setVisibility(View.GONE);
+            } else {
+                price.setText(offer.priceText);
+                buyable = true;
+            }
+            btnBuy.setEnabled(buyable);
+            btnBuy.setAlpha(buyable ? 1f : 0.5f);
+            if (buyable) {
+                setSfx(btnBuy);
+                btnBuy.setOnClickListener(v -> dt.getBillingManager().launchPurchase(this, offer.product));
+            }
+            premiumContainer.addView(row);
+        }
+    }
+
+    @Override
+    public void onOffersChanged(List<ProductOffer> offers) {
+        renderPremium();
+    }
+
+    @Override
+    public void onEntitlementsChanged(Entitlements entitlements) {
+        updateGemUI();
+        renderPremium();
+    }
+
+    @Override
+    public void onPurchaseMessage(String message) {
+        showGameMessage(message);
     }
 
     public void unlockJobTabList(){

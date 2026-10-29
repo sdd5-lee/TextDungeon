@@ -100,6 +100,24 @@
             android:textColor="#A0A0A0"
             android:textStyle="bold"
             android:background="?attr/selectableItemBackground" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#33E9C176" />
+
+        <!-- 유료 상품. 젬으로 사는 카드와 섞지 않으려고 탭을 따로 둔다 -->
+        <TextView
+            android:id="@+id/tab_premium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="12dp"
+            android:text="프리미엄"
+            android:textColor="#A0A0A0"
+            android:textStyle="bold"
+            android:background="?attr/selectableItemBackground" />
     </LinearLayout>
 
     <!-- 콘텐츠 영역이 이제 page_indicator 위까지만 오도록 변경 -->
@@ -136,6 +154,65 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingVertical="16dp"/>
+        </ScrollView>
+
+        <ScrollView
+            android:id="@+id/premium_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingHorizontal="16dp"
+            android:visibility="invisible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingVertical="16dp">
+
+                <!-- Play 스토어에 연결하지 못했을 때 안내 -->
+                <TextView
+                    android:id="@+id/premium_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingVertical="24dp"
+                    android:textColor="#A0A0A0"
+                    android:textSize="14sp"
+                    android:visibility="gone"
+                    tools:text="Play 스토어에 연결할 수 없습니다." />
+
+                <LinearLayout
+                    android:id="@+id/premium_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+
+                <TextView
+                    android:id="@+id/btn_premium_restore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_shop_btn"
+                    android:fontFamily="serif"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="10dp"
+                    android:text="구매 복원"
+                    android:textColor="#E9C176"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:lineSpacingExtra="4dp"
+                    android:text="@string/premium_notice"
+                    android:textColor="#808080"
+                    android:textSize="11sp" />
+            </LinearLayout>
         </ScrollView>
     </FrameLayout>
 

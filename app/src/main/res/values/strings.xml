@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">TextDungeon</string>
+
+    <!-- 결제·광고 안내. 청약철회 문구는 출시 전에 법률 검토 필요 (설계서 8-3) -->
+    <string name="premium_notice">• 유료 상품은 Google Play 결제로 판매되며, 구매 즉시 효과가 적용되는 디지털 콘텐츠라 구매 후에는 청약철회가 제한될 수 있습니다. 환불은 Google Play 환불 정책을 따릅니다.\n• 앱을 다시 설치했거나 기기를 바꿨다면 같은 Google 계정으로 \'구매 복원\'을 눌러 주세요.\n• 젬·해금·업그레이드 기록은 이 기기에만 저장되어, 유료 상품과 달리 복원이 보장되지 않습니다.</string>
 </resources>

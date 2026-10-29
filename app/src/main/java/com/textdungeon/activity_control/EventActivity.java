@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.textdungeon.R;
+import com.textdungeon.ads.AdManager;
+import com.textdungeon.ads.RewardType;
 import com.textdungeon.ai.AiCallback;
 import com.textdungeon.buttons.ChoiceButton;
 import com.textdungeon.buttons.SingleClickListener;
@@ -249,11 +251,38 @@ public class EventActivity extends BaseActivity {
     private void renderDiceButton() {
         ChoiceButton diceButton = new ChoiceButton(this);
         setSfx(diceButton);
-
-        diceButton.setTextView("혼돈의 주사위 사용하기 (" + player.getDiceChance() + "개)");
         diceButton.setLayoutParams(matchParentWrapContent());
-        diceButton.setOnClickListener(SingleClickListener.wrap(v -> onDiceSelected()));
+        // 남은 횟수가 0이고 이번 판에 아직 안 받았으면 광고로 +1 (판당 1번, 업그레이드 상한과 별개)
+        if (player.getDiceChance() <= 0 && !player.isAdDiceUsed()) {
+            bindAdDiceButton(diceButton);
+        } else {
+            bindDiceButton(diceButton);
+        }
         choiceButtons.addView(diceButton);
+    }
+
+    private void bindDiceButton(ChoiceButton diceButton) {
+        diceButton.setTextView("혼돈의 주사위 사용하기 (" + player.getDiceChance() + "개)");
+        diceButton.setOnClickListener(SingleClickListener.wrap(v -> onDiceSelected()));
+    }
+
+    private void bindAdDiceButton(ChoiceButton diceButton) {
+        boolean skip = dt.getEntitlements().hasAdSkip();
+        diceButton.setTextView(skip ? "혼돈의 주사위 +1 받기" : "광고 보고 혼돈의 주사위 +1");
+        diceButton.setOnClickListener(SingleClickListener.wrap(v ->
+                dt.getAdManager().showReward(this, RewardType.CHAOS_DICE, new AdManager.RewardCallback() {
+                    @Override
+                    public void onRewarded() {
+                        if (isFinishing() || isDestroyed() || !player.grantAdDice()) return;
+                        dt.saveGame(); // 받은 주사위와 '이번 판에 받음'을 같이 저장
+                        bindDiceButton(diceButton);
+                    }
+
+                    @Override
+                    public void onUnavailable(String message) {
+                        showGameMessage(message);
+                    }
+                })));
     }
 
     // ─────────────────────────────────────────────────────────────

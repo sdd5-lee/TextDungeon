@@ -2,13 +2,19 @@ package com.textdungeon.data;
 
 import android.content.Context;
 
+import com.textdungeon.ads.AdManager;
 import com.textdungeon.ai.AiManager;
+import com.textdungeon.billing.BillingManager;
+import com.textdungeon.billing.Entitlements;
+import com.textdungeon.billing.UserRecordEntitlementStore;
 import com.textdungeon.event.GameEvent;
 import com.textdungeon.model.Item;
 import com.textdungeon.model.Monster;
 import com.textdungeon.model.Job;
 import com.textdungeon.model.Magic;
 import com.textdungeon.player.Player;
+import com.textdungeon.scenario.ScenarioPack;
+import com.textdungeon.scenario.ScenarioRepository;
 import com.textdungeon.system.AchievementManager;
 import com.textdungeon.system.GameSave;
 import com.textdungeon.system.UserRecord;
@@ -30,6 +36,11 @@ public class DataControlTower {
     private Difficulty difficulty;
     private Map<Integer, GameEvent> aiEvents;
     private AchievementManager achievementManager;
+    private final BillingManager billingManager;
+    private final AdManager adManager;
+    private final ScenarioRepository scenarioRepository;
+    /** 지금 읽혀 있는 시나리오 (진행 중인 판의 시나리오) */
+    private ScenarioPack scenario = ScenarioPack.BASE;
 
     private DataControlTower(Context context){
         this.appContext = context.getApplicationContext();
@@ -38,12 +49,22 @@ public class DataControlTower {
 
         loadGameData();
 
+        // 결제·광고: 보유 상품은 UserRecord에 캐시한다. 둘 다 Activity를 붙잡지 않는다
+        this.billingManager = new BillingManager(appContext,
+                new UserRecordEntitlementStore(appContext, this::getUserRecord));
+        this.adManager = new AdManager(appContext, this::getEntitlements);
+        this.scenarioRepository = new ScenarioRepository();
+
         this.achievementManager = new AchievementManager(appContext);
         if (this.userRecord != null) {
             this.achievementManager.syncSavedData(this.userRecord.getAchievements());
         }
 
-        initAll(context);
+        // 이어하기면 그 판의 시나리오를, 아니면 기본 시나리오를 읽는다.
+        // 환불로 잠긴 DLC여도 진행 중인 판은 끝까지 허용한다
+        magicManager = new DataControl<>(Magic.class);
+        magicManager.init(context, "magic_list.json"); // 마법은 모든 시나리오 공통
+        loadScenario(scenario);
     }
 
     public static DataControlTower getInstance(Context context){
@@ -53,18 +74,17 @@ public class DataControlTower {
         return instance;
     }
 
-    private void initAll(Context context) {
+    /** 시나리오의 몬스터·아이템·이벤트를 읽는다. 경로는 ScenarioRepository에서만 받는다 */
+    private void loadScenario(ScenarioPack pack) {
         monsterManager = new DataControl<>(Monster.class);
-        monsterManager.init(context, "monster_list.json");
+        monsterManager.init(appContext, scenarioRepository.assetPath(pack, ScenarioRepository.MONSTERS));
 
         itemManager = new DataControl<>(Item.class);
-        itemManager.init(context, "item_list.json");
+        itemManager.init(appContext, scenarioRepository.assetPath(pack, ScenarioRepository.ITEMS));
 
         eventManager = new DataControl<>(GameEvent.class, EventGson.create());
-        eventManager.init(context, "event_list.json");
-
-        magicManager = new DataControl<>(Magic.class);
-        magicManager.init(context, "magic_list.json");
+        eventManager.init(appContext, scenarioRepository.assetPath(pack, ScenarioRepository.EVENTS));
+        this.scenario = pack;
 
         // 무결성 검사
         boolean valid = DataValidator.validateAll(
@@ -94,6 +114,7 @@ public class DataControlTower {
                 this.aiEvents.putAll(save.getAiEvents());
             }
             this.dungeonControl.setCurrentEvent(save.getCurrentEvent());
+            this.scenario = ScenarioPack.fromId(save.getScenarioId());
         } else {
             this.player = null;
             this.difficulty = Difficulty.NORMAL;
@@ -101,7 +122,11 @@ public class DataControlTower {
         }
     }
 
-    public void startNewGame(String name, Job job, String traitId){
+    public void startNewGame(String name, Job job, String traitId, ScenarioPack pack){
+        // 시작 아이템(보물의 축복)도 고른 시나리오에서 나와야 하므로 플레이어를 만들기 전에 바꾼다
+        if (pack != scenario) loadScenario(pack);
+        userRecord.setLastScenarioId(pack.id);
+
         this.player = GameSave.createNewPlayer(this.userRecord, name, job, traitId);
         this.player.setTraitId(traitId);
         // createNewPlayer는 직업 기본 특성 기준으로 HP를 채운다. 다른 특성을 고르면(예: 마력폭주 ↔ 다른 특성)
@@ -131,7 +156,7 @@ public class DataControlTower {
         }
 
         GameSave currentSave = new GameSave(this.player, dungeonControl.getCurrentFloor(), difficulty,
-                aiEvents, dungeonControl.getCurrentEvent());
+                aiEvents, dungeonControl.getCurrentEvent(), scenario.id);
         currentSave.runSave(appContext);
     }
 
@@ -149,6 +174,15 @@ public class DataControlTower {
     }
 
     public Context getAppContext() { return appContext; }
+    public BillingManager getBillingManager() { return billingManager; }
+    public AdManager getAdManager() { return adManager; }
+    public ScenarioRepository getScenarioRepository() { return scenarioRepository; }
+    public ScenarioPack getScenario() { return scenario; }
+
+    /** UserRecord 캐시로 새로 만든다. 지급 직후에도 최신 값을 돌려준다 */
+    public Entitlements getEntitlements() {
+        return new Entitlements(getUserRecord().getOwnedProducts());
+    }
     public DataControl<GameEvent> getEventManager() { return eventManager; }
     public DataControl<Item> getItemManager() { return itemManager; }
     public DataControl<Magic> getMagicManager() { return magicManager; }

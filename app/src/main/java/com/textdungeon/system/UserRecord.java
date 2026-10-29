@@ -21,6 +21,16 @@ public class UserRecord {
     private Set<String> discoveredItems;
     private Set<String> discoveredMonsters;
     private Set<String> discoveredEvents;
+
+    // ===== 결제 =====
+    // Play에서 마지막으로 확인한 보유 상품 ID(Product.id). 오프라인일 때 쓰는 캐시이고,
+    // 동기화가 성공할 때마다 Play 목록으로 통째로 덮어쓴다.
+    // Gson 역직렬화 때문에 final로 두지 않는다. 예전 세이브에는 없으므로 null일 수 있다
+    private Set<String> ownedProducts;
+    private long entitlementSyncedAt;
+    // 마지막으로 고른 시나리오 ID. null이면 기본 시나리오
+    private String lastScenarioId;
+
     public UserRecord(){
         this.gem = 0;
         this.unlockJobName = new HashSet<>();
@@ -123,6 +133,20 @@ public class UserRecord {
         if (discoveredEvents == null) return new HashSet<>();
         return discoveredEvents;
     }
+    public Set<String> getOwnedProducts() {
+        if (ownedProducts == null) ownedProducts = new HashSet<>();
+        return ownedProducts;
+    }
+    public void setOwnedProducts(Set<String> ids) {
+        ownedProducts = new HashSet<>(ids);
+        entitlementSyncedAt = System.currentTimeMillis();
+    }
+    public long getEntitlementSyncedAt() { return entitlementSyncedAt; }
+
+    public String getLastScenarioId() { return lastScenarioId; }
+    public void setLastScenarioId(String lastScenarioId) { this.lastScenarioId = lastScenarioId; }
+
+    /** 기록 초기화. 유료 상품(ownedProducts)은 Play가 기준이므로 지우지 않는다 */
     public void clearAll() {
         this.gem = 0;
         this.killCount = 0;

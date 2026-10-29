@@ -13,10 +13,13 @@ import android.widget.TextView;
 
 import com.example.textdungeon.R;
 import com.google.android.material.snackbar.Snackbar;
+import com.textdungeon.billing.Entitlements;
 import com.textdungeon.buttons.SingleClickListener;
 import com.textdungeon.data.DataControlTower;
 import com.textdungeon.model.Job;
 import com.textdungeon.model.Trait;
+import com.textdungeon.scenario.ScenarioPack;
+import com.textdungeon.scenario.ScenarioRepository;
 import com.textdungeon.system.UserRecord;
 
 import java.util.ArrayList;
@@ -257,15 +260,55 @@ public class CharacterActivity extends BaseActivity {
 
     private void startGame(View v) {
         if (playerJob != null) {
-            String inputName = editPlayerName.getText().toString().trim();
-            String playerName = inputName.isEmpty() ? "모험가 A" : inputName;
-
-            dt.startNewGame(playerName, playerJob, selectedTrait.name());
-
-            Intent intent = new Intent(this, DifficultyActivity.class);
-            startActivity(intent);
+            // DLC 시나리오가 있을 때만 고르게 한다. 기본 시나리오뿐이면 바로 시작
+            if (dt.getScenarioRepository().hasChoice()) {
+                showScenarioPicker();
+            } else {
+                beginRun(ScenarioPack.BASE);
+            }
         } else {
             Snackbar.make(v, "직업을 선택하지 않았습니다", Snackbar.LENGTH_SHORT).show();
         }
+    }
+
+    private void beginRun(ScenarioPack pack) {
+        String inputName = editPlayerName.getText().toString().trim();
+        String playerName = inputName.isEmpty() ? "모험가 A" : inputName;
+
+        dt.startNewGame(playerName, playerJob, selectedTrait.name(), pack);
+
+        Intent intent = new Intent(this, DifficultyActivity.class);
+        startActivity(intent);
+    }
+
+    /** 시나리오 고르기. 잠긴 DLC를 누르면 상점 프리미엄 탭으로 보낸다 */
+    private void showScenarioPicker() {
+        ScenarioRepository repo = dt.getScenarioRepository();
+        Entitlements entitlements = dt.getEntitlements();
+        List<ScenarioPack> packs = repo.all();
+        String[] labels = new String[packs.size()];
+        int checked = 0;
+        ScenarioPack last = ScenarioPack.fromId(dt.getUserRecord().getLastScenarioId());
+        for (int i = 0; i < packs.size(); i++) {
+            ScenarioPack p = packs.get(i);
+            labels[i] = repo.isUnlocked(p, entitlements) ? p.displayName : "🔒 " + p.displayName;
+            if (p == last && repo.isUnlocked(p, entitlements)) checked = i;
+        }
+        final int[] choice = {checked};
+        new android.app.AlertDialog.Builder(this)
+                .setTitle("시나리오 선택")
+                .setSingleChoiceItems(labels, checked, (d, which) -> choice[0] = which)
+                .setPositiveButton("시작", (d, w) -> {
+                    ScenarioPack pack = packs.get(choice[0]);
+                    if (repo.isUnlocked(pack, entitlements)) {
+                        beginRun(pack);
+                    } else {
+                        Intent intent = new Intent(this, ShopActivity.class);
+                        intent.putExtra(ShopActivity.EXTRA_TAB, ShopActivity.TAB_PREMIUM);
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton("취소", null)
+                .show();
     }
 }

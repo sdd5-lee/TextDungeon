@@ -18,7 +18,7 @@ ADB="${ADB:-$LOCALAPPDATA/Android/Sdk/platform-tools/adb.exe}"
 MODEL="${MODEL:-C:/Users/super/models/gemma-4-E2B-it.litertlm}"
 BACKENDS="${BACKENDS:-gpu cpu}"
 COUNT="${COUNT:-20}"
-PKG=com.example.textdungeon
+PKG=com.lkj.textdungeon # applicationId (소스 패키지 com.example.textdungeon과 다름)
 ACT=$PKG/com.textdungeon.ai.OnDeviceSpikeActivity
 FILES=/sdcard/Android/data/$PKG/files
 # adb.exe는 /c/... 형식을 모르므로 Git Bash에서는 C:/... 형식으로 받는다 (pwd -W)

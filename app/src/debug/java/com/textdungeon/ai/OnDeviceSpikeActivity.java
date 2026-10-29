@@ -57,7 +57,7 @@ import java.util.regex.Pattern;
  * 형식 성공률, 생각 모드, 응답 시간을 잰다. 디버그 빌드에만 들어가고 게임 화면과는 연결하지 않는다.
  *
  * 실행 (모델은 먼저 adb push로 files/models/에 넣어 둔다):
- *   adb shell am start -n com.example.textdungeon/com.textdungeon.ai.OnDeviceSpikeActivity
+ *   adb shell am start -n com.lkj.textdungeon/com.textdungeon.ai.OnDeviceSpikeActivity
  *     --es model 파일명    models/ 안의 모델 (기본 gemma-4-E2B-it.litertlm)
  *     --es backend auto    auto = GPU 시도 후 실패하면 CPU / gpu / cpu
  *     --ez cloud true      클라우드 응답 시간도 잴지

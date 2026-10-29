@@ -9,6 +9,7 @@ import com.textdungeon.buttons.SingleClickListener;
 import com.textdungeon.data.DataControlTower;
 import com.textdungeon.player.Player;
 import com.textdungeon.system.GameSave;
+import com.textdungeon.system.GemFormula;
 import com.textdungeon.system.RunSettlement;
 
 public class DiedActivity extends BaseActivity {
@@ -18,6 +19,7 @@ public class DiedActivity extends BaseActivity {
     private TextView tvScoreValue;
     private TextView btnExit;
     private int earnedGems;
+    private SettlementAdBonus adBonus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +29,15 @@ public class DiedActivity extends BaseActivity {
         tvClearDesc = findViewById(R.id.tv_clear_desc);
         tvScoreValue = findViewById(R.id.tv_score_value);
         btnExit = findViewById(R.id.btn_exit);
+        adBonus = new SettlementAdBonus(this, findViewById(R.id.btn_ad_bonus), bonus -> {
+            earnedGems += bonus;
+            tvScoreValue.setText(String.valueOf(earnedGems));
+        });
 
         // 화면이 다시 만들어질 때(회전 등) 젬이 또 지급되지 않도록, 정산은 처음 한 번만 하고 결과만 보관한다
         if (savedInstanceState != null) {
             earnedGems = savedInstanceState.getInt(KEY_GEMS, 0);
+            adBonus.restore(savedInstanceState);
         } else {
             earnedGems = settleRun();
         }
@@ -52,6 +59,7 @@ public class DiedActivity extends BaseActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(KEY_GEMS, earnedGems);
+        adBonus.save(outState);
     }
 
     /**
@@ -63,7 +71,11 @@ public class DiedActivity extends BaseActivity {
         Player player = dt.getPlayer();
         if (player == null) return 0; // 이미 정산됨
 
-        int gems = RunSettlement.baseGems(dt, player);
+        // 기본 정산 × 젬 부스터. 광고 ×2는 버튼을 눌렀을 때 따로 준다
+        int base = RunSettlement.baseGems(dt, player);
+        int boost = dt.getEntitlements().gemBoostMultiplier();
+        int gems = GemFormula.finalGems(base, boost, false);
+        adBonus.settled(base, boost);
 
         dt.getUserRecord().addGem(gems);
         GameSave.saveUserRecord(this, dt.getUserRecord());

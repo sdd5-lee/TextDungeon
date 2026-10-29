@@ -24,6 +24,12 @@
             android:name="libvndksupport.so"
             android:required="false" />
 
+        <!-- AdMob 앱 ID. local.properties의 ADMOB_APP_ID (없으면 local.defaults.properties의 Google 테스트 ID).
+             결제 권한(BILLING)과 광고 ID 권한(AD_ID)은 각 라이브러리가 자동으로 넣는다 -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="${ADMOB_APP_ID}" />
+
         <activity
             android:name="com.textdungeon.activity_control.SystemSettingActivity"
             android:exported="true" />

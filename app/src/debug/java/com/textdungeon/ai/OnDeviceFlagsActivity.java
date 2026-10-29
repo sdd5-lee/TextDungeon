@@ -12,7 +12,7 @@ import com.textdungeon.ai.backend.OnDeviceDebugFlags;
 /**
  * 온디바이스 디버그 플래그를 바꾸고 바로 닫힌다 (디버그 빌드 전용, 화면 없음).
  *
- *   adb shell am start -n com.example.textdungeon/com.textdungeon.ai.OnDeviceFlagsActivity
+ *   adb shell am start -n com.lkj.textdungeon/com.textdungeon.ai.OnDeviceFlagsActivity
  *     --es backend cpu     gpu(기본) / auto(GPU가 실패하면 CPU) / cpu(에뮬레이터)
  *     --ez skipram true    램 기준 검사를 건너뜀 (에뮬레이터)
  *     --el delay 15000     온디바이스 응답을 일부러 늦춤 (ms)

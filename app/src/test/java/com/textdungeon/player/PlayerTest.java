@@ -303,4 +303,17 @@ public class PlayerTest {
         player.refreshHp();
         assertEquals(hpBefore, player.getStat().getHp());
     }
+
+    @Test
+    public void 광고_주사위는_판당_한_번만_받는다() {
+        player.useDice();
+        assertEquals(0, player.getDiceChance());
+
+        assertTrue(player.grantAdDice());
+        assertEquals(1, player.getDiceChance());
+        assertTrue(player.isAdDiceUsed());
+
+        assertFalse(player.grantAdDice());
+        assertEquals(1, player.getDiceChance());
+    }
 }

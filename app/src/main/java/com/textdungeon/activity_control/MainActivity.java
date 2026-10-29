@@ -19,6 +19,10 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
 
         dt = DataControlTower.getInstance(this);
+        // 결제: 연결되면 보유 상품을 Play 목록으로 맞춘다 (실패하면 저장된 캐시로 계속)
+        // 광고: 보상형 광고를 미리 불러 둔다 (광고 스킵을 보유하면 광고 SDK를 켜지 않는다)
+        dt.getBillingManager().start();
+        dt.getAdManager().initialize();
 
         View btnNewGame = findViewById(R.id.btn_start);
         View btnContinue = findViewById(R.id.btn_continue);
