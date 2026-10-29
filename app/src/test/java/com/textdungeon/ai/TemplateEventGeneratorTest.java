@@ -53,9 +53,17 @@ public class TemplateEventGeneratorTest {
         return Arrays.asList(GSON.fromJson("{\"id\":\"mon_1\",\"name\":\"해골 기사\"}", Monster.class));
     }
 
+    private static GodForms.Form form(GodForms.Grade grade) {
+        return new GodForms.Form("가루다의 깃털", grade);
+    }
+
     private static TemplateEventGenerator.Plan plan(AiType god) {
-        return TemplateEventGenerator.plan(god, 21, items("near_1", "near_2"), items("deep_1", "deep_2", "deep_3"),
-                monsters(), new Random(7));
+        return plan(god, GodForms.Grade.HIGH, 7);
+    }
+
+    private static TemplateEventGenerator.Plan plan(AiType god, GodForms.Grade grade, int seed) {
+        return TemplateEventGenerator.plan(god, 21, form(grade), items("deep_1", "deep_2", "deep_3"), monsters(),
+                new Random(seed));
     }
 
     private static int stat(TemplateEventGenerator.Outcome o, String type) {
@@ -64,15 +72,75 @@ public class TemplateEventGeneratorTest {
     }
 
     @Test
-    public void 투쟁의_신은_층_몬스터와_전투하고_이기면_스탯_둘() {
+    public void 투쟁의_신은_층_몬스터와_전투하고_이기면_스탯_둘과_전리품() {
         TemplateEventGenerator.Plan p = plan(AiType.STRUGGLE);
 
         assertEquals("battle", p.type);
         assertEquals("mon_1", p.enemy.getId());
         assertEquals("battle", p.outcomes.get(0).action);
         assertEquals(2, p.outcomes.get(0).stats.size());
+        assertTrue(p.outcomes.get(0).itemId.startsWith("deep_"));
         assertEquals("escape", p.outcomes.get(1).action);
         assertTrue(p.outcomes.get(1).stats.isEmpty());
+        assertNull(p.outcomes.get(1).itemId);
+    }
+
+    @Test
+    public void 형상_등급이_얻는_쪽_세기를_정하고_대가는_그대로다() {
+        for (GodForms.Grade grade : GodForms.Grade.values()) {
+            for (int seed = 0; seed < 30; seed++) {
+                for (AiType god : new AiType[]{AiType.STRUGGLE, AiType.DEATH}) {
+                    TemplateEventGenerator.Plan p = plan(god, grade, seed);
+                    for (RewardStat s : p.outcomes.get(0).stats) {
+                        int percent = p.outcomes.get(0).percents.get(s.getStatType());
+                        if ("데미지".equals(s.getStatType())) assertTrue(percent >= 85);
+                        else assertTrue(god + " " + grade + " " + percent,
+                                percent >= grade.minPercent && percent <= grade.maxPercent);
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
+    public void 등급마다_아이템_후보가_다르고_비면_가까운_등급을_쓴다() {
+        List<Item> near = items("near");
+        List<Item> upper = items("upper");
+        List<Item> deep = items("deep");
+        assertEquals(near, TemplateEventGenerator.itemsFor(GodForms.Grade.LOW, near, upper, deep));
+        assertEquals(upper, TemplateEventGenerator.itemsFor(GodForms.Grade.MID, near, upper, deep));
+        assertEquals(deep, TemplateEventGenerator.itemsFor(GodForms.Grade.HIGH, near, upper, deep));
+        assertEquals(upper, TemplateEventGenerator.itemsFor(GodForms.Grade.HIGH, near, upper, new ArrayList<>()));
+        assertEquals(upper, TemplateEventGenerator.itemsFor(GodForms.Grade.LOW, null, upper, deep));
+    }
+
+    @Test
+    public void 신마다_형상은_하급_중급_상급_열한_개씩이고_한글이다() {
+        for (AiType god : AiType.values()) {
+            List<GodForms.Form> forms = GodForms.all(god);
+            assertEquals(god.name(), 33, forms.size());
+            java.util.Set<String> names = new java.util.HashSet<>();
+            int[] perGrade = new int[3];
+            for (GodForms.Form f : forms) {
+                names.add(f.name);
+                perGrade[f.grade.ordinal()]++;
+                assertTrue(f.name, f.name.matches("[가-힣 ]+"));
+                // 이름에 넣어도 MAX_NAME_LENGTH를 넘지 않게 짧게
+                assertTrue(f.name, f.name.length() <= 14);
+            }
+            assertEquals(god.name() + " 중복", 33, names.size());
+            assertEquals(Arrays.asList(11, 11, 11), Arrays.asList(perGrade[0], perGrade[1], perGrade[2]));
+        }
+    }
+
+    @Test
+    public void 형상_등급은_하급이_가장_흔하고_상급이_드물다() {
+        Random rnd = new Random(3);
+        int[] count = new int[3];
+        for (int i = 0; i < 10000; i++) count[GodForms.pick(AiType.ADVENTURE, rnd).grade.ordinal()]++;
+        assertEquals(5000, count[0], 300);
+        assertEquals(3500, count[1], 300);
+        assertEquals(1500, count[2], 300);
     }
 
     @Test
@@ -102,8 +170,8 @@ public class TemplateEventGeneratorTest {
     public void 보상_수치는_층별_상한을_넘지_않는다() {
         for (AiType god : AiType.values()) {
             for (int seed = 0; seed < 30; seed++) {
-                TemplateEventGenerator.Plan p = TemplateEventGenerator.plan(god, 41, items("n"), items("d1", "d2"),
-                        monsters(), new Random(seed));
+                TemplateEventGenerator.Plan p = TemplateEventGenerator.plan(god, 41,
+                        form(GodForms.Grade.values()[seed % 3]), items("d1", "d2"), monsters(), new Random(seed));
                 for (TemplateEventGenerator.Outcome o : p.outcomes) {
                     for (RewardStat s : o.stats) {
                         assertEquals(god + " " + s.getStatType(),
@@ -123,7 +191,8 @@ public class TemplateEventGeneratorTest {
         assertTrue(prompt.contains("(전투) 해골 기사과(와) 싸운다. 이기면"));
         assertTrue(prompt.contains("(도망)"));
         String hints = prompt.substring(prompt.indexOf("정해진 결과:"), prompt.indexOf("이 결과에 맞는"));
-        assertFalse(hints, hints.replaceAll("\\d+\\.", "").matches("(?s).*\\d.*"));
+        // 따옴표 안은 아이템 이름 (게임 데이터의 이름에는 숫자가 없다)
+        assertFalse(hints, hints.replaceAll("\\d+\\.", "").replaceAll("'[^']*'", "").matches("(?s).*\\d.*"));
     }
 
     @Test
@@ -132,6 +201,7 @@ public class TemplateEventGeneratorTest {
         String prompt = TemplateEventGenerator.prompt(p);
 
         assertTrue(prompt, prompt.startsWith("[죽음의 신이 내리는 축복 | 던전 중간층]"));
+        assertTrue(prompt, prompt.contains("신이 내미는 형상: 가루다의 깃털 (귀한 축복)"));
         assertFalse(prompt, prompt.contains("21층"));
         assertFalse(prompt, prompt.contains("장소"));
     }
@@ -233,8 +303,8 @@ public class TemplateEventGeneratorTest {
             }
         };
         GameEvent[] made = new GameEvent[1];
-        new TemplateEventGenerator(backend, new Random(1)).generate(1, AiType.DEATH, items("n"), items("d1", "d2"),
-                monsters(), 1, 1, new AiCallback() {
+        new TemplateEventGenerator(backend, new Random(1)).generate(1, AiType.DEATH, items("n"), items("u"),
+                items("d1", "d2"), monsters(), 1, 1, new AiCallback() {
                     @Override
                     public void onSuccess(GameEvent e) {
                         made[0] = e;

@@ -147,8 +147,10 @@ public class DifficultyActivity extends BaseActivity {
         dt.getAiManager().generateEvent(
                 targetFloor,
                 god,
+                // 형상 등급별 아이템 후보: 하급은 이 층대, 중급은 더 깊은 층 장비, 상급은 심층 장비
                 dt.getItemsForFloor(targetFloor - 5, targetFloor + 5),
-                dt.getDeepFloorGear(),                                  // 보물의 신은 심층 장비 중에서 준다
+                dt.getUpperGear(targetFloor),
+                dt.getDeepFloorGear(),
                 dt.getMonstersForFloor(targetFloor, targetFloor + 10), // 이 층대에 실제로 나오는 몬스터만
                 dt.getDifficulty().rewardMultiplier,
                 Reward.expMultiplier(dt.getPlayer()),

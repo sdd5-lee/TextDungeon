@@ -71,9 +71,10 @@ public class AiManager {
      * 신의 이벤트 하나를 온디바이스 모델로 만든다. 모델은 한 번에 요청 하나만 받으므로 앞 요청이 끝난 뒤에 부른다.
      * 모델이 준비되지 않았으면 바로 onError로 간다
      */
-    public void generateEvent(int floor, AiType god, List<Item> nearItems, List<Item> treasureItems,
+    public void generateEvent(int floor, AiType god, List<Item> nearItems, List<Item> upperItems, List<Item> deepItems,
                               List<Monster> monsters, int rewardMultiplier, int expMultiplier, AiCallback callback) {
-        eventGenerator.generate(floor, god, nearItems, treasureItems, monsters, rewardMultiplier, expMultiplier, callback);
+        eventGenerator.generate(floor, god, nearItems, upperItems, deepItems, monsters, rewardMultiplier, expMultiplier,
+                callback);
     }
 
     /** 오래 걸려 포기한 이벤트 생성을 멈춘다. 멈춘 요청의 콜백은 늦게라도 온다 */

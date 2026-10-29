@@ -151,7 +151,7 @@ public class EventSpikeActivity extends AppCompatActivity {
                     Result r = "json".equals(method)
                             ? runJson(backend, dt, cases.get(i), timeout)
                             : runTemplate(backend, cases.get(i), timeout);
-                    check(cases.get(i), r);
+                    check(cases.get(i), r, method);
                     list.add(r);
                     show(column + " " + (i + 1) + "/" + cases.size() + " " + r.ms + "ms "
                             + (r.ok ? "OK " + r.event.getName() + (r.problems.isEmpty() ? "" : " 문제 " + r.problems) : "실패: " + r.error));
@@ -182,8 +182,11 @@ public class EventSpikeActivity extends AppCompatActivity {
                 for (Monster m : monsters) c.monsterIds.add(m.getId());
                 c.deepIds = deepIds;
                 // 두 대상이 같은 뼈대를 받도록 경우마다 시드를 고정한다
-                c.plan = TemplateEventGenerator.plan(god, floor, dt.getItemsForFloor(floor - 5, floor + 5),
-                        dt.getDeepFloorGear(), monsters, new Random(cases.size() + 1));
+                Random rnd = new Random(cases.size() + 1);
+                GodForms.Form form = GodForms.pick(god, rnd);
+                List<Item> items = TemplateEventGenerator.itemsFor(form.grade, dt.getItemsForFloor(floor - 5, floor + 5),
+                        dt.getUpperGear(floor), dt.getDeepFloorGear());
+                c.plan = TemplateEventGenerator.plan(god, floor, form, items, monsters, rnd);
                 cases.add(c);
             }
         }
@@ -252,7 +255,7 @@ public class EventSpikeActivity extends AppCompatActivity {
     }
 
     /** 게임에 넣었을 때 문제가 되는 점 (성공한 이벤트만) */
-    private static void check(Case c, Result r) {
+    private static void check(Case c, Result r, String method) {
         if (!r.ok) return;
         GameEvent e = r.event;
         List<String> choices = e.getChoices();
@@ -268,12 +271,18 @@ public class EventSpikeActivity extends AppCompatActivity {
             if (!(e instanceof BattleEvent)) r.problems.add("전투가 아님");
             else if (!c.monsterIds.contains(((BattleEvent) e).getEnemyId())) r.problems.add("층에 없는 몬스터");
         }
-        if (c.god == AiType.TREASURE && rewards != null && rewards.size() >= 2) {
+        // 틀 방식의 보물은 형상 등급에 맞는 후보에서 코드가 고르므로, 심층 장비인지는 JSON 방식만 본다
+        if ("json".equals(method) && c.god == AiType.TREASURE && rewards != null && rewards.size() >= 2) {
             String a = rewards.get(0).getItemId();
             String b = rewards.get(1).getItemId();
             if (a == null || b == null || a.equals(b) || !c.deepIds.contains(a) || !c.deepIds.contains(b)) {
                 r.problems.add("보물 둘이 아님");
             }
+        }
+        // 플레이어는 형상 이름으로 보상 세기를 짐작하므로 이름이나 상황에 그대로 나와야 한다
+        if ("template".equals(method)) {
+            String form = c.plan.form.name.replace(" ", "");
+            if (!(e.getName() + e.getDescription()).replace(" ", "").contains(form)) r.problems.add("형상이 글에 없음");
         }
     }
 
@@ -319,6 +328,7 @@ public class EventSpikeActivity extends AppCompatActivity {
         for (int i = 0; i < cases.size(); i++) {
             Case c = cases.get(i);
             md.append("\n### ").append(i + 1).append(". ").append(c.god.getGodName()).append(" ").append(c.floor).append("층\n");
+            md.append("- 형상: ").append(c.plan.form.name).append(" (").append(c.plan.form.grade.label).append(")\n");
             md.append("- 틀 방식 뼈대: ");
             for (int k = 0; k < c.plan.outcomes.size(); k++) {
                 if (k > 0) md.append(" / ");
