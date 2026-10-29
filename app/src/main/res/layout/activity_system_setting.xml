@@ -54,7 +54,7 @@
 
     <LinearLayout
         android:layout_width="371dp"
-        android:layout_height="173dp"
+        android:layout_height="wrap_content"
         android:alpha="0.8"
         android:gravity="start"
         android:orientation="vertical"
@@ -132,6 +132,16 @@
                 android:text="크게"
                 android:textColor="#FFFFFF" />
         </RadioGroup>
+
+        <TextView
+            android:id="@+id/tv_ondevice_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif"
+            android:textColor="#BBBBBB"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:text="온디바이스 AI: 받는 중 45%" />
     </LinearLayout>
 
     <FrameLayout

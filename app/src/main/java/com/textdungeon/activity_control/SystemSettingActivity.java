@@ -3,17 +3,32 @@ package com.textdungeon.activity_control;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import androidx.activity.OnBackPressedCallback;
 import com.example.textdungeon.R;
+import com.textdungeon.data.DataControlTower;
 import com.textdungeon.system.SoundManager;
 
 public class SystemSettingActivity extends BaseActivity {
 
     private SharedPreferences prefs;
+    private TextView tvOnDeviceStatus;
+    private final Handler statusHandler = new Handler(Looper.getMainLooper());
+    // 화면이 떠 있는 동안 1초마다 온디바이스 AI 상태(받는 중 %)를 새로 고친다
+    private final Runnable statusUpdater = new Runnable() {
+        @Override
+        public void run() {
+            tvOnDeviceStatus.setText(DataControlTower.getInstance(SystemSettingActivity.this)
+                    .getAiManager().getOnDeviceStatusLine());
+            statusHandler.postDelayed(this, 1000);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +41,7 @@ public class SystemSettingActivity extends BaseActivity {
         RadioGroup rgFontSize = findViewById(R.id.rg_font_size);
         FrameLayout btnBack = findViewById(R.id.btn_back);
         FrameLayout btnOpenSource = findViewById(R.id.btn_opensource);
+        tvOnDeviceStatus = findViewById(R.id.tv_ondevice_status);
 
         // 모든 버튼에 효과음 일괄 적용
         setSfx(btnBack, btnOpenSource);
@@ -82,9 +98,11 @@ public class SystemSettingActivity extends BaseActivity {
                     .setMessage("본 앱은 다음의 오픈소스 라이브러리를 사용하고 있습니다.\n\n" +
                             "■ Apache License 2.0\n" +
                             "- AndroidX & Material Components\n" +
-                            "- Google Gson, Guava\n" +
+                            "- Google Gson\n" +
                             "- AndroidX Media3 (ExoPlayer)\n" +
-                            "- Google Generative AI SDK\n" +
+                            "- OkHttp\n" +
+                            "- LiteRT-LM\n" +
+                            "- Gemma 4 E2B 모델 (혼돈의 주사위)\n" +
                             "- RuntimeTypeAdapterFactory\n\n" +
                             "■ BSD / MIT / Apache 2.0 License\n" +
                             "- Glide (Bumptech)\n\n" +
@@ -104,5 +122,17 @@ public class SystemSettingActivity extends BaseActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        statusHandler.post(statusUpdater);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        statusHandler.removeCallbacks(statusUpdater);
     }
 }

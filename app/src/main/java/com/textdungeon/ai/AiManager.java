@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import com.textdungeon.ai.backend.FallbackBackend;
 import com.textdungeon.ai.backend.GeminiBackend;
 import com.textdungeon.ai.backend.LlmBackend;
+import com.textdungeon.ai.backend.ModelDownloader;
 import com.textdungeon.ai.backend.OnDeviceBackend;
 import com.textdungeon.ai.backend.OnDeviceDebugFlags;
 import com.textdungeon.event.GameEvent;
@@ -23,19 +24,25 @@ import java.util.List;
  *  - 혼돈의 주사위(선택지 추가): 온디바이스 우선, 준비 안 됐거나 실패하면 클라우드
  *
  * 온디바이스 모델은 생성자에서 올리지 않는다. 게임을 시작할 때 warmUpOnDevice(),
- * 판이 끝날 때 releaseOnDevice()를 부른다.
+ * 판이 끝날 때 releaseOnDevice()를 부른다. 모델 파일은 메인 화면에서 startModelDownload()로 받는다.
  */
 public class AiManager {
     static final String GEMINI_MODEL = "gemini-3-flash-preview";
 
     private final OnDeviceBackend onDeviceBackend;
+    private final ModelDownloader modelDownloader;
     private final EventGenerator generator;
     private final ChaosDice chaosDice;
+    // 게임 중이라 모델이 올라가 있어야 하는지 (warmUp 이후 release 전). 받기가 끝났을 때 바로 올릴지 정한다
+    private volatile boolean onDeviceWanted;
 
     public AiManager(Context appContext) {
         LlmBackend eventCloud = new GeminiBackend(GEMINI_MODEL, ApiKeyManager.getGeminiGodsKey());
         LlmBackend choiceCloud = new GeminiBackend(GEMINI_MODEL, ApiKeyManager.getGeminiKey());
         this.onDeviceBackend = new OnDeviceBackend(appContext);
+        this.modelDownloader = new ModelDownloader(appContext, () -> {
+            if (onDeviceWanted) onDeviceBackend.warmUp();
+        });
 
         this.generator = new EventGenerator(eventCloud);
         this.chaosDice = new ChaosDice(new FallbackBackend(onDeviceBackend, choiceCloud,
@@ -76,17 +83,60 @@ public class AiManager {
 
     /** 온디바이스 모델을 뒤에서 올린다. 이미 올라가 있거나 쓸 수 없는 기기면 아무것도 하지 않는다 */
     public void warmUpOnDevice() {
+        onDeviceWanted = true;
         onDeviceBackend.warmUp();
     }
 
     /** 온디바이스 모델을 내린다. 추론 중이면 끝난 뒤에 닫는다 */
     public void releaseOnDevice() {
+        onDeviceWanted = false;
         onDeviceBackend.release();
     }
 
-    /** 3단계에서 모델 상태를 설정 화면에 보여줄 때 사용 */
+    /** 모델 파일이 없으면 Wi-Fi에서 받기 시작한다. 메인 화면에 올 때마다 부른다 */
+    public void startModelDownload() {
+        modelDownloader.start();
+    }
+
     public OnDeviceBackend.State getOnDeviceState() {
         return onDeviceBackend.getState();
+    }
+
+    /** 설정 화면의 "온디바이스 AI: …" 한 줄 */
+    public String getOnDeviceStatusLine() {
+        ModelDownloader.Progress p = modelDownloader.progress();
+        return onDeviceStatusLine(p.status, p.percent, onDeviceBackend.getState());
+    }
+
+    static String onDeviceStatusLine(ModelDownloader.Status status, int percent, OnDeviceBackend.State state) {
+        String text;
+        switch (status) {
+            case READY:
+                text = state == OnDeviceBackend.State.FAILED ? "사용 불가 (이 기기에서 실행 실패)" : "준비됨";
+                break;
+            case DOWNLOADING:
+                text = percent >= 0 ? "받는 중 " + percent + "%" : "받는 중";
+                break;
+            case WAITING_NETWORK:
+                text = "받는 중 (Wi-Fi 연결 대기)";
+                break;
+            case VERIFYING:
+                text = "받는 중 (파일 확인)";
+                break;
+            case NO_SPACE:
+                text = "사용 불가 (저장 공간 3.7GB 필요)";
+                break;
+            case FAILED:
+                text = "사용 불가 (받기 실패)";
+                break;
+            case UNSUPPORTED:
+                text = "사용 불가 (지원하지 않는 기기)";
+                break;
+            default:
+                text = "받기 전";
+                break;
+        }
+        return "온디바이스 AI: " + text;
     }
 
     public boolean isOnDeviceReady() {

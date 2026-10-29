@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-   Sample backup rules file; uncomment and customize as necessary.
+   자동 백업 규칙 (API 30 이하). API 31 이상은 data_extraction_rules.xml을 쓴다.
    See https://developer.android.com/guide/topics/data/autobackup
-   for details.
-   Note: This file is ignored for devices older than API 31
-   See https://developer.android.com/about/versions/12/backup-restore
 -->
 <full-backup-content>
-    <!--
-   <include domain="sharedpref" path="."/>
-   <exclude domain="sharedpref" path="device.xml"/>
--->
+    <!-- 혼돈의 주사위 온디바이스 모델(2.6GB). 백업 한도(25MB)를 넘겨 세이브까지 백업되지 않게 되므로 뺀다. 다시 받을 수 있다 -->
+    <exclude domain="external" path="models/" />
 </full-backup-content>

@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-   Sample data extraction rules file; uncomment and customize as necessary.
+   백업과 기기 이전 규칙 (API 31 이상).
    See https://developer.android.com/about/versions/12/backup-restore#xml-changes
-   for details.
 -->
 <data-extraction-rules>
+    <!-- 혼돈의 주사위 온디바이스 모델(2.6GB)은 빼고, 새 기기에서 다시 받는다 -->
     <cloud-backup>
+        <exclude domain="external" path="models/" />
     </cloud-backup>
-    <!--
     <device-transfer>
-        <include .../>
-        <exclude .../>
+        <exclude domain="external" path="models/" />
     </device-transfer>
-    -->
 </data-extraction-rules>

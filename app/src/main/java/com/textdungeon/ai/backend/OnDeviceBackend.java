@@ -40,7 +40,7 @@ public class OnDeviceBackend implements LlmBackend {
         NOT_LOADED,
         LOADING,
         READY,
-        /** 모델 파일이 없거나 기기 조건 미달. 로드를 시도하지 않는다 */
+        /** 모델 파일이 없거나 기기 조건 미달. 로드를 시도하지 않는다 (파일이 없던 경우만 warmUp 때 다시 본다) */
         UNAVAILABLE,
         /** 초기화 실패. 다시 시도하면 매번 몇 초씩 버리므로 프로세스가 살아 있는 동안 유지한다 */
         FAILED
@@ -65,6 +65,8 @@ public class OnDeviceBackend implements LlmBackend {
     private final AtomicBoolean busy = new AtomicBoolean(false);
 
     private volatile State state = State.NOT_LOADED;
+    // UNAVAILABLE의 이유가 모델 파일이 없어서인지. 받기가 끝나면 다시 로드할 수 있다
+    private volatile boolean missingModel;
     private volatile String device = "";            // 실제로 뜬 장치 (GPU/CPU), 로그용
     private Engine engine;                          // executor 스레드에서만 읽고 쓴다
     private volatile Conversation running;          // cancel()이 다른 스레드에서 읽는다
@@ -78,10 +80,14 @@ public class OnDeviceBackend implements LlmBackend {
         return state;
     }
 
-    /** NOT_LOADED일 때만 로드를 시작한다. 그 밖의 상태에서는 아무것도 하지 않는다 */
+    /**
+     * NOT_LOADED일 때 로드를 시작한다. 모델 파일이 없어서 UNAVAILABLE이었으면 파일이 생겼는지 다시 본다
+     * (첫 실행 다운로드). 그 밖의 상태에서는 아무것도 하지 않는다
+     */
     public void warmUp() {
         synchronized (this) {
-            if (state != State.NOT_LOADED) return;
+            boolean retry = state == State.UNAVAILABLE && missingModel;
+            if (state != State.NOT_LOADED && !retry) return;
             state = State.LOADING;
         }
         executor.execute(this::load);
@@ -190,7 +196,8 @@ public class OnDeviceBackend implements LlmBackend {
         }
         String reason = unavailableReason();
         File model = reason == null ? ModelLocator.find(appContext) : null;
-        if (reason == null && model == null) reason = "모델 파일 없음";
+        missingModel = reason == null && model == null;
+        if (missingModel) reason = "모델 파일 없음";
         if (reason != null) {
             Log.i(TAG, "온디바이스 사용 안 함: " + reason);
             state = State.UNAVAILABLE;
@@ -262,21 +269,28 @@ public class OnDeviceBackend implements LlmBackend {
 
     /** 로드를 시도하지 않을 이유. 괜찮으면 null */
     private String unavailableReason() {
+        String unsupported = deviceUnsupportedReason(appContext);
+        if (unsupported != null) return unsupported;
+
+        long free = appContext.getCacheDir().getUsableSpace();
+        if (free < MIN_FREE_CACHE) return "저장 공간 부족 (" + (free >> 20) + "MB)";
+        return null;
+    }
+
+    /** 이 기기에서 모델을 쓰지 않을 이유(ABI, 램). 괜찮으면 null. ModelDownloader도 이걸 보고 받을지 정한다 */
+    static String deviceUnsupportedReason(Context context) {
         List<String> abis = Arrays.asList(Build.SUPPORTED_64_BIT_ABIS);
         boolean abiOk = abis.contains("arm64-v8a") || (BuildConfig.DEBUG && abis.contains("x86_64"));
         if (!abiOk) return "지원하지 않는 ABI " + abis;
 
-        ActivityManager am = (ActivityManager) appContext.getSystemService(Context.ACTIVITY_SERVICE);
-        if (am != null && !OnDeviceDebugFlags.skipRamCheck(appContext)) {
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        if (am != null && !OnDeviceDebugFlags.skipRamCheck(context)) {
             ActivityManager.MemoryInfo info = new ActivityManager.MemoryInfo();
             am.getMemoryInfo(info);
             if (am.isLowRamDevice() || info.totalMem < MIN_TOTAL_RAM) {
                 return "램 기준 미달 (" + (info.totalMem >> 20) + "MB)";
             }
         }
-
-        long free = appContext.getCacheDir().getUsableSpace();
-        if (free < MIN_FREE_CACHE) return "저장 공간 부족 (" + (free >> 20) + "MB)";
         return null;
     }
 
