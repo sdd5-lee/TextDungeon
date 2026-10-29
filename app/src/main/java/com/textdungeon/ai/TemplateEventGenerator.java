@@ -37,8 +37,8 @@ public class TemplateEventGenerator {
     /** 여섯 줄이면 한국어 300자 안팎이라 이 정도면 충분하다 */
     static final int MAX_OUTPUT_TOKENS = 400;
     /**
-     * 기본 온도에서는 한국어 사이에 영어·한자가 섞여 20개 중 6개를 버렸다. 0.6에서는 3개 (S24, docs/ondevice-event).
-     * 주사위는 기본값 그대로 쓴다
+     * 기본 온도에서는 한국어 사이에 다른 나라 글자가 섞여 20개 중 7개를 버렸다. 0.6에서는 4개, 0.4로 더 낮춰도 나아지지 않았다
+     * (S24, docs/ondevice-event). 주사위는 기본값 그대로 쓴다
      */
     static final double TEMPERATURE = 0.6;
 
@@ -51,28 +51,21 @@ public class TemplateEventGenerator {
     private static final String[] TRAINING_STATS = {"힘", "민첩", "체력", "지혜"};
     private static final String[] GAINS = {"힘", "민첩", "체력", "지혜", "경험치", "골드", "회복"};
     private static final String[] COSTS = {"데미지", "힘", "민첩", "체력", "지혜", "골드"};
-    // 무대를 정해 주지 않으면 작은 모델은 "심연의 시험", "그림자 제물의 계약" 같은 이름을 되풀이한다 (S24 측정 20개 중 6개가 "…시험")
-    private static final String[] PLACES = {
-            "무너진 예배당", "거미줄로 덮인 서고", "얼어붙은 지하 호수", "버려진 대장간", "뼈로 쌓은 다리",
-            "빛나는 버섯 동굴", "녹슨 철창 감옥", "향이 피어오르는 제단", "물에 잠긴 회랑", "거울이 늘어선 방",
-            "무너진 광산 갱도", "잿더미가 된 도서관", "피 냄새가 나는 투기장", "이끼 낀 석상 정원", "바람이 우는 낭떠러지",
-            "금이 간 봉인의 문", "썩은 나무뿌리 터널", "촛불이 꺼지지 않는 무덤", "황금 먼지가 날리는 보물고",
-            "용암이 흐르는 균열", "버려진 연금술 공방", "종이 울리는 탑", "안개 낀 지하 시장", "부서진 왕좌의 방"
-    };
 
     // 형식 예시. 그대로 베끼면 버린다
-    static final String EXAMPLE_NAME = "메마른 우물의 속삭임";
-    static final String EXAMPLE_SITUATION = "바닥이 보이지 않는 우물 속에서 누군가 당신의 이름을 부른다.";
-    static final String EXAMPLE_CHOICE1 = "우물 속으로 밧줄을 내린다";
-    static final String EXAMPLE_RESULT1 = "밧줄을 타고 올라온 차가운 손이 팔을 할퀴지만, 손끝에서 낯선 힘이 스며든다.";
-    static final String EXAMPLE_CHOICE2 = "돌을 던져 소리를 막는다";
-    static final String EXAMPLE_RESULT2 = "메아리가 그치고, 우물가에 떨어진 은화 몇 닢이 반짝인다.";
+    static final String EXAMPLE_NAME = "잿빛 깃털의 약속";
+    static final String EXAMPLE_SITUATION = "허공에서 잿빛 깃털 하나가 내려앉고, 낮은 목소리가 대가를 치를 각오가 있느냐고 묻는다.";
+    static final String EXAMPLE_CHOICE1 = "깃털을 힘껏 움켜쥔다";
+    static final String EXAMPLE_RESULT1 = "깃털이 손바닥을 파고들어 피가 흐르지만, 상처 사이로 낯선 힘이 스며든다.";
+    static final String EXAMPLE_CHOICE2 = "고개를 숙여 사양한다";
+    static final String EXAMPLE_RESULT2 = "목소리가 웃음을 흘리며 사라지고, 발치에 은화 몇 닢이 남는다.";
 
     private static final String[] KEYS = {"이름", "상황", "선택지1", "결과1", "선택지2", "결과2"};
     // "**선택지 1**: ...", "- 결과1 : ..." 같은 변형도 받는다
     private static final Pattern LINE = Pattern.compile("^[\\s*#>-]*(이름|상황|선택지\\s*[12]|결과\\s*[12])\\s*\\**\\s*[:：]\\s*(.+)$");
-    // 작은 모델이 한국어 사이에 다른 글자를 섞는다 ("hardening되지만", "미 微動하며", "위험Ни를", "진_한"). 게임 이름에는 영문이 없고 HP만 쓴다
-    private static final Pattern FOREIGN = Pattern.compile("[_A-Za-z\\u0400-\\u04FF\\u3040-\\u30FF\\u3400-\\u9FFF\\uF900-\\uFAFF]");
+    // 작은 모델이 한국어 사이에 다른 글자를 섞는다 ("hardening되지만", "미 微動하며", "위험Ни를", "두려움वश", "진_한").
+    // 섞이는 글자가 여러 나라 것이라 한글·숫자·문장부호 말고는 모두 거부한다. 게임 이름에는 영문이 없고 HP만 쓴다
+    private static final Pattern FOREIGN = Pattern.compile("[^가-힣ㄱ-ㅎㅏ-ㅣ0-9\\s.,!?'\"()\\[\\]~·…‘’“”:;%/—–-]");
     private static final Pattern PLACEHOLDER =Pattern.compile("^[(\\[<（【].*|.*\\d+\\s*자\\s*(내외|이내|안팎).*");
 
     /** 선택지 하나의 정해진 결과 */
@@ -91,7 +84,6 @@ public class TemplateEventGenerator {
         int floor;
         String type;          // battle, normal
         Monster enemy;
-        String place;         // 이름이 비슷해지지 않게 코드가 고른 무대
         final List<Outcome> outcomes = new ArrayList<>();
     }
 
@@ -214,7 +206,6 @@ public class TemplateEventGenerator {
                 }
                 break;
         }
-        p.place = pick(PLACES, rnd);
         return p;
     }
 
@@ -256,9 +247,9 @@ public class TemplateEventGenerator {
     static String prompt(Plan p) {
         StringBuilder sb = new StringBuilder();
         // 층 숫자를 주면 상황에 "21층"을 그대로 쓴다 (S24 측정 20개 중 6개). 깊이는 말로만 준다
-        sb.append("[").append(p.god.getGodName()).append(" | ").append(depth(p.floor)).append("의 이벤트]\n");
+        // 신들의 이벤트는 신이 내리는 축복이다. 장소는 정하지 않는다
+        sb.append("[").append(p.god.getGodName()).append("이 내리는 축복 | ").append(depth(p.floor)).append("]\n");
         sb.append("신의 성격: ").append(p.god.getTone()).append("\n");
-        if (p.place != null) sb.append("장소: ").append(p.place).append("\n");
         if (p.enemy != null) {
             sb.append("등장하는 적: ").append(p.enemy.getName())
                     .append(". 선택지1은 이 적과 싸우는 행동, 선택지2는 싸움을 피하는 행동.\n");
@@ -277,7 +268,8 @@ public class TemplateEventGenerator {
                 .append("결과1: ").append(EXAMPLE_RESULT1).append("\n")
                 .append("선택지2: ").append(EXAMPLE_CHOICE2).append("\n")
                 .append("결과2: ").append(EXAMPLE_RESULT2).append("\n\n")
-                .append("규칙: 예시의 문장은 쓰지 말고 새로 지어라. 이름은 장소나 등장하는 것을 넣어 15자 안팎, 상황은 그 장소에서 벌어지는 한두 문장, 선택지는 20자 안팎의 행동. ")
+                .append("규칙: 예시의 문장은 쓰지 말고 새로 지어라. 이름은 이 축복이 어떤 것인지 드러나게 15자 안팎, ")
+                .append("상황은 신이 모습을 드러내거나 축복을 내미는 한두 문장, 선택지는 20자 안팎의 행동. ")
                 .append("결과는 위에 정해진 변화를 이야기로 묘사하고 숫자는 쓰지 않는다. 두 선택지는 서로 달라야 한다. ")
                 .append("한국어로만 쓰고 영어·한자는 쓰지 않는다.");
         return sb.toString();

@@ -127,14 +127,13 @@ public class TemplateEventGeneratorTest {
     }
 
     @Test
-    public void 프롬프트에는_층_숫자_대신_깊이와_장소를_준다() {
+    public void 프롬프트는_신의_축복이고_층_숫자_대신_깊이를_준다() {
         TemplateEventGenerator.Plan p = plan(AiType.DEATH);
         String prompt = TemplateEventGenerator.prompt(p);
 
+        assertTrue(prompt, prompt.startsWith("[죽음의 신이 내리는 축복 | 던전 중간층]"));
         assertFalse(prompt, prompt.contains("21층"));
-        assertTrue(prompt, prompt.contains("던전 중간층"));
-        assertNotNull(p.place);
-        assertTrue(prompt, prompt.contains("장소: " + p.place));
+        assertFalse(prompt, prompt.contains("장소"));
     }
 
     @Test
@@ -193,6 +192,8 @@ public class TemplateEventGeneratorTest {
         rejects(ANSWER.replace("뜨거운 힘이", "hardening된 힘이"), "외국 글자");
         rejects(ANSWER.replace("작은 주머니", "작은 微주머니"), "외국 글자");
         rejects(ANSWER.replace("제단에 고개", "제단Ни에 고개"), "외국 글자");
+        rejects(ANSWER.replace("제단에 고개", "제단वश에 고개"), "외국 글자");
+        rejects(ANSWER.replace("붉게 물든", "붉게_물든"), "외국 글자");
     }
 
     private static void rejects(String answer, String reason) {
