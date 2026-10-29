@@ -44,8 +44,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
         CollectionData data = collectionList.get(position);
 
         if (data.isDiscovered()) {
-            Glide.with(context)
-                    .load(data.getImgResId())
+            GameImages.glide(context, data.getImgName())
                     .into(holder.image);
 
             holder.image.setAlpha(1.0f);

@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.textdungeon.R;
 import com.google.android.material.snackbar.Snackbar;
+import com.textdungeon.activity_control.GameImages;
 import com.textdungeon.data.DataControl;
 import com.textdungeon.model.Item;
 import com.textdungeon.player.Equipment;
@@ -111,12 +112,7 @@ public class InventoryDialog extends Dialog {
             ImageView actionIcon = itemSlot.findViewById(R.id.action_icon);
 
             Item item = itemLibrary.spawn(itemId);
-            String iconName = item.getImgId();
-
-            int imgResId = getContext().getResources().getIdentifier(iconName, "drawable", getContext().getPackageName());
-            if (imgResId != 0){
-                actionIcon.setImageResource(imgResId);
-            }
+            GameImages.set(actionIcon, item.getImgId(), 0);
 
             itemSlot.setOnClickListener(v -> showItemActionDialog(item, itemMap.get(itemId)));
 
@@ -273,8 +269,7 @@ public class InventoryDialog extends Dialog {
             slotIcon.setAlpha(1.0f);
             slotLayout.setBackgroundColor(Color.parseColor("#44E9C176"));
         } else {
-            int defaultResId = getContext().getResources().getIdentifier(defaultIconName, "drawable", getContext().getPackageName());
-            if (defaultResId != 0) slotIcon.setImageResource(defaultResId);
+            GameImages.set(slotIcon, defaultIconName, 0);
 
             slotIcon.setAlpha(0.3f);
             slotLayout.setBackgroundResource(R.drawable.bg_event_panel);
@@ -317,8 +312,7 @@ public class InventoryDialog extends Dialog {
         if (imgName == null || imgName.trim().isEmpty()) {
             imgName = getIconNameByType(item.getType());
         }
-        int imgResId = getContext().getResources().getIdentifier(imgName, "drawable", getContext().getPackageName());
-        if (imgResId != 0) icon.setImageResource(imgResId);
+        GameImages.set(icon, imgName, 0);
     }
     private String getIconNameByType(String type) {
         switch (type.toLowerCase()) {

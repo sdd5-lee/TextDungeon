@@ -64,8 +64,7 @@ public class ShopUnlockAdapter extends RecyclerView.Adapter<ShopUnlockAdapter.Vi
             isUnlocked = record.isUnlockJob(job.name);
 
             holder.unlockImg.setVisibility(View.VISIBLE);
-            int imgResId = context.getResources().getIdentifier(job.img, "drawable", context.getPackageName());
-            if (imgResId != 0) holder.unlockImg.setImageResource(imgResId);
+            GameImages.set(holder.unlockImg, job.img, 0);
 
             holder.unlockButton.setOnClickListener(view -> {
                 SoundManager.getInstance(context).playButtonSfx();

@@ -126,12 +126,7 @@ public class CharacterActivity extends BaseActivity {
                 tv.setTextColor(Color.parseColor("#888888"));
             } else {
                 layout.setAlpha(1.0f);
-                int imgResId = getResources().getIdentifier(job.img, "drawable", getPackageName());
-                if (imgResId != 0) {
-                    iv.setImageResource(imgResId);
-                } else {
-                    iv.setImageResource(android.R.drawable.ic_menu_gallery);
-                }
+                GameImages.set(iv, job.img, android.R.drawable.ic_menu_gallery);
                 iv.clearColorFilter();
                 tv.setText(job.name);
             }

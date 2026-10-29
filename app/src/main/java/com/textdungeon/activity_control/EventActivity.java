@@ -133,14 +133,7 @@ public class EventActivity extends BaseActivity {
         View hpArea = findViewById(R.id.hp_area);
         GridLayout statList = findViewById(R.id.stat_list);
 
-        String jobImgName = player.getJob().img.toLowerCase();
-        int resId = getResources().getIdentifier(jobImgName, "drawable", getPackageName());
-
-        if (resId != 0) {
-            avatar.setImageResource(resId);
-        } else {
-            avatar.setImageResource(R.drawable.dungeon_entrance);
-        }
+        GameImages.set(avatar, player.getJob().img.toLowerCase(), R.drawable.dungeon_entrance);
 
         avatar.setOnClickListener(v -> new PlayerInfoDialog(this, player).show());
         hpArea.setOnClickListener(v -> new PlayerInfoDialog(this, player).show());
@@ -222,26 +215,20 @@ public class EventActivity extends BaseActivity {
         ImageView eventImage = findViewById(R.id.event_image);
         eventImage.setAlpha(1.0f);
 
-        String imageName = currentEvent.getImgId();
-        int imageResId = 0;
+        boolean shown = GameImages.set(eventImage, currentEvent.getImgId(), 0);
 
-        if (imageName != null && !imageName.isEmpty()) {
-            imageResId = getResources().getIdentifier(
-                    imageName, "drawable", getPackageName());
-        }
-
-        if (imageResId == 0 && currentEvent instanceof BattleEvent) {
+        // 이벤트에 이미지가 없으면 전투 상대 몬스터 이미지
+        if (!shown && currentEvent instanceof BattleEvent) {
             BattleEvent battleEvent = (BattleEvent) currentEvent;
             if (battleEvent.getEnemyId() != null) {
                 Monster monster = eventManager.spawnMonster(battleEvent.getEnemyId());
-                if (monster != null && monster.getImgId() != null) {
-                    imageResId = getResources().getIdentifier(
-                            monster.getImgId(), "drawable", getPackageName());
+                if (monster != null) {
+                    shown = GameImages.set(eventImage, monster.getImgId(), 0);
                 }
             }
         }
 
-        eventImage.setImageResource(imageResId != 0 ? imageResId : R.drawable.mon_god);
+        if (!shown) eventImage.setImageResource(R.drawable.mon_god);
     }
 
     private void renderChoiceButtons() {

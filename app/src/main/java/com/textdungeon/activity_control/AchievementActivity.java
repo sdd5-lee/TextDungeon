@@ -24,9 +24,7 @@ import com.textdungeon.model.Item;
 import com.textdungeon.model.Monster;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class AchievementActivity extends BaseActivity {
@@ -48,8 +46,6 @@ public class AchievementActivity extends BaseActivity {
 
     private List<CollectionData> currentCollectionList = new ArrayList<>();
     private CollectionAdapter collectionAdapter;
-
-    private final Map<String, Integer> imageCache = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,22 +76,9 @@ public class AchievementActivity extends BaseActivity {
         switchMainMode(false);
     }
 
-    private int getCachedResId(String imgName, String defaultImgName) {
-        if (imgName == null || imgName.trim().isEmpty()) {
-            imgName = defaultImgName;
-        }
-
-        if (imageCache.containsKey(imgName)) {
-            return imageCache.get(imgName);
-        }
-
-        int resId = getResources().getIdentifier(imgName, "drawable", getPackageName());
-        if (resId == 0) {
-            resId = getResources().getIdentifier(defaultImgName, "drawable", getPackageName());
-        }
-
-        imageCache.put(imgName, resId);
-        return resId;
+    /** 이미지 이름이 없거나 그 이미지가 없으면 기본 이미지 이름 */
+    private String imageOrDefault(String imgName, String defaultImgName) {
+        return GameImages.exists(this, imgName) ? imgName : defaultImgName;
     }
 
     private void switchMainMode(boolean toCollection) {
@@ -189,25 +172,21 @@ public class AchievementActivity extends BaseActivity {
         if (category.equals("아이템")) {
             for (Item item : dt.getItemManager().getAll()) {
                 boolean discovered = disItems.contains(item.getId());
-                // 💡 여기서 미리 resId를 찾아둠
-                int resId = getCachedResId(item.getImgId(), "ic_weapon");
-                currentCollectionList.add(new CollectionData(
-                        item.getName(), item.getDescription(), resId, discovered));
+                currentCollectionList.add(new CollectionData(item.getName(), item.getDescription(),
+                        imageOrDefault(item.getImgId(), "ic_weapon"), discovered));
             }
         } else if (category.equals("몬스터")) {
             for (Monster mon : dt.getMonsterManager().getAll()) {
                 boolean discovered = disMonsters.contains(mon.getId());
                 String desc = mon.getDescription() + "\n\n[기본 스탯]\n공격력: " + mon.getAttack() + " / 체력: " + mon.getMaxHp();
-                int resId = getCachedResId(mon.getImgId(), "mon_goblin");
-                currentCollectionList.add(new CollectionData(
-                        mon.getName(), desc, resId, discovered));
+                currentCollectionList.add(new CollectionData(mon.getName(), desc,
+                        imageOrDefault(mon.getImgId(), "mon_goblin"), discovered));
             }
         } else if (category.equals("이벤트")) {
             for (GameEvent ev : dt.getEventManager().getAll()) {
                 boolean discovered = disEvents.contains(ev.getId());
-                int resId = getCachedResId(ev.getImgId(), "ic_event");
-                currentCollectionList.add(new CollectionData(
-                        ev.getName(), ev.getDescription(), resId, discovered));
+                currentCollectionList.add(new CollectionData(ev.getName(), ev.getDescription(),
+                        imageOrDefault(ev.getImgId(), "ic_event"), discovered));
             }
         }
 
@@ -235,7 +214,7 @@ public class AchievementActivity extends BaseActivity {
 
             unlockStatus.setText("닫기");
             unlockStatus.setTextColor(Color.parseColor("#E9C176"));
-            charImage.setImageResource(data.getImgResId());
+            GameImages.set(charImage, data.getImgName(), 0);
         } else {
             charName.setText("???");
             charName.setTextColor(Color.parseColor("#A0A0A0"));

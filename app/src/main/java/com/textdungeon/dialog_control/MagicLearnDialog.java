@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.example.textdungeon.R;
 import com.google.android.material.snackbar.Snackbar;
 import com.textdungeon.activity_control.BaseActivity;
+import com.textdungeon.activity_control.GameImages;
 import com.textdungeon.data.DataControl;
 import com.textdungeon.data.DataControlTower;
 import com.textdungeon.model.Achievement;
@@ -86,14 +87,7 @@ public class MagicLearnDialog extends Dialog {
 
             String imgName = magic.getImg();
             if (imgName != null && !imgName.isEmpty()) {
-                int resId = getContext().getResources().getIdentifier(
-                        imgName, "drawable", getContext().getPackageName());
-
-                if (resId != 0) {
-                    ivMagicIcon.setImageResource(resId);
-                } else {
-                    ivMagicIcon.setImageResource(R.drawable.magic_default_icon);
-                }
+                GameImages.set(ivMagicIcon, imgName, R.drawable.magic_default_icon);
             }
 
             int reqWisdom = magic.getValue();

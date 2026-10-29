@@ -7,8 +7,6 @@ import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.widget.TextView;
 
-import androidx.core.content.ContextCompat;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,17 +26,13 @@ public class GameUI {
             int start = matcher.start();
             int end = matcher.end();
 
-            int resId = context.getResources().getIdentifier(tagName, "drawable", context.getPackageName());
+            Drawable d = GameImages.drawable(context, tagName);
+            if (d != null) {
+                int size = (int) (textSize * 1.3);
+                d.setBounds(0, 0, size, size);
 
-            if (resId != 0) {
-                Drawable d = ContextCompat.getDrawable(context, resId);
-                if (d != null) {
-                    int size = (int) (textSize * 1.3);
-                    d.setBounds(0, 0, size, size);
+                ssb.setSpan(new ImageSpan(d, ImageSpan.ALIGN_BOTTOM), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-                    ssb.setSpan(new ImageSpan(d, ImageSpan.ALIGN_BOTTOM), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-                }
             }
         }
         return ssb;
