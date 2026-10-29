@@ -121,12 +121,7 @@ public class TemplateEventGenerator {
         backend.generate(prompt(plan), ResponseFormat.TEXT, MAX_OUTPUT_TOKENS, TEMPERATURE, new LlmCallback() {
             @Override
             public void onResult(String text) {
-                try {
-                    callback.onSuccess(toEvent(text, plan, rewardMultiplier, expMultiplier));
-                } catch (Exception e) {
-                    Log.w(TAG, "틀 방식 응답을 쓸 수 없음: " + e.getMessage() + "\n" + text);
-                    callback.onError("이벤트 창조 실패: " + e.getMessage());
-                }
+                finish(text, plan, rewardMultiplier, expMultiplier, MAX_REPAIR_ROUNDS, callback);
             }
 
             @Override
@@ -134,6 +129,57 @@ public class TemplateEventGenerator {
                 callback.onError(errorMessage);
             }
         });
+    }
+
+    /**
+     * 실패의 대부분은 여섯 줄 중 한 줄에 외국 단어가 섞인 것이다. 같은 뼈대로 다시 만들면 같은 자리에서 또 깨지지만
+     * (S24, 10개 중 1개 성공, 6.3초), 그 줄만 고쳐 쓰게 하면 10개 중 9개가 2.2초에 고쳐졌다 (docs/ondevice-event)
+     */
+    static final int MAX_REPAIR_ROUNDS = 2;
+
+    /** 응답을 이벤트로 바꾼다. 한 줄만 고치면 되는 문제면 그 줄들을 고쳐 쓰게 하고 다시 본다 */
+    private void finish(String text, Plan plan, int rewardMultiplier, int expMultiplier, int repairsLeft,
+                        AiCallback callback) {
+        try {
+            callback.onSuccess(toEvent(text, plan, rewardMultiplier, expMultiplier));
+            return;
+        } catch (ParseException e) {
+            Map<String, String> lines = extractLines(text);
+            List<Broken> broken = repairsLeft > 0 ? brokenLines(lines) : null;
+            if (broken != null && !broken.isEmpty()) {
+                Log.i(TAG, "깨진 줄 " + broken.size() + "개 고쳐 쓰기: " + e.getMessage());
+                repair(lines, broken, 0, () -> finish(joinLines(lines), plan, rewardMultiplier, expMultiplier,
+                        repairsLeft - 1, callback), callback);
+                return;
+            }
+            Log.w(TAG, "틀 방식 응답을 쓸 수 없음: " + e.getMessage() + "\n" + text);
+            callback.onError("이벤트 창조 실패: " + e.getMessage());
+        } catch (Exception e) {
+            Log.w(TAG, "틀 방식 응답을 쓸 수 없음: " + e.getMessage() + "\n" + text);
+            callback.onError("이벤트 창조 실패: " + e.getMessage());
+        }
+    }
+
+    /** 깨진 줄을 하나씩 차례로 고쳐 쓴다 (모델은 요청을 한 번에 하나만 받는다) */
+    private void repair(Map<String, String> lines, List<Broken> broken, int index, Runnable done, AiCallback callback) {
+        if (index >= broken.size()) {
+            done.run();
+            return;
+        }
+        Broken b = broken.get(index);
+        backend.generate(repairPrompt(lines, b), ResponseFormat.TEXT, REPAIR_MAX_OUTPUT_TOKENS, TEMPERATURE,
+                new LlmCallback() {
+                    @Override
+                    public void onResult(String text) {
+                        lines.put(b.key, repairedValue(text, b.key));
+                        repair(lines, broken, index + 1, done, callback);
+                    }
+
+                    @Override
+                    public void onError(String errorMessage) {
+                        callback.onError(errorMessage);
+                    }
+                });
     }
 
     // ── 뼈대 ─────────────────────────────────────
@@ -349,30 +395,129 @@ public class TemplateEventGenerator {
 
     /** AI 응답 여섯 줄을 꺼낸다. 하나라도 없거나 규칙을 어기면 ParseException */
     static Map<String, String> parseLines(String raw) throws ParseException {
-        Map<String, String> found = new java.util.HashMap<>();
-        if (raw != null) {
-            for (String line : raw.split("\\r?\\n")) {
-                Matcher m = LINE.matcher(line.trim());
-                if (!m.matches()) continue;
-                String key = m.group(1).replaceAll("\\s", "");
-                // 굵은 글씨 표시를 지우고, 단어 사이에 생긴 긴 공백("진        한")은 한 칸으로 줄인다
-                String value = m.group(2).replaceAll("\\*+", "").replaceAll("\\s+", " ").trim();
-                if (!found.containsKey(key) && !value.isEmpty()) found.put(key, value);
-            }
-        }
+        Map<String, String> found = extractLines(raw);
         for (String key : KEYS) {
             if (!found.containsKey(key)) throw new ParseException(key + " 줄 없음");
         }
-        check(found.get("이름"), "이름", MAX_NAME_LENGTH, EXAMPLE_NAME);
-        check(found.get("선택지1"), "선택지1", MAX_CHOICE_LENGTH, EXAMPLE_CHOICE1);
-        check(found.get("선택지2"), "선택지2", MAX_CHOICE_LENGTH, EXAMPLE_CHOICE2);
-        checkText(found.get("상황"), "상황", EXAMPLE_SITUATION);
-        checkText(found.get("결과1"), "결과1", EXAMPLE_RESULT1);
-        checkText(found.get("결과2"), "결과2", EXAMPLE_RESULT2);
+        // 이름, 선택지를 먼저 본다
+        for (String key : new String[]{"이름", "선택지1", "선택지2", "상황", "결과1", "결과2"}) {
+            checkLine(key, found.get(key));
+        }
         if (normalize(found.get("선택지1")).equals(normalize(found.get("선택지2")))) {
             throw new ParseException("두 선택지가 같음");
         }
         return found;
+    }
+
+    /** 검사 없이 "키: 값" 줄을 꺼낸다 */
+    static Map<String, String> extractLines(String raw) {
+        Map<String, String> found = new java.util.LinkedHashMap<>();
+        if (raw == null) return found;
+        for (String line : raw.split("\\r?\\n")) {
+            Matcher m = LINE.matcher(line.trim());
+            if (!m.matches()) continue;
+            String key = m.group(1).replaceAll("\\s", "");
+            // 굵은 글씨 표시를 지우고, 단어 사이에 생긴 긴 공백("진        한")은 한 칸으로 줄인다
+            String value = m.group(2).replaceAll("\\*+", "").replaceAll("\\s+", " ").trim();
+            if (!found.containsKey(key) && !value.isEmpty()) found.put(key, value);
+        }
+        return found;
+    }
+
+    private static void checkLine(String key, String value) throws ParseException {
+        switch (key) {
+            case "이름": check(value, key, MAX_NAME_LENGTH, EXAMPLE_NAME); break;
+            case "선택지1": check(value, key, MAX_CHOICE_LENGTH, EXAMPLE_CHOICE1); break;
+            case "선택지2": check(value, key, MAX_CHOICE_LENGTH, EXAMPLE_CHOICE2); break;
+            case "상황": checkText(value, key, EXAMPLE_SITUATION); break;
+            case "결과1": checkText(value, key, EXAMPLE_RESULT1); break;
+            default: checkText(value, key, EXAMPLE_RESULT2); break;
+        }
+    }
+
+    // ── 깨진 줄 고쳐 쓰기 ─────────────────────────
+    // 실패는 대개 여섯 줄 중 한 줄에 외국 단어 하나가 섞인 것이라, 전체를 다시 만들지 않고 그 줄만 고쳐 쓰게 한다
+
+    /** 고쳐 쓸 한 줄. 고친 줄은 parseLines로 다시 검사한다 */
+    static final class Broken {
+        final String key;
+        final String value;
+        /** 모델에게 줄 고칠 내용 */
+        final String instruction;
+
+        Broken(String key, String value, String instruction) {
+            this.key = key;
+            this.value = value;
+            this.instruction = instruction;
+        }
+    }
+
+    static final int REPAIR_MAX_OUTPUT_TOKENS = 160;
+    private static final Pattern FOREIGN_RUN = Pattern.compile(FOREIGN.pattern() + "+");
+
+    /**
+     * 규칙을 어긴 줄들. 외국 글자, 길이, 숫자처럼 그 줄만 고치면 되는 문제만 고른다.
+     * 줄이 없거나 예시를 베꼈거나 두 선택지가 같으면 null (다시 만든다). 어긴 줄이 없으면 빈 목록
+     */
+    static List<Broken> brokenLines(Map<String, String> lines) {
+        List<Broken> broken = new ArrayList<>();
+        for (String key : KEYS) {
+            String value = lines.get(key);
+            if (value == null) return null;
+            try {
+                checkLine(key, value);
+            } catch (ParseException e) {
+                String instruction = instruction(key, value, e.getMessage());
+                if (instruction == null) return null;
+                broken.add(new Broken(key, value, instruction));
+            }
+        }
+        if (broken.isEmpty() && normalize(lines.get("선택지1")).equals(normalize(lines.get("선택지2")))) return null;
+        return broken;
+    }
+
+    private static String instruction(String key, String value, String problem) {
+        if (problem.contains("외국 글자")) {
+            List<String> parts = new ArrayList<>();
+            Matcher m = FOREIGN_RUN.matcher(value.replace("HP", ""));
+            while (m.find()) {
+                if (!parts.contains("'" + m.group() + "'")) parts.add("'" + m.group() + "'");
+            }
+            return String.join(", ", parts) + "은(는) 한국어가 아니다. 그 부분만 문맥에 맞는 한국어로 바꾸고 나머지 글자는 그대로 둔다.";
+        }
+        if (problem.contains("자를 넘음")) {
+            int limit = key.startsWith("선택지") ? 20 : key.equals("이름") ? 15 : 100;
+            return "너무 길다. 뜻은 그대로 두고 " + limit + "자 안팎으로 줄인다.";
+        }
+        if (problem.contains("숫자가 있음")) return "숫자를 빼고 말로만 쓴다.";
+        return null;
+    }
+
+    /** 이벤트 글 전체를 맥락으로 주고, 깨진 한 줄만 고쳐 쓰게 한다 */
+    static String repairPrompt(Map<String, String> lines, Broken b) {
+        StringBuilder sb = new StringBuilder("아래는 던전 게임 이벤트 글이다.\n");
+        for (String key : KEYS) sb.append(key).append(": ").append(lines.get(key)).append("\n");
+        sb.append("\n'").append(b.key).append("' 줄에서 ").append(b.instruction).append("\n")
+                .append("고친 ").append(b.key).append(" 한 줄만 '").append(b.key).append(": ' 뒤에 써서 답하라. 한국어로만 쓴다.");
+        return sb.toString();
+    }
+
+    /** 고쳐 쓴 답에서 그 줄을 꺼낸다. "키:"를 빼먹었으면 첫 줄을 쓴다 */
+    static String repairedValue(String raw, String key) {
+        String value = extractLines(raw).get(key);
+        if (value != null) return value;
+        for (String line : raw.split("\\r?\\n")) {
+            String v = line.replaceAll("^[\\s*#>\"'-]+|[\\s*\"']+$", "").replaceAll("\\s+", " ");
+            if (!v.isEmpty()) return v;
+        }
+        return "";
+    }
+
+    /** 꺼낸 줄을 다시 응답 모양으로 (parseLines, toEvent에 넣는다) */
+    static String joinLines(Map<String, String> lines) {
+        StringBuilder sb = new StringBuilder();
+        for (String key : KEYS) sb.append(key).append(": ").append(lines.get(key)).append("\n");
+        return sb.toString();
     }
 
     private static void check(String value, String key, int maxLength, String example) throws ParseException {

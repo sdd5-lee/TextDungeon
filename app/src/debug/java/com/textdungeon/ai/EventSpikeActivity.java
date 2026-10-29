@@ -96,9 +96,11 @@ public class EventSpikeActivity extends AppCompatActivity {
         List<String> targets = Arrays.asList(valueOr(getIntent().getStringExtra("targets"), "device,cloud").split(","));
         List<String> methods = Arrays.asList(valueOr(getIntent().getStringExtra("methods"), "json,template").split(","));
         int count = getIntent().getIntExtra("count", 20);
+        boolean repair = "repair".equals(getIntent().getStringExtra("mode"));
         new Thread(() -> {
             try {
-                run(targets, methods, count);
+                if (repair) runRepairCompare();
+                else run(targets, methods, count);
             } catch (Throwable t) {
                 Log.e(TAG, "측정 중단", t);
                 show("측정 중단: " + t);
@@ -127,16 +129,7 @@ public class EventSpikeActivity extends AppCompatActivity {
             LlmBackend backend;
             OnDeviceBackend device = null;
             if ("device".equals(target)) {
-                device = new OnDeviceBackend(getApplicationContext());
-                long start = SystemClock.elapsedRealtime();
-                device.warmUp();
-                while (device.getState() != OnDeviceBackend.State.READY
-                        && device.getState() != OnDeviceBackend.State.FAILED
-                        && device.getState() != OnDeviceBackend.State.UNAVAILABLE
-                        && SystemClock.elapsedRealtime() - start < LOAD_TIMEOUT_MS) {
-                    Thread.sleep(200);
-                }
-                show("온디바이스 " + device.getState() + " (" + (SystemClock.elapsedRealtime() - start) + "ms, " + device.name() + ")");
+                device = loadDevice();
                 if (device.getState() != OnDeviceBackend.State.READY) continue;
                 deviceName = device.name();
                 backend = device;
@@ -165,6 +158,176 @@ public class EventSpikeActivity extends AppCompatActivity {
         }
         File file = writeReport(cases, results, deviceName);
         show("완료. 결과 파일: " + file.getAbsolutePath());
+    }
+
+    private OnDeviceBackend loadDevice() throws InterruptedException {
+        OnDeviceBackend device = new OnDeviceBackend(getApplicationContext());
+        long start = SystemClock.elapsedRealtime();
+        device.warmUp();
+        while (device.getState() != OnDeviceBackend.State.READY
+                && device.getState() != OnDeviceBackend.State.FAILED
+                && device.getState() != OnDeviceBackend.State.UNAVAILABLE
+                && SystemClock.elapsedRealtime() - start < LOAD_TIMEOUT_MS) {
+            Thread.sleep(200);
+        }
+        show("온디바이스 " + device.getState() + " (" + (SystemClock.elapsedRealtime() - start) + "ms, " + device.name() + ")");
+        return device;
+    }
+
+    // ── 고쳐 쓰기 대 다시 만들기 ─────────────────
+
+    private static class RepairResult {
+        long ms;
+        boolean ok;
+        int calls;
+        String error = "";
+        GameEvent event;
+        List<String> changes = new ArrayList<>();
+    }
+
+    /**
+     * 앞 측정에서 실패한 응답을 깨진 줄만 고쳐 쓰는 것과, 같은 뼈대로 이벤트를 다시 만드는 것을 번갈아 잰다.
+     * 입력: files/spike/repair_input.txt. 한 줄에 "경우 번호<탭>원문", 원문의 줄바꿈은 " / " (보고서의 실패 원문 그대로).
+     * 경우 번호는 같은 코드의 측정 보고서 번호다 (시드가 같아 뼈대가 같다)
+     *   adb shell am start -S -n com.lkj.textdungeon/com.textdungeon.ai.EventSpikeActivity --es mode repair
+     */
+    private void runRepairCompare() throws Exception {
+        DataControlTower dt = DataControlTower.getInstance(this);
+        List<Case> cases = buildCases(dt, FLOORS.length * AiType.values().length);
+        File input = new File(getExternalFilesDir(null), "spike/repair_input.txt");
+        List<String[]> entries = new ArrayList<>();
+        for (String line : new String(java.nio.file.Files.readAllBytes(input.toPath()), StandardCharsets.UTF_8).split("\n")) {
+            String[] parts = line.split("\t", 2);
+            if (parts.length == 2) entries.add(parts);
+        }
+        show("실패 응답 " + entries.size() + "개로 고쳐 쓰기 대 다시 만들기");
+        OnDeviceBackend device = loadDevice();
+        if (device.getState() != OnDeviceBackend.State.READY) return;
+
+        List<Case> picked = new ArrayList<>();
+        List<String> raws = new ArrayList<>();
+        List<RepairResult> repairs = new ArrayList<>();
+        List<Result> regens = new ArrayList<>();
+        for (String[] e : entries) {
+            Case c = cases.get(Integer.parseInt(e[0].trim()) - 1);
+            String raw = e[1].replace(" / ", "\n");
+            RepairResult rr = runRepair(device, c, raw);
+            show("고쳐 쓰기 " + e[0] + " " + rr.ms + "ms " + (rr.ok ? "OK" : "실패: " + rr.error) + " " + rr.changes);
+            Result rg = runTemplate(device, c, DEVICE_TIMEOUT_SEC);
+            show("다시 만들기 " + e[0] + " " + rg.ms + "ms " + (rg.ok ? "OK " + rg.event.getName() : "실패: " + rg.error));
+            picked.add(c);
+            raws.add(e[0].trim());
+            repairs.add(rr);
+            regens.add(rg);
+        }
+        device.release();
+        File file = writeRepairReport(picked, raws, repairs, regens, device.name());
+        show("완료. 결과 파일: " + file.getAbsolutePath());
+    }
+
+    private RepairResult runRepair(LlmBackend backend, Case c, String raw) throws InterruptedException {
+        RepairResult r = new RepairResult();
+        long start = SystemClock.elapsedRealtime();
+        Map<String, String> lines = TemplateEventGenerator.extractLines(raw);
+        List<TemplateEventGenerator.Broken> broken = TemplateEventGenerator.brokenLines(lines);
+        if (broken == null || broken.isEmpty()) {
+            r.error = broken == null ? "한 줄로 못 고치는 문제" : "깨진 줄 없음";
+        } else {
+            for (TemplateEventGenerator.Broken b : broken) {
+                String[] error = {""};
+                String text = ask(backend, TemplateEventGenerator.repairPrompt(lines, b), error);
+                r.calls++;
+                if (text == null) {
+                    r.error = error[0];
+                    break;
+                }
+                String fixed = TemplateEventGenerator.repairedValue(text, b.key);
+                r.changes.add(b.key + ": " + b.value + " → " + fixed);
+                lines.put(b.key, fixed);
+            }
+            if (r.error.isEmpty()) {
+                try {
+                    r.event = new TemplateEventGenerator(backend).toEvent(TemplateEventGenerator.joinLines(lines), c.plan,
+                            REWARD_MULTIPLIER, 1);
+                    r.ok = true;
+                } catch (Exception e) {
+                    r.error = e.getMessage();
+                }
+            }
+        }
+        r.ms = SystemClock.elapsedRealtime() - start;
+        return r;
+    }
+
+    /** 요청 하나를 보내고 답을 기다린다. 실패하면 null이고 이유는 error[0] */
+    private static String ask(LlmBackend backend, String prompt, String[] error) throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(1);
+        String[] text = new String[1];
+        backend.generate(prompt, ResponseFormat.TEXT, TemplateEventGenerator.REPAIR_MAX_OUTPUT_TOKENS,
+                TemplateEventGenerator.TEMPERATURE, new LlmCallback() {
+                    @Override
+                    public void onResult(String t) {
+                        text[0] = t;
+                        latch.countDown();
+                    }
+
+                    @Override
+                    public void onError(String errorMessage) {
+                        error[0] = errorMessage;
+                        latch.countDown();
+                    }
+                });
+        if (!latch.await(DEVICE_TIMEOUT_SEC, TimeUnit.SECONDS)) error[0] = "시간 초과";
+        return text[0];
+    }
+
+    private File writeRepairReport(List<Case> cases, List<String> numbers, List<RepairResult> repairs, List<Result> regens,
+                                   String deviceName) throws Exception {
+        String stamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
+        StringBuilder md = new StringBuilder("# 고쳐 쓰기 대 다시 만들기 ").append(stamp).append("\n\n")
+                .append("- 기기: ").append(android.os.Build.MANUFACTURER).append(' ').append(android.os.Build.MODEL)
+                .append(", ").append(deviceName).append("\n")
+                .append("- 앞 측정에서 실패한 응답마다 깨진 줄만 고쳐 쓰기와 같은 뼈대로 다시 만들기를 번갈아 잰다\n\n")
+                .append("| 방법 | 성공 | 중앙값 | 평균 | 최대 |\n| --- | --- | --- | --- | --- |\n");
+        List<Long> repairTimes = new ArrayList<>();
+        List<Long> regenTimes = new ArrayList<>();
+        int repairOk = 0, regenOk = 0;
+        for (int i = 0; i < cases.size(); i++) {
+            repairTimes.add(repairs.get(i).ms);
+            regenTimes.add(regens.get(i).ms);
+            if (repairs.get(i).ok) repairOk++;
+            if (regens.get(i).ok) regenOk++;
+        }
+        md.append(timeRow("고쳐 쓰기", repairOk, repairTimes)).append(timeRow("다시 만들기", regenOk, regenTimes));
+        md.append("\n## 경우별\n");
+        for (int i = 0; i < cases.size(); i++) {
+            Case c = cases.get(i);
+            RepairResult rr = repairs.get(i);
+            Result rg = regens.get(i);
+            md.append("\n### ").append(numbers.get(i)).append(". ").append(c.god.getGodName()).append(' ')
+                    .append(c.floor).append("층\n")
+                    .append("- 고쳐 쓰기 (").append(sec(rr.ms)).append(", 요청 ").append(rr.calls).append("번) ")
+                    .append(rr.ok ? "성공" : "실패: " + rr.error).append("\n");
+            for (String change : rr.changes) md.append("  - ").append(change).append("\n");
+            md.append("- 다시 만들기 (").append(sec(rg.ms)).append(") ")
+                    .append(rg.ok ? "성공: " + rg.event.getName() : "실패: " + rg.error).append("\n");
+        }
+        File dir = new File(getExternalFilesDir(null), "spike");
+        if (!dir.exists() && !dir.mkdirs()) throw new IllegalStateException("폴더를 못 만듦: " + dir);
+        File file = new File(dir, "repair_" + stamp + ".md");
+        try (FileOutputStream out = new FileOutputStream(file)) {
+            out.write(md.toString().getBytes(StandardCharsets.UTF_8));
+        }
+        return file;
+    }
+
+    private static String timeRow(String label, int ok, List<Long> times) {
+        List<Long> sorted = new ArrayList<>(times);
+        Collections.sort(sorted);
+        long sum = 0;
+        for (long t : sorted) sum += t;
+        return "| " + label + " | " + ok + "/" + sorted.size() + " | " + sec(sorted.get(sorted.size() / 2)) + " | "
+                + sec(sum / sorted.size()) + " | " + sec(sorted.get(sorted.size() - 1)) + " |\n";
     }
 
     private static List<Case> buildCases(DataControlTower dt, int count) {

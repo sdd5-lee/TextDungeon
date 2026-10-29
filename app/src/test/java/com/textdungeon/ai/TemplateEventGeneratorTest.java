@@ -267,6 +267,122 @@ public class TemplateEventGeneratorTest {
         rejects(ANSWER.replace("붉게 물든", "붉게_물든"), "외국 글자");
     }
 
+    @Test
+    public void 외국_글자가_섞인_줄만_골라_고칠_곳을_짚어_준다() {
+        java.util.Map<String, String> lines = TemplateEventGenerator.extractLines(
+                ANSWER.replace("뜨거운 힘이", "뜨거운 ignor힘이").replace("작은 주머니", "작은 微주머니"));
+        List<TemplateEventGenerator.Broken> broken = TemplateEventGenerator.brokenLines(lines);
+
+        assertEquals(2, broken.size());
+        assertEquals("결과1", broken.get(0).key);
+        assertTrue(broken.get(0).instruction, broken.get(0).instruction.startsWith("'ignor'은(는) 한국어가 아니다"));
+        assertEquals("결과2", broken.get(1).key);
+        String prompt = TemplateEventGenerator.repairPrompt(lines, broken.get(0));
+        assertTrue(prompt, prompt.contains("상황: 붉게 물든 제단"));
+        assertTrue(prompt, prompt.endsWith("고친 결과1 한 줄만 '결과1: ' 뒤에 써서 답하라. 한국어로만 쓴다."));
+    }
+
+    @Test
+    public void 긴_선택지는_줄이라고_하고_한_줄로_못_고치는_문제는_다시_만든다() {
+        List<TemplateEventGenerator.Broken> broken = TemplateEventGenerator.brokenLines(TemplateEventGenerator.extractLines(
+                ANSWER.replace("칼을 뽑아 제단에 꽂는다", "칼을 뽑아 들고 제단 위로 올라가 하늘을 향해 크게 외친다")));
+        assertEquals("선택지1", broken.get(0).key);
+        assertTrue(broken.get(0).instruction.contains("20자 안팎으로 줄인다"));
+
+        assertNull(TemplateEventGenerator.brokenLines(TemplateEventGenerator.extractLines(
+                ANSWER.replace("선택지2: 제단에 고개 숙이고 물러난다\n", ""))));
+        assertNull(TemplateEventGenerator.brokenLines(TemplateEventGenerator.extractLines(
+                ANSWER.replace("피 묻은 제단의 시험", TemplateEventGenerator.EXAMPLE_NAME))));
+        assertTrue(TemplateEventGenerator.brokenLines(TemplateEventGenerator.extractLines(ANSWER)).isEmpty());
+    }
+
+    @Test
+    public void 고쳐_쓴_답에서_그_줄을_꺼내_다시_검사한다() throws Exception {
+        String fixed = "칼이 손을 베고 피를 마시자, 몸속에서 뜨거운 힘이 솟구친다.";
+        assertEquals(fixed, TemplateEventGenerator.repairedValue("결과1: " + fixed, "결과1"));
+        assertEquals(fixed, TemplateEventGenerator.repairedValue("\n\"" + fixed + "\"\n", "결과1"));
+
+        java.util.Map<String, String> lines = TemplateEventGenerator.extractLines(ANSWER.replace("뜨거운 힘이", "뜨거운 ignor힘이"));
+        lines.put("결과1", TemplateEventGenerator.repairedValue("결과1: " + fixed, "결과1"));
+        assertEquals(fixed, TemplateEventGenerator.parseLines(TemplateEventGenerator.joinLines(lines)).get("결과1"));
+    }
+
+    /** 정해 둔 답을 차례로 돌려주고, 받은 요청의 출력 상한을 적어 두는 가짜 모델 */
+    private static LlmBackend scripted(List<Integer> maxTokens, String... answers) {
+        java.util.Iterator<String> next = Arrays.asList(answers).iterator();
+        return new LlmBackend() {
+            @Override
+            public void generate(String prompt, ResponseFormat format, LlmCallback callback) {
+                fail("출력 상한 없이 부르면 안 됨");
+            }
+
+            @Override
+            public void generate(String prompt, ResponseFormat format, int max, Double temp, LlmCallback callback) {
+                maxTokens.add(max);
+                callback.onResult(next.next());
+            }
+
+            @Override
+            public boolean isReady() {
+                return true;
+            }
+
+            @Override
+            public String name() {
+                return "가짜";
+            }
+        };
+    }
+
+    private static Object generateWith(LlmBackend backend) {
+        Object[] made = new Object[1];
+        new TemplateEventGenerator(backend, new Random(1)).generate(1, AiType.DEATH, items("n"), items("u"),
+                items("d1", "d2"), monsters(), 1, 1, new AiCallback() {
+                    @Override
+                    public void onSuccess(GameEvent e) {
+                        made[0] = e;
+                    }
+
+                    @Override
+                    public void onError(String errorMessage) {
+                        made[0] = errorMessage;
+                    }
+                });
+        return made[0];
+    }
+
+    @Test
+    public void 깨진_줄은_그_줄만_고쳐_써서_이벤트로_만든다() {
+        List<Integer> maxTokens = new ArrayList<>();
+        Object made = generateWith(scripted(maxTokens,
+                ANSWER.replace("뜨거운 힘이", "뜨거운 ignor힘이"),
+                "결과1: 칼이 손을 베고 피를 마시자, 몸속에서 뜨거운 힘이 솟구친다."));
+
+        assertTrue(String.valueOf(made), made instanceof GameEvent);
+        assertTrue(((GameEvent) made).getRewards().get(0).getDescription().startsWith("칼이 손을 베고 피를 마시자, 몸속에서 뜨거운 힘이"));
+        assertEquals(Arrays.asList(TemplateEventGenerator.MAX_OUTPUT_TOKENS, TemplateEventGenerator.REPAIR_MAX_OUTPUT_TOKENS),
+                maxTokens);
+    }
+
+    @Test
+    public void 고쳐_써도_계속_깨지면_두_번까지만_고치고_실패로_돌려준다() {
+        List<Integer> maxTokens = new ArrayList<>();
+        String broken = "결과1: 칼이 손을 ignor 베고 피를 마신다.";
+        Object made = generateWith(scripted(maxTokens, ANSWER.replace("뜨거운 힘이", "뜨거운 ignor힘이"), broken, broken));
+
+        assertTrue(String.valueOf(made), made instanceof String && ((String) made).contains("외국 글자"));
+        assertEquals(1 + TemplateEventGenerator.MAX_REPAIR_ROUNDS, maxTokens.size());
+    }
+
+    @Test
+    public void 한_줄로_못_고치는_응답은_고쳐_쓰지_않고_바로_실패다() {
+        List<Integer> maxTokens = new ArrayList<>();
+        Object made = generateWith(scripted(maxTokens, ANSWER.replace("선택지2: 제단에 고개 숙이고 물러난다\n", "")));
+
+        assertTrue(String.valueOf(made), made instanceof String && ((String) made).contains("선택지2 줄 없음"));
+        assertEquals(1, maxTokens.size());
+    }
+
     private static void rejects(String answer, String reason) {
         try {
             TemplateEventGenerator.parseLines(answer);
