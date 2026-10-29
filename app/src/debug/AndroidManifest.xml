@@ -7,6 +7,11 @@
             android:name="com.textdungeon.ai.OnDeviceSpikeActivity"
             android:exported="true" />
 
+        <!-- AI 이벤트 생성 비교 측정: JSON 방식 / 틀 방식 (디버그 빌드 전용, adb로만 실행) -->
+        <activity
+            android:name="com.textdungeon.ai.EventSpikeActivity"
+            android:exported="true" />
+
         <!-- 온디바이스 디버그 플래그 설정 (디버그 빌드 전용, adb로만 실행) -->
         <activity
             android:name="com.textdungeon.ai.OnDeviceFlagsActivity"

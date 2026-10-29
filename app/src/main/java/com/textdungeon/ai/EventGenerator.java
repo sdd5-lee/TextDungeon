@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
  */
 public class EventGenerator {
     private static final String TAG = "EventGenerator";
+    static final int MAX_OUTPUT_TOKENS = 1024;
 
     private final LlmBackend backend;
     private final Gson gson = new Gson();
@@ -73,7 +74,8 @@ public class EventGenerator {
                 aiType.getIdPrefix(), floor, floor, eventType
         );
 
-        backend.generate(prompt, ResponseFormat.JSON, new LlmCallback() {
+        // JSON 전체를 쓰게 하므로 출력이 길다 (온디바이스로 돌릴 때만 의미가 있다)
+        backend.generate(prompt, ResponseFormat.JSON, MAX_OUTPUT_TOKENS, null, new LlmCallback() {
             @Override
             public void onResult(String text) {
                 parseAndCallback(text, floor, itemList, monsterList, aiType, callback);

@@ -3,6 +3,10 @@ plugins {
     alias(libs.plugins.secrets)
 }
 
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) localPropertiesFile.withInputStream { localProperties.load(it) }
+
 android {
     namespace 'com.example.textdungeon'
     compileSdk 36
@@ -20,6 +24,10 @@ android {
     }
 
     buildTypes {
+        debug {
+            // 디버그 측정 화면(클라우드 비교)만 쓰는 키. 게임은 클라우드를 쓰지 않으므로 출시 APK에는 넣지 않는다
+            buildConfigField "String", "GEMINI_API_KEY_GODS", "\"${localProperties.getProperty('GEMINI_API_KEY_GODS', '')}\""
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -51,7 +59,8 @@ android {
 secrets {
     propertiesFileName = "local.properties"
     defaultPropertiesFileName = "local.defaults.properties"
-    ignoreList.add('^GEMINI_API_KEY$') // 정규식이라 끝을 묶지 않으면 _GODS까지 빠진다. 예전 주사위용 키. 주사위는 이제 클라우드를 쓰지 않는다
+    ignoreList.add('^GEMINI_API_KEY$') // 정규식이라 끝을 묶어 둔다. 예전 주사위용 키. 주사위는 이제 클라우드를 쓰지 않는다
+    ignoreList.add('^GEMINI_API_KEY_GODS$') // 이벤트 생성용 키. 디버그 빌드에만 따로 넣는다 (위 buildTypes.debug)
 }
 
 dependencies {

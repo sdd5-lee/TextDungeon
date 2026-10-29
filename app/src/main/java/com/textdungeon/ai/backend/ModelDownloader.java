@@ -232,7 +232,7 @@ public class ModelDownloader {
         File temp = tempFile(target);
         if (temp.exists() && !temp.delete()) Log.w(TAG, "임시 파일을 지우지 못함: " + temp);
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(MODEL_URL))
-                .setTitle("혼돈의 주사위 AI 모델")
+                .setTitle("TextDungeon AI 모델 (신들의 이벤트, 혼돈의 주사위)")
                 .setDescription("Wi-Fi에서만 받습니다 (2.6GB)")
                 .setAllowedOverMetered(false)
                 .setAllowedOverRoaming(false)

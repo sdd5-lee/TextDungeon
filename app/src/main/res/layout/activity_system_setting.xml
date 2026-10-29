@@ -139,7 +139,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
             android:fontFamily="serif"
-            android:text="혼돈의 주사위 AI 모델 받기 (Wi-Fi, 2.6GB)"
+            android:text="AI 모델 받기 (신들의 이벤트·혼돈의 주사위, Wi-Fi 2.6GB)"
             android:textColor="#BBBBBB"
             android:textSize="14sp"
             android:textStyle="bold"

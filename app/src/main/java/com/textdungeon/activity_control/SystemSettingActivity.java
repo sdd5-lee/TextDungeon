@@ -105,7 +105,7 @@ public class SystemSettingActivity extends BaseActivity {
                             "- AndroidX Media3 (ExoPlayer)\n" +
                             "- OkHttp\n" +
                             "- LiteRT-LM\n" +
-                            "- Gemma 4 E2B 모델 (혼돈의 주사위)\n" +
+                            "- Gemma 4 E2B 모델 (신들의 이벤트, 혼돈의 주사위)\n" +
                             "- RuntimeTypeAdapterFactory\n\n" +
                             "■ BSD / MIT / Apache 2.0 License\n" +
                             "- Glide (Bumptech)\n\n" +
@@ -141,7 +141,7 @@ public class SystemSettingActivity extends BaseActivity {
             }
             new android.app.AlertDialog.Builder(this)
                     .setTitle("AI 모델 지우기")
-                    .setMessage("받아 둔 모델(2.6GB)을 지웁니다. 혼돈의 주사위는 미리 준비된 결과로만 동작합니다.\n다시 켜면 Wi-Fi에서 새로 받습니다.")
+                    .setMessage("받아 둔 모델(2.6GB)을 지웁니다. 게임은 신들의 이벤트 없이 시작하고, 혼돈의 주사위는 미리 준비된 결과로만 동작합니다.\n다시 켜면 Wi-Fi에서 새로 받습니다.")
                     .setPositiveButton("지우기", (dialog, which) -> ai.setModelDownloadEnabled(false))
                     .setNegativeButton("취소", (dialog, which) -> button.setChecked(true))
                     .setOnCancelListener(dialog -> button.setChecked(true))

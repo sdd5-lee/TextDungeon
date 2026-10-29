@@ -17,6 +17,17 @@ public interface LlmBackend {
         generate(prompt, format, validator.guard(callback));
     }
 
+    /**
+     * 출력 길이 상한과 샘플링 온도를 정해서 요청한다. 이벤트처럼 주사위와 다른 출력이 필요할 때 쓴다.
+     * 온디바이스는 이 값만큼만 만들고 멈춘다. 클라우드는 둘 다 무시한다 (길이로 막히는 일이 거의 없다)
+     *
+     * @param temperature null이면 모델 기본값
+     */
+    default void generate(String prompt, ResponseFormat format, int maxOutputTokens, Double temperature,
+                          LlmCallback callback) {
+        generate(prompt, format, callback);
+    }
+
     /** 진행 중인 요청을 멈춘다. 멈출 수 없는 백엔드(클라우드)는 아무것도 하지 않는다 */
     default void cancel() {}
 

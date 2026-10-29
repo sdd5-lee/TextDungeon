@@ -38,6 +38,11 @@ public class Reward {
     public String getDescription() {
         return description;
     }
+    /** 비어 있으면 null일 수 있다 */
+    public List<RewardStat> getStatRewards() {
+        return statRewards;
+    }
+
     public String getItemId() {
         return itemId;
     }

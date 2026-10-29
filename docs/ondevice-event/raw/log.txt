@@ -1,0 +1,96 @@
+이벤트 20개, 대상 [device, cloud], 방식 [json, template]
+온디바이스 READY (4004ms, OnDevice(GPU))
+device/json 1/20 18554ms 실패: 이벤트 창조 실패: com.google.gson.stream.MalformedJsonException: Unterminated array at line 49 column 2 path $.shopItems[0].statRewards[1]
+See https://github.com/google/gson/blob/main/Troubleshooting.md#malformed-json
+device/json 2/20 19984ms 실패: 이벤트 창조 실패: com.google.gson.stream.MalformedJsonException: Expected name at line 4 column 1 path $.choices[0].reward
+See https://github.com/google/gson/blob/main/Troubleshooting.md#malformed-json
+device/json 3/20 13873ms 실패: 이벤트 창조 실패: java.lang.IllegalStateException: Expected STRING but was BEGIN_OBJECT at path $.shopItems[0]
+device/json 4/20 19604ms 실패: 이벤트 창조 실패: com.google.gson.stream.MalformedJsonException: Unterminated object at line 57 column 2 path $.shopItems[2].description
+See https://github.com/google/gson/blob/main/Troubleshooting.md#malformed-json
+device/json 5/20 14338ms 실패: 이벤트 창조 실패: com.google.gson.stream.MalformedJsonException: Expected name at line 32 column 1 path $.rewards
+See https://github.com/google/gson/blob/main/Troubleshooting.md#malformed-json
+device/json 6/20 41670ms 실패: 이벤트 창조 실패: com.google.gson.stream.MalformedJsonException: Use JsonReader.setStrictness(Strictness.LENIENT) to accept malformed JSON at line 2 column 1033 path $
+See https://github.com/google/gson/blob/main/Troubleshooting.md#malformed-json
+device/json 7/20 25522ms 실패: 이벤트 창조 실패: com.google.gson.stream.MalformedJsonException: Unterminated object at line 68 column 2 path $.shopItems[2].items
+See https://github.com/google/gson/blob/main/Troubleshooting.md#malformed-json
+device/json 8/20 23195ms 실패: 이벤트 창조 실패: com.google.gson.stream.MalformedJsonException: Unterminated array at line 18 column 2 path $.choices[0].options[1]
+See https://github.com/google/gson/blob/main/Troubleshooting.md#malformed-json
+device/json 9/20 15780ms 실패: 이벤트 창조 실패: 빈 선택지 0
+device/json 10/20 42697ms 실패: 이벤트 창조 실패: com.google.gson.stream.MalformedJsonException: Unterminated string at line 2 column 2655 path $.rewards[16].description
+See https://github.com/google/gson/blob/main/Troubleshooting.md#malformed-json
+device/json 11/20 47047ms 실패: 이벤트 창조 실패: com.google.gson.stream.MalformedJsonException: Unterminated string at line 2 column 2439 path $.rewards[13].
+See https://github.com/google/gson/blob/main/Troubleshooting.md#malformed-json
+device/json 12/20 46682ms 실패: 이벤트 창조 실패: com.google.gson.stream.MalformedJsonException: Unterminated object at line 69 column 2 path $.rewards
+See https://github.com/google/gson/blob/main/Troubleshooting.md#malformed-json
+device/json 13/20 16168ms OK 죽음의 문턱에서의 거래
+device/json 14/20 29784ms 실패: 이벤트 창조 실패: 빈 선택지 0
+device/json 15/20 52895ms 실패: 이벤트 창조 실패: com.google.gson.stream.MalformedJsonException: Unterminated string at line 2 column 2676 path $.rewards[20].action
+See https://github.com/google/gson/blob/main/Troubleshooting.md#malformed-json
+device/json 16/20 19915ms 실패: 이벤트 창조 실패: 빈 선택지 0
+device/json 17/20 29331ms 실패: 이벤트 창조 실패: com.google.gson.stream.MalformedJsonException: Unterminated array at line 19 column 2 path $.choices[0].options[1]
+See https://github.com/google/gson/blob/main/Troubleshooting.md#malformed-json
+device/json 18/20 55441ms 실패: 이벤트 창조 실패: com.google.gson.stream.MalformedJsonException: Unterminated string at line 3 column 2193 path $.choices[0].reward[22].description
+See https://github.com/google/gson/blob/main/Troubleshooting.md#malformed-json
+device/json 19/20 9440ms 실패: 이벤트 창조 실패: 빈 선택지 0
+device/json 20/20 19461ms 실패: 이벤트 창조 실패: 빈 선택지 0
+device/template 1/20 4909ms OK 혼돈의 심연 속 시험
+device/template 2/20 5059ms OK 그림자 던전의 시험
+device/template 3/20 5715ms OK 그림자 제물의 계약
+device/template 4/20 4486ms OK 맹렬한 결투의 시험
+device/template 5/20 4569ms OK 심연의 선택지
+device/template 6/20 5065ms OK 혼돈의 심연 속 시험
+device/template 7/20 5806ms OK 심연의 시험대
+device/template 8/20 5972ms 실패: 상황에 숫자가 있음: 11층 던전의 심 지하, 붉은 기운이 감도는 제단 앞에 섰다. 신의 그림자가 당신의 의지를 시험한다. | 원문: 이름: 핏빛 제물의 계약 / 상황: 11층 던전의 심 지하, 붉은 기운이 감도�
+device/template 9/20 5059ms 실패: 상황에 숫자가 있음: 11층 던전의 심 지하에서 뼈와 어둠이 섞인 해골 기사가 당신 앞에 나타났다. | 원문: 이름: 11층의 그림자 결투 / 상황: 11층 던전의 심 지하에서 뼈와 어둠이 섞인 해골 기사가 당신
+device/template 10/20 4822ms OK 신성한 시험의 문턱
+device/template 11/20 5677ms 실패: 상황에 숫자가 있음: 끝없이 펼쳐진 21층 던전의 중심부, 모든 논리가 무너지는 공간에 당신이 서 있다. | 원문: 이름: 혼돈의 심연의 시험 / 상황: 끝없이 펼쳐진 21층 던전의 중심부, 모든 논리가 무너�
+device/template 12/20 5248ms OK 벼랑 끝의 시험
+device/template 13/20 5752ms OK 그림자 제물의 심연
+device/template 14/20 5340ms OK 21층의 결투의 그림자
+device/template 15/20 5089ms OK 운명의 갈림길의 시험
+device/template 16/20 5566ms 실패: 상황에 숫자가 있음: 41층의 공기는 짙은 안개로 가득 차 있고, 모든 것이 비정상적으로 움직이기 시작한다. | 원문: 이름: 덧없는 그림자의 춤 / 상황: 41층의 공기는 짙은 안개로 가득 차 있고, 모든 것
+device/template 17/20 7073ms 실패: 상황에 숫자가 있음: 41층 던전의 가장 깊은 곳, 핏빛으로 물든 수정들이 빛나고 있다. 당신의 발밑에서 끔찍한 균열이 벌어지고 있다. | 원문: 이름: 41층 심연의 시험대 / 상황: 41층 던전의 가장 깊은 �
+device/template 18/20 5531ms OK 그림자 제물의 계약
+device/template 19/20 5367ms 실패: 상황에 숫자가 있음: 41층 던전의 심 지하에서 붉은 눈동자를 가진 서큐버스가 당신 앞에 나타났다. | 원문: 이름: 41층의 그림자 결투 / 상황: 41층 던전의 심 지하에서 붉은 눈동자를 가진 서큐버스가 �
+device/template 20/20 4945ms OK 심연의 선택지
+cloud/json 1/20 15499ms OK 공간을 찢고 나타난 미친 토끼의 초대
+cloud/json 2/20 12571ms OK 금기된 심연의 피제단 문제 [긴 선택지, 긴 선택지]
+cloud/json 3/20 8448ms OK 사신의 금기된 제단
+cloud/json 4/20 10383ms OK 시련의 그림자: 해골 기사
+cloud/json 5/20 8551ms OK 보물의 신의 은총
+cloud/json 6/20 11908ms OK 혼돈의 수수께끼 문 문제 [긴 선택지, 긴 선택지]
+cloud/json 7/20 11427ms OK 금지된 영혼의 대장간 문제 [긴 선택지]
+cloud/json 8/20 18733ms OK 사신의 잔혹한 계약
+cloud/json 9/20 10913ms OK 피에 물든 사신과의 사투
+cloud/json 10/20 7214ms OK 보물의 신의 시험
+cloud/json 11/20 13958ms OK 비논리의 소용돌이
+cloud/json 12/20 12907ms OK 금단의 피를 바치는 제단
+cloud/json 13/20 14297ms OK 죽음의 신의 금기된 거래
+cloud/json 14/20 9112ms OK 전장의 지배자, 오크 워로드
+cloud/json 15/20 13546ms OK 보물의 신의 선택
+cloud/json 16/20 16423ms OK 차원의 일그러진 농담 문제 [긴 선택지]
+cloud/json 17/20 22449ms 실패: HTTP 503
+cloud/json 18/20 14437ms OK 죽음의 사신과 맺는 피의 계약 문제 [긴 선택지, 긴 선택지]
+cloud/json 19/20 388ms 실패: HTTP 429
+cloud/json 20/20 9420ms OK 보물의 신의 선택
+cloud/template 1/20 399ms 실패: HTTP 429
+cloud/template 2/20 8107ms OK 날카로운 칼날의 보물고
+cloud/template 3/20 393ms 실패: HTTP 429
+cloud/template 4/20 409ms 실패: HTTP 429
+cloud/template 5/20 6681ms OK 고대 신상의 갈라진 선택
+cloud/template 6/20 590ms 실패: HTTP 429
+cloud/template 7/20 408ms 실패: HTTP 429
+cloud/template 8/20 616ms 실패: HTTP 429
+cloud/template 9/20 6878ms OK 심연을 지키는 뼈의 결투가
+cloud/template 10/20 391ms 실패: HTTP 429
+cloud/template 11/20 515ms 실패: HTTP 429
+cloud/template 12/20 406ms 실패: HTTP 429
+cloud/template 13/20 409ms 실패: HTTP 429
+cloud/template 14/20 1038ms 실패: HTTP 429
+cloud/template 15/20 600ms 실패: HTTP 429
+cloud/template 16/20 820ms 실패: HTTP 429
+cloud/template 17/20 407ms 실패: HTTP 429
+cloud/template 18/20 836ms 실패: HTTP 429
+cloud/template 19/20 923ms 실패: HTTP 429
+cloud/template 20/20 596ms 실패: HTTP 429
+완료. 결과 파일: /storage/emulated/0/Android/data/com.lkj.textdungeon/files/spike/event_20261030_001317.md

@@ -4,7 +4,7 @@ import com.example.textdungeon.BuildConfig;
 
 /**
  * API 키를 BuildConfig에서 읽어오는 유틸리티.
- * (관리자 패널을 통한 런타임 키 입력/오버라이드 기능은 제거됨 — 항상 빌드 시점 키만 사용)
+ * 게임은 클라우드를 쓰지 않아서 디버그 빌드의 측정 화면(클라우드 비교)만 쓴다. 출시 APK에는 키도 이 클래스도 없다
  */
 public class ApiKeyManager {
 

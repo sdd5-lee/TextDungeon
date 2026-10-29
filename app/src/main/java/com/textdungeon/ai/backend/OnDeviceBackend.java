@@ -14,6 +14,7 @@ import com.google.ai.edge.litertlm.ConversationConfig;
 import com.google.ai.edge.litertlm.Engine;
 import com.google.ai.edge.litertlm.EngineConfig;
 import com.google.ai.edge.litertlm.Message;
+import com.google.ai.edge.litertlm.SamplerConfig;
 import com.google.ai.edge.litertlm.ThinkingConfig;
 
 import java.io.File;
@@ -46,8 +47,12 @@ public class OnDeviceBackend implements LlmBackend {
         FAILED
     }
 
+    /** 주사위 출력 상한. 이벤트처럼 긴 출력은 generate(..., maxOutputTokens, temperature, ...)로 따로 정한다 */
     private static final int MAX_OUTPUT_TOKENS = 200;
-    // 0-A 측정과 같은 값. 지금 프롬프트(600자 안팎)와 출력 200토큰이 들어가고도 남는다
+    // 온도를 정한 요청의 나머지 샘플링 값. S24에서 틀 방식 이벤트 20개를 잰 값 (docs/ondevice-event)
+    private static final int SAMPLER_TOP_K = 40;
+    private static final double SAMPLER_TOP_P = 0.95;
+    // 0-A 측정과 같은 값. 주사위 프롬프트(600자 안팎)와 출력 200토큰, 이벤트(JSON 방식 프롬프트 약 2500자 + 출력)도 들어간다
     private static final int MAX_NUM_TOKENS = 4096;
     // 램이 이보다 적으면 쓰지 않는다. "6GB" 기기는 totalMem이 이보다 조금 작게 나오므로 사실상 8GB 이상. 0-B 결과로 조정
     private static final long MIN_TOTAL_RAM = 6L << 30;
@@ -107,45 +112,57 @@ public class OnDeviceBackend implements LlmBackend {
 
     @Override
     public void generate(String prompt, ResponseFormat format, LlmCallback callback) {
+        generate(prompt, format, MAX_OUTPUT_TOKENS, null, callback);
+    }
+
+    @Override
+    public void generate(String prompt, ResponseFormat format, int maxOutputTokens, Double temperature,
+                         LlmCallback callback) {
         if (state != State.READY || !busy.compareAndSet(false, true)) {
             callback.onError("온디바이스 모델을 쓸 수 없음 (" + state + ")");
             return;
         }
         cancelRequested = false;
         executor.execute(() -> {
+            String text = null;
+            String error = null;
             try {
                 if (engine == null) {
-                    callback.onError("온디바이스 모델이 해제됨");
-                    return;
+                    error = "온디바이스 모델이 해제됨";
+                } else {
+                    text = infer(prompt, maxOutputTokens, temperature);
+                    if (text == null) error = "온디바이스 추론을 멈춤";
                 }
-                String text = infer(prompt);
-                if (text == null) callback.onError("온디바이스 추론을 멈춤");
-                else callback.onResult(text);
             } catch (Throwable t) {
                 if (cancelRequested) {
                     // cancelProcess()로 멈추면 sendMessage가 CANCELLED 예외를 던진다
                     Log.i(TAG, "온디바이스 추론을 멈춤: " + t.getMessage());
-                    callback.onError("온디바이스 추론을 멈춤");
+                    error = "온디바이스 추론을 멈춤";
                 } else {
                     // 초기화는 됐는데 추론마다 실패하는 기기가 있다 (에뮬레이터 GPU: 초기화 4분 41초 뒤
                     // "Can not find OpenCL library"로 매번 5~7초 만에 실패). 주사위마다 시간을 버리지 않게 내리고 FAILED로 둔다
                     Log.e(TAG, "온디바이스 추론 실패 → 이번 실행 동안 쓰지 않음", t);
                     markFailed();
-                    callback.onError("온디바이스 추론 실패: " + t.getMessage());
+                    error = "온디바이스 추론 실패: " + t.getMessage();
                 }
-            } finally {
-                busy.set(false);
             }
+            // 콜백 안에서 바로 다음 요청을 보내도 받을 수 있게 먼저 푼다 (이벤트는 하나씩 차례로 만든다)
+            busy.set(false);
+            if (error != null) callback.onError(error);
+            else callback.onResult(text);
         });
     }
 
     /** @return 정리한 응답. 중간에 멈췄으면 null */
-    private String infer(String prompt) throws Exception {
+    private String infer(String prompt, int maxOutputTokens, Double temperature) throws Exception {
         debugDelay();
         if (cancelRequested) return null;
+        // 온도를 정하지 않으면 모델 기본값. 씨앗은 요청마다 바꾼다 (같은 프롬프트로 다시 시도하면 다른 답이 나오게)
+        SamplerConfig sampler = temperature == null ? null
+                : new SamplerConfig(SAMPLER_TOP_K, SAMPLER_TOP_P, temperature, (int) System.nanoTime());
         // Kotlin 쪽에서 null을 받지 않는 리스트·맵 인자에는 빈 값을 넘긴다. 생각 모드는 끈다
         ConversationConfig config = new ConversationConfig(null, Collections.emptyList(), Collections.emptyList(),
-                null, true, null, Collections.emptyMap(), null, false, MAX_OUTPUT_TOKENS, new ThinkingConfig(false));
+                sampler, true, null, Collections.emptyMap(), null, false, maxOutputTokens, new ThinkingConfig(false));
         long start = SystemClock.elapsedRealtime();
         try (Conversation conversation = engine.createConversation(config)) {
             running = conversation;

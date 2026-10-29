@@ -4,44 +4,43 @@ import android.content.ComponentCallbacks2;
 import android.content.Context;
 import android.content.res.Configuration;
 
-import com.textdungeon.ai.backend.GeminiBackend;
-import com.textdungeon.ai.backend.LlmBackend;
 import com.textdungeon.ai.backend.ModelDownloader;
 import com.textdungeon.ai.backend.OnDeviceBackend;
 import com.textdungeon.ai.backend.OnDeviceDebugFlags;
 import com.textdungeon.model.Item;
 import com.textdungeon.model.Monster;
-import com.textdungeon.model.Stat;
 
 import java.util.List;
 
 /**
  * AI 기능의 진입점. 어떤 기능이 어떤 백엔드를 쓰는지는 여기서만 결정한다.
  *
- *  - 이벤트 생성: 클라우드(Gemini)
- *  - 혼돈의 주사위(선택지 추가): 온디바이스, 준비 안 됐거나 실패하면 결과표(ChaosTable). 클라우드는 쓰지 않는다
+ *  - 이벤트 생성: 온디바이스 틀 방식(TemplateEventGenerator). 모델이 없거나 실패하면 그 판은 AI 이벤트 없이 간다
+ *  - 혼돈의 주사위(선택지 추가): 온디바이스, 준비 안 됐거나 실패하면 결과표(ChaosTable)
+ *
+ * 게임은 클라우드(Gemini)를 쓰지 않는다. GeminiBackend와 JSON 방식(EventGenerator)은 디버그 측정 화면의 비교용으로만 남아 있다.
  *
  * 온디바이스 모델은 생성자에서 올리지 않는다. 게임을 시작할 때 warmUpOnDevice(),
  * 판이 끝날 때 releaseOnDevice()를 부른다. 모델 파일은 메인 화면에서 startModelDownload()로 받는다.
  */
 public class AiManager {
+    /** 디버그 측정 화면에서 비교용으로 부르는 클라우드 모델 */
     static final String GEMINI_MODEL = "gemini-3-flash-preview";
 
     private final OnDeviceBackend onDeviceBackend;
     private final ModelDownloader modelDownloader;
-    private final EventGenerator generator;
+    private final TemplateEventGenerator eventGenerator;
     private final ChaosDice chaosDice;
     // 게임 중이라 모델이 올라가 있어야 하는지 (warmUp 이후 release 전). 받기가 끝났을 때 바로 올릴지 정한다
     private volatile boolean onDeviceWanted;
 
     public AiManager(Context appContext) {
-        LlmBackend eventCloud = new GeminiBackend(appContext, GEMINI_MODEL, ApiKeyManager.getGeminiGodsKey());
         this.onDeviceBackend = new OnDeviceBackend(appContext);
         this.modelDownloader = new ModelDownloader(appContext, () -> {
             if (onDeviceWanted) onDeviceBackend.warmUp();
         });
 
-        this.generator = new EventGenerator(eventCloud);
+        this.eventGenerator = new TemplateEventGenerator(onDeviceBackend);
         this.chaosDice = new ChaosDice(onDeviceBackend,
                 () -> OnDeviceDebugFlags.timeoutMs(appContext, AiTimeouts.ON_DEVICE_MS));
 
@@ -68,9 +67,18 @@ public class AiManager {
         chaosDice.roll(request, callback);
     }
 
-    public void generate(int targetFloor, Stat stat, List<Item> all, List<Monster> monsterList,
-                         String eventType, AiType aiType, AiCallback aiCallback) {
-        generator.generate(targetFloor, stat, all, monsterList, eventType, aiType, aiCallback);
+    /**
+     * 신의 이벤트 하나를 온디바이스 모델로 만든다. 모델은 한 번에 요청 하나만 받으므로 앞 요청이 끝난 뒤에 부른다.
+     * 모델이 준비되지 않았으면 바로 onError로 간다
+     */
+    public void generateEvent(int floor, AiType god, List<Item> nearItems, List<Item> treasureItems,
+                              List<Monster> monsters, int rewardMultiplier, int expMultiplier, AiCallback callback) {
+        eventGenerator.generate(floor, god, nearItems, treasureItems, monsters, rewardMultiplier, expMultiplier, callback);
+    }
+
+    /** 오래 걸려 포기한 이벤트 생성을 멈춘다. 멈춘 요청의 콜백은 늦게라도 온다 */
+    public void cancelOnDevice() {
+        onDeviceBackend.cancel();
     }
 
     /** 온디바이스 모델을 뒤에서 올린다. 이미 올라가 있거나 쓸 수 없는 기기면 아무것도 하지 않는다 */
@@ -144,7 +152,7 @@ public class AiManager {
                 text = "사용 불가 (지원하지 않는 기기)";
                 break;
             case DISABLED:
-                text = "꺼짐 (주사위는 준비된 결과)";
+                text = "꺼짐 (신들의 이벤트 없음, 주사위는 준비된 결과)";
                 break;
             default:
                 text = "받기 전";
