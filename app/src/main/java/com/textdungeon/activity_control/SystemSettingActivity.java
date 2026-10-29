@@ -1,7 +1,10 @@
 package com.textdungeon.activity_control;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -10,6 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.widget.SwitchCompat;
 import com.example.textdungeon.R;
@@ -18,6 +22,8 @@ import com.textdungeon.data.DataControlTower;
 import com.textdungeon.system.SoundManager;
 
 public class SystemSettingActivity extends BaseActivity {
+    /** Play 규정상 앱 안에서도 열 수 있어야 한다. 원본은 docs/release/privacy-policy.html */
+    private static final String PRIVACY_POLICY_URL = "https://sdd5-lee.github.io/textdungeon-privacy/";
 
     private SharedPreferences prefs;
     private TextView tvOnDeviceStatus;
@@ -43,11 +49,20 @@ public class SystemSettingActivity extends BaseActivity {
         RadioGroup rgFontSize = findViewById(R.id.rg_font_size);
         FrameLayout btnBack = findViewById(R.id.btn_back);
         FrameLayout btnOpenSource = findViewById(R.id.btn_opensource);
+        FrameLayout btnPrivacy = findViewById(R.id.btn_privacy);
         tvOnDeviceStatus = findViewById(R.id.tv_ondevice_status);
         setupModelSwitch(findViewById(R.id.sw_ondevice_model));
 
         // 모든 버튼에 효과음 일괄 적용
-        setSfx(btnBack, btnOpenSource);
+        setSfx(btnBack, btnOpenSource, btnPrivacy);
+
+        btnPrivacy.setOnClickListener(v -> {
+            try {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(PRIVACY_POLICY_URL)));
+            } catch (ActivityNotFoundException e) {
+                Toast.makeText(this, "브라우저가 없습니다\n" + PRIVACY_POLICY_URL, Toast.LENGTH_LONG).show();
+            }
+        });
 
         int savedVolume = prefs.getInt("volume", 50);
         sbVolume.setProgress(savedVolume);
