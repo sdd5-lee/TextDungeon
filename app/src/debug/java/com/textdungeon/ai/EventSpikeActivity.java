@@ -328,7 +328,8 @@ public class EventSpikeActivity extends AppCompatActivity {
         for (int i = 0; i < cases.size(); i++) {
             Case c = cases.get(i);
             md.append("\n### ").append(i + 1).append(". ").append(c.god.getGodName()).append(" ").append(c.floor).append("층\n");
-            md.append("- 형상: ").append(c.plan.form.name).append(" (").append(c.plan.form.grade.label).append(")\n");
+            md.append("- 형상: ").append(c.plan.form.name).append(" (").append(c.plan.form.grade.label).append("), 장소: ")
+                    .append(c.plan.place).append("\n");
             md.append("- 틀 방식 뼈대: ");
             for (int k = 0; k < c.plan.outcomes.size(); k++) {
                 if (k > 0) md.append(" / ");

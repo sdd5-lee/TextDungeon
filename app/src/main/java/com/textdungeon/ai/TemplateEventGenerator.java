@@ -52,13 +52,13 @@ public class TemplateEventGenerator {
     private static final String[] GAINS = {"힘", "민첩", "체력", "지혜", "경험치", "골드", "회복"};
     private static final String[] COSTS = {"데미지", "힘", "민첩", "체력", "지혜", "골드"};
 
-    // 형식 예시. 그대로 베끼면 버린다
-    static final String EXAMPLE_NAME = "잿빛 깃털의 약속";
-    static final String EXAMPLE_SITUATION = "허공에서 잿빛 깃털 하나가 내려앉고, 낮은 목소리가 대가를 치를 각오가 있느냐고 묻는다.";
-    static final String EXAMPLE_CHOICE1 = "깃털을 힘껏 움켜쥔다";
-    static final String EXAMPLE_RESULT1 = "깃털이 손바닥을 파고들어 피가 흐르지만, 상처 사이로 낯선 힘이 스며든다.";
-    static final String EXAMPLE_CHOICE2 = "고개를 숙여 사양한다";
-    static final String EXAMPLE_RESULT2 = "목소리가 웃음을 흘리며 사라지고, 발치에 은화 몇 닢이 남는다.";
+    // 형식 예시. 그대로 베끼면 버린다. 빛보다 장소와 물건을 그리는 문장으로 보여 준다
+    static final String EXAMPLE_NAME = "녹슨 저울의 심판";
+    static final String EXAMPLE_SITUATION = "안개 낀 돌다리 끝에 녹슨 저울 하나가 삐걱거리고, 낮은 목소리가 무엇을 올려놓겠느냐고 묻는다.";
+    static final String EXAMPLE_CHOICE1 = "저울에 피 한 방울을 떨어뜨린다";
+    static final String EXAMPLE_RESULT1 = "저울이 기울며 손끝이 차갑게 저려 오지만, 핏줄을 따라 낯선 힘이 스며든다.";
+    static final String EXAMPLE_CHOICE2 = "저울을 내버려 두고 돌아선다";
+    static final String EXAMPLE_RESULT2 = "저울이 멈추고, 다리 위로 은화 몇 닢이 굴러떨어진다.";
 
     private static final String[] KEYS = {"이름", "상황", "선택지1", "결과1", "선택지2", "결과2"};
     // "**선택지 1**: ...", "- 결과1 : ..." 같은 변형도 받는다
@@ -83,6 +83,7 @@ public class TemplateEventGenerator {
         AiType god;
         int floor;
         GodForms.Form form;   // 신이 내미는 형상. 등급이 보상 세기를 정한다
+        String place;         // 꿈속 천상에서 신이 머무는 곳
         String type;          // battle, normal
         Monster enemy;
         final List<Outcome> outcomes = new ArrayList<>();
@@ -235,6 +236,8 @@ public class TemplateEventGenerator {
                 }
                 break;
         }
+        // 보상을 다 정한 뒤에 고른다 (장소를 넣기 전 측정과 같은 시드면 보상이 같다)
+        p.place = GodForms.place(god, rnd);
         return p;
     }
 
@@ -275,9 +278,9 @@ public class TemplateEventGenerator {
 
     static String prompt(Plan p) {
         StringBuilder sb = new StringBuilder();
-        // 층 숫자를 주면 상황에 "21층"을 그대로 쓴다 (S24 측정 20개 중 6개). 깊이는 말로만 준다
-        // 신들의 이벤트는 신이 내리는 축복이다. 장소 대신 신이 내미는 형상을 준다
-        sb.append("[").append(p.god.getGodName()).append("이 내리는 축복 | ").append(depth(p.floor)).append("]\n");
+        // 신들의 이벤트는 꿈속 천상에서 신이 내리는 축복이다. 층 숫자를 주면 상황에 "21층"을 그대로 써서 주지 않는다
+        sb.append("[꿈속 천상에서 ").append(p.god.getGodName()).append("이 내리는 축복]\n");
+        sb.append("장소: 천상의 ").append(p.place).append("\n");
         sb.append("신의 성격: ").append(p.god.getTone()).append("\n");
         sb.append("신이 내미는 형상: ").append(p.form.name).append(" (").append(p.form.grade.label).append(")\n");
         if (p.enemy != null) {
@@ -299,17 +302,11 @@ public class TemplateEventGenerator {
                 .append("선택지2: ").append(EXAMPLE_CHOICE2).append("\n")
                 .append("결과2: ").append(EXAMPLE_RESULT2).append("\n\n")
                 .append("규칙: 예시의 문장은 쓰지 말고 새로 지어라. 이름은 형상이 드러나게 15자 안팎, ")
-                .append("상황은 신이 그 형상으로 모습을 드러내거나 축복을 내미는 한두 문장이고 형상 이름을 그대로 쓴다. ")
-                .append("선택지는 20자 안팎의 행동. ")
+                .append("상황은 그 장소에서 신이 형상을 내미는 한두 문장이고 형상 이름을 그대로 쓴다. ")
+                .append("빛보다 장소와 물건을 그린다. 선택지는 20자 안팎의 행동. ")
                 .append("결과는 위에 정해진 변화를 이야기로 묘사하고 숫자는 쓰지 않는다. 두 선택지는 서로 달라야 한다. ")
                 .append("한국어로만 쓰고 영어·한자는 쓰지 않는다.");
         return sb.toString();
-    }
-
-    private static String depth(int floor) {
-        if (floor <= 15) return "던전 위층";
-        if (floor <= 35) return "던전 중간층";
-        return "던전 깊은 층";
     }
 
     /** 정해진 결과를 숫자 없는 말로. 예: "힘이 크게 오르지만 HP를 많이 잃는다" */

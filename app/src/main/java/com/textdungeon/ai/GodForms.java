@@ -116,7 +116,27 @@ final class GodForms {
         });
     }
 
+    // 꿈속 천상에서 신이 머무는 곳. 빛 묘사("눈부신", "찬란한")를 쓰다 외국 글자가 자주 새어, 장소와 물건을 그리게 한다
+    private static final Map<AiType, String[]> PLACES = new EnumMap<>(AiType.class);
+
+    static {
+        PLACES.put(AiType.ADVENTURE, new String[]{"구름 위 낡은 선착장", "바람 부는 절벽 길", "끝없이 이어진 돌다리", "별 지도가 새겨진 탑 꼭대기"});
+        PLACES.put(AiType.CHAOS, new String[]{"거꾸로 흐르는 폭포 아래", "뒤틀린 계단 정원", "웃음소리가 울리는 유리 미로", "색이 바뀌는 연못가"});
+        PLACES.put(AiType.DEATH, new String[]{"잿빛 강가", "촛불이 늘어선 납골당", "시든 꽃밭", "안개 낀 나루터"});
+        PLACES.put(AiType.STRUGGLE, new String[]{"피 묻은 원형 투기장", "부서진 성벽 위", "창이 꽂힌 전장 언덕", "북소리가 울리는 연무장"});
+        PLACES.put(AiType.TREASURE, new String[]{"금화가 쌓인 보물고", "보석 박힌 회랑", "자물쇠로 가득한 창고", "황금 저울이 놓인 제단"});
+    }
+
     private GodForms() {}
+
+    static String place(AiType god, Random rnd) {
+        String[] places = PLACES.get(god);
+        return places[rnd.nextInt(places.length)];
+    }
+
+    static List<String> places(AiType god) {
+        return java.util.Arrays.asList(PLACES.get(god));
+    }
 
     /** 등급을 확률대로 뽑고, 그 신의 11가지 형상 중 하나를 고른다 */
     static Form pick(AiType god, Random rnd) {

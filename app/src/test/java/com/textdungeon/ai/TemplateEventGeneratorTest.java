@@ -130,6 +130,7 @@ public class TemplateEventGeneratorTest {
             }
             assertEquals(god.name() + " 중복", 33, names.size());
             assertEquals(Arrays.asList(11, 11, 11), Arrays.asList(perGrade[0], perGrade[1], perGrade[2]));
+            for (String place : GodForms.places(god)) assertTrue(place, place.matches("[가-힣 ]+"));
         }
     }
 
@@ -196,14 +197,14 @@ public class TemplateEventGeneratorTest {
     }
 
     @Test
-    public void 프롬프트는_신의_축복이고_층_숫자_대신_깊이를_준다() {
+    public void 프롬프트는_꿈속_천상의_축복이고_장소와_형상을_주며_층_숫자는_없다() {
         TemplateEventGenerator.Plan p = plan(AiType.DEATH);
         String prompt = TemplateEventGenerator.prompt(p);
 
-        assertTrue(prompt, prompt.startsWith("[죽음의 신이 내리는 축복 | 던전 중간층]"));
+        assertTrue(prompt, prompt.startsWith("[꿈속 천상에서 죽음의 신이 내리는 축복]\n장소: 천상의 " + p.place + "\n"));
+        assertTrue(p.place, GodForms.places(AiType.DEATH).contains(p.place));
         assertTrue(prompt, prompt.contains("신이 내미는 형상: 가루다의 깃털 (귀한 축복)"));
         assertFalse(prompt, prompt.contains("21층"));
-        assertFalse(prompt, prompt.contains("장소"));
     }
 
     @Test
