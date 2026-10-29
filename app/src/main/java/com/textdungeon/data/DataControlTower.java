@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.textdungeon.ads.AdManager;
 import com.textdungeon.ai.AiManager;
+import com.textdungeon.ai.ChaosTable;
 import com.textdungeon.billing.BillingManager;
 import com.textdungeon.billing.Entitlements;
 import com.textdungeon.billing.UserRecordEntitlementStore;
@@ -29,6 +30,7 @@ public class DataControlTower {
     private DataControl<Item> itemManager;
     private DataControl<GameEvent> eventManager;
     private DataControl<Magic> magicManager;
+    private ChaosTable chaosTable = ChaosTable.EMPTY;
     private Player player;
     private UserRecord userRecord;
     private DungeonControl dungeonControl;
@@ -84,6 +86,7 @@ public class DataControlTower {
 
         eventManager = new DataControl<>(GameEvent.class, EventGson.create());
         eventManager.init(appContext, scenarioRepository.assetPath(pack, ScenarioRepository.EVENTS));
+        chaosTable = ChaosTable.load(appContext, scenarioRepository.assetPath(pack, ScenarioRepository.CHAOS));
         this.scenario = pack;
 
         // 무결성 검사
@@ -212,6 +215,23 @@ public class DataControlTower {
     public java.util.List<Item> getItemsForFloor(int fromFloor, int toFloor) {
         return getEventItems(e -> e.getMinFloor() <= toFloor && e.getMaxFloor() >= fromFloor,
                 item -> true);
+    }
+
+    /**
+     * 혼돈의 주사위 특별 선택지의 장비 후보: 지금보다 6~15층 깊은 이벤트의 보상 장비 (상점·소모품 제외).
+     * 깊은 층에서는 41~50층 장비에서 고른다.
+     */
+    public java.util.List<Item> getUpperGear(int floor) {
+        int from = Math.min(floor + 6, 41);
+        int to = Math.min(floor + 15, 50);
+        return getEventItems(e -> !(e instanceof com.textdungeon.event.ShopEvent)
+                        && e.getMinFloor() <= to && e.getMaxFloor() >= from,
+                item -> !"consumables".equals(item.getType()));
+    }
+
+    /** 지금 시나리오의 혼돈의 주사위 결과표 */
+    public ChaosTable getChaosTable() {
+        return chaosTable;
     }
 
     /**

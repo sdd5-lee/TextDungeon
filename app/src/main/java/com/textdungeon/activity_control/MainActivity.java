@@ -55,7 +55,7 @@ public class MainActivity extends BaseActivity {
         if (btnContinue != null) {
             btnContinue.setVisibility(dt.getPlayer() != null ? View.VISIBLE : View.GONE);
         }
-        // 혼돈의 주사위 온디바이스 모델이 없으면 Wi-Fi에서 받기 시작한다 (받는 동안은 클라우드)
+        // 혼돈의 주사위 온디바이스 모델이 없으면 Wi-Fi에서 받기 시작한다 (받는 동안은 결과표)
         dt.getAiManager().startModelDownload();
     }
 

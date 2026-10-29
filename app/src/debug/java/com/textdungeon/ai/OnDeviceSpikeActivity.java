@@ -277,11 +277,11 @@ public class OnDeviceSpikeActivity extends AppCompatActivity {
     }
 
     /**
-     * 1단계 확인: 게임과 같은 경로(AiManager → ChaosDice → FallbackBackend → 온디바이스/클라우드)로 주사위를 굴린다.
+     * 1단계 확인: 게임과 같은 경로(AiManager → ChaosDice → 특별 선택지·온디바이스·결과표)로 주사위를 굴린다.
      *   --ei dice 3        굴릴 횟수
      *   --ez wait true     모델이 준비될 때까지 기다린 뒤 굴림 (false면 로딩 중에 바로 굴림)
      *   --ez release true  끝나면 모델을 내리고 메모리를 다시 잰다
-     * 어느 백엔드가 응답했는지는 Logcat 태그 FallbackBackend. 디버그 플래그는 OnDeviceFlagsActivity로 바꾼다.
+     * 어디서 나온 선택지인지는 결과 줄의 성공(AI/TABLE/SPECIAL)과 Logcat 태그 ChaosDice. 디버그 플래그는 OnDeviceFlagsActivity로 바꾼다.
      */
     private void runDice(int count, boolean waitReady, boolean release) throws Exception {
         DataControlTower dt = DataControlTower.getInstance(this);
@@ -306,13 +306,15 @@ public class OnDeviceSpikeActivity extends AppCompatActivity {
             String[] outcome = new String[1];
             long t0 = SystemClock.elapsedRealtime();
             // 보통 난이도(보상 2배), 경험치 특성 없음
-            ai.requestChaosChoice(c.floor, statForFloor(c.floor), dt.getItemsForFloor(c.floor - 5, c.floor + 5),
-                    c.event, 2, 1, new AiCallback() {
+            ChaosDice.Request request = new ChaosDice.Request(c.floor, statForFloor(c.floor),
+                    dt.getItemsForFloor(c.floor - 5, c.floor + 5), dt.getUpperGear(c.floor),
+                    c.event, dt.getChaosTable(), 2, 1);
+            ai.requestChaosChoice(request, new ChaosDice.Callback() {
                         @Override
-                        public void onSuccess(GameEvent updatedEvent) {
+                        public void onSuccess(GameEvent updatedEvent, ChaosDice.Source source, boolean refundDice) {
                             List<String> choices = updatedEvent.getChoices();
                             List<com.textdungeon.model.Reward> rewards = updatedEvent.getRewards();
-                            outcome[0] = "성공 \"" + choices.get(choices.size() - 1) + "\" → "
+                            outcome[0] = "성공(" + source + ") \"" + choices.get(choices.size() - 1) + "\" → "
                                     + rewards.get(rewards.size() - 1).getDescription();
                             latch.countDown();
                         }
@@ -323,7 +325,7 @@ public class OnDeviceSpikeActivity extends AppCompatActivity {
                             latch.countDown();
                         }
                     });
-            boolean done = latch.await(AiTimeouts.DICE_TOTAL_MS + 10_000, TimeUnit.MILLISECONDS);
+            boolean done = latch.await(AiTimeouts.ON_DEVICE_MS + 10_000, TimeUnit.MILLISECONDS);
             afterCallback[i] = c.event.getChoices().size();
             show("주사위 " + (i + 1) + "/" + cases.size() + " " + (SystemClock.elapsedRealtime() - t0) + "ms "
                     + (done ? outcome[0] : "콜백 없음") + ", 선택지 " + before + "→" + afterCallback[i]

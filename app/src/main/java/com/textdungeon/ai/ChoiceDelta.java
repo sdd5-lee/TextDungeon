@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * 혼돈의 주사위가 AI에게서 받아오는 "추가분".
+ * 혼돈의 주사위가 AI나 결과표(ChaosTable)에서 받아오는 "추가분".
  * 이벤트 전체가 아니라 새 선택지 1개 + 그 보상만 담는다.
  */
 public class ChoiceDelta {
@@ -31,6 +31,11 @@ public class ChoiceDelta {
     /** 보상설명만 바꾼 사본 */
     public ChoiceDelta withDescription(String description) {
         return new ChoiceDelta(choiceText, description, itemId, stats);
+    }
+
+    /** 선택지 문장만 바꾼 사본 */
+    public ChoiceDelta withChoiceText(String text) {
+        return new ChoiceDelta(text, rewardDescription, itemId, stats);
     }
 
     /** 스탯 수치를 층별 상한으로 잘라낸 사본 */

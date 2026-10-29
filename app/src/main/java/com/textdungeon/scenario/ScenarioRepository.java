@@ -16,6 +16,8 @@ public final class ScenarioRepository {
     public static final String EVENTS = "event_list.json";
     public static final String MONSTERS = "monster_list.json";
     public static final String ITEMS = "item_list.json";
+    /** 혼돈의 주사위 결과표. 없으면 주사위는 온디바이스 모델로만 동작한다 */
+    public static final String CHAOS = "chaos_table.json";
 
     public List<ScenarioPack> all() {
         return Collections.unmodifiableList(Arrays.asList(ScenarioPack.values()));

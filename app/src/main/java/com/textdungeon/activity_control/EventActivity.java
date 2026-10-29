@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.example.textdungeon.R;
 import com.textdungeon.ads.AdManager;
 import com.textdungeon.ads.RewardType;
-import com.textdungeon.ai.AiCallback;
+import com.textdungeon.ai.ChaosDice;
 import com.textdungeon.buttons.ChoiceButton;
 import com.textdungeon.buttons.SingleClickListener;
 import com.textdungeon.data.DataControlTower;
@@ -41,7 +41,8 @@ public class EventActivity extends BaseActivity {
     private TextView eventDesc;
     private LinearLayout choiceButtons;
     private GameEvent currentEvent;
-    private boolean isDiceUsed = false;
+    // 주사위 응답을 기다리는 중. 이벤트에서 주사위를 더 쓸 수 있는지는 currentEvent.isChaosDone()으로 본다
+    private boolean diceRolling = false;
 
     private Handler typingHandler = new Handler(Looper.getMainLooper());
     private Runnable typingRunnable;
@@ -176,7 +177,8 @@ public class EventActivity extends BaseActivity {
         renderChoiceButtons();
 
         // 상점은 어떤 선택지를 눌러도 상점이 열리므로 주사위를 띄우지 않는다
-        if (!isDiceUsed && !(currentEvent instanceof com.textdungeon.event.ShopEvent)) {
+        if (!diceRolling && !currentEvent.isChaosDone()
+                && !(currentEvent instanceof com.textdungeon.event.ShopEvent)) {
             renderDiceButton();
         }
 
@@ -262,7 +264,9 @@ public class EventActivity extends BaseActivity {
     }
 
     private void bindDiceButton(ChoiceButton diceButton) {
-        diceButton.setTextView("혼돈의 주사위 사용하기 (" + player.getDiceChance() + "개)");
+        // 결과표 선택지가 나와서 주사위를 돌려받았으면 그 자리를 다시 굴릴 수 있다 (이벤트당 한 번)
+        String label = currentEvent.getChaosSlot() != null ? "혼돈의 주사위 다시 굴리기" : "혼돈의 주사위 사용하기";
+        diceButton.setTextView(label + " (" + player.getDiceChance() + "개)");
         diceButton.setOnClickListener(SingleClickListener.wrap(v -> onDiceSelected()));
     }
 
@@ -425,50 +429,55 @@ public class EventActivity extends BaseActivity {
 
     private void onDiceSelected() {
         // 응답을 기다리는 동안 다시 눌러도 요청이 또 나가지 않도록 진행 중이면 무시
-        if (isDiceUsed || player.getDiceChance() <= 0) return;
-        isDiceUsed = true;
+        if (diceRolling || currentEvent.isChaosDone() || player.getDiceChance() <= 0) return;
+        diceRolling = true;
         player.useDice();
 
         choiceButtons.removeAllViews();
-        final int choiceCountBefore = currentEvent.getChoices() == null ? 0 : currentEvent.getChoices().size();
         appendDesc("🎲 운명을 재구성하는 중...");
         startTypingAnimation();
 
         int floor = eventManager.getCurrentFloor();
-        dt.getAiManager().requestChaosChoice(
+        GameEvent rolledEvent = currentEvent;
+        ChaosDice.Request request = new ChaosDice.Request(
                 floor,
                 player.getStat(),
                 dt.getItemsForFloor(floor - 5, floor + 5), // 이 층대에 실제로 나오는 아이템만 (ChaosDice가 5개를 고른다)
-                currentEvent,
+                dt.getUpperGear(floor),                     // 특별 선택지의 장비 후보
+                rolledEvent,
+                dt.getChaosTable(),
                 // 보상 요약을 실제 적용량으로 쓰기 위해 (GameEvent.execute: difficulty가 없으면 한 번만 적용)
                 dt.getDifficulty() != null ? dt.getDifficulty().rewardMultiplier : 1,
-                com.textdungeon.model.Reward.expMultiplier(player),
-                new AiCallback() {
-                    @Override
-                    public void onSuccess(GameEvent updatedEvent) {
-                        runOnUiThread(() -> {
-                            if (updatedEvent != null && updatedEvent.getChoices().size() > choiceCountBefore) {
-                                currentEvent = updatedEvent;
-                                dt.getDungeonControl().setCurrentEvent(currentEvent);
-                                renderEvent("시스템: 새로운 선택지가 생성되었습니다.");
-                            } else {
-                                isDiceUsed = false;
-                                player.addDiceChane(1);
-                                renderEvent("시스템: 혼돈의 신이 응답하지 않습니다.");
-                            }
-                        });
+                com.textdungeon.model.Reward.expMultiplier(player));
+        dt.getAiManager().requestChaosChoice(request, new ChaosDice.Callback() {
+            @Override
+            public void onSuccess(GameEvent updatedEvent, ChaosDice.Source source, boolean refundDice) {
+                runOnUiThread(() -> {
+                    diceRolling = false;
+                    if (refundDice) player.addDiceChane(1);
+                    if (updatedEvent != currentEvent) return; // 그 사이 다음 층으로 넘어감
+                    dt.getDungeonControl().setCurrentEvent(currentEvent);
+                    String message;
+                    if (source == ChaosDice.Source.SPECIAL) {
+                        message = "시스템: 혼돈의 신이 미소 짓습니다. 특별한 선택지가 나타났습니다!";
+                    } else if (refundDice) {
+                        message = "시스템: 혼돈의 신이 졸고 있어 주사위가 돌아왔습니다. 한 번 더 굴려 볼 수 있습니다.";
+                    } else {
+                        message = "시스템: 새로운 선택지가 생성되었습니다.";
                     }
+                    renderEvent(message);
+                });
+            }
 
-                    @Override
-                    public void onError(String errorMessage) {
-                        runOnUiThread(() -> {
-                            isDiceUsed = false;
-                            player.addDiceChane(1);
-                            renderEvent("시스템: 오류가 발생했습니다.");
-                        });
-                    }
-                }
-        );
+            @Override
+            public void onError(String errorMessage) {
+                runOnUiThread(() -> {
+                    diceRolling = false;
+                    player.addDiceChane(1);
+                    if (rolledEvent == currentEvent) renderEvent("시스템: 혼돈의 신이 응답하지 않습니다.");
+                });
+            }
+        });
     }
 
     // ─────────────────────────────────────────────────────────────
@@ -575,7 +584,6 @@ public class EventActivity extends BaseActivity {
             button.setTextView("다음층으로 (" + eventManager.getCurrentFloor() + "F)");
             // 연타 시 두 번째 클릭이 방금 꺼낸 AI 이벤트를 랜덤 이벤트로 덮어쓰는 것 방지
             button.setOnClickListener(SingleClickListener.wrap(v -> {
-                isDiceUsed = false;
                 currentEvent = eventManager.pickRandomEvent();
                 dt.getDungeonControl().setCurrentEvent(currentEvent);
                 renderEvent();

@@ -21,6 +21,12 @@ public class GameEvent {
     @SerializedName("choices") protected List<String> choices;
     @SerializedName("type") protected String type;
 
+    // 혼돈의 주사위 상태. 판 저장 파일(GameSave)에 이벤트와 같이 저장돼서 이어하기에도 남는다
+    /** 다시 굴릴 수 있는 결과표 선택지의 자리. 없으면 null */
+    protected Integer chaosSlot;
+    /** 이 이벤트에서는 주사위를 더 쓸 수 없음 (AI·특별 선택지가 나왔거나 다시 굴리기를 씀) */
+    protected boolean chaosDone;
+
     public GameEvent() {}
 
     public String getId() { return id; }
@@ -81,6 +87,27 @@ public class GameEvent {
         }
         choices.add(choiceText);
         rewards.add(reward);
+    }
+
+    /** index 자리의 선택지와 보상을 같이 바꾼다 (주사위 다시 굴리기). 메인 스레드에서만 호출할 것 */
+    public void replaceChoiceWithReward(int index, String choiceText, Reward reward) {
+        if (!canAppendChoice() || choices == null || index < 0 || index >= choices.size()) {
+            throw new IllegalStateException("선택지 " + index + "번을 바꿀 수 없습니다: " + id);
+        }
+        choices.set(index, choiceText);
+        rewards.set(index, reward);
+    }
+
+    public Integer getChaosSlot() { return chaosSlot; }
+    public boolean isChaosDone() { return chaosDone; }
+
+    /** 다시 굴릴 수 있는 결과표 선택지를 index 자리에 넣었다 */
+    public void setChaosSlot(int index) { chaosSlot = index; }
+
+    /** 이 이벤트의 주사위를 끝낸다 */
+    public void finishChaos() {
+        chaosSlot = null;
+        chaosDone = true;
     }
 
     /** 선택지 추가가 가능한 상태인지 (선택지/보상 개수 정렬 여부) */

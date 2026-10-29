@@ -46,7 +46,7 @@ public class OnDeviceStatusLineTest {
 
     @Test
     public void 설정에서_끄면_꺼짐() {
-        assertEquals("온디바이스 AI: 꺼짐 (주사위는 클라우드)",
+        assertEquals("온디바이스 AI: 꺼짐 (주사위는 준비된 결과)",
                 AiManager.onDeviceStatusLine(Status.DISABLED, -1, State.NOT_LOADED));
     }
 }

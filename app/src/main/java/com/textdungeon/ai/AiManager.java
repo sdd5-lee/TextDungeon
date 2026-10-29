@@ -4,13 +4,11 @@ import android.content.ComponentCallbacks2;
 import android.content.Context;
 import android.content.res.Configuration;
 
-import com.textdungeon.ai.backend.FallbackBackend;
 import com.textdungeon.ai.backend.GeminiBackend;
 import com.textdungeon.ai.backend.LlmBackend;
 import com.textdungeon.ai.backend.ModelDownloader;
 import com.textdungeon.ai.backend.OnDeviceBackend;
 import com.textdungeon.ai.backend.OnDeviceDebugFlags;
-import com.textdungeon.event.GameEvent;
 import com.textdungeon.model.Item;
 import com.textdungeon.model.Monster;
 import com.textdungeon.model.Stat;
@@ -21,7 +19,7 @@ import java.util.List;
  * AI 기능의 진입점. 어떤 기능이 어떤 백엔드를 쓰는지는 여기서만 결정한다.
  *
  *  - 이벤트 생성: 클라우드(Gemini)
- *  - 혼돈의 주사위(선택지 추가): 온디바이스 우선, 준비 안 됐거나 실패하면 클라우드
+ *  - 혼돈의 주사위(선택지 추가): 온디바이스, 준비 안 됐거나 실패하면 결과표(ChaosTable). 클라우드는 쓰지 않는다
  *
  * 온디바이스 모델은 생성자에서 올리지 않는다. 게임을 시작할 때 warmUpOnDevice(),
  * 판이 끝날 때 releaseOnDevice()를 부른다. 모델 파일은 메인 화면에서 startModelDownload()로 받는다.
@@ -38,15 +36,14 @@ public class AiManager {
 
     public AiManager(Context appContext) {
         LlmBackend eventCloud = new GeminiBackend(GEMINI_MODEL, ApiKeyManager.getGeminiGodsKey());
-        LlmBackend choiceCloud = new GeminiBackend(GEMINI_MODEL, ApiKeyManager.getGeminiKey());
         this.onDeviceBackend = new OnDeviceBackend(appContext);
         this.modelDownloader = new ModelDownloader(appContext, () -> {
             if (onDeviceWanted) onDeviceBackend.warmUp();
         });
 
         this.generator = new EventGenerator(eventCloud);
-        this.chaosDice = new ChaosDice(new FallbackBackend(onDeviceBackend, choiceCloud,
-                () -> OnDeviceDebugFlags.timeoutMs(appContext, AiTimeouts.ON_DEVICE_MS)));
+        this.chaosDice = new ChaosDice(onDeviceBackend,
+                () -> OnDeviceDebugFlags.timeoutMs(appContext, AiTimeouts.ON_DEVICE_MS));
 
         // Application 클래스가 없어서 여기서 등록한다. 모델이 1~2GB를 차지하므로
         // 메모리 회수 대상(TRIM_MEMORY_BACKGROUND 이상)이 되면 내린다.
@@ -67,13 +64,8 @@ public class AiManager {
         });
     }
 
-    /**
-     * @param rewardMultiplier 난이도 보상 배수 (Difficulty.rewardMultiplier)
-     * @param expMultiplier    특성 경험치 배수 (Reward.expMultiplier(player))
-     */
-    public void requestChaosChoice(int floor, Stat stat, List<Item> itemList, GameEvent currentEvent,
-                                   int rewardMultiplier, int expMultiplier, AiCallback callback) {
-        chaosDice.roll(floor, stat, itemList, currentEvent, rewardMultiplier, expMultiplier, callback);
+    public void requestChaosChoice(ChaosDice.Request request, ChaosDice.Callback callback) {
+        chaosDice.roll(request, callback);
     }
 
     public void generate(int targetFloor, Stat stat, List<Item> all, List<Monster> monsterList,
@@ -102,7 +94,7 @@ public class AiManager {
         return modelDownloader.isEnabled();
     }
 
-    /** 설정 화면 스위치. 끄면 모델을 내리고 받아 둔 파일을 지워서, 주사위는 클라우드로만 간다 */
+    /** 설정 화면 스위치. 끄면 모델을 내리고 받아 둔 파일을 지워서, 주사위는 결과표로만 간다 */
     public void setModelDownloadEnabled(boolean enabled) {
         if (!enabled) releaseOnDevice();
         modelDownloader.setEnabled(enabled);
@@ -152,7 +144,7 @@ public class AiManager {
                 text = "사용 불가 (지원하지 않는 기기)";
                 break;
             case DISABLED:
-                text = "꺼짐 (주사위는 클라우드)";
+                text = "꺼짐 (주사위는 준비된 결과)";
                 break;
             default:
                 text = "받기 전";
