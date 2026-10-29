@@ -10,10 +10,6 @@ public class ApiKeyManager {
 
     private ApiKeyManager() {}
 
-    public static String getGeminiKey() {
-        return BuildConfig.GEMINI_API_KEY;
-    }
-
     public static String getGeminiGodsKey() {
         return BuildConfig.GEMINI_API_KEY_GODS;
     }

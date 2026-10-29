@@ -26,11 +26,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Pattern;
 
 /**
- * 온디바이스 모델 (LiteRT-LM, Gemma 4 E2B). 혼돈의 주사위에서 클라우드보다 먼저 쓴다.
+ * 온디바이스 모델 (LiteRT-LM, Gemma 4 E2B). 혼돈의 주사위가 결과표보다 먼저 쓴다.
  *
  * 로딩, 추론, 해제는 모두 전용 스레드 하나에서 처리한다 (엔진을 메인 스레드에서 부르지 않는다).
  * 앱을 켤 때가 아니라 게임을 시작할 때 warmUp()으로 올리고, 판이 끝나거나 메모리가 부족하면 release()로 내린다.
- * 준비되지 않았거나 앞 요청을 처리 중이면 isReady()가 false라서 FallbackBackend가 클라우드로 보낸다.
+ * 준비되지 않았거나 앞 요청을 처리 중이면 isReady()가 false라서 ChaosDice가 결과표를 쓴다.
  */
 public class OnDeviceBackend implements LlmBackend {
     private static final String TAG = "OnDeviceBackend";
@@ -95,7 +95,7 @@ public class OnDeviceBackend implements LlmBackend {
 
     /**
      * 엔진을 내린다. 추론 중이면 끝난 뒤에 닫는다 (같은 스레드에서 차례로 처리).
-     * 새 요청은 바로 클라우드로 가도록 상태부터 바꾼다. FAILED, UNAVAILABLE은 그대로 둔다.
+     * 새 요청은 바로 결과표로 가도록 상태부터 바꾼다. FAILED, UNAVAILABLE은 그대로 둔다.
      */
     public void release() {
         synchronized (this) {
@@ -254,7 +254,7 @@ public class OnDeviceBackend implements LlmBackend {
         Log.i(TAG, "엔진 해제");
     }
 
-    /** 출시 빌드는 GPU만 쓴다 (실패하면 클라우드). 디버그 빌드는 플래그로 CPU도 쓸 수 있다 */
+    /** 출시 빌드는 GPU만 쓴다 (실패하면 주사위는 결과표). 디버그 빌드는 플래그로 CPU도 쓸 수 있다 */
     private List<String> deviceOrder() {
         if (!BuildConfig.DEBUG) return Collections.singletonList("GPU");
         switch (OnDeviceDebugFlags.backend(appContext)) {

@@ -1,5 +1,6 @@
 package com.textdungeon.ai.backend;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.example.textdungeon.BuildConfig;
@@ -42,10 +43,15 @@ public class GeminiBackend implements LlmBackend {
 
     private final String model;
     private final String apiKey;
+    // API 키를 Android 앱으로 제한했을 때 Google이 확인하는 값 (AppCertificate 참고)
+    private final String packageName;
+    private final String certSha1;
 
-    public GeminiBackend(String model, String apiKey) {
+    public GeminiBackend(Context context, String model, String apiKey) {
         this.model = model;
         this.apiKey = apiKey;
+        this.packageName = context.getPackageName();
+        this.certSha1 = AppCertificate.sha1(context);
     }
 
     @Override
@@ -70,11 +76,12 @@ public class GeminiBackend implements LlmBackend {
         final long requestId = System.currentTimeMillis() % 100000;
         logRaw("요청 #" + requestId + " (" + format + ")", prompt);
 
-        Request request = new Request.Builder()
+        Request.Builder builder = new Request.Builder()
                 .url(String.format(ENDPOINT_FORMAT, model))
                 .addHeader("x-goog-api-key", apiKey)
-                .post(RequestBody.create(body.toString(), JSON_MEDIA))
-                .build();
+                .addHeader("X-Android-Package", packageName);
+        if (certSha1 != null) builder.addHeader("X-Android-Cert", certSha1);
+        Request request = builder.post(RequestBody.create(body.toString(), JSON_MEDIA)).build();
 
         CLIENT.newCall(request).enqueue(new Callback() {
             @Override

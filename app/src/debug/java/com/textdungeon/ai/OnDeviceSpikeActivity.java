@@ -24,6 +24,7 @@ import com.google.ai.edge.litertlm.Engine;
 import com.google.ai.edge.litertlm.EngineConfig;
 import com.google.ai.edge.litertlm.Message;
 import com.google.ai.edge.litertlm.ThinkingConfig;
+import com.textdungeon.ai.backend.AppCertificate;
 import com.textdungeon.ai.backend.GeminiBackend;
 import com.textdungeon.ai.backend.LlmCallback;
 import com.textdungeon.ai.backend.ResponseFormat;
@@ -62,8 +63,7 @@ import java.util.regex.Pattern;
  *     --es backend auto    auto = GPU 시도 후 실패하면 CPU / gpu / cpu
  *     --ez cloud true      클라우드 응답 시간도 잴지
  *     --ez nothink false   프롬프트 끝에 /no_think를 붙일지 (ThinkingConfig로 안 꺼질 때)
- *     --ei count 20
- *     --es key dice        클라우드 키: dice = GEMINI_API_KEY(주사위용) / gods = GEMINI_API_KEY_GODS(이벤트 생성용)
+ *     --ei count 20        (클라우드는 이벤트 생성용 키 GEMINI_API_KEY_GODS로 잰다)
  * 결과: Logcat 태그 SPIKE, 파일 files/spike/spike_시각.md (adb pull로 가져온다)
  *
  * models/ 폴더는 앱이 만들어야 한다. adb shell mkdir로 만들면 주인이 셸이라 앱이 읽지 못한다.
@@ -123,8 +123,7 @@ public class OnDeviceSpikeActivity extends AppCompatActivity {
         boolean cloud = intent.getBooleanExtra("cloud", true);
         boolean noThink = intent.getBooleanExtra("nothink", false);
         int count = intent.getIntExtra("count", 20);
-        String key = "gods".equals(intent.getStringExtra("key"))
-                ? ApiKeyManager.getGeminiGodsKey() : ApiKeyManager.getGeminiKey();
+        String key = ApiKeyManager.getGeminiGodsKey();
         String probe = intent.getStringExtra("probe");
         // --ei maxtokens 0 이면 모델 기본값(null)을 쓴다
         int maxTokens = intent.getIntExtra("maxtokens", MAX_NUM_TOKENS);
@@ -163,13 +162,15 @@ public class OnDeviceSpikeActivity extends AppCompatActivity {
     private void run(String modelName, String backendMode, String cloudKey, boolean noThink, int count) throws Exception {
         DataControlTower dt = DataControlTower.getInstance(this);
         List<Case> cases = buildCases(dt, count);
+        // Google Cloud에서 API 키를 Android 앱으로 제한할 때 넣을 값 (디버그 키)
+        show("서명 SHA-1: " + AppCertificate.sha1(this));
         show("이벤트 " + cases.size() + "개, backend=" + backendMode
                 + ", nothink=" + noThink + ", cloud=" + (cloudKey != null));
 
         // 1) 클라우드: 같은 프롬프트를 하나씩 순서대로 보내 응답 시간만 잰다
         List<Result> cloudResults = new ArrayList<>();
         if (cloudKey != null) {
-            GeminiBackend cloud = new GeminiBackend(AiManager.GEMINI_MODEL, cloudKey);
+            GeminiBackend cloud = new GeminiBackend(this, AiManager.GEMINI_MODEL, cloudKey);
             for (int i = 0; i < cases.size(); i++) {
                 Result r = runCloud(cloud, cases.get(i));
                 cloudResults.add(r);

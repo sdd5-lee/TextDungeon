@@ -35,7 +35,7 @@ public class AiManager {
     private volatile boolean onDeviceWanted;
 
     public AiManager(Context appContext) {
-        LlmBackend eventCloud = new GeminiBackend(GEMINI_MODEL, ApiKeyManager.getGeminiGodsKey());
+        LlmBackend eventCloud = new GeminiBackend(appContext, GEMINI_MODEL, ApiKeyManager.getGeminiGodsKey());
         this.onDeviceBackend = new OnDeviceBackend(appContext);
         this.modelDownloader = new ModelDownloader(appContext, () -> {
             if (onDeviceWanted) onDeviceBackend.warmUp();
