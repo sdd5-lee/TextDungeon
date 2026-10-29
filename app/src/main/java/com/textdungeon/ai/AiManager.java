@@ -98,6 +98,25 @@ public class AiManager {
         modelDownloader.start();
     }
 
+    public boolean isModelDownloadEnabled() {
+        return modelDownloader.isEnabled();
+    }
+
+    /** 설정 화면 스위치. 끄면 모델을 내리고 받아 둔 파일을 지워서, 주사위는 클라우드로만 간다 */
+    public void setModelDownloadEnabled(boolean enabled) {
+        if (!enabled) releaseOnDevice();
+        modelDownloader.setEnabled(enabled);
+        // 게임 중에 다시 켜고 모델이 이미 있으면(adb push) 다음 warmUp에서 바로 올라간다
+    }
+
+    public boolean isOnDeviceSupported() {
+        return modelDownloader.isSupported();
+    }
+
+    public boolean hasOnDeviceModel() {
+        return modelDownloader.hasModel();
+    }
+
     public OnDeviceBackend.State getOnDeviceState() {
         return onDeviceBackend.getState();
     }
@@ -131,6 +150,9 @@ public class AiManager {
                 break;
             case UNSUPPORTED:
                 text = "사용 불가 (지원하지 않는 기기)";
+                break;
+            case DISABLED:
+                text = "꺼짐 (주사위는 클라우드)";
                 break;
             default:
                 text = "받기 전";

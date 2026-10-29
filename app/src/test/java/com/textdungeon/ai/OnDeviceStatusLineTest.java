@@ -43,4 +43,10 @@ public class OnDeviceStatusLineTest {
         assertEquals("온디바이스 AI: 사용 불가 (저장 공간 3.7GB 필요)",
                 AiManager.onDeviceStatusLine(Status.NO_SPACE, -1, State.NOT_LOADED));
     }
+
+    @Test
+    public void 설정에서_끄면_꺼짐() {
+        assertEquals("온디바이스 AI: 꺼짐 (주사위는 클라우드)",
+                AiManager.onDeviceStatusLine(Status.DISABLED, -1, State.NOT_LOADED));
+    }
 }

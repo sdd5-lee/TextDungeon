@@ -133,6 +133,19 @@
                 android:textColor="#FFFFFF" />
         </RadioGroup>
 
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/sw_ondevice_model"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="serif"
+            android:text="혼돈의 주사위 AI 모델 받기 (Wi-Fi, 2.6GB)"
+            android:textColor="#BBBBBB"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:thumbTint="@color/setting_switch_thumb"
+            app:trackTint="@color/setting_switch_track" />
+
         <TextView
             android:id="@+id/tv_ondevice_status"
             android:layout_width="wrap_content"

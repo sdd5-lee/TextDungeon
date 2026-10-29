@@ -11,7 +11,9 @@ import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import androidx.activity.OnBackPressedCallback;
+import androidx.appcompat.widget.SwitchCompat;
 import com.example.textdungeon.R;
+import com.textdungeon.ai.AiManager;
 import com.textdungeon.data.DataControlTower;
 import com.textdungeon.system.SoundManager;
 
@@ -42,6 +44,7 @@ public class SystemSettingActivity extends BaseActivity {
         FrameLayout btnBack = findViewById(R.id.btn_back);
         FrameLayout btnOpenSource = findViewById(R.id.btn_opensource);
         tvOnDeviceStatus = findViewById(R.id.tv_ondevice_status);
+        setupModelSwitch(findViewById(R.id.sw_ondevice_model));
 
         // 모든 버튼에 효과음 일괄 적용
         setSfx(btnBack, btnOpenSource);
@@ -121,6 +124,28 @@ public class SystemSettingActivity extends BaseActivity {
             public void handleOnBackPressed() {
                 finish();
             }
+        });
+    }
+
+    /** 켜면 Wi-Fi에서 받기 시작, 끄면 받던 것을 취소하고 받아 둔 모델을 지운다 (지울 게 있으면 먼저 묻는다) */
+    private void setupModelSwitch(SwitchCompat swModel) {
+        AiManager ai = DataControlTower.getInstance(this).getAiManager();
+        swModel.setChecked(ai.isModelDownloadEnabled());
+        // 모델을 못 쓰는 기기는 받지도 않으므로 스위치를 막는다 (상태 줄에 이유가 나온다)
+        swModel.setEnabled(ai.isOnDeviceSupported());
+        swModel.setOnCheckedChangeListener((button, on) -> {
+            if (on == ai.isModelDownloadEnabled()) return;
+            if (on || !ai.hasOnDeviceModel()) {
+                ai.setModelDownloadEnabled(on);
+                return;
+            }
+            new android.app.AlertDialog.Builder(this)
+                    .setTitle("AI 모델 지우기")
+                    .setMessage("받아 둔 모델(2.6GB)을 지웁니다. 혼돈의 주사위는 클라우드로만 동작합니다.\n다시 켜면 Wi-Fi에서 새로 받습니다.")
+                    .setPositiveButton("지우기", (dialog, which) -> ai.setModelDownloadEnabled(false))
+                    .setNegativeButton("취소", (dialog, which) -> button.setChecked(true))
+                    .setOnCancelListener(dialog -> button.setChecked(true))
+                    .show();
         });
     }
 

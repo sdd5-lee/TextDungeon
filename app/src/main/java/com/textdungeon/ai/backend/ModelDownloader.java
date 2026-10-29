@@ -47,6 +47,8 @@ public class ModelDownloader {
     private static final String PREFS = "OnDeviceModel";
     private static final String KEY_DOWNLOAD_ID = "download_id";
     private static final String KEY_FAILURES = "failures";
+    /** 설정 화면의 "AI 모델 받기" 스위치. 기본은 켬 */
+    private static final String KEY_ENABLED = "enabled";
 
     public enum Status {
         /** 모델 파일이 있다 */
@@ -61,7 +63,9 @@ public class ModelDownloader {
         /** 여러 번 실패해서 그만 받음 */
         FAILED,
         /** 기기 조건(ABI, 램)이 안 맞아 받지 않음 */
-        UNSUPPORTED
+        UNSUPPORTED,
+        /** 사용자가 설정에서 껐음 */
+        DISABLED
     }
 
     public static final class Progress {
@@ -115,11 +119,66 @@ public class ModelDownloader {
         executor.execute(this::check);
     }
 
+    public boolean isEnabled() {
+        return prefs.getBoolean(KEY_ENABLED, true);
+    }
+
+    /**
+     * 설정 스위치. 켜면 받기 시작하고, 끄면 받던 것을 취소하고 받아 둔 모델과 캐시를 지운다.
+     * 끄기 전에 엔진을 내려 둬야 한다 (AiManager가 한다). 지우는 일은 다운로드 스레드에서 한다
+     */
+    public void setEnabled(boolean enabled) {
+        prefs.edit().putBoolean(KEY_ENABLED, enabled).apply();
+        if (enabled) {
+            // 예전에 실패해서 그만 받았더라도 사용자가 다시 켜면 처음부터 받는다
+            prefs.edit().remove(KEY_FAILURES).apply();
+            enqueuedThisProcess = false;
+            start();
+        } else {
+            executor.execute(this::deleteAll);
+        }
+    }
+
+    private void deleteAll() {
+        long id = downloadId();
+        if (id != -1) {
+            downloadManager().remove(id); // 받던 임시 파일도 같이 지운다
+            setDownloadId(-1);
+        }
+        File target = ModelLocator.target(appContext);
+        if (target != null) {
+            deleteQuietly(target);
+            deleteQuietly(tempFile(target));
+        }
+        deleteCaches();
+        Log.i(TAG, "모델 받기 끔: 모델과 캐시를 지움");
+    }
+
+    /**
+     * 엔진이 cacheDir에 모델 이름으로 시작하는 캐시를 만든다
+     * (에뮬레이터에서 GPU 가중치 778MB + 프로그램 13MB, CPU 788MB). 엔진이 내려가 있을 때만 부른다
+     */
+    private void deleteCaches() {
+        File[] caches = appContext.getCacheDir().listFiles(
+                (dir, name) -> name.startsWith(ModelLocator.MODEL_FILE));
+        if (caches == null) return;
+        for (File f : caches) deleteQuietly(f);
+    }
+
+    private static void deleteQuietly(File f) {
+        if (f.exists() && !f.delete()) Log.w(TAG, "지우지 못함: " + f);
+    }
+
     private void check() {
         File target = ModelLocator.target(appContext);
         if (target == null) return;
         long id = downloadId();
 
+        if (!isEnabled()) {
+            // 꺼 둔 뒤에 끝난 다운로드가 있으면 치운다
+            if (id != -1) deleteAll();
+            return;
+        }
         if (ModelLocator.find(appContext) != null) {
             // adb push 등으로 이미 있으면 받던 것은 취소한다
             if (id != -1) {
@@ -193,6 +252,8 @@ public class ModelDownloader {
             String problem = verify(temp, MODEL_BYTES, MODEL_SHA256);
             Log.i(TAG, "모델 확인 " + (SystemClock.elapsedRealtime() - start) + "ms: "
                     + (problem == null ? "통과" : problem));
+            // 캐시 이름에 모델 파일의 수정 시각이 들어가서, 새로 받으면 예전 캐시(GPU·CPU 각 800MB 안팎)는 다시 쓰이지 않는다
+            if (problem == null) deleteCaches();
             if (problem == null && temp.renameTo(target)) {
                 // 이름을 바꾼 뒤에 지워야 DownloadManager가 받은 파일을 같이 지우지 않는다
                 downloadManager().remove(id);
@@ -213,8 +274,9 @@ public class ModelDownloader {
 
     /** 설정 화면 표시용. 메인 스레드에서 불러도 된다 (DownloadManager 조회 한 번) */
     public Progress progress() {
-        if (ModelLocator.find(appContext) != null) return new Progress(Status.READY);
         if (OnDeviceBackend.deviceUnsupportedReason(appContext) != null) return new Progress(Status.UNSUPPORTED);
+        if (!isEnabled()) return new Progress(Status.DISABLED);
+        if (ModelLocator.find(appContext) != null) return new Progress(Status.READY);
         if (verifying) return new Progress(Status.VERIFYING);
 
         long id = downloadId();
@@ -266,6 +328,15 @@ public class ModelDownloader {
         StringBuilder hex = new StringBuilder();
         for (byte b : md.digest()) hex.append(String.format("%02x", b));
         return hex.toString();
+    }
+
+    public boolean hasModel() {
+        return ModelLocator.find(appContext) != null;
+    }
+
+    /** 이 기기에서 온디바이스 모델을 쓸 수 있는지 (ABI, 램). 아니면 설정 스위치를 막는다 */
+    public boolean isSupported() {
+        return OnDeviceBackend.deviceUnsupportedReason(appContext) == null;
     }
 
     private static File tempFile(File target) {
