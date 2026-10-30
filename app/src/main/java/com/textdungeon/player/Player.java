@@ -32,7 +32,7 @@ public class Player {
         this.job = job;
         this.traitId = job.trait.name();
         this.stat = new Stat(job.strength, job.agility, job.health,job.wisdom );
-        magicScroll.startRun(job.isMageLine() ? 1 : 0, stat.getWisdom());
+        magicScroll.startRun(job.startsWithMagicCore() ? 1 : 0, stat.getWisdom());
 
         stat.updateBattleStat(level);
         stat.setHp(getMaxHp());

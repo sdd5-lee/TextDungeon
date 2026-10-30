@@ -37,10 +37,11 @@ public class PlayerTest {
     }
 
     @Test
-    public void 마법사와_전투마법사만_코어_1개로_시작() {
+    public void 마법사_성기사_전투마법사_용사만_코어_1개로_시작() {
         for (Job job : Job.values()) {
             Player p = new Player("테스터", job);
-            int expected = (job == Job.MAGE || job == Job.WARLOCK) ? 1 : 0;
+            int expected = (job == Job.MAGE || job == Job.PALADIN
+                    || job == Job.WARLOCK || job == Job.HERO) ? 1 : 0;
             assertEquals(job.name, expected, p.getMagicScroll().getTotalCores(p.getStat().getWisdom()));
         }
     }
