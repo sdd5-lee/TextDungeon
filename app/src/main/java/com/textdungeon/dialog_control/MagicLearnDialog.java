@@ -27,15 +27,13 @@ import com.textdungeon.system.SoundManager;
 import java.util.List;
 
 /**
- * 마법서. 마법 나무에서 마법을 누르면 아래에 조건(계열·이전 마법·지혜)과 버튼이 나온다.
+ * 세피로트의 나무. 나무에서 마법을 누르면 아래에 조건(계열·이전 마법·지혜)과 버튼이 나온다.
  * 계열은 코어 포인트로 열고, 계열 안에서는 앞 마법을 배운 뒤 지혜 조건을 채우면 배운다.
  */
 public class MagicLearnDialog extends Dialog {
 
     private static final int OK_COLOR = 0xFF2E6B2A;
     private static final int NO_COLOR = 0xFF9A2A22;
-    /** 나무 모양: 가운데에서 퍼지는 마법진, 아래에서 자라는 세피로트의 나무 */
-    private static final MagicTreeView.Shape SHAPE = MagicTreeView.Shape.CIRCLE;
 
     private final Player player;
     private final DataControl<Magic> magicManager;
@@ -71,14 +69,7 @@ public class MagicLearnDialog extends Dialog {
             dismiss();
         });
 
-        boolean rising = SHAPE == MagicTreeView.Shape.RISING;
-        ((TextView) findViewById(R.id.tv_magic_title)).setText(rising ? "세피로트의 나무" : "마법진");
-        tvSchool.setText(rising
-                ? "아래 기초 마법에서 계열마다 가지가 위로 자랍니다."
-                : "가운데 기초 마법에서 계열마다 갈래가 뻗어 나갑니다.");
-
         tree = findViewById(R.id.magic_tree);
-        tree.setShape(SHAPE);
         tree.setMagics(magicManager.getAll(), player.getMagicScroll(), this::showDetail);
         refresh();
     }
@@ -216,11 +207,12 @@ public class MagicLearnDialog extends Dialog {
         refresh();
     }
 
-    /** 마법서 창 위에 띄운다 (창을 닫지 않으므로 화면 뒤에 띄우면 안 보인다) */
+    /** 나무 창 위에 띄운다 (창을 닫지 않으므로 화면 뒤에 띄우면 안 보인다) */
     private void showBar(String message) {
         View root = findViewById(android.R.id.content);
         if (root == null) return;
         Snackbar snackbar = Snackbar.make(root, message, Snackbar.LENGTH_SHORT);
+        snackbar.setAnchorView(R.id.detail_panel); // 닫기·배우기 버튼을 가리지 않게 설명 칸 위에
         snackbar.setBackgroundTint(Color.parseColor("#901418"));
         snackbar.setTextColor(Color.parseColor("#E5E2E1"));
         snackbar.show();

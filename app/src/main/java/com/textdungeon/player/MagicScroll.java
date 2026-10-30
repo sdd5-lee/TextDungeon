@@ -13,7 +13,7 @@ public class MagicScroll {
     /** 지혜가 이만큼 오를 때마다 코어 포인트 1개 (20, 40, 60...) */
     public static final int WISDOM_PER_CORE = 20;
 
-    /** 마법서에서 마법 하나의 상태. 막힌 곳은 계열 → 이전 마법 → 지혜 순으로 본다 */
+    /** 세피로트의 나무에서 마법 하나의 상태. 막힌 곳은 계열 → 이전 마법 → 지혜 순으로 본다 */
     public enum LearnState { LEARNED, CAN_LEARN, SCHOOL_LOCKED, NEED_PREVIOUS, NEED_WISDOM }
 
     private List<LearnedMagic> learnedMagicList;

@@ -59,7 +59,7 @@ public class Magic {
         return requires;
     }
 
-    /** 지혜를 빼고 본 기본 피해 (마법서 설명용) */
+    /** 지혜를 빼고 본 기본 피해 (세피로트의 나무 설명용) */
     public int getBaseDamage() {
         return magicDamage;
     }

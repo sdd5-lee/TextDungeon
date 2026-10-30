@@ -548,7 +548,10 @@ public class EventActivity extends BaseActivity {
     // ─────────────────────────────────────────────────────────────
 
     private void openMagicBook() {
-        new MagicLearnDialog(this, player, dt.getMagicManager()).show();
+        MagicLearnDialog dialog = new MagicLearnDialog(this, player, dt.getMagicManager());
+        // 연 계열·배운 마법은 창을 닫을 때 바로 저장 (다음 층까지 기다리면 앱을 끌 때 사라진다)
+        dialog.setOnDismissListener(d -> dt.saveGame());
+        dialog.show();
     }
 
     /** 이벤트나 스탯 분배가 끝났을 때(= 다음 층 버튼이 나올 때) 새로 얻은 마법 코어를 알린다 */
@@ -557,8 +560,8 @@ public class EventActivity extends BaseActivity {
         if (fresh <= 0) return;
         new android.app.AlertDialog.Builder(this)
                 .setTitle("마법 코어 획득")
-                .setMessage("코어 포인트를 " + fresh + "개 얻었습니다.\n마법서에서 새 마법 계열을 열 수 있습니다.")
-                .setPositiveButton("마법서 열기", (d, w) -> openMagicBook())
+                .setMessage("코어 포인트를 " + fresh + "개 얻었습니다.\n세피로트의 나무에서 새 마법 계열을 열 수 있습니다.")
+                .setPositiveButton("세피로트 열기", (d, w) -> openMagicBook())
                 .setNegativeButton("닫기", null)
                 .show();
     }
