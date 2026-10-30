@@ -15,6 +15,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.textdungeon.R; // R 패키지 경로는 프로젝트에 맞게 수정
+import com.textdungeon.activity_control.GameImages;
 import com.textdungeon.buttons.BattleButton;
 import com.textdungeon.data.DataControlTower;
 import com.textdungeon.data.Difficulty;
@@ -113,6 +114,9 @@ public class BattleDialog extends Dialog {
         Trait t = player.getTrait();
         playerName.setText((t != null ? t.displayName + " " : "") + player.getName());
         monsterName.setText(battleSystem.getEnemyName());
+
+        // 몬스터 그림 (없으면 빈 칸 그대로)
+        GameImages.set(findViewById(R.id.battle_monster_image), monster.getImgId(), 0);
     }
 
     private void setupListeners() {
