@@ -37,6 +37,25 @@ public class PlayerTest {
     }
 
     @Test
+    public void 마법사와_전투마법사만_코어_1개로_시작() {
+        for (Job job : Job.values()) {
+            Player p = new Player("테스터", job);
+            int expected = (job == Job.MAGE || job == Job.WARLOCK) ? 1 : 0;
+            assertEquals(job.name, expected, p.getMagicScroll().getTotalCores(p.getStat().getWisdom()));
+        }
+    }
+
+    @Test
+    public void 스탯_분배로_지혜20을_넘기면_코어가_생긴다() {
+        int before = player.getStat().getWisdom();
+        player.getStat().setWisdom(20);
+        player.recalculateStats(before);
+        player.getStat().setWisdom(10); // 이벤트로 깎여도
+        player.recalculateStats(20);
+        assertEquals(1, player.getMagicScroll().getTotalCores(player.getStat().getWisdom()));
+    }
+
+    @Test
     public void 초기_직업은_생성자에서_넘긴_직업() {
         assertEquals(Job.WARRIOR, player.getJob());
     }

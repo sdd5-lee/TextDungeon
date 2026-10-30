@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 마법서: 위에 지혜·코어, 가운데 마법 나무, 아래에 누른 마법의 설명과 배우기 버튼 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dialog_rounded_background"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="4dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="serif"
+            android:text="마법서"
+            android:textColor="#E9C176"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_current_wisdom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="serif"
+                android:textColor="#E0BFBA"
+                android:textSize="13sp"
+                tools:text="지혜 32" />
+
+            <TextView
+                android:id="@+id/tv_core_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="serif"
+                android:textColor="#E9C176"
+                android:textSize="13sp"
+                tools:text="코어 포인트 1 · 다음 코어: 지혜 40" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <com.textdungeon.dialog_control.MagicTreeView
+        android:id="@+id/magic_tree"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1" />
+
+    <!-- 누른 마법 설명. 높이를 고정해 마법을 바꿔 눌러도 나무가 움직이지 않게 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="228dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/panel_parchment"
+        android:orientation="vertical"
+        android:paddingHorizontal="18dp"
+        android:paddingVertical="14dp">
+
+        <TextView
+            android:id="@+id/tv_detail_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif"
+            android:text="마법을 눌러 보세요"
+            android:textColor="#3A2810"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_detail_school"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:fontFamily="serif"
+            android:text="가운데 기초 마법에서 계열마다 갈래가 뻗어 나갑니다."
+            android:textColor="#6B5230"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_detail_conditions"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:fontFamily="serif"
+            android:lineSpacingExtra="3dp"
+            android:textColor="#3A2810"
+            android:textSize="13sp"
+            tools:text="기본 피해 50 (지혜 2마다 +1)\n✔ 화염 계열 열림\n✖ 이전 마법(화염구)을 배워야 해금할 수 있습니다\n✖ 요구 지혜 30 (현재 22)" />
+
+        <TextView
+            android:id="@+id/btn_detail_action"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@drawable/bg_battle_attack"
+            android:fontFamily="serif"
+            android:gravity="center"
+            android:textColor="#F0CF86"
+            android:textSize="14sp"
+            android:visibility="invisible"
+            tools:text="배우기"
+            tools:visibility="visible" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/btn_magic_close"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_battle_escape"
+        android:fontFamily="serif"
+        android:gravity="center"
+        android:text="닫기"
+        android:textColor="#E5E2E1"
+        android:textSize="14sp" />
+</LinearLayout>

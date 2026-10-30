@@ -27,6 +27,11 @@ public enum Job {
     public final String name;
     public final int strength, agility, health, wisdom;
 
+    /** 마법사 계열(마법사, 전투 마법사)은 마법 코어 1개를 들고 시작한다. 나머지는 지혜 20에서 첫 코어 */
+    public boolean isMageLine() {
+        return this == MAGE || this == WARLOCK;
+    }
+
     // 직업별 특성
     public final Trait trait;
     // 해금 여부 확인

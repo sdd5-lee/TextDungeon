@@ -77,6 +77,8 @@ public class GameSave {
         }
         stat.updateBattleStat(newPlayer.getLevel());
         newPlayer.getStat().setHp(newPlayer.getMaxHp());
+        // 특성·상점 보너스로 시작 지혜가 오른 것까지 코어 계산에 넣는다
+        newPlayer.getMagicScroll().recordWisdom(stat.getWisdom());
         return newPlayer;
     }
     // ───────────── 파일 입출력 ─────────────

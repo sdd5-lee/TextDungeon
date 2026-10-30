@@ -32,6 +32,7 @@ public class Player {
         this.job = job;
         this.traitId = job.trait.name();
         this.stat = new Stat(job.strength, job.agility, job.health,job.wisdom );
+        magicScroll.startRun(job.isMageLine() ? 1 : 0, stat.getWisdom());
 
         stat.updateBattleStat(level);
         stat.setHp(getMaxHp());
@@ -86,6 +87,7 @@ public class Player {
         updateBattleStatKeepingHp();
 
         magicScroll.adjustForWisdomChange(previousWisdom, stat.getWisdom());
+        magicScroll.recordWisdom(stat.getWisdom());
         refreshHp();
     }
 

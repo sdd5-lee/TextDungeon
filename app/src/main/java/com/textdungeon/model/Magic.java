@@ -11,8 +11,21 @@ public class Magic {
     private int magicDamage;
     private int value;
     private String img;
+    /** 계열 (없으면 기초) */
+    private MagicSchool school;
+    /** 먼저 배워야 하는 마법 id (없으면 바로 배울 수 있다) */
+    private String requires;
 
     public Magic(){}
+
+    /** 테스트용 */
+    public Magic(String id, String name, MagicSchool school, String requires, int value) {
+        this.id = id;
+        this.name = name;
+        this.school = school;
+        this.requires = requires;
+        this.value = value;
+    }
     public int getMaxCount() {
         return maxCount;
     }
@@ -36,5 +49,18 @@ public class Magic {
 
     public String getImg() {
         return img;
+    }
+
+    public MagicSchool getSchool() {
+        return school != null ? school : MagicSchool.BASIC;
+    }
+
+    public String getRequires() {
+        return requires;
+    }
+
+    /** 지혜를 빼고 본 기본 피해 (마법서 설명용) */
+    public int getBaseDamage() {
+        return magicDamage;
     }
 }

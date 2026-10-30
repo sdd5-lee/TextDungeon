@@ -97,14 +97,7 @@ public class EventActivity extends BaseActivity {
         LinearLayout btnMagicLearn = findViewById(R.id.btn_magic_learn);
         if (btnMagicLearn != null) {
             setSfx(btnMagicLearn);
-            btnMagicLearn.setOnClickListener(v -> {
-                MagicLearnDialog dialog = new MagicLearnDialog(
-                        EventActivity.this,
-                        player,
-                        dt.getMagicManager()
-                );
-                dialog.show();
-            });
+            btnMagicLearn.setOnClickListener(v -> openMagicBook());
         }
 
         LinearLayout btnInventory = findViewById(R.id.btn_inventory);
@@ -554,6 +547,22 @@ public class EventActivity extends BaseActivity {
     // 다음 층 이동
     // ─────────────────────────────────────────────────────────────
 
+    private void openMagicBook() {
+        new MagicLearnDialog(this, player, dt.getMagicManager()).show();
+    }
+
+    /** 이벤트나 스탯 분배가 끝났을 때(= 다음 층 버튼이 나올 때) 새로 얻은 마법 코어를 알린다 */
+    private void notifyNewCores() {
+        int fresh = player.getMagicScroll().takeNewCores(player.getStat().getWisdom());
+        if (fresh <= 0) return;
+        new android.app.AlertDialog.Builder(this)
+                .setTitle("마법 코어 획득")
+                .setMessage("코어 포인트를 " + fresh + "개 얻었습니다.\n마법서에서 새 마법 계열을 열 수 있습니다.")
+                .setPositiveButton("마법서 열기", (d, w) -> openMagicBook())
+                .setNegativeButton("닫기", null)
+                .show();
+    }
+
     private void showNextFloorButton() {
         eventManager.goNextFloor();
         choiceButtons.removeAllViews();
@@ -561,6 +570,7 @@ public class EventActivity extends BaseActivity {
         int currentFloor = eventManager.getCurrentFloor();
         List<Achievement> unlocked = dt.getAchievementManager().updateProgress("floor", currentFloor, false);
         showAchievementNotification(unlocked);
+        notifyNewCores();
 
         if (eventManager.getCurrentFloor() > 50){
             appendDesc("던전안에 숨어있던 마왕을 쓰러트렸습니다.\n더 이상의 적은 없다.");
