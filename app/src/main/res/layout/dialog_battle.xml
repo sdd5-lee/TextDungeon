@@ -159,64 +159,104 @@
     </LinearLayout>
 
     <!-- Combat Actions -->
+    <!-- 버튼은 아이콘 위, 작은 글자 아래. 버튼 사이·줄 사이는 8dp -->
     <LinearLayout
         android:id="@+id/actions_area"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:orientation="vertical"
         android:animateLayoutChanges="true">
 
-        <!-- Category Selectors (Top Row) -->
+        <!-- 공격, 방어, 도망 -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="52dp"
+            android:layout_height="64dp"
             android:orientation="horizontal">
 
-            <TextView
+            <LinearLayout
                 android:id="@+id/battle_btn_attack"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="1dp"
+                android:layout_marginEnd="4dp"
                 android:layout_weight="1"
-                android:background="#1C1B1B"
+                android:background="@drawable/bg_battle_attack"
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center"
-                android:letterSpacing="0.1"
-                android:text="공격"
-                android:textColor="#FFFFFF"
-                android:textSize="12sp" />
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_weapon"
+                    app:tint="#F07A70" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:fontFamily="serif"
+                    android:letterSpacing="0.1"
+                    android:text="공격"
+                    android:textColor="#F07A70"
+                    android:textSize="11sp" />
+            </LinearLayout>
 
-            <TextView
+            <LinearLayout
                 android:id="@+id/battle_btn_guard"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginHorizontal="1dp"
+                android:layout_marginHorizontal="4dp"
                 android:layout_weight="1"
-                android:background="#1C1B1B"
+                android:background="@drawable/bg_battle_guard"
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center"
-                android:letterSpacing="0.1"
-                android:text="방어"
-                android:textColor="#FFFFFF"
-                android:textSize="12sp" />
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_shield"
+                    app:tint="#8FB4E3" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:fontFamily="serif"
+                    android:letterSpacing="0.1"
+                    android:text="방어"
+                    android:textColor="#8FB4E3"
+                    android:textSize="11sp" />
+            </LinearLayout>
 
-            <TextView
+            <LinearLayout
                 android:id="@+id/battle_btn_escape"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="4dp"
                 android:layout_weight="1"
-                android:background="#1C1B1B"
+                android:background="@drawable/bg_battle_escape"
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center"
-                android:letterSpacing="0.1"
-                android:text="도망"
-                android:textColor="#FDFDFD"
-                android:textSize="12sp" />
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_run"
+                    app:tint="#A8A79C" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:fontFamily="serif"
+                    android:letterSpacing="0.1"
+                    android:text="도망"
+                    android:textColor="#A8A79C"
+                    android:textSize="11sp" />
+            </LinearLayout>
         </LinearLayout>
 
         <!-- 마법(스킬) 목록 -->
@@ -224,7 +264,7 @@
             android:id="@+id/magic_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="140dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:fillViewport="true"
             android:visibility="gone">
 
@@ -244,7 +284,7 @@
             android:id="@+id/items_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="140dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:fillViewport="true"
             android:visibility="gone">
 
@@ -262,62 +302,64 @@
         <!-- 하단바 마법, 가방 -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="4dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="8dp"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:id="@+id/battle_btn_magic"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginEnd="4dp"
                 android:layout_weight="1"
-                android:background="#1C1B1B"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:layout_marginEnd="1dp"
+                android:background="@drawable/bg_battle_magic"
                 android:clickable="true"
-                android:focusable="true">
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical">
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@android:drawable/ic_menu_compass"
-                    app:tint="#448AFF" />
+                    android:layout_width="24dp"
+                    android:layout_height="22dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_magic"
+                    app:tint="#7AA7FF" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="3dp"
+                    android:fontFamily="serif"
+                    android:letterSpacing="0.1"
                     android:text="마법"
-                    android:textColor="#448AFF"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:letterSpacing="0.1" />
+                    android:textColor="#7AA7FF"
+                    android:textSize="11sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/battle_btn_items"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginStart="4dp"
                 android:layout_weight="1"
-                android:background="#1C1B1B"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:layout_marginStart="1dp"
+                android:background="@drawable/bg_battle_items"
                 android:clickable="true"
-                android:focusable="true">
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical">
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@android:drawable/ic_menu_save"
+                    android:layout_width="24dp"
+                    android:layout_height="22dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_bag"
                     app:tint="#E9C176" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="3dp"
+                    android:fontFamily="serif"
+                    android:letterSpacing="0.1"
                     android:text="가방"
                     android:textColor="#E9C176"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:letterSpacing="0.1" />
+                    android:textSize="11sp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

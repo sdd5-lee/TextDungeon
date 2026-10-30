@@ -136,7 +136,8 @@ public class SystemSettingActivity extends BaseActivity {
                             "- OkHttp\n" +
                             "- LiteRT-LM\n" +
                             "- Gemma 4 E2B 모델 (신들의 이벤트, 혼돈의 주사위)\n" +
-                            "- RuntimeTypeAdapterFactory\n\n" +
+                            "- RuntimeTypeAdapterFactory\n" +
+                            "- Material Icons (전투 방어·도망 아이콘)\n\n" +
                             "■ BSD / MIT / Apache 2.0 License\n" +
                             "- Glide (Bumptech)\n\n" +
                             "■ 사운드 에셋\n" +

@@ -123,43 +123,36 @@ public class BattleDialog extends Dialog {
     private void setupListeners() {
         // [ATTACK] 버튼
         findViewById(R.id.battle_btn_attack).setOnClickListener(v -> {
-            magicScrollView.setVisibility(View.GONE);
-            itemsScrollView.setVisibility(View.GONE);
+            showList(null);
             executeAction(1, null);
         });
         // [GUARD] 버튼
         findViewById(R.id.battle_btn_guard).setOnClickListener(v -> {
-            magicScrollView.setVisibility(View.GONE);
-            itemsScrollView.setVisibility(View.GONE);
+            showList(null);
             executeAction(2, null);
         });
         // [ESCAPE] 버튼
         findViewById(R.id.battle_btn_escape).setOnClickListener(v -> {
-            magicScrollView.setVisibility(View.GONE);
-            itemsScrollView.setVisibility(View.GONE);
+            showList(null);
             executeAction(3, null);
         });
 
         // [MAGIC] 탭 토글
-        findViewById(R.id.battle_btn_magic).setOnClickListener(v -> {
-            itemsScrollView.setVisibility(View.GONE);
-            if (magicScrollView.getVisibility() == View.VISIBLE) {
-                magicScrollView.setVisibility(View.GONE);
-            } else {
-                magicScrollView.setVisibility(View.VISIBLE);
-            }
-        });
+        findViewById(R.id.battle_btn_magic).setOnClickListener(v ->
+                showList(magicScrollView.getVisibility() == View.VISIBLE ? null : magicScrollView));
         // [ITEMS] 탭 토글
-        findViewById(R.id.battle_btn_items).setOnClickListener(v -> {
-            magicScrollView.setVisibility(View.GONE);
-            if (itemsScrollView.getVisibility() == View.VISIBLE) {
-                itemsScrollView.setVisibility(View.GONE);
-            } else {
-                itemsScrollView.setVisibility(View.VISIBLE);
-            }
-        });
+        findViewById(R.id.battle_btn_items).setOnClickListener(v ->
+                showList(itemsScrollView.getVisibility() == View.VISIBLE ? null : itemsScrollView));
         addMagic();
         addItem();
+    }
+
+    // 마법·가방 목록 중 하나를 연다 (null이면 둘 다 닫는다). 열린 쪽 버튼은 밝게 표시
+    private void showList(ScrollView list) {
+        magicScrollView.setVisibility(list == magicScrollView ? View.VISIBLE : View.GONE);
+        itemsScrollView.setVisibility(list == itemsScrollView ? View.VISIBLE : View.GONE);
+        findViewById(R.id.battle_btn_magic).setSelected(list == magicScrollView);
+        findViewById(R.id.battle_btn_items).setSelected(list == itemsScrollView);
     }
     private void addMagic(){
         GridLayout magicContainer = findViewById(R.id.magic_container);
