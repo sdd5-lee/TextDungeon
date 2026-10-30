@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 전투 창 버튼 바탕. 눌렀을 때와 목록이 열려 있을 때(selected)는 밝게 -->
+<!-- 전투 창 가방 버튼 바탕. 목록이 열려 있으면(selected) 목록과 같은 가죽 -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
@@ -8,13 +8,7 @@
             <corners android:radius="6dp" />
         </shape>
     </item>
-    <item android:state_selected="true">
-        <shape android:shape="rectangle">
-            <solid android:color="#30281A" />
-            <stroke android:width="1dp" android:color="#9C7B3E" />
-            <corners android:radius="6dp" />
-        </shape>
-    </item>
+    <item android:state_selected="true" android:drawable="@drawable/bg_battle_items_open" />
     <item>
         <shape android:shape="rectangle">
             <solid android:color="#211C13" />

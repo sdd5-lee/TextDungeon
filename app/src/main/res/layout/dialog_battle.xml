@@ -259,12 +259,13 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!-- 마법(스킬) 목록 -->
+        <!-- 마법(스킬) 목록: 양피지. 열리면 마법 버튼도 같은 양피지가 된다 -->
         <ScrollView
             android:id="@+id/magic_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="140dp"
             android:layout_marginTop="8dp"
+            android:background="@drawable/panel_parchment"
             android:fillViewport="true"
             android:visibility="gone">
 
@@ -272,19 +273,19 @@
                 android:id="@+id/magic_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#1C1B1B"
                 android:columnCount="2"
-                android:padding="8dp">
+                android:padding="12dp">
 
             </GridLayout>
         </ScrollView>
 
-        <!-- 가방(아이템) 목록 -->
+        <!-- 가방(아이템) 목록: 가죽과 가방. 열리면 가방 버튼도 같은 가죽이 된다 -->
         <ScrollView
             android:id="@+id/items_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="140dp"
             android:layout_marginTop="8dp"
+            android:background="@drawable/bg_panel_items"
             android:fillViewport="true"
             android:visibility="gone">
 
@@ -292,9 +293,8 @@
                 android:id="@+id/item_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#1C1B1B"
                 android:columnCount="2"
-                android:padding="8dp">
+                android:padding="12dp">
 
             </GridLayout>
         </ScrollView>
@@ -320,17 +320,19 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="22dp"
+                    android:duplicateParentState="true"
                     android:importantForAccessibility="no"
                     android:src="@drawable/ic_magic"
-                    app:tint="#7AA7FF" />
+                    app:tint="@color/battle_magic_fg" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
+                    android:duplicateParentState="true"
                     android:fontFamily="serif"
                     android:letterSpacing="0.1"
                     android:text="마법"
-                    android:textColor="#7AA7FF"
+                    android:textColor="@color/battle_magic_fg"
                     android:textSize="11sp" />
             </LinearLayout>
 

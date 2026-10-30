@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 마법 버튼 글자·아이콘: 목록이 열려 양피지 바탕이 되면 진한 갈색 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true" android:color="#4A3418" />
+    <item android:color="#7AA7FF" />
+</selector>
