@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.widget.SwitchCompat;
 import com.example.textdungeon.R;
+import com.textdungeon.ads.AdManager;
 import com.textdungeon.ai.AiManager;
 import com.textdungeon.data.DataControlTower;
 import com.textdungeon.system.SoundManager;
@@ -63,6 +64,15 @@ public class SystemSettingActivity extends BaseActivity {
                 Toast.makeText(this, "브라우저가 없습니다\n" + PRIVACY_POLICY_URL, Toast.LENGTH_LONG).show();
             }
         });
+
+        // 유럽 등에서는 광고 동의를 언제든 바꿀 수 있어야 한다
+        FrameLayout btnAdPrivacy = findViewById(R.id.btn_ad_privacy);
+        AdManager ads = DataControlTower.getInstance(this).getAdManager();
+        if (ads.isPrivacyOptionsRequired()) {
+            btnAdPrivacy.setVisibility(View.VISIBLE);
+            setSfx(btnAdPrivacy);
+            btnAdPrivacy.setOnClickListener(v -> ads.showPrivacyOptions(this));
+        }
 
         int savedVolume = prefs.getInt("volume", 50);
         sbVolume.setProgress(savedVolume);

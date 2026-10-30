@@ -31,7 +31,7 @@ public class AdManagerTest {
         Entitlements skip = new Entitlements(Collections.singleton(Product.REMOVE_ADS.id));
 
         AdManager ads = new AdManager(context, () -> skip);
-        ads.initialize(); // 광고 스킵이면 SDK를 켜지 않는다
+        ads.initialize(activity); // 광고 스킵이면 동의 창도 SDK도 켜지 않는다
         ads.showReward(activity, RewardType.GEM_DOUBLE, callback);
 
         verify(callback).onRewarded();

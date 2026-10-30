@@ -16,6 +16,9 @@ import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
+import com.google.android.ump.ConsentInformation;
+import com.google.android.ump.ConsentRequestParameters;
+import com.google.android.ump.UserMessagingPlatform;
 import com.textdungeon.billing.Entitlements;
 
 import java.util.EnumMap;
@@ -55,10 +58,44 @@ public final class AdManager {
         this.entitlements = entitlements;
     }
 
-    /** MobileAds 초기화 후 광고를 하나씩 미리 불러 둔다. 광고 스킵을 보유하면 SDK를 아예 켜지 않는다 */
-    public void initialize() {
+    /**
+     * 동의를 받은 뒤 MobileAds를 초기화하고 광고를 하나씩 미리 불러 둔다. 광고 스킵을 보유하면 SDK를 아예 켜지 않는다.
+     * 유럽경제지역·영국·스위스에서는 UMP 동의 창을 먼저 띄운다 (창 내용은 AdMob의 '개인정보 보호 및 메시지'에서 만든다).
+     * 그 밖의 나라는 동의가 필요 없다고 바로 답이 온다
+     */
+    public void initialize(Activity activity) {
         if (entitlements.get().hasAdSkip()) return;
-        ensureInitialized();
+        ConsentInformation consent = UserMessagingPlatform.getConsentInformation(appContext);
+        consent.requestConsentInfoUpdate(activity, new ConsentRequestParameters.Builder().build(),
+                () -> UserMessagingPlatform.loadAndShowConsentFormIfRequired(activity, formError -> {
+                    if (formError != null) Log.w(TAG, "동의 창 실패: " + formError.getMessage());
+                    if (consent.canRequestAds()) ensureInitialized();
+                }),
+                requestError -> {
+                    // 오프라인 등. 이전 실행에서 받은 동의가 있으면 그대로 쓴다
+                    Log.w(TAG, "동의 정보 갱신 실패: " + requestError.getMessage());
+                    if (consent.canRequestAds()) ensureInitialized();
+                });
+        // 이전 실행에서 이미 동의를 받았으면 갱신을 기다리지 않고 바로 켠다
+        if (consent.canRequestAds()) ensureInitialized();
+    }
+
+    /** 동의가 필요한 지역이면 옵션 화면에 '광고 개인정보 설정' 버튼을 보여야 한다 */
+    public boolean isPrivacyOptionsRequired() {
+        return UserMessagingPlatform.getConsentInformation(appContext).getPrivacyOptionsRequirementStatus()
+                == ConsentInformation.PrivacyOptionsRequirementStatus.REQUIRED;
+    }
+
+    /** 동의를 다시 고르는 창. 고른 뒤 광고를 요청해도 되면 SDK를 켠다 */
+    public void showPrivacyOptions(Activity activity) {
+        UserMessagingPlatform.showPrivacyOptionsForm(activity, formError -> {
+            if (formError != null) Log.w(TAG, "개인정보 설정 창 실패: " + formError.getMessage());
+            if (canRequestAds()) ensureInitialized();
+        });
+    }
+
+    private boolean canRequestAds() {
+        return UserMessagingPlatform.getConsentInformation(appContext).canRequestAds();
     }
 
     private void ensureInitialized() {
@@ -112,7 +149,8 @@ public final class AdManager {
 
     private void load(RewardType type) {
         if (!initStarted) {
-            ensureInitialized(); // 초기화가 끝나면 모든 종류를 불러온다
+            // 동의를 받기 전에는 SDK를 켜지 않는다. 초기화가 끝나면 모든 종류를 불러온다
+            if (canRequestAds()) ensureInitialized();
             return;
         }
         if (ready.containsKey(type) || loading.contains(type)) return;

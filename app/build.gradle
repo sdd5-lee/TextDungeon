@@ -89,5 +89,7 @@ dependencies {
     implementation 'com.android.billingclient:billing:9.1.0'
     // 보상형 광고. 기존 SDK는 유지보수 모드지만, 차세대 SDK는 guava·코루틴 등 의존성이 커서 기존 SDK를 쓴다
     implementation 'com.google.android.gms:play-services-ads:25.5.0'
+    // 유럽경제지역·영국·스위스 광고 동의 창. 광고 SDK가 이미 끌어오는 버전을 직접 적어 둔다
+    implementation 'com.google.android.ump:user-messaging-platform:4.0.0'
 
 }
