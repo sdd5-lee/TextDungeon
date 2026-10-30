@@ -16,13 +16,13 @@
         android:paddingHorizontal="4dp">
 
         <TextView
+            android:id="@+id/tv_magic_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="serif"
-            android:text="마법서"
             android:textColor="#E9C176"
-            android:textSize="22sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -48,7 +48,7 @@
                 android:fontFamily="serif"
                 android:textColor="#E9C176"
                 android:textSize="13sp"
-                tools:text="코어 포인트 1 · 다음 코어: 지혜 40" />
+                tools:text="코어 1개 · 다음은 지혜 40" />
         </LinearLayout>
     </LinearLayout>
 

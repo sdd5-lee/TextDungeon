@@ -34,6 +34,8 @@ public class MagicLearnDialog extends Dialog {
 
     private static final int OK_COLOR = 0xFF2E6B2A;
     private static final int NO_COLOR = 0xFF9A2A22;
+    /** 나무 모양: 가운데에서 퍼지는 마법진, 아래에서 자라는 세피로트의 나무 */
+    private static final MagicTreeView.Shape SHAPE = MagicTreeView.Shape.CIRCLE;
 
     private final Player player;
     private final DataControl<Magic> magicManager;
@@ -69,7 +71,14 @@ public class MagicLearnDialog extends Dialog {
             dismiss();
         });
 
+        boolean rising = SHAPE == MagicTreeView.Shape.RISING;
+        ((TextView) findViewById(R.id.tv_magic_title)).setText(rising ? "세피로트의 나무" : "마법진");
+        tvSchool.setText(rising
+                ? "아래 기초 마법에서 계열마다 가지가 위로 자랍니다."
+                : "가운데 기초 마법에서 계열마다 갈래가 뻗어 나갑니다.");
+
         tree = findViewById(R.id.magic_tree);
+        tree.setShape(SHAPE);
         tree.setMagics(magicManager.getAll(), player.getMagicScroll(), this::showDetail);
         refresh();
     }
@@ -93,8 +102,8 @@ public class MagicLearnDialog extends Dialog {
         MagicScroll scroll = player.getMagicScroll();
         int wis = wisdom();
         tvWisdom.setText("지혜 " + wis);
-        tvCoreInfo.setText("코어 포인트 " + scroll.getAvailableCores(wis)
-                + " · 다음 코어: 지혜 " + scroll.getNextCoreWisdom(wis));
+        tvCoreInfo.setText("코어 " + scroll.getAvailableCores(wis)
+                + "개 · 다음은 지혜 " + scroll.getNextCoreWisdom(wis));
         tree.refresh(wis);
         if (selected != null) showDetail(selected);
     }

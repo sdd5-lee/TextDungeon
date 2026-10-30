@@ -32,8 +32,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 마법 나무. 가운데 기초 마법에서 계열마다 한 갈래씩 뻗고, 앞 마법(requires)을 따라 바깥으로 이어진다.
- * 계열 방향은 MagicSchool.angle, 단계별 거리는 TIER. 마법을 누르면 크게 보이고 listener로 알린다.
+ * 마법 나무. 기초 마법에서 계열마다 한 갈래씩 뻗고, 앞 마법(requires)을 따라 이어진다.
+ * CIRCLE(마법진)은 가운데에서 MagicSchool.angle 방향으로 퍼지고, RISING(세피로트의 나무)은 아래에서 계열마다 한 줄씩 위로 자란다.
+ * 마법을 누르면 크게 보이고 listener로 알린다.
  */
 public class MagicTreeView extends FrameLayout {
 
@@ -41,11 +42,15 @@ public class MagicTreeView extends FrameLayout {
         void onMagicSelected(Magic magic);
     }
 
+    public enum Shape { CIRCLE, RISING }
+
     /** 가운데에서 몇 단계 떨어졌는지에 따른 거리 (가로·세로 반지름에 대한 비율) */
     private static final float[] TIER = {0f, 0.42f, 0.72f, 1f};
-    private static final int NODE_DP = 52;
-    private static final int ROOT_DP = 60;
-    private static final float SELECTED_SCALE = 1.45f;
+    private static final int NODE_DP = 40;
+    private static final int ROOT_DP = 46;
+    private static final float SELECTED_SCALE = 1.35f;
+    /** RISING에서 가지 끝 위에 계열 이름이 들어갈 자리 */
+    private static final int LABEL_DP = 18;
 
     private static final int LINE_LEARNED = 0xFFC99A45;
     private static final int LINE_OPEN = 0xFF6E5F43;
@@ -71,6 +76,7 @@ public class MagicTreeView extends FrameLayout {
     private final Paint ringPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint glowPaint = new Paint();
     private final float density;
+    private Shape shape = Shape.CIRCLE;
     private MagicScroll scroll;
     private int wisdom;
     private Node selected;
@@ -86,6 +92,12 @@ public class MagicTreeView extends FrameLayout {
         ringPaint.setStyle(Paint.Style.STROKE);
         ringPaint.setStrokeWidth(dp(1));
         ringPaint.setColor(0xFF221E1A);
+    }
+
+    public void setShape(Shape shape) {
+        this.shape = shape;
+        requestLayout();
+        invalidate();
     }
 
     public void setMagics(List<Magic> magics, MagicScroll scroll, Listener listener) {
@@ -190,17 +202,43 @@ public class MagicTreeView extends FrameLayout {
         if (listener != null) listener.onMagicSelected(n.magic);
     }
 
+    /** 커졌을 때도 잘리지 않게 노드 반지름 × 확대율만큼 띄운다 */
+    private float margin() {
+        return dp(NODE_DP) * SELECTED_SCALE / 2f + dp(4);
+    }
+
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         int w = right - left;
         int h = bottom - top;
-        float cx = w / 2f;
-        float cy = h / 2f;
-        // 커졌을 때도 잘리지 않게 노드 반지름 × 확대율만큼 띄운다
-        float margin = dp(NODE_DP) * SELECTED_SCALE / 2f + dp(4);
-        float rx = cx - margin;
-        float ry = cy - margin;
+        float cx, cy;
+        if (shape == Shape.RISING) {
+            cx = w / 2f;
+            cy = h - margin();
+            positionRising(w, cy);
+        } else {
+            cx = w / 2f;
+            cy = h / 2f;
+            positionCircle(cx, cy);
+        }
+        // 배경은 기초 마법 자리에서 번지는 빛
+        glowPaint.setShader(new RadialGradient(cx, cy, Math.max(w, h) * (shape == Shape.RISING ? 0.8f : 0.5f),
+                0xFF1E1912, 0xFF0D0C0B, Shader.TileMode.CLAMP));
 
+        for (Node n : nodes) {
+            int size = n.view.getMeasuredWidth();
+            int l = Math.round(n.x - size / 2f);
+            int t = Math.round(n.y - size / 2f);
+            n.view.layout(l, t, l + size, t + size);
+        }
+        for (Node n : nodes) {
+            if (n.label != null) placeLabel(n);
+        }
+    }
+
+    private void positionCircle(float cx, float cy) {
+        float rx = cx - margin();
+        float ry = cy - margin();
         for (Node n : nodes) {
             if (n.depth == 0) {
                 n.x = cx;
@@ -211,31 +249,51 @@ public class MagicTreeView extends FrameLayout {
                 n.x = cx + (float) Math.cos(a) * rx * f;
                 n.y = cy + (float) Math.sin(a) * ry * f;
             }
-            int size = n.view.getMeasuredWidth();
-            int l = Math.round(n.x - size / 2f);
-            int t = Math.round(n.y - size / 2f);
-            n.view.layout(l, t, l + size, t + size);
+        }
+    }
 
-            if (n.label != null) {
-                int lw = n.label.getMeasuredWidth();
-                int lh = n.label.getMeasuredHeight();
-                // 아래로 뻗는 갈래는 다음 마법과 겹치지 않게 이름을 위에 둔다.
-                // 마법을 눌러 커져도 이름을 가리지 않게 커진 크기 바깥에 둔다
-                boolean below = Math.sin(Math.toRadians(n.magic.getSchool().angle)) < 0.9;
-                float r = size * SELECTED_SCALE / 2f + dp(1);
-                int lt = below ? Math.round(n.y + r) : Math.round(n.y - r - lh);
-                int ll = Math.round(n.x - lw / 2f);
-                n.label.layout(ll, lt, ll + lw, lt + lh);
+    /** 기초 마법은 맨 아래 가운데, 계열은 enum 순서대로 왼쪽부터 한 줄씩, 단계마다 한 칸 위 */
+    private void positionRising(int w, float rootY) {
+        List<MagicSchool> columns = new ArrayList<>();
+        for (MagicSchool s : MagicSchool.values()) {
+            if (s.needsCore()) columns.add(s);
+        }
+        float colW = w / (float) columns.size();
+        float row = (rootY - margin() - dp(LABEL_DP)) / (TIER.length - 1);
+        for (Node n : nodes) {
+            if (n.depth == 0) {
+                n.x = w / 2f;
+                n.y = rootY;
+            } else {
+                n.x = colW * (columns.indexOf(n.magic.getSchool()) + 0.5f);
+                n.y = rootY - row * n.depth;
             }
         }
     }
 
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-        float r = Math.max(w, h) / 2f;
-        glowPaint.setShader(new RadialGradient(w / 2f, h / 2f, r,
-                0xFF1E1912, 0xFF0D0C0B, Shader.TileMode.CLAMP));
+    /** 마법을 눌러 커져도 이름을 가리지 않게 커진 크기 바깥에 둔다 */
+    private void placeLabel(Node n) {
+        int lw = n.label.getMeasuredWidth();
+        int lh = n.label.getMeasuredHeight();
+        float r = n.view.getMeasuredWidth() * SELECTED_SCALE / 2f + dp(1);
+        float x = n.x;
+        float top;
+        if (shape == Shape.RISING) {
+            // 가지 끝(가장 위 마법) 위에
+            Node tip = n;
+            for (Node o : nodes) {
+                if (o.magic.getSchool() == n.magic.getSchool() && o.y < tip.y) tip = o;
+            }
+            x = tip.x;
+            top = tip.y - r - lh;
+        } else {
+            // 아래로 뻗는 갈래는 다음 마법과 겹치지 않게 이름을 위에 둔다
+            boolean below = Math.sin(Math.toRadians(n.magic.getSchool().angle)) < 0.9;
+            top = below ? n.y + r : n.y - r - lh;
+        }
+        int ll = Math.round(x - lw / 2f);
+        int lt = Math.round(top);
+        n.label.layout(ll, lt, ll + lw, lt + lh);
     }
 
     @Override
@@ -244,14 +302,15 @@ public class MagicTreeView extends FrameLayout {
         int h = getHeight();
         canvas.drawRect(0, 0, w, h, glowPaint);
 
-        // 단계별 고리 (패시브 나무 느낌)
-        float margin = dp(NODE_DP) * SELECTED_SCALE / 2f + dp(4);
-        float rx = w / 2f - margin;
-        float ry = h / 2f - margin;
-        for (int i = 1; i < TIER.length; i++) {
-            RectF oval = new RectF(w / 2f - rx * TIER[i], h / 2f - ry * TIER[i],
-                    w / 2f + rx * TIER[i], h / 2f + ry * TIER[i]);
-            canvas.drawOval(oval, ringPaint);
+        // 마법진: 단계별 고리
+        if (shape == Shape.CIRCLE) {
+            float rx = w / 2f - margin();
+            float ry = h / 2f - margin();
+            for (int i = 1; i < TIER.length; i++) {
+                RectF oval = new RectF(w / 2f - rx * TIER[i], h / 2f - ry * TIER[i],
+                        w / 2f + rx * TIER[i], h / 2f + ry * TIER[i]);
+                canvas.drawOval(oval, ringPaint);
+            }
         }
 
         // 앞 마법과 잇는 선: 배운 길은 금색, 지금 이어 갈 수 있는 길은 흐린 금색, 나머지는 어둡게

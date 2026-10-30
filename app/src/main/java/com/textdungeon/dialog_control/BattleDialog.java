@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.example.textdungeon.R; // R 패키지 경로는 프로젝트에 맞게 수정
 import com.textdungeon.activity_control.GameImages;
 import com.textdungeon.buttons.BattleButton;
+import com.textdungeon.buttons.MagicCardButton;
 import com.textdungeon.data.DataControlTower;
 import com.textdungeon.data.Difficulty;
 import com.textdungeon.model.Item;
@@ -166,13 +167,20 @@ public class BattleDialog extends Dialog {
             if (magic == null){{
                 continue;
             }}
-            BattleButton button = new BattleButton(getContext(),magic.getImg(),magic.getName(),lm.getCurrentCount(),"시전하기");
-            button.setOnClickListener(v -> {
+            MagicCardButton card = new MagicCardButton(getContext(), magic, lm);
+            card.setOnClickListener(v -> {
                 executeAction(4, lm.getMagicId());
                 updateUI();
                 addMagic();
             });
-            magicContainer.addView(button);
+            // 두 칸에 같은 너비로 나눠 채운다
+            int margin = Math.round(4 * context.getResources().getDisplayMetrics().density);
+            GridLayout.LayoutParams params = new GridLayout.LayoutParams(
+                    GridLayout.spec(GridLayout.UNDEFINED), GridLayout.spec(GridLayout.UNDEFINED, 1f));
+            params.width = 0;
+            params.height = Math.round(84 * context.getResources().getDisplayMetrics().density);
+            params.setMargins(margin, margin, margin, margin);
+            magicContainer.addView(card, params);
         }
     }
     private void addItem() {
