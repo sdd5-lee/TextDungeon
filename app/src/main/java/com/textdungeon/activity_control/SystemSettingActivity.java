@@ -74,6 +74,11 @@ public class SystemSettingActivity extends BaseActivity {
             btnAdPrivacy.setOnClickListener(v -> ads.showPrivacyOptions(this));
         }
 
+        // 전투에서 공격받을 때 창 흔들기 (BattleDialog가 읽는다)
+        SwitchCompat swShake = findViewById(R.id.sw_screen_shake);
+        swShake.setChecked(prefs.getBoolean("screenShake", true));
+        swShake.setOnCheckedChangeListener((button, on) -> prefs.edit().putBoolean("screenShake", on).apply());
+
         int savedVolume = prefs.getInt("volume", 50);
         sbVolume.setProgress(savedVolume);
 

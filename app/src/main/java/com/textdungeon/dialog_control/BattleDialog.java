@@ -223,7 +223,7 @@ public class BattleDialog extends Dialog {
         String resultLog = battleSystem.playerAction(choice, magicId);
         appendLog(resultLog);
         updateUI();
-        if (battleSystem.getLastDamageTaken() > 0) shake();
+        if (battleSystem.getLastDamageTaken() > 0) shake(battleSystem.getLastDamageTaken());
         if (battleSystem.isEscapeState()){
             appendLog("\n[도망에 성공하였습니다. 2초 뒤 돌아갑니다...]");
             findViewById(R.id.actions_area).setVisibility(View.GONE);
@@ -238,12 +238,15 @@ public class BattleDialog extends Dialog {
         }
     }
 
-    // 공격받으면 창을 좌우로 흔든다
-    private void shake() {
+    // 공격받으면 창을 좌우로 흔든다 (옵션에서 끌 수 있다)
+    // 최대 체력의 1/3 이상을 한 번에 잃으면 가장 세게: 폭 4dp → 24dp, 시간 0.3초 → 0.5초
+    private void shake(int damage) {
+        if (!context.getSharedPreferences("GameSettings", Context.MODE_PRIVATE).getBoolean("screenShake", true)) return;
+        float power = Math.min(1f, damage * 3f / Math.max(1, playerMaxHp));
+        float d = (4 + 20 * power) * context.getResources().getDisplayMetrics().density;
         View root = findViewById(R.id.battle_root);
-        float d = 10 * context.getResources().getDisplayMetrics().density;
         ObjectAnimator.ofFloat(root, View.TRANSLATION_X, 0, -d, d, -d * 0.7f, d * 0.7f, -d * 0.3f, d * 0.3f, 0)
-                .setDuration(350)
+                .setDuration(300 + (long) (200 * power))
                 .start();
     }
 
