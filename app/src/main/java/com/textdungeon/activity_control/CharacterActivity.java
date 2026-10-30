@@ -1,12 +1,13 @@
 package com.textdungeon.activity_control;
 
 import android.content.Intent;
-import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
-import android.widget.EditText;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,34 +17,42 @@ import com.google.android.material.snackbar.Snackbar;
 import com.textdungeon.billing.Entitlements;
 import com.textdungeon.buttons.SingleClickListener;
 import com.textdungeon.data.DataControlTower;
+import com.textdungeon.dialog_control.PlayerNameDialog;
+import com.textdungeon.dialog_control.TraitPickerDialog;
 import com.textdungeon.model.Job;
 import com.textdungeon.model.Trait;
 import com.textdungeon.scenario.ScenarioPack;
 import com.textdungeon.scenario.ScenarioRepository;
+import com.textdungeon.system.GameSave;
 import com.textdungeon.system.UserRecord;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 캐릭터 선택. 고른 직업의 초상화를 크게 보여 주고, 아래 줄에서 직업을 바꾼다.
+ * 특성은 직업의 기본 특성으로 시작하고, 카드 옆 바꾸기 버튼의 목록 창에서 다른 특성으로 바꾼다.
+ * 잠긴 직업은 이름만 보이고 그림·능력치·설명·특성은 숨긴다. 시작을 누르면 이름을 묻는다.
+ */
 public class CharacterActivity extends BaseActivity {
-    FrameLayout btnEmbark;
-    TextView characterDesc, statHp, statStr, statAgi, statWis;
-    EditText editPlayerName;
+    /** 능력치 막대가 가득 차는 값 (가장 높은 직업 능력치 14보다 조금 크게) */
+    private static final int STAT_MAX = 15;
+    private static final int GOLD = 0xFFE9C176;
+    private static final int TEXT = 0xFFE5E2E1;
+    private static final int TEXT_LOCKED = 0xFF8D867C;
 
-    LinearLayout btnTraitToggle;
-    GridLayout traitGridContainer;
-    TextView tvSelectedTrait;
-    ImageView ivTraitArrow;
-    View traitScrollArea;
-    boolean isTraitExpanded = false;
-    Map<Job, LinearLayout> jobViews = new HashMap<>();
+    private ImageView ivPortrait;
+    private View lockedCover, traitSection, btnTraitChange, btnStart;
+    private TextView tvJobName, tvTraitBadge, tvDescription, tvTraitName, tvTraitTag, tvTraitDescription;
+    private LinearLayout statBars, jobStrip;
+    private final Map<Job, FrameLayout> thumbs = new EnumMap<>(Job.class);
 
-    Job playerJob;
-    Trait selectedTrait;
-    DataControlTower dt;
-    UserRecord record;
+    private Job playerJob;
+    private Trait selectedTrait;
+    private DataControlTower dt;
+    private UserRecord record;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,228 +62,227 @@ public class CharacterActivity extends BaseActivity {
         dt = DataControlTower.getInstance(this);
         record = dt.getUserRecord();
 
-        LinearLayout jobKnight = findViewById(R.id.job_knight);
-        LinearLayout jobRogue = findViewById(R.id.job_rogue);
-        LinearLayout jobMage = findViewById(R.id.job_mage);
-        LinearLayout jobWarrior = findViewById(R.id.job_warrior);
-        LinearLayout jobPaladin = findViewById(R.id.job_paladin);
-        LinearLayout jobRanger = findViewById(R.id.job_ranger);
-        LinearLayout jobHero = findViewById(R.id.job_hero);
-        LinearLayout jobWarlock = findViewById(R.id.job_warlock);
-        LinearLayout jobMonk = findViewById(R.id.job_monk);
+        ivPortrait = findViewById(R.id.iv_job_portrait);
+        lockedCover = findViewById(R.id.locked_cover);
+        tvJobName = findViewById(R.id.tv_job_name);
+        tvTraitBadge = findViewById(R.id.tv_trait_badge);
+        tvDescription = findViewById(R.id.character_description);
+        statBars = findViewById(R.id.stat_bars);
+        jobStrip = findViewById(R.id.job_strip);
+        traitSection = findViewById(R.id.trait_section);
+        tvTraitName = findViewById(R.id.tv_trait_name);
+        tvTraitTag = findViewById(R.id.tv_trait_tag);
+        tvTraitDescription = findViewById(R.id.tv_trait_description);
+        btnTraitChange = findViewById(R.id.btn_trait_change);
+        btnStart = findViewById(R.id.btn_start);
 
-        jobViews.put(Job.KNIGHT, jobKnight);
-        jobViews.put(Job.ROGUE, jobRogue);
-        jobViews.put(Job.MAGE, jobMage);
-        jobViews.put(Job.WARRIOR, jobWarrior);
-        jobViews.put(Job.PALADIN, jobPaladin);
-        jobViews.put(Job.ARCHER, jobRanger);
-        jobViews.put(Job.HERO, jobHero);
-        jobViews.put(Job.WARLOCK, jobWarlock);
-        jobViews.put(Job.MONK, jobMonk);
-
-        statHp = findViewById(R.id.stat_hp);
-        statStr = findViewById(R.id.stat_str);
-        statAgi = findViewById(R.id.stat_agi);
-        statWis = findViewById(R.id.stat_wis);
-        editPlayerName = findViewById(R.id.edit_player_name);
-        characterDesc = findViewById(R.id.character_description);
-        btnEmbark = findViewById(R.id.btn_embark);
-
-        btnTraitToggle = findViewById(R.id.btn_trait_toggle);
-        tvSelectedTrait = findViewById(R.id.tv_selected_trait);
-        ivTraitArrow = findViewById(R.id.iv_trait_arrow);
-        traitScrollArea = findViewById(R.id.trait_scroll_area);
-        traitGridContainer = findViewById(R.id.trait_grid_container);
-
-        setSfx(jobKnight, jobRogue, jobMage, jobWarrior, jobPaladin, jobRanger, jobHero, jobWarlock, jobMonk, btnEmbark, btnTraitToggle);
-
-        initJobCards();
-
-        jobRogue.setOnClickListener(v -> handleJobClick(v, Job.ROGUE));
-        jobMage.setOnClickListener(v -> handleJobClick(v, Job.MAGE));
-        jobWarrior.setOnClickListener(v -> handleJobClick(v, Job.WARRIOR));
-        jobRanger.setOnClickListener(v -> handleJobClick(v, Job.ARCHER));
-
-        jobKnight.setOnClickListener(v -> handleJobClick(v, Job.KNIGHT));
-        jobPaladin.setOnClickListener(v -> handleJobClick(v, Job.PALADIN));
-        jobHero.setOnClickListener(v -> handleJobClick(v, Job.HERO));
-        jobWarlock.setOnClickListener(v -> handleJobClick(v, Job.WARLOCK));
-        jobMonk.setOnClickListener(v -> handleJobClick(v, Job.MONK));
-
-        btnTraitToggle.setOnClickListener(v -> toggleTraitMenu());
-
-        statHp.setText("");
-        statStr.setText("");
-        statAgi.setText("");
-        statWis.setText("");
-        characterDesc.setText("직업을 선택하세요");
-        playerJob = null;
-
-        btnEmbark.setOnClickListener(SingleClickListener.wrap(this::startGame)); // 연타 시 새 게임이 두 번 시작되는 것 방지
+        tvTraitBadge.setBackground(badgeBack(0xBF14100C));
+        fitPortrait();
+        setSfx(btnStart, btnTraitChange);
+        btnTraitChange.setOnClickListener(SingleClickListener.wrap(this::openTraitPicker));
+        buildJobStrip();
+        // 처음에는 해금된 첫 직업을 골라 둔다
+        for (Job job : Job.values()) {
+            if (isUnlocked(job)) {
+                selectJob(job);
+                break;
+            }
+        }
+        btnStart.setOnClickListener(SingleClickListener.wrap(this::startGame)); // 연타 시 새 게임이 두 번 시작되는 것 방지
     }
 
-    private void initJobCards() {
-        for (Map.Entry<Job, LinearLayout> entry : jobViews.entrySet()) {
-            Job job = entry.getKey();
-            LinearLayout layout = entry.getValue();
-            ImageView iv = (ImageView) layout.getChildAt(0);
-            TextView tv = (TextView) layout.getChildAt(1);
+    private boolean isUnlocked(Job job) {
+        return job.defaultUnlocked || record.isUnlockJob(job.name);
+    }
 
-            if (!job.defaultUnlocked && !record.isUnlockJob(job.name)) {
-                layout.setAlpha(0.3f);
-                iv.setImageResource(android.R.drawable.ic_secure);
-                iv.setColorFilter(Color.parseColor("#888888"));
-                tv.setText("???");
-                tv.setTextColor(Color.parseColor("#888888"));
-            } else {
-                layout.setAlpha(1.0f);
+    /** 화면이 길어 아래가 비면 그만큼 초상화를 키운다 (정사각형 그림이라 가로 길이까지만) */
+    private void fitPortrait() {
+        View scroll = findViewById(R.id.character_scroll);
+        View content = findViewById(R.id.character_content);
+        View hero = findViewById(R.id.hero_frame);
+        scroll.post(() -> {
+            int extra = scroll.getHeight() - content.getHeight();
+            if (extra <= 0) return;
+            ViewGroup.LayoutParams lp = hero.getLayoutParams();
+            lp.height = Math.min(lp.height + extra, hero.getWidth());
+            hero.setLayoutParams(lp);
+        });
+    }
+
+    // ── 직업 ────────────────────────────────────────────
+
+    /** 아래 줄의 직업 칸. 해금된 직업은 그림과 이름, 잠긴 직업은 자물쇠와 이름만 */
+    private void buildJobStrip() {
+        int size = dp(72);
+        for (Job job : Job.values()) {
+            boolean unlocked = isUnlocked(job);
+            FrameLayout thumb = new FrameLayout(this);
+            GradientDrawable back = new GradientDrawable();
+            back.setColor(unlocked ? 0xFF14110E : 0xFF1C1A18);
+            back.setCornerRadius(dp(8));
+            thumb.setBackground(back);
+            thumb.setClipToOutline(true);
+            thumb.setContentDescription(job.name);
+
+            if (unlocked) {
+                ImageView iv = new ImageView(this);
+                iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 GameImages.set(iv, job.img, android.R.drawable.ic_menu_gallery);
-                iv.clearColorFilter();
-                tv.setText(job.name);
+                thumb.addView(iv, new FrameLayout.LayoutParams(
+                        FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+            } else {
+                ImageView lock = new ImageView(this);
+                lock.setImageResource(R.drawable.ic_lock);
+                lock.setColorFilter(0xFF5A544C);
+                FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(dp(20), dp(20),
+                        Gravity.CENTER_HORIZONTAL | Gravity.TOP);
+                lp.topMargin = dp(16);
+                thumb.addView(lock, lp);
             }
+
+            TextView name = text(job.name, 10, unlocked ? TEXT : TEXT_LOCKED);
+            name.setGravity(Gravity.CENTER);
+            name.setSingleLine();
+            name.setPadding(0, dp(2), 0, dp(2));
+            if (unlocked) name.setBackgroundColor(0x99000000);
+            thumb.addView(name, new FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM));
+
+            thumb.setOnClickListener(v -> selectJob(job));
+            setSfx(thumb);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(size, size);
+            lp.setMarginEnd(dp(8));
+            jobStrip.addView(thumb, lp);
+            thumbs.put(job, thumb);
         }
     }
 
-    private void handleJobClick(View v, Job job) {
-        if (record.isUnlockJob(job.name)) updateUI(job);
-        else Snackbar.make(v, "해금되지 않은 직업입니다", Snackbar.LENGTH_SHORT).show();
-    }
-
-    private void updateUI(Job job) {
+    private void selectJob(Job job) {
         playerJob = job;
-        selectedTrait = job.trait;
-
-        highlightSelectedJob();
-
-        statHp.setText(String.valueOf(job.health));
-        statStr.setText(String.valueOf(job.strength));
-        statAgi.setText(String.valueOf(job.agility));
-        statWis.setText(String.valueOf(job.wisdom));
-
-        btnTraitToggle.setVisibility(View.VISIBLE);
-        tvSelectedTrait.setText(selectedTrait.displayName);
-        updateDescription();
-
-        if (isTraitExpanded) toggleTraitMenu();
-        populateTraitList();
-    }
-
-    private void highlightSelectedJob() {
-        for (Map.Entry<Job, LinearLayout> entry : jobViews.entrySet()) {
-            Job job = entry.getKey();
-            LinearLayout layout = entry.getValue();
-
-            if (!job.defaultUnlocked && !record.isUnlockJob(job.name)) {
-                continue;
-            }
-
-            TextView tv = (TextView) layout.getChildAt(1);
-
-            if (job == playerJob) {
-                tv.setTextColor(Color.parseColor("#E9C176"));
-                layout.setBackgroundColor(Color.parseColor("#3A3A3A"));
-            } else {
-                tv.setTextColor(Color.parseColor("#E5E2E1"));
-                layout.setBackgroundColor(Color.parseColor("#2A2A2A"));
-            }
+        boolean unlocked = isUnlocked(job);
+        for (Map.Entry<Job, FrameLayout> e : thumbs.entrySet()) {
+            e.getValue().setForeground(frame(e.getKey() == job));
         }
-    }
-
-    private void updateDescription() {
-        if (playerJob != null && selectedTrait != null) {
-            characterDesc.setText(playerJob.description + "\n\n[장착 중인 특성: " + selectedTrait.displayName + "]\n" + selectedTrait.description);
+        tvJobName.setText(job.name);
+        tvJobName.setTextColor(unlocked ? GOLD : TEXT_LOCKED);
+        lockedCover.setVisibility(unlocked ? View.GONE : View.VISIBLE);
+        // 잠긴 직업은 이름만. 자리는 남겨 두어 아래 줄이 위아래로 움직이지 않게
+        int shown = unlocked ? View.VISIBLE : View.INVISIBLE;
+        tvTraitBadge.setVisibility(shown);
+        statBars.setVisibility(shown);
+        traitSection.setVisibility(shown);
+        btnStart.setAlpha(unlocked ? 1f : 0.45f);
+        if (!unlocked) {
+            ivPortrait.setImageDrawable(null);
+            tvDescription.setText("");
+            selectedTrait = null;
+            return;
         }
+        GameImages.set(ivPortrait, job.img, android.R.drawable.ic_menu_gallery);
+        tvDescription.setText(job.description);
+        showStats(job);
+        // 고를 다른 특성이 없으면 바꾸기 버튼을 흐리게 (누르면 늘리는 법을 알려 준다)
+        btnTraitChange.setAlpha(availableTraits(job).size() > 1 ? 1f : 0.45f);
+        selectTrait(job.trait);
     }
 
-    private void toggleTraitMenu() {
-        isTraitExpanded = !isTraitExpanded;
-        if (isTraitExpanded) {
-            traitScrollArea.setVisibility(View.VISIBLE);
-            ivTraitArrow.animate().rotation(180).setDuration(200).start();
-        } else {
-            traitScrollArea.setVisibility(View.GONE);
-            ivTraitArrow.animate().rotation(0).setDuration(200).start();
-        }
+    private void showStats(Job job) {
+        statBars.removeAllViews();
+        addStatRow("힘", R.drawable.ic_strength, job.strength, 0xFFD9534F);
+        addStatRow("민첩", R.drawable.ic_dexterity, job.agility, 0xFF5CB85C);
+        addStatRow("체력", R.drawable.ic_health, job.health, 0xFFC9A24A);
+        addStatRow("지혜", R.drawable.ic_wisdom, job.wisdom, 0xFF6B8FD6);
     }
 
-    private void populateTraitList() {
-        traitGridContainer.removeAllViews();
-        List<Trait> availableTraits = new ArrayList<>();
+    private void addStatRow(String label, int icon, int value, int color) {
+        LinearLayout row = new LinearLayout(this);
+        row.setOrientation(LinearLayout.HORIZONTAL);
+        row.setGravity(Gravity.CENTER_VERTICAL);
+        row.setPadding(0, dp(3), 0, dp(3));
 
-        // 직업의 기본 특성
-        availableTraits.add(playerJob.trait);
+        ImageView iv = new ImageView(this);
+        iv.setImageResource(icon);
+        iv.setColorFilter(0xFFB8B0A6);
+        row.addView(iv, new LinearLayout.LayoutParams(dp(14), dp(14)));
+
+        LinearLayout.LayoutParams nameLp = new LinearLayout.LayoutParams(dp(38), LinearLayout.LayoutParams.WRAP_CONTENT);
+        nameLp.setMarginStart(dp(6));
+        row.addView(text(label, 12, 0xFFB8B0A6), nameLp);
+
+        // 막대: 전체를 STAT_MAX로 보고 채운 부분만 weight를 준다
+        LinearLayout track = new LinearLayout(this);
+        track.setBackground(round(0xFF2A2622));
+        track.setClipToOutline(true);
+        track.setWeightSum(STAT_MAX);
+        View fill = new View(this);
+        fill.setBackground(round(color));
+        track.addView(fill, new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT,
+                Math.min(value, STAT_MAX)));
+        row.addView(track, new LinearLayout.LayoutParams(0, dp(7), 1f));
+
+        TextView num = text(String.valueOf(value), 13, TEXT);
+        num.setGravity(Gravity.END);
+        row.addView(num, new LinearLayout.LayoutParams(dp(30), LinearLayout.LayoutParams.WRAP_CONTENT));
+        statBars.addView(row);
+    }
+
+    // ── 특성 ────────────────────────────────────────────
+
+    /** 고른 직업의 기본 특성, 해금된 직업들의 특성, 상점에서 해금한 특성 */
+    private List<Trait> availableTraits(Job job) {
+        List<Trait> traits = new ArrayList<>();
+        traits.add(job.trait);
         for (Job j : Job.values()) {
-            if (j.defaultUnlocked || record.isUnlockJob(j.name)) {
-                if (!availableTraits.contains(j.trait)) {
-                    availableTraits.add(j.trait);
-                }
-            }
+            if (isUnlocked(j) && !traits.contains(j.trait)) traits.add(j.trait);
         }
-        // 해금된 상점 특성
         for (Trait t : Trait.values()) {
-            if (record.isUnlockTrait(t.name()) && !availableTraits.contains(t)) {
-                availableTraits.add(t);
-            }
+            if (record.isUnlockTrait(t.name()) && !traits.contains(t)) traits.add(t);
         }
-
-        for (Trait t : availableTraits) {
-            LinearLayout block = new LinearLayout(this);
-            android.widget.GridLayout.LayoutParams params = new android.widget.GridLayout.LayoutParams();
-            params.width = 0;
-            params.height = android.widget.GridLayout.LayoutParams.WRAP_CONTENT;
-            params.columnSpec = android.widget.GridLayout.spec(android.widget.GridLayout.UNDEFINED, 1f);
-            params.setMargins(8, 8, 8, 8);
-            block.setLayoutParams(params);
-
-            block.setOrientation(LinearLayout.VERTICAL);
-            block.setGravity(android.view.Gravity.CENTER);
-            block.setPadding(8, 32, 8, 32);
-
-            if (t == selectedTrait) {
-                block.setBackgroundColor(Color.parseColor("#3A3A3A"));
-            } else {
-                block.setBackgroundColor(Color.parseColor("#2A2A2A"));
-            }
-
-            TextView tv = new TextView(this);
-            tv.setText(t.displayName + "");
-            tv.setTextColor(Color.parseColor(t == selectedTrait ? "#E9C176" : "#E5E2E1"));
-            tv.setTextSize(11f);
-            tv.setGravity(android.view.Gravity.CENTER);
-            tv.setTypeface(android.graphics.Typeface.SERIF, t == selectedTrait ? android.graphics.Typeface.BOLD : android.graphics.Typeface.NORMAL);
-
-            block.addView(tv);
-
-            block.setClickable(true);
-            block.setOnClickListener(v -> {
-                selectedTrait = t;
-                tvSelectedTrait.setText(t.displayName);
-                updateDescription();
-                populateTraitList();
-            });
-
-            traitGridContainer.addView(block);
-        }
+        return traits;
     }
+
+    private void openTraitPicker(View v) {
+        if (playerJob == null || !isUnlocked(playerJob)) return;
+        List<Trait> traits = availableTraits(playerJob);
+        if (traits.size() <= 1) {
+            Snackbar.make(v, "직업을 해금하거나 상점에서 특성을 사면 바꿀 수 있습니다", Snackbar.LENGTH_SHORT).show();
+            return;
+        }
+        new TraitPickerDialog(this, playerJob, traits, selectedTrait, this::selectTrait).show();
+    }
+
+    private void selectTrait(Trait trait) {
+        selectedTrait = trait;
+        boolean isDefault = trait == playerJob.trait;
+        tvTraitBadge.setText("특성 · " + trait.displayName);
+        tvTraitName.setText(trait.displayName);
+        tvTraitTag.setText(isDefault ? "기본 특성" : "바꾼 특성");
+        tvTraitTag.setTextColor(isDefault ? 0xFFC9A86A : 0xFFD9826A);
+        tvTraitDescription.setText(trait.description);
+    }
+
+    // ── 시작 ────────────────────────────────────────────
 
     private void startGame(View v) {
-        if (playerJob != null) {
-            // DLC 시나리오가 있을 때만 고르게 한다. 기본 시나리오뿐이면 바로 시작
-            if (dt.getScenarioRepository().hasChoice()) {
-                showScenarioPicker();
-            } else {
-                beginRun(ScenarioPack.BASE);
-            }
+        if (playerJob == null || !isUnlocked(playerJob)) {
+            Snackbar.make(v, "해금되지 않은 직업입니다", Snackbar.LENGTH_SHORT).show();
+            return;
+        }
+        new PlayerNameDialog(this, playerJob, selectedTrait, record.getRecentNames(), this::onNameChosen).show();
+    }
+
+    private void onNameChosen(String name) {
+        record.addRecentName(name);
+        GameSave.saveUserRecord(this, record);
+        // DLC 시나리오가 있을 때만 고르게 한다. 기본 시나리오뿐이면 바로 시작
+        if (dt.getScenarioRepository().hasChoice()) {
+            showScenarioPicker(name);
         } else {
-            Snackbar.make(v, "직업을 선택하지 않았습니다", Snackbar.LENGTH_SHORT).show();
+            beginRun(name, ScenarioPack.BASE);
         }
     }
 
-    private void beginRun(ScenarioPack pack) {
-        String inputName = editPlayerName.getText().toString().trim();
-        String playerName = inputName.isEmpty() ? "모험가 A" : inputName;
-
+    private void beginRun(String playerName, ScenarioPack pack) {
         dt.startNewGame(playerName, playerJob, selectedTrait.name(), pack);
 
         Intent intent = new Intent(this, DifficultyActivity.class);
@@ -282,7 +290,7 @@ public class CharacterActivity extends BaseActivity {
     }
 
     /** 시나리오 고르기. 잠긴 DLC를 누르면 상점 프리미엄 탭으로 보낸다 */
-    private void showScenarioPicker() {
+    private void showScenarioPicker(String playerName) {
         ScenarioRepository repo = dt.getScenarioRepository();
         Entitlements entitlements = dt.getEntitlements();
         List<ScenarioPack> packs = repo.all();
@@ -301,7 +309,7 @@ public class CharacterActivity extends BaseActivity {
                 .setPositiveButton("시작", (d, w) -> {
                     ScenarioPack pack = packs.get(choice[0]);
                     if (repo.isUnlocked(pack, entitlements)) {
-                        beginRun(pack);
+                        beginRun(playerName, pack);
                     } else {
                         Intent intent = new Intent(this, ShopActivity.class);
                         intent.putExtra(ShopActivity.EXTRA_TAB, ShopActivity.TAB_PREMIUM);
@@ -310,5 +318,45 @@ public class CharacterActivity extends BaseActivity {
                 })
                 .setNegativeButton("취소", null)
                 .show();
+    }
+
+    // ── 그리기 도우미 ────────────────────────────────────
+
+    private TextView text(String s, float sp, int color) {
+        TextView tv = new TextView(this);
+        tv.setText(s);
+        tv.setTextSize(sp);
+        tv.setTextColor(color);
+        tv.setTypeface(Typeface.SERIF);
+        return tv;
+    }
+
+    /** 직업 칸 테두리: 고른 칸은 금색 */
+    private GradientDrawable frame(boolean selected) {
+        GradientDrawable d = new GradientDrawable();
+        d.setCornerRadius(dp(8));
+        d.setColor(0);
+        d.setStroke(dp(selected ? 2 : 1.5f), selected ? GOLD : 0xFF3A342E);
+        return d;
+    }
+
+    /** 초상화 위 "특성 · X" 배지: 금색 테두리 알약 */
+    private GradientDrawable badgeBack(int fill) {
+        GradientDrawable d = new GradientDrawable();
+        d.setCornerRadius(dp(20));
+        d.setColor(fill);
+        d.setStroke(dp(1), GOLD);
+        return d;
+    }
+
+    private GradientDrawable round(int color) {
+        GradientDrawable d = new GradientDrawable();
+        d.setCornerRadius(dp(4));
+        d.setColor(color);
+        return d;
+    }
+
+    private int dp(float v) {
+        return Math.round(v * getResources().getDisplayMetrics().density);
     }
 }

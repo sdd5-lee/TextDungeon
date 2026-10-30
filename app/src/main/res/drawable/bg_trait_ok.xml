@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 특성 바꾸기 창의 "이 특성으로" 버튼 (캐릭터 화면 시작 버튼과 같은 붉은색) -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#A3191E" />
+            <corners android:radius="8dp" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#901418" />
+            <corners android:radius="8dp" />
+        </shape>
+    </item>
+</selector>

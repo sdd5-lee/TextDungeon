@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 캐릭터 선택에서 특성 바꾸기를 누르면 뜨는 특성 선택 창. 전투 창의 가방처럼 가죽 판에 특성 버튼을 두 줄로 깔고,
+     처음에는 목록만 보인다. 특성을 누르면 아래로 설명 칸이 펼쳐지고 "이 특성으로"가 나타난다.
+     창은 화면 전체(trait_overlay, 바깥을 누르면 닫힘)이고 그 안의 판(trait_root)만 늘어나서 펼침이 매끄럽다.
+     화면이 작아 다 안 들어가면 버튼 판만 줄어든다 (weight) -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/trait_overlay"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/trait_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/dialog_rounded_background"
+        android:clickable="true"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif"
+            android:gravity="center"
+            android:letterSpacing="0.1"
+            android:text="특성 선택"
+            android:textColor="#E9C176"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <!-- 높이는 코드에서 화면 높이에 맞춰 크게 고정한다. 특성이 늘어 넘치면 이 판 안에서 스크롤 -->
+        <ScrollView
+            android:id="@+id/trait_grid_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="14dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_panel_traits"
+            android:scrollbars="none">
+
+            <GridLayout
+                android:id="@+id/trait_grid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:padding="12dp" />
+        </ScrollView>
+
+        <!-- 누른 특성의 설명 (전투 기록 칸 모양). 처음에는 접혀 있다가 특성을 누르면 펼쳐진다 -->
+        <ScrollView
+            android:id="@+id/trait_desc_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:layout_marginTop="8dp"
+            android:background="#1C1B1B"
+            android:padding="12dp"
+            android:scrollbars="none"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_pick_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="serif"
+                        android:textColor="#E9C176"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        tools:text="불굴" />
+
+                    <TextView
+                        android:id="@+id/tv_pick_tag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:fontFamily="serif"
+                        android:textColor="#9A948C"
+                        android:textSize="12sp"
+                        tools:text="기본 특성 · 사용 중" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_pick_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="serif"
+                    android:lineSpacingExtra="3dp"
+                    android:textColor="#E0BFBA"
+                    android:textSize="14sp"
+                    tools:text="HP가 30% 이하일 때 공격력이 50% 증가합니다." />
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/btn_trait_close"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_trait_close"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="serif"
+                android:gravity="center"
+                android:letterSpacing="0.15"
+                android:text="닫기"
+                android:textColor="#BDB6AD"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/btn_trait_ok"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_trait_ok"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="serif"
+                android:gravity="center"
+                android:letterSpacing="0.1"
+                android:text="이 특성으로"
+                android:textColor="#E5E2E1"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

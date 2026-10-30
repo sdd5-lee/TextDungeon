@@ -4,6 +4,7 @@ package com.textdungeon.system;
 import com.textdungeon.model.Achievement;
 import com.textdungeon.model.Job;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -30,6 +31,9 @@ public class UserRecord {
     private long entitlementSyncedAt;
     // 마지막으로 고른 시나리오 ID. null이면 기본 시나리오
     private String lastScenarioId;
+    // 이름 정하기 창에 보여 줄 최근 이름 (최신이 앞). 예전 세이브에는 없으므로 null일 수 있다
+    private List<String> recentNames;
+    private static final int MAX_RECENT_NAMES = 3;
 
     public UserRecord(){
         this.gem = 0;
@@ -145,6 +149,18 @@ public class UserRecord {
 
     public String getLastScenarioId() { return lastScenarioId; }
     public void setLastScenarioId(String lastScenarioId) { this.lastScenarioId = lastScenarioId; }
+
+    public List<String> getRecentNames() {
+        if (recentNames == null) recentNames = new ArrayList<>();
+        return recentNames;
+    }
+    /** 이번에 쓴 이름을 맨 앞에 두고, 같은 이름은 하나만, 오래된 것부터 버린다 */
+    public void addRecentName(String name) {
+        List<String> names = getRecentNames();
+        names.remove(name);
+        names.add(0, name);
+        while (names.size() > MAX_RECENT_NAMES) names.remove(names.size() - 1);
+    }
 
     /** 기록 초기화. 유료 상품(ownedProducts)은 Play가 기준이므로 지우지 않는다 */
     public void clearAll() {

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 특성 카드 옆 "특성 바꾸기" 버튼 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#3A2E1C" />
+            <stroke android:width="1dp" android:color="#E9C176" />
+            <corners android:radius="10dp" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#241C12" />
+            <stroke android:width="1dp" android:color="#8A6A3A" />
+            <corners android:radius="10dp" />
+        </shape>
+    </item>
+</selector>

@@ -44,4 +44,20 @@ public class UserRecordCompatTest {
         assertEquals("base", back.getLastScenarioId());
         assertTrue(back.getEntitlementSyncedAt() > 0);
     }
+
+    @Test
+    public void 최근_이름은_최신이_앞이고_3개까지_겹치지_않게() {
+        String old = "{\"gem\":0,\"unlockJobName\":[\"전사\"]}";
+        UserRecord r = new Gson().fromJson(old, UserRecord.class);
+        assertTrue(r.getRecentNames().isEmpty());
+
+        r.addRecentName("브란");
+        r.addRecentName("카엘");
+        r.addRecentName("세라");
+        r.addRecentName("브란");
+        r.addRecentName("로웬");
+
+        UserRecord back = new Gson().fromJson(new Gson().toJson(r), UserRecord.class);
+        assertEquals(Arrays.asList("로웬", "브란", "세라"), back.getRecentNames());
+    }
 }
