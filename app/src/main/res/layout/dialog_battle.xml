@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/battle_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/dialog_rounded_background"
@@ -152,7 +153,6 @@
                 android:lineSpacingExtra="2dp"
                 android:textColor="#E0BFBA"
                 android:textSize="12sp"
-                android:textStyle="italic"
                 tools:text="The Bone-Stalker shrieks in the darkness.\nYou hit for 12 damage with Quick Strike." />
         </ScrollView>
         <!-- 전체 로그 버튼   -->

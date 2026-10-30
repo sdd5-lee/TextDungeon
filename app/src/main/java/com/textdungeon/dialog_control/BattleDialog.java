@@ -1,5 +1,6 @@
 package com.textdungeon.dialog_control;
 
+import android.animation.ObjectAnimator;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
@@ -222,6 +223,7 @@ public class BattleDialog extends Dialog {
         String resultLog = battleSystem.playerAction(choice, magicId);
         appendLog(resultLog);
         updateUI();
+        if (battleSystem.getLastDamageTaken() > 0) shake();
         if (battleSystem.isEscapeState()){
             appendLog("\n[도망에 성공하였습니다. 2초 뒤 돌아갑니다...]");
             findViewById(R.id.actions_area).setVisibility(View.GONE);
@@ -234,6 +236,15 @@ public class BattleDialog extends Dialog {
             findViewById(R.id.actions_area).setVisibility(View.GONE);
             new Handler(Looper.getMainLooper()).postDelayed(this::dismiss, 2000);
         }
+    }
+
+    // 공격받으면 창을 좌우로 흔든다
+    private void shake() {
+        View root = findViewById(R.id.battle_root);
+        float d = 10 * context.getResources().getDisplayMetrics().density;
+        ObjectAnimator.ofFloat(root, View.TRANSLATION_X, 0, -d, d, -d * 0.7f, d * 0.7f, -d * 0.3f, d * 0.3f, 0)
+                .setDuration(350)
+                .start();
     }
 
     private void updateUI() {

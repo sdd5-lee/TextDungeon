@@ -25,6 +25,7 @@ public class BattleSystem {
     private boolean isPlayerTurn = true;
     private boolean isBattleOver = false;
     private boolean escapeState = false;
+    private int lastDamageTaken; // 이번 행동에서 플레이어가 받은 피해 (화면 흔들기용)
     private Random random = new Random();
 
     public BattleSystem(Player player, Monster monster, Context context, Difficulty difficulty) {
@@ -43,6 +44,7 @@ public class BattleSystem {
     // 플레이어 액션 (1: 공격, 2: 방어, 3: 도망, 4: 마법)
     // =========================
     public String playerAction(int choice, String magicId) {
+        lastDamageTaken = 0;
         if (escapeState) return "당신은 도망쳤습니다!";
         if (isBattleOver) return "전투가 이미 종료되었습니다.";
         if (!isPlayerTurn) return "적의 턴을 기다려주세요.";
@@ -148,6 +150,7 @@ public class BattleSystem {
 
         damage = applyTraitIncomingDamage(damage);
         player.takeDamage(damage);
+        lastDamageTaken = damage;
         log += enemyName + "의 공격! 플레이어에게 " + damage + "의 피해.";
 
         // 반격 사망 체크
@@ -216,6 +219,7 @@ public class BattleSystem {
     // =========================
     public boolean isBattleOver() { return isBattleOver; }
     public boolean isEscapeState(){return escapeState;}
+    public int getLastDamageTaken(){return lastDamageTaken;}
     public String getEnemyName() { return enemyName; }
     public int getEnemyHp() { return enemyHp; }
 }
