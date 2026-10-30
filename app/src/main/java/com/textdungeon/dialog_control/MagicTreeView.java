@@ -2,14 +2,23 @@ package com.textdungeon.dialog_control;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.BitmapShader;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
+import android.graphics.ComposeShader;
+import android.graphics.DashPathEffect;
+import android.graphics.LinearGradient;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
+import android.graphics.PorterDuff;
 import android.graphics.RadialGradient;
-import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.GradientDrawable;
 import android.os.SystemClock;
@@ -39,8 +48,8 @@ import java.util.Random;
 /**
  * 세피로트의 나무. 맨 아래 기초 마법이 뿌리 자리이고, 줄기가 세 가지로 갈라진 뒤
  * 가지마다 두 계열이 한 줄씩 위로 자란다 (계열 순서는 MagicSchool).
- * 계열을 열면 그 가지가 계열 모습으로 바뀌고(화염은 불이 붙고 신성은 하얘진다),
- * 배운 마법까지 이어진 토막일수록 진하다. 마법을 누르면 크게 보이고 listener로 알린다.
+ * 계열을 열면 그 가지가 계열 질감으로 바뀌고(화염은 흐르는 용암, 신성은 흰 자작나무),
+ * 배운 마법까지 이어진 토막일수록 밝다. 마법을 누르면 크게 보이고 listener로 알린다.
  */
 public class MagicTreeView extends FrameLayout {
 
@@ -60,28 +69,43 @@ public class MagicTreeView extends FrameLayout {
     private static final int LABEL_DP = 22;
     private static final int ROOTS_DP = 26;
     private static final int TWIG_DP = 30;
+    /** 뿌리가 땅속으로 사라지는 높이 */
+    private static final int GROUND_DP = 28;
     /** 굵기가 줄어드는 토막 하나를 몇 조각으로 나눠 그릴지 */
     private static final int PIECES = 8;
 
     private static final int STROKE_CAN_LEARN = 0xFF8FD18A;
     private static final int STROKE_LOCKED = 0xFF4A4640;
-    private static final int GOLD_VEIN = 0xFFE9C176;
+    private static final int EDGE = 0xFF0A0705;
+    private static final int BACK_DARK = 0xFF0D0C0B;
 
-    /** 나무 색: 테두리, 바탕, 밝은 결, 가운데 빛(0이면 없음) */
-    private static final int[] BARE = {0xFF1A120C, 0xFF33261A, 0xFF46352A, 0};
-    private static final Map<MagicSchool, int[]> LOOKS = new EnumMap<>(MagicSchool.class);
+    /** 빛이 드는 쪽 (왼쪽 위) */
+    private static final float LIGHT_X = -0.6f;
+    private static final float LIGHT_Y = -0.8f;
+    /** 둥근 가지 음영: 빛이 드는 가장자리 → 밝은 결 → 가운데 → 그늘 → 그늘진 가장자리 */
+    private static final float[] SHADE_AT = {0f, 0.2f, 0.45f, 0.78f, 1f};
+    private static final int[] SHADE = {0x4D000000, 0x14FFF2DC, 0x00000000, 0x66000000, 0xC8000000};
+    /** 얼음은 빛을 반사해 밝은 결이 또렷하다 */
+    private static final int[] SHADE_ICE = {0x40000000, 0x33FFFFFF, 0x00000000, 0x55000000, 0xB0000000};
+    /** 용암은 스스로 빛나서 그늘이 옅다 */
+    private static final int[] SHADE_LAVA = {0x33000000, 0x1FFFE0A0, 0x00000000, 0x33000000, 0x73000000};
+    /** 가지 둘레 빛을 몇 겹(굵기 dp)으로 번지게 할지. 겹칠수록 가지 가까이가 진하다 */
+    private static final float[] HALO_DP = {3, 7, 12, 18};
+
+    /** 계열마다 가지 질감과 질감 한 장(256px)이 화면에서 차지하는 길이(dp). 잠긴 계열은 BASIC 나무껍질 */
+    private static final Map<MagicSchool, int[]> TEXTURES = new EnumMap<>(MagicSchool.class);
 
     static {
-        LOOKS.put(MagicSchool.BASIC, new int[]{0xFF24170E, 0xFF5C3F27, 0xFF7D5A3A, 0});
-        LOOKS.put(MagicSchool.FIRE, new int[]{0xFF1E0D06, 0xFF3B1D10, 0xFF6B2E14, 0xFFFF7A2A});
-        LOOKS.put(MagicSchool.FROST, new int[]{0xFF2B4352, 0xFF8DB4C8, 0xFFD8EEF8, 0});
-        LOOKS.put(MagicSchool.NATURE, new int[]{0xFF22200E, 0xFF5E5A28, 0xFF93B84A, 0});
-        LOOKS.put(MagicSchool.WIND, new int[]{0xFF1F3A36, 0xFF6E9E96, 0xFFB8E6DD, 0});
-        LOOKS.put(MagicSchool.HOLY, new int[]{0xFF8A7F66, 0xFFE8E0CC, 0xFFFFFFFF, 0});
-        LOOKS.put(MagicSchool.DARK, new int[]{0xFF0E0A12, 0xFF251A2E, 0xFF4A3560, 0xFFA77BD8});
+        TEXTURES.put(MagicSchool.BASIC, new int[]{R.drawable.tree_bark, 80});
+        TEXTURES.put(MagicSchool.FIRE, new int[]{R.drawable.tree_lava, 70});
+        TEXTURES.put(MagicSchool.FROST, new int[]{R.drawable.tree_ice, 90});
+        TEXTURES.put(MagicSchool.NATURE, new int[]{R.drawable.tree_moss, 100});
+        TEXTURES.put(MagicSchool.WIND, new int[]{R.drawable.tree_wind, 100});
+        TEXTURES.put(MagicSchool.HOLY, new int[]{R.drawable.tree_birch, 90});
+        TEXTURES.put(MagicSchool.DARK, new int[]{R.drawable.tree_obsidian, 75});
     }
 
-    /** 계열을 열면 가지 둘레에 번지는 빛 */
+    /** 열린 계열 가지 둘레에 번지는 빛 */
     private static final Map<MagicSchool, Integer> GLOWS = new EnumMap<>(MagicSchool.class);
 
     static {
@@ -92,6 +116,10 @@ public class MagicTreeView extends FrameLayout {
         GLOWS.put(MagicSchool.HOLY, 0xFFFFF3C0);
         GLOWS.put(MagicSchool.DARK, 0xFF8A5CC8);
     }
+
+    /** 잠긴 계열은 빛 바랜 마른 나무, 열었지만 이어진 마법을 아직 못 배운 토막은 어둡게 */
+    private static final ColorFilter LOCKED = tone(0.25f, 0.42f);
+    private static final ColorFilter DORMANT = tone(0.85f, 0.68f);
 
     private static class Node {
         final Magic magic;
@@ -106,29 +134,42 @@ public class MagicTreeView extends FrameLayout {
         }
     }
 
-    /** 나무 한 토막. 끝의 마법(tip)이 속한 계열 모습으로 칠한다. 줄기·뿌리·큰 가지는 BASIC */
+    /** 나무 한 토막. 끝의 마법(tip)이 속한 계열 질감으로 칠한다. 줄기·뿌리·큰 가지는 BASIC */
     private static class Branch {
         final MagicSchool school;
         final Node tip;
+        /** 토막 전체 (빛·그림자·바람결은 이음매 없이 한 번에) */
+        final Path full;
+        final float avgWidth;
         final Path[] pieces = new Path[PIECES];
         final float[] widths = new float[PIECES];
-        /** 장식 자리: x, y, 접선 각도, 크기, 위상, 옆(±1), 그 자리 굵기 */
+        /** 조각마다 질감에 음영을 겹친 칠: 계열 질감, 잠겼을 때의 나무껍질 */
+        final Shader[] skin = new Shader[PIECES];
+        final Shader[] bark = new Shader[PIECES];
+        /** 조각 가운데의 진행 방향(단위 벡터 x, y). 용암은 이쪽으로 흐른다 */
+        final float[] dirs = new float[PIECES * 2];
+        /** 불티·빛 알갱이 자리: x, y, 위상(0~1), 옆(±1), 그 자리 굵기 */
         final List<float[]> marks = new ArrayList<>();
 
-        Branch(MagicSchool school, Node tip) {
+        Branch(MagicSchool school, Node tip, Path full, float avgWidth) {
             this.school = school;
             this.tip = tip;
+            this.full = full;
+            this.avgWidth = avgWidth;
         }
     }
 
     private final List<Node> nodes = new ArrayList<>();
     private final List<Branch> branches = new ArrayList<>();
-    private final Paint wood = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Map<MagicSchool, Bitmap> textures = new EnumMap<>(MagicSchool.class);
+    private final Paint skinPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
+    private final Paint edge = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint aura = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint line = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint fill = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint glowPaint = new Paint();
-    private final Path flame = new Path();
-    private final RectF oval = new RectF();
+    private final Paint groundPaint = new Paint();
+    private final Matrix flowMatrix = new Matrix();
     private final float density;
     private MagicScroll scroll;
     private int wisdom;
@@ -140,11 +181,26 @@ public class MagicTreeView extends FrameLayout {
         density = getResources().getDisplayMetrics().density;
         setWillNotDraw(false);
         setClipChildren(false);
-        wood.setStyle(Paint.Style.STROKE);
-        wood.setStrokeCap(Paint.Cap.ROUND);
-        wood.setStrokeJoin(Paint.Join.ROUND);
+        for (Paint p : new Paint[]{skinPaint, edge, aura}) {
+            p.setStyle(Paint.Style.STROKE);
+            p.setStrokeCap(Paint.Cap.ROUND);
+            p.setStrokeJoin(Paint.Join.ROUND);
+        }
+        edge.setColor(EDGE);
         line.setStyle(Paint.Style.STROKE);
         line.setStrokeCap(Paint.Cap.ROUND);
+        for (Map.Entry<MagicSchool, int[]> e : TEXTURES.entrySet()) {
+            textures.put(e.getKey(), BitmapFactory.decodeResource(getResources(), e.getValue()[0]));
+        }
+    }
+
+    private static ColorFilter tone(float saturation, float brightness) {
+        ColorMatrix m = new ColorMatrix();
+        m.setSaturation(saturation);
+        ColorMatrix scale = new ColorMatrix();
+        scale.setScale(brightness, brightness, brightness, 1f);
+        m.postConcat(scale);
+        return new ColorMatrixColorFilter(m);
     }
 
     public void setMagics(List<Magic> magics, MagicScroll scroll, Listener listener) {
@@ -287,9 +343,11 @@ public class MagicTreeView extends FrameLayout {
                 n.y = rootY - span * TIER_Y[n.depth];
             }
         }
-        // 배경은 뿌리 자리에서 번지는 빛
+        // 배경은 뿌리 자리에서 번지는 빛, 아래쪽은 뿌리가 묻히는 땅
         glowPaint.setShader(new RadialGradient(rootX, rootY, Math.max(w, h) * 0.8f,
-                0xFF1E1912, 0xFF0D0C0B, Shader.TileMode.CLAMP));
+                0xFF1E1912, BACK_DARK, Shader.TileMode.CLAMP));
+        groundPaint.setShader(new LinearGradient(0, h - dp(GROUND_DP), 0, h,
+                BACK_DARK & 0x00FFFFFF, BACK_DARK & 0xF2FFFFFF, Shader.TileMode.CLAMP));
 
         for (Node n : nodes) {
             int size = n.view.getMeasuredWidth();
@@ -385,27 +443,62 @@ public class MagicTreeView extends FrameLayout {
         }
     }
 
-    /** 굵기가 w0에서 w1로 줄어드는 토막을 조각으로 나누고, 장식 자리를 12dp마다 잡는다 */
+    /** 굵기가 w0에서 w1로 줄어드는 토막을 조각으로 나눠 조각마다 질감을 입히고, 알갱이 자리를 12dp마다 잡는다 */
     private void addBranch(Path path, float w0, float w1, MagicSchool school, Node tip, Random rnd) {
-        Branch b = new Branch(school, tip);
+        Branch b = new Branch(school, tip, path, (w0 + w1) / 2f);
         PathMeasure pm = new PathMeasure(path, false);
         float len = pm.getLength();
+        float[] pos = new float[2];
+        float[] tan = new float[2];
         for (int i = 0; i < PIECES; i++) {
             Path piece = new Path();
             pm.getSegment(len * i / PIECES, Math.min(len, len * (i + 1) / PIECES + dp(1)), piece, true);
             b.pieces[i] = piece;
-            b.widths[i] = w0 + (w1 - w0) * (i + 0.5f) / PIECES;
+            float width = w0 + (w1 - w0) * (i + 0.5f) / PIECES;
+            b.widths[i] = width;
+            float mid = len * (i + 0.5f) / PIECES;
+            pm.getPosTan(mid, pos, tan);
+            b.dirs[2 * i] = tan[0];
+            b.dirs[2 * i + 1] = tan[1];
+            b.skin[i] = skin(school, pos, tan, mid, width);
+            b.bark[i] = school == MagicSchool.BASIC ? b.skin[i] : skin(MagicSchool.BASIC, pos, tan, mid, width);
         }
-        float[] pos = new float[2];
-        float[] tan = new float[2];
         float step = dp(12);
         for (float d = step * 0.5f; d < len; d += step) {
             pm.getPosTan(d, pos, tan);
-            b.marks.add(new float[]{pos[0], pos[1], (float) Math.toDegrees(Math.atan2(tan[1], tan[0])),
-                    0.75f + rnd.nextFloat() * 0.5f, rnd.nextFloat() * 6.283f, rnd.nextBoolean() ? 1 : -1,
+            b.marks.add(new float[]{pos[0], pos[1], rnd.nextFloat(), rnd.nextBoolean() ? 1 : -1,
                     w0 + (w1 - w0) * d / len});
         }
         branches.add(b);
+    }
+
+    /**
+     * 질감의 세로결을 가지 방향으로 눕히고(이어진 조각끼리 결이 이어지게 토막 길이 dist만큼 민다),
+     * 왼쪽 위에서 빛이 드는 둥근 음영을 겹친다.
+     */
+    private Shader skin(MagicSchool school, float[] pos, float[] tan, float dist, float width) {
+        Bitmap tex = textures.get(school);
+        float s = dp(TEXTURES.get(school)[1]) / (float) tex.getWidth();
+        Matrix m = new Matrix();
+        m.setScale(s, s);
+        m.postTranslate(0, -dist);
+        m.postRotate((float) Math.toDegrees(Math.atan2(tan[1], tan[0])) - 90f);
+        m.postTranslate(pos[0], pos[1]);
+        BitmapShader texture = new BitmapShader(tex, Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
+        texture.setLocalMatrix(m);
+
+        float nx = -tan[1];
+        float ny = tan[0];
+        if (nx * LIGHT_X + ny * LIGHT_Y < 0) {
+            nx = -nx;
+            ny = -ny;
+        }
+        float half = width / 2f;
+        LinearGradient shade = new LinearGradient(pos[0] + nx * half, pos[1] + ny * half,
+                pos[0] - nx * half, pos[1] - ny * half,
+                school == MagicSchool.FIRE ? SHADE_LAVA : school == MagicSchool.FROST ? SHADE_ICE : SHADE,
+                SHADE_AT, Shader.TileMode.CLAMP);
+        return new ComposeShader(texture, shade, PorterDuff.Mode.SRC_OVER);
     }
 
     // ── 그리기 ────────────────────────────────────────────
@@ -432,149 +525,138 @@ public class MagicTreeView extends FrameLayout {
 
     private void drawTree(Canvas canvas) {
         float t = SystemClock.uptimeMillis() / 1000f;
+        // 용암은 숨 쉬듯 밝아졌다 어두워진다
+        float heat = (float) Math.sin(t * 2.2f);
         boolean animate = false;
 
-        // 열린 계열은 가지 둘레로 빛이 번진다 (불은 일렁인다)
-        for (Branch b : branches) {
-            Integer glow = GLOWS.get(b.school);
-            if (glow == null || !isOpen(b)) continue;
-            float flicker = b.school == MagicSchool.FIRE ? 0.75f + 0.25f * (float) Math.sin(t * 7 + b.widths[0]) : 1f;
-            wood.setColor(glow);
-            wood.setAlpha((int) ((isLit(b) ? 70 : 28) * flicker));
-            drawPieces(canvas, b, dp(9), 1f, 0);
-        }
-        // 테두리 → 바탕 → 밝은 결(왼쪽)과 어두운 주름(오른쪽)
-        for (Branch b : branches) {
-            wood.setColor(look(b)[0]);
-            drawPieces(canvas, b, dp(2.5f), 1f, 0);
-        }
-        for (Branch b : branches) {
-            wood.setColor(look(b)[1]);
-            drawPieces(canvas, b, 0, 1f, 0);
-        }
-        for (Branch b : branches) {
-            int[] c = look(b);
-            wood.setColor(c[2]);
-            drawPieces(canvas, b, 0, 0.22f, -0.2f);
-            wood.setColor(c[0]);
-            wood.setAlpha(160);
-            drawPieces(canvas, b, 0, 0.12f, 0.22f);
-        }
-        // 가운데 빛: 불·어둠의 속불, 기초 마법을 배우면 줄기에 금빛
-        for (Branch b : branches) {
-            boolean lit = isLit(b);
-            int core = isOpen(b) ? look(b)[3] : 0;
-            if (core == 0 && b.school == MagicSchool.BASIC && lit) core = GOLD_VEIN;
-            if (core == 0) continue;
-            float flicker = b.school == MagicSchool.FIRE ? 0.85f + 0.15f * (float) Math.sin(t * 6 + b.widths[0]) : 1f;
-            boolean vein = core == GOLD_VEIN;
-            wood.setColor(core);
-            wood.setAlpha((int) ((vein ? 120 : lit ? 230 : 110) * flicker));
-            drawPieces(canvas, b, 0, vein ? 0.14f : 0.28f, 0);
-        }
-        // 계열 장식
+        // 열린 계열은 가지 둘레로 빛이 옅게 번진다 (넓은 겹부터 깔아 가장자리가 부드럽게)
         for (Branch b : branches) {
             if (b.school == MagicSchool.BASIC || !isOpen(b)) continue;
-            drawMarks(canvas, b, isLit(b), t);
+            float k = b.school == MagicSchool.FIRE ? 0.75f + 0.25f * heat : 1f;
+            aura.setColor(GLOWS.get(b.school));
+            aura.setAlpha((int) ((isLit(b) ? 16 : 6) * k));
+            for (int i = HALO_DP.length - 1; i >= 0; i--) {
+                aura.setStrokeWidth(b.avgWidth + dp(HALO_DP[i]));
+                canvas.drawPath(b.full, aura);
+            }
+        }
+        // 오른쪽 아래로 지는 그림자
+        int save = canvas.save();
+        canvas.translate(dp(3), dp(4));
+        aura.setColor(Color.BLACK);
+        aura.setAlpha(80);
+        for (Branch b : branches) {
+            aura.setStrokeWidth(b.avgWidth + dp(2));
+            canvas.drawPath(b.full, aura);
+        }
+        canvas.restoreToCount(save);
+        // 테두리를 모두 깐 뒤 질감을 올려 갈라지는 곳이 한 덩어리로 이어지게
+        for (Branch b : branches) {
+            for (int i = 0; i < PIECES; i++) {
+                edge.setStrokeWidth(b.widths[i] + dp(1.6f));
+                canvas.drawPath(b.pieces[i], edge);
+            }
+        }
+        ColorFilter burning = tone(1f, 1f + 0.14f * heat);
+        for (Branch b : branches) {
+            boolean open = isOpen(b);
+            boolean lit = isLit(b);
+            boolean lava = open && b.school == MagicSchool.FIRE;
+            skinPaint.setColorFilter(!open ? LOCKED : !lit ? DORMANT : lava ? burning : null);
+            Shader[] skins = open ? b.skin : b.bark;
+            // 용암은 가지를 따라 마법 쪽으로 천천히 흐른다 (질감 한 장 길이마다 처음으로)
+            float flow = lava ? (t * dp(lit ? 7 : 3)) % dp(TEXTURES.get(MagicSchool.FIRE)[1]) : 0f;
+            for (int i = 0; i < PIECES; i++) {
+                if (lava) {
+                    flowMatrix.setTranslate(b.dirs[2 * i] * flow, b.dirs[2 * i + 1] * flow);
+                    skins[i].setLocalMatrix(flowMatrix);
+                }
+                skinPaint.setShader(skins[i]);
+                skinPaint.setStrokeWidth(b.widths[i]);
+                canvas.drawPath(b.pieces[i], skinPaint);
+            }
+            animate |= lava;
+        }
+        skinPaint.setShader(null);
+        // 바람결, 불티·빛 알갱이
+        for (Branch b : branches) {
+            if (b.school == MagicSchool.BASIC || !isOpen(b)) continue;
+            boolean lit = isLit(b);
+            if (b.school == MagicSchool.WIND) drawGusts(canvas, b, lit, t);
+            drawMotes(canvas, b, lit, t);
             animate = true;
         }
+        // 뿌리는 땅속으로 사라진다
+        canvas.drawRect(0, getHeight() - dp(GROUND_DP), getWidth(), getHeight(), groundPaint);
         if (animate) postInvalidateOnAnimation();
     }
 
-    private int[] look(Branch b) {
-        return isOpen(b) ? LOOKS.get(b.school) : BARE;
-    }
-
-    /** 조각마다 굵기(widths × scale + extra)로, 굵기 × shift만큼 옆으로 밀어 그린다 */
-    private void drawPieces(Canvas canvas, Branch b, float extra, float scale, float shift) {
-        int alpha = wood.getAlpha();
-        for (int i = 0; i < PIECES; i++) {
-            float w = b.widths[i] * scale + extra;
-            wood.setStrokeWidth(w);
-            wood.setAlpha(alpha);
-            if (shift == 0) {
-                canvas.drawPath(b.pieces[i], wood);
-            } else {
-                int save = canvas.save();
-                canvas.translate(b.widths[i] * shift, 0);
-                canvas.drawPath(b.pieces[i], wood);
-                canvas.restoreToCount(save);
-            }
+    /** 가지 양옆을 따라 위로 스치는 가는 바람결 */
+    private void drawGusts(Canvas canvas, Branch b, boolean lit, float t) {
+        float dash = dp(12);
+        float gap = dp(34);
+        float period = dash + gap;
+        line.setColor(0xFFD8F7EF);
+        line.setAlpha(lit ? 110 : 45);
+        line.setStrokeWidth(dp(1.1f));
+        for (int side = -1; side <= 1; side += 2) {
+            float phase = period - (t * dp(60) + (side > 0 ? period / 2f : 0f)) % period;
+            line.setPathEffect(new DashPathEffect(new float[]{dash, gap}, phase));
+            int save = canvas.save();
+            canvas.translate(side * (b.avgWidth / 2f + dp(4)), 0);
+            canvas.drawPath(b.full, line);
+            canvas.restoreToCount(save);
         }
+        line.setPathEffect(null);
     }
 
-    /** 배운 토막은 장식을 다 그리고, 열기만 한 토막은 셋에 하나만 작게 */
-    private void drawMarks(Canvas canvas, Branch b, boolean lit, float t) {
+    /** 배운 토막은 모든 자리에서, 열기만 한 토막은 셋에 한 자리에서 */
+    private void drawMotes(Canvas canvas, Branch b, boolean lit, float t) {
         for (int i = 0; i < b.marks.size(); i++) {
             if (!lit && i % 3 != 0) continue;
             float[] m = b.marks.get(i);
-            float x = m[0], y = m[1], angle = m[2], ph = m[4], side = m[5], bw = m[6];
-            float s = m[3] * (lit ? 1f : 0.6f);
+            float x = m[0], y = m[1], ph = m[2], side = m[3], bw = m[4];
+            float wave = (float) Math.sin(t * 1.7f + ph * 6.283f);
             switch (b.school) {
-                case FIRE: {
-                    float fx = x + side * bw * 0.25f;
-                    float hgt = dp(17) * s * (0.8f + 0.25f * (float) Math.sin(t * 9 + ph));
-                    float wd = dp(5.5f) * s;
-                    drawFlame(canvas, fx, y, hgt, wd, 0xC8FF6A1A);
-                    drawFlame(canvas, fx, y, hgt * 0.55f, wd * 0.55f, 0xE6FFD25A);
-                    float rise = (t * dp(18) + ph * dp(6)) % dp(30);
-                    fill.setColor(0xFFFFB347);
-                    fill.setAlpha((int) (200 * (1 - rise / dp(30))));
-                    canvas.drawCircle(fx + (float) Math.sin(t * 3 + ph) * dp(3), y - hgt - rise, dp(1.4f), fill);
+                case FIRE: { // 용암 틈에서 튀어 오르는 불티
+                    float k = (t * 0.45f + ph) % 1f;
+                    float fade = (1 - k) * (float) Math.sqrt(1 - k);
+                    spark(canvas, x + side * bw * 0.3f + wave * dp(4) * k, y - k * dp(36),
+                            dp(1.1f) * (1 - 0.5f * k), 0xFFFFD27A, 0xFFFF6A1A, fade);
                     break;
                 }
-                case FROST: {
-                    float r = dp(4.5f) * s;
-                    float cx = x + side * bw * 0.45f;
-                    line.setColor(0xFFEAF8FF);
-                    line.setAlpha((int) (170 + 70 * Math.sin(t * 2 + ph)));
-                    line.setStrokeWidth(dp(1));
-                    for (int k = 0; k < 3; k++) {
-                        double a = Math.toRadians(angle + k * 60);
-                        float dx = (float) Math.cos(a) * r;
-                        float dy = (float) Math.sin(a) * r;
-                        canvas.drawLine(cx - dx, y - dy, cx + dx, y + dy, line);
-                    }
+                case HOLY: { // 천천히 떠오르는 빛 알갱이
+                    if (lit && i % 2 == 1) break;
+                    float k = (t * 0.25f + ph) % 1f;
+                    spark(canvas, x + side * (bw * 0.5f + dp(3)) + wave * dp(2), y - k * dp(26),
+                            dp(0.9f), 0xFFFFF8E0, 0xFFFFE9A0, 0.8f * (float) Math.sin(Math.PI * k));
                     break;
                 }
-                case NATURE: {
-                    int save = canvas.save();
-                    canvas.translate(x + side * bw * 0.4f, y);
-                    canvas.rotate(angle + side * (55 + 8 * (float) Math.sin(t * 1.5 + ph)));
-                    oval.set(0, -dp(3) * s, dp(12) * s, dp(3) * s);
-                    fill.setColor(i % 2 == 0 ? 0xFF6FAE3A : 0xFF8BC34A);
-                    canvas.drawOval(oval, fill);
-                    canvas.restoreToCount(save);
+                case DARK: { // 피어오르는 그림자 연기
+                    float k = (t * 0.3f + ph) % 1f;
+                    fill.setColor(0xFF6A4596);
+                    fill.setAlpha((int) (60 * Math.sin(Math.PI * k)));
+                    canvas.drawCircle(x + side * bw * 0.25f + wave * dp(3), y - k * dp(24), dp(2.5f + 5 * k), fill);
                     break;
                 }
-                case WIND: {
-                    float r = dp(6) * s;
-                    float cx = x + side * (bw * 0.5f + r * 0.6f);
-                    oval.set(cx - r, y - r, cx + r, y + r);
-                    line.setColor(0xFF5FD3C0);
-                    line.setAlpha(150);
-                    line.setStrokeWidth(dp(1.3f));
-                    canvas.drawArc(oval, (t * 120 + ph * 57) % 360, 200, false, line);
+                case FROST: { // 얼음 결에 잠깐 맺혔다 사라지는 빛
+                    float f = (float) Math.pow(Math.max(0, Math.sin(t * 1.1f + ph * 18.85f)), 16);
+                    if (f < 0.02f) break;
+                    float gx = x + side * bw * 0.22f;
+                    float r = dp(4.5f) * f;
+                    line.setColor(0xFFF4FBFF);
+                    line.setAlpha((int) (230 * f));
+                    line.setStrokeWidth(dp(0.8f));
+                    canvas.drawLine(gx - r, y, gx + r, y, line);
+                    canvas.drawLine(gx, y - r, gx, y + r, line);
+                    spark(canvas, gx, y, dp(1f), 0xFFFFFFFF, 0xFFBFE6FF, f);
                     break;
                 }
-                case HOLY: {
-                    float k = 0.5f + 0.5f * (float) Math.sin(t * 3 + ph);
-                    float r = dp(5) * s * (0.4f + 0.6f * k);
-                    float cx = x + side * bw * 0.6f;
-                    line.setColor(0xFFFFF6D8);
-                    line.setAlpha((int) (120 + 135 * k));
-                    line.setStrokeWidth(dp(1.2f));
-                    canvas.drawLine(cx - r, y, cx + r, y, line);
-                    canvas.drawLine(cx, y - r, cx, y + r, line);
-                    break;
-                }
-                case DARK: {
-                    float rise = (t * dp(12) + ph * dp(5)) % dp(26);
-                    float f = rise / dp(26);
-                    fill.setColor(0xFFA77BD8);
-                    fill.setAlpha((int) (130 * (1 - f)));
-                    canvas.drawCircle(x + side * bw * 0.3f + (float) Math.sin(t * 2 + ph) * dp(2), y - rise,
-                            dp(2.5f + 3f * f) * s, fill);
+                case NATURE: { // 가지 둘레를 떠도는 포자
+                    if (i % 2 == 1) break;
+                    float k = (t * 0.18f + ph) % 1f;
+                    spark(canvas, x + side * (bw * 0.5f + dp(5)) + wave * dp(5), y - k * dp(16),
+                            dp(1.1f), 0xFFE2F59A, 0xFF9BCB4A, (float) Math.sin(Math.PI * k));
                     break;
                 }
                 default:
@@ -583,14 +665,14 @@ public class MagicTreeView extends FrameLayout {
         }
     }
 
-    /** 위로 타오르는 물방울 모양 불꽃 (x, y가 밑동) */
-    private void drawFlame(Canvas canvas, float x, float y, float hgt, float wd, int color) {
-        flame.reset();
-        flame.moveTo(x, y - hgt);
-        flame.cubicTo(x + wd, y - hgt * 0.45f, x + wd * 0.8f, y, x, y);
-        flame.cubicTo(x - wd * 0.8f, y, x - wd, y - hgt * 0.45f, x, y - hgt);
-        fill.setColor(color);
-        canvas.drawPath(flame, fill);
+    /** 작은 빛 알갱이: 둘레에 옅게 번지는 빛과 밝은 가운데 */
+    private void spark(Canvas canvas, float x, float y, float r, int core, int glow, float alpha) {
+        fill.setColor(glow);
+        fill.setAlpha((int) (90 * alpha));
+        canvas.drawCircle(x, y, r * 2.8f, fill);
+        fill.setColor(core);
+        fill.setAlpha((int) (240 * alpha));
+        canvas.drawCircle(x, y, r, fill);
     }
 
     private int dp(float v) {
