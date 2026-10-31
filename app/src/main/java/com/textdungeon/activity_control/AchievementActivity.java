@@ -217,6 +217,7 @@ public class AchievementActivity extends BaseActivity {
             unlockStatus.setText("닫기");
             unlockStatus.setTextColor(Color.parseColor("#E9C176"));
             GameImages.set(charImage, data.getImgName(), 0);
+            if (data.fillsFrame()) charImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
             if (data.getGrade() != null) {
                 ItemFrames.tintTypeIcon(charImage, data.getImgName(), data.getGrade());
                 charName.setTextColor(data.getGrade().color);

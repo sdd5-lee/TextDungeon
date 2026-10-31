@@ -40,7 +40,7 @@
     "wisdomPercent": 150,
     "cooldown": 3,
     "value": 30,
-    "img": "magic_img_2"
+    "img": "magic_img_16"
   },
   {
     "id": "mag_15",
@@ -51,7 +51,7 @@
     "wisdomPercent": 260,
     "cooldown": 5,
     "value": 40,
-    "img": "magic_img_8"
+    "img": "magic_img_15"
   },
   {
     "id": "mag_13",
@@ -84,7 +84,7 @@
     "wisdomPercent": 160,
     "cooldown": 3,
     "value": 30,
-    "img": "magic_img_11"
+    "img": "magic_img_17"
   },
   {
     "id": "mag_18",
@@ -95,7 +95,7 @@
     "wisdomPercent": 175,
     "cooldown": 3,
     "value": 30,
-    "img": "magic_img_4"
+    "img": "magic_img_18"
   },
   {
     "id": "mag_11",
@@ -117,7 +117,7 @@
     "wisdomPercent": 270,
     "cooldown": 5,
     "value": 40,
-    "img": "magic_img_11"
+    "img": "magic_img_19"
   },
   {
     "id": "mag_6",
@@ -150,7 +150,7 @@
     "wisdomPercent": 175,
     "cooldown": 3,
     "value": 30,
-    "img": "magic_img_6"
+    "img": "magic_img_21"
   },
   {
     "id": "mag_20",
@@ -161,7 +161,7 @@
     "wisdomPercent": 220,
     "cooldown": 5,
     "value": 40,
-    "img": "magic_img_12"
+    "img": "magic_img_20"
   },
   {
     "id": "mag_22",
@@ -172,7 +172,7 @@
     "wisdomPercent": 270,
     "cooldown": 5,
     "value": 40,
-    "img": "magic_img_6"
+    "img": "magic_img_22"
   },
   {
     "id": "mag_7",
@@ -205,7 +205,7 @@
     "wisdomPercent": 170,
     "cooldown": 3,
     "value": 30,
-    "img": "magic_img_7"
+    "img": "magic_img_24"
   },
   {
     "id": "mag_23",
@@ -216,7 +216,7 @@
     "wisdomPercent": 250,
     "cooldown": 5,
     "value": 40,
-    "img": "magic_img_10"
+    "img": "magic_img_23"
   },
   {
     "id": "mag_25",
@@ -227,7 +227,7 @@
     "wisdomPercent": 240,
     "cooldown": 5,
     "value": 40,
-    "img": "magic_img_7"
+    "img": "magic_img_25"
   },
   {
     "id": "mag_5",
@@ -249,7 +249,7 @@
     "wisdomPercent": 165,
     "cooldown": 3,
     "value": 30,
-    "img": "magic_img_5"
+    "img": "magic_img_26"
   },
   {
     "id": "mag_27",
@@ -260,7 +260,7 @@
     "wisdomPercent": 145,
     "cooldown": 3,
     "value": 30,
-    "img": "magic_img_5"
+    "img": "magic_img_27"
   },
   {
     "id": "mag_14",
@@ -282,7 +282,7 @@
     "wisdomPercent": 255,
     "cooldown": 5,
     "value": 40,
-    "img": "magic_img_14"
+    "img": "magic_img_28"
   },
   {
     "id": "mag_3",
@@ -315,7 +315,7 @@
     "wisdomPercent": 150,
     "cooldown": 3,
     "value": 30,
-    "img": "magic_img_3"
+    "img": "magic_img_30"
   },
   {
     "id": "mag_29",
@@ -326,7 +326,7 @@
     "wisdomPercent": 255,
     "cooldown": 5,
     "value": 40,
-    "img": "magic_img_9"
+    "img": "magic_img_29"
   },
   {
     "id": "mag_31",
@@ -337,6 +337,6 @@
     "wisdomPercent": 235,
     "cooldown": 5,
     "value": 40,
-    "img": "magic_img_9"
+    "img": "magic_img_31"
   }
 ]

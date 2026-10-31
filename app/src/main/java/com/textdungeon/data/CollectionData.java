@@ -28,4 +28,7 @@ public class CollectionData {
     public String getImgName() { return imgName; }
     public boolean isDiscovered() { return discovered; }
     public ItemGrade getGrade() { return grade; }
+
+    /** 몬스터·이벤트 그림은 가로로 길어서 칸을 채우고 가운데를 보여 준다 (아이템은 정사각형이라 통째로) */
+    public boolean fillsFrame() { return grade == null; }
 }

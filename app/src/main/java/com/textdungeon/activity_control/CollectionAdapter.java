@@ -51,6 +51,9 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
         }
 
         ItemFrames.tintTypeIcon(holder.image, data.isDiscovered() ? data.getImgName() : null, data.getGrade());
+        // Glide가 into() 때 이 값을 보고 자른다
+        holder.image.setScaleType(data.isDiscovered() && data.fillsFrame()
+                ? ImageView.ScaleType.CENTER_CROP : ImageView.ScaleType.FIT_CENTER);
 
         if (data.isDiscovered()) {
             GameImages.glide(context, data.getImgName())
