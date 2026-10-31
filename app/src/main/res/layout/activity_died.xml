@@ -50,7 +50,6 @@
         android:text="당신의 여정은 여기서 끝이 났습니다"
         android:textColor="#E0BFBA"
         android:textSize="18sp"
-        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/bottom_line" />

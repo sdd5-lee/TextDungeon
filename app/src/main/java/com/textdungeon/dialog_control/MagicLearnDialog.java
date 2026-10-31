@@ -93,8 +93,8 @@ public class MagicLearnDialog extends Dialog {
         MagicScroll scroll = player.getMagicScroll();
         int wis = wisdom();
         tvWisdom.setText("지혜 " + wis);
-        tvCoreInfo.setText("코어 " + scroll.getAvailableCores(wis)
-                + "개 · 다음은 지혜 " + scroll.getNextCoreWisdom(wis));
+        tvCoreInfo.setText("깃든 코어 " + scroll.getAvailableCores(wis)
+                + "개 · 지혜 " + scroll.getNextCoreWisdom(wis) + "에 새 코어");
         tree.refresh(wis);
         if (selected != null) showDetail(selected);
     }
@@ -108,52 +108,55 @@ public class MagicLearnDialog extends Dialog {
 
         tvName.setText(magic.getName());
         tvSchool.setText(school.needsCore()
-                ? school.displayName + " 계열 · " + tierOf(magic) + "단계"
-                : "기초 마법 · 코어 없이 배운다");
+                ? school.displayName + "의 가지 · " + tierOf(magic) + "번째 마법"
+                : "뿌리의 마법 · 코어 없이 깨우칩니다");
 
         SpannableStringBuilder sb = new SpannableStringBuilder();
-        sb.append("기본 피해 ").append(String.valueOf(magic.getBaseDamage())).append(" (지혜 2마다 +1)");
+        sb.append("위력 ").append(String.valueOf(magic.getMagicDamage(wis)))
+                .append(" (").append(String.valueOf(magic.getBaseDamage()))
+                .append(" + 지혜의 ").append(String.valueOf(magic.getWisdomPercent())).append("%)")
+                .append(" · 쓰고 나면 ").append(String.valueOf(magic.getCooldown())).append("턴 쉼");
         if (school.needsCore()) {
             boolean open = scroll.isSchoolOpen(school);
             line(sb, open, open
-                    ? school.displayName + " 계열 열림"
-                    : school.displayName + " 계열이 닫혀 있습니다 (코어 1개로 연다)");
+                    ? school.displayName + "의 가지가 깨어나 있습니다"
+                    : school.displayName + "의 가지가 잠들어 있습니다");
         }
         if (magic.getRequires() != null) {
             Magic prev = magicManager.spawn(magic.getRequires());
             String prevName = prev != null ? prev.getName() : magic.getRequires();
             boolean learned = scroll.hasMagic(magic.getRequires());
             line(sb, learned, learned
-                    ? "이전 마법: " + prevName
-                    : "이전 마법(" + prevName + ")을 배워야 해금할 수 있습니다");
+                    ? "앞선 마법 「" + prevName + "」을(를) 깨우쳤습니다"
+                    : "먼저 「" + prevName + "」을(를) 깨우쳐야 합니다");
         }
-        line(sb, wis >= magic.getValue(), "요구 지혜 " + magic.getValue() + " (현재 " + wis + ")");
+        line(sb, wis >= magic.getValue(), "지혜 " + magic.getValue() + "의 깨달음이 필요합니다 (지금 " + wis + ")");
         tvConditions.setText(sb);
 
         btnAction.setVisibility(View.VISIBLE);
         btnAction.setOnClickListener(null);
         switch (state) {
             case LEARNED:
-                setAction("배운 마법", R.drawable.bg_magic_disabled, 0xFFD8C6A4);
+                setAction("이미 깨우친 마법", R.drawable.bg_magic_disabled, 0xFFD8C6A4);
                 break;
             case CAN_LEARN:
-                setAction("배우기", R.drawable.bg_magic_learn, 0xFFB9E3B3);
+                setAction("마법 깨우치기", R.drawable.bg_magic_learn, 0xFFB9E3B3);
                 btnAction.setOnClickListener(v -> learn(magic));
                 break;
             case SCHOOL_LOCKED:
                 if (scroll.getAvailableCores(wis) > 0) {
-                    setAction(school.displayName + " 계열 열기 (코어 1)", R.drawable.bg_magic_open, 0xFFF0CF86);
+                    setAction("코어 1개로 " + school.displayName + "의 가지 열기", R.drawable.bg_magic_open, 0xFFF0CF86);
                     btnAction.setOnClickListener(v -> openSchool(school));
                 } else {
-                    setAction("코어 포인트가 없습니다 (다음: 지혜 " + scroll.getNextCoreWisdom(wis) + ")",
+                    setAction("깃든 코어가 없습니다 · 지혜 " + scroll.getNextCoreWisdom(wis) + "에 새 코어",
                             R.drawable.bg_magic_disabled, 0xFFD8C6A4);
                 }
                 break;
             case NEED_PREVIOUS:
-                setAction("이전 마법을 먼저 배우세요", R.drawable.bg_magic_disabled, 0xFFD8C6A4);
+                setAction("앞선 마법을 먼저 깨우치세요", R.drawable.bg_magic_disabled, 0xFFD8C6A4);
                 break;
             case NEED_WISDOM:
-                setAction("지혜가 부족합니다", R.drawable.bg_magic_disabled, 0xFFD8C6A4);
+                setAction("아직 지혜가 모자랍니다", R.drawable.bg_magic_disabled, 0xFFD8C6A4);
                 break;
         }
     }
@@ -189,15 +192,15 @@ public class MagicLearnDialog extends Dialog {
     private void openSchool(MagicSchool school) {
         SoundManager.getInstance(getContext()).playButtonSfx();
         if (player.getMagicScroll().openSchool(school, wisdom())) {
-            showBar(school.displayName + " 계열을 열었습니다!");
+            showBar(school.displayName + "의 가지가 깨어났습니다!");
         }
         refresh();
     }
 
     private void learn(Magic magic) {
         SoundManager.getInstance(getContext()).playButtonSfx();
-        player.getMagicScroll().addMagic(magic.getId(), magic.getMaxCount());
-        showBar(magic.getName() + " 마법의 이치를 깨달았습니다!");
+        player.getMagicScroll().addMagic(magic.getId());
+        showBar("「" + magic.getName() + "」의 이치를 깨우쳤습니다!");
         List<Achievement> unlocked = DataControlTower.getInstance(getContext())
                 .getAchievementManager().updateProgress("magic_learn", 1, true);
         // getContext()는 테마로 감싼 것이라 Activity가 아니다. 창을 띄운 Activity는 getOwnerActivity()

@@ -1,14 +1,15 @@
 package com.textdungeon.model;
 
-import com.google.gson.Gson;
-import com.textdungeon.player.Player;
-
 public class Magic {
     String id;
     String name;
-    private int count;
-    private int maxCount;
+    /** 지혜를 빼고 본 기본 피해 */
     private int magicDamage;
+    /** 지혜의 몇 %를 피해에 더하는지 (70이면 지혜 10당 +7) */
+    private int wisdomPercent;
+    /** 쓰고 나서 다시 쓰기까지 쉬는 내 턴 수 (싸움마다 처음엔 모두 준비돼 있다) */
+    private int cooldown;
+    /** 배우는 데 필요한 지혜 */
     private int value;
     private String img;
     /** 계열 (없으면 기초) */
@@ -26,13 +27,10 @@ public class Magic {
         this.requires = requires;
         this.value = value;
     }
-    public int getMaxCount() {
-        return maxCount;
-    }
 
-    public int getCount() {return count;}
+    /** 기본 피해 + 지혜 × 비율 */
     public int getMagicDamage(int wisdom) {
-        return magicDamage + (wisdom / 2);
+        return magicDamage + wisdom * wisdomPercent / 100;
     }
 
     public String getName() {
@@ -62,5 +60,13 @@ public class Magic {
     /** 지혜를 빼고 본 기본 피해 (세피로트의 나무 설명용) */
     public int getBaseDamage() {
         return magicDamage;
+    }
+
+    public int getWisdomPercent() {
+        return wisdomPercent;
+    }
+
+    public int getCooldown() {
+        return cooldown;
     }
 }

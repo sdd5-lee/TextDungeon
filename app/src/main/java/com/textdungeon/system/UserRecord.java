@@ -34,6 +34,8 @@ public class UserRecord {
     // 이름 정하기 창에 보여 줄 최근 이름 (최신이 앞). 예전 세이브에는 없으므로 null일 수 있다
     private List<String> recentNames;
     private static final int MAX_RECENT_NAMES = 3;
+    // 클리어한 던전 id. 다음 던전이 열리는 조건이다. 예전 세이브에는 없으므로 null일 수 있다
+    private Set<String> clearedDungeons;
 
     public UserRecord(){
         this.gem = 0;
@@ -162,6 +164,14 @@ public class UserRecord {
         while (names.size() > MAX_RECENT_NAMES) names.remove(names.size() - 1);
     }
 
+    public Set<String> getClearedDungeons() {
+        if (clearedDungeons == null) clearedDungeons = new HashSet<>();
+        return clearedDungeons;
+    }
+    public void addClearedDungeon(String dungeonId) {
+        if (dungeonId != null) getClearedDungeons().add(dungeonId);
+    }
+
     /** 기록 초기화. 유료 상품(ownedProducts)은 Play가 기준이므로 지우지 않는다 */
     public void clearAll() {
         this.gem = 0;
@@ -172,6 +182,7 @@ public class UserRecord {
         this.discoveredItems.clear();
         this.discoveredMonsters.clear();
         this.discoveredEvents.clear();
+        getClearedDungeons().clear();
 
         if (this.achievements != null) {
             this.achievements.clear();

@@ -47,7 +47,7 @@ import java.util.Random;
 
 /**
  * 세피로트의 나무. 맨 아래 기초 마법이 뿌리 자리이고, 줄기가 세 가지로 갈라진 뒤
- * 가지마다 두 계열이 한 줄씩 위로 자란다 (계열 순서는 MagicSchool).
+ * 가지마다 두 계열이 위로 자라고 (계열 순서는 MagicSchool), 계열 첫 마법 위에서 다시 두 갈래로 갈라진다.
  * 계열을 열면 그 가지가 계열 질감으로 바뀌고(화염은 흐르는 용암, 신성은 흰 자작나무),
  * 배운 마법까지 이어진 토막일수록 밝다. 마법을 누르면 크게 보이고 listener로 알린다.
  */
@@ -58,17 +58,25 @@ public class MagicTreeView extends FrameLayout {
     }
 
     /** 기초 마법에서 몇 단계 위인지에 따른 높이 (0 = 기초 마법, 1 = 가장 위) */
-    private static final float[] TIER_Y = {0f, 0.40f, 0.70f, 1f};
+    private static final float[] TIER_Y = {0f, 0.40f, 0.66f, 0.93f};
+    /**
+     * 계열 첫 마법 위에서 두 갈래로 갈라진 마법은 계열 칸 안에서 좌우로 비키고(칸 너비 비율),
+     * 옆 칸 마법과 부딪히지 않게 왼쪽 갈래는 낮게, 오른쪽 갈래는 높게 엇갈린다(높이 비율)
+     */
+    private static final float FORK_X = 0.27f;
+    private static final float FORK_LIFT = 0.07f;
     /** 줄기가 세 가지로, 가지가 두 계열로 갈라지는 높이 */
     private static final float TRUNK_FORK = 0.17f;
     private static final float BOUGH_FORK = 0.29f;
-    private static final int NODE_DP = 40;
+    private static final int NODE_DP = 36;
     private static final int ROOT_DP = 46;
     private static final float SELECTED_SCALE = 1.35f;
     /** 가지 끝 위의 계열 이름 자리, 기초 마법 아래 뿌리 자리, 가지 끝 잔가지 길이(마법 가운데부터) */
     private static final int LABEL_DP = 22;
     private static final int ROOTS_DP = 26;
     private static final int TWIG_DP = 30;
+    /** 양 끝 계열의 갈라진 마법이 눌려 커져도 잘리지 않게 좌우를 띄우는 폭 */
+    private static final int INSET_DP = 12;
     /** 뿌리가 땅속으로 사라지는 높이 */
     private static final int GROUND_DP = 28;
     /** 굵기가 줄어드는 토막 하나를 몇 조각으로 나눠 그릴지 */
@@ -125,6 +133,9 @@ public class MagicTreeView extends FrameLayout {
         final Magic magic;
         Node parent;
         int depth;
+        /** 갈래: -1 왼쪽(낮게), 1 오른쪽(높게), 0 가운데 */
+        int side;
+        boolean hasChild;
         ShapeableImageView view;
         TextView label;
         float x, y;
@@ -219,6 +230,7 @@ public class MagicTreeView extends FrameLayout {
         for (Node n : nodes) {
             String req = n.magic.getRequires();
             n.parent = req != null ? byId.get(req) : null;
+            if (n.parent != null) n.parent.hasChild = true;
         }
         for (Node n : nodes) {
             int d = 0;
@@ -254,6 +266,18 @@ public class MagicTreeView extends FrameLayout {
                 label.setGravity(Gravity.CENTER);
                 n.label = label;
                 addView(label);
+            }
+        }
+
+        // 한 마법에서 둘로 갈라지면 json에 먼저 나온 쪽이 왼쪽 갈래. 갈라지지 않으면 앞 마법의 갈래를 따른다
+        for (int d = 2; d < TIER_Y.length; d++) {
+            for (Node n : nodes) {
+                if (n.depth != d || n.parent == null) continue;
+                List<Node> siblings = new ArrayList<>();
+                for (Node o : nodes) {
+                    if (o.parent == n.parent) siblings.add(o);
+                }
+                n.side = siblings.size() < 2 ? n.parent.side : siblings.indexOf(n) == 0 ? -1 : 1;
             }
         }
     }
@@ -332,15 +356,16 @@ public class MagicTreeView extends FrameLayout {
         float rootY = h - margin() - dp(ROOTS_DP);
         float span = rootY - margin() - dp(LABEL_DP);
         List<MagicSchool> columns = columns();
-        float colW = w / (float) columns.size();
+        float inset = dp(INSET_DP);
+        float colW = (w - 2 * inset) / columns.size();
 
         for (Node n : nodes) {
             if (n.depth == 0) {
                 n.x = rootX;
                 n.y = rootY;
             } else {
-                n.x = colW * (columns.indexOf(n.magic.getSchool()) + 0.5f);
-                n.y = rootY - span * TIER_Y[n.depth];
+                n.x = inset + colW * (columns.indexOf(n.magic.getSchool()) + 0.5f + n.side * FORK_X);
+                n.y = rootY - span * (TIER_Y[n.depth] + n.side * FORK_LIFT);
             }
         }
         // 배경은 뿌리 자리에서 번지는 빛, 아래쪽은 뿌리가 묻히는 땅
@@ -358,7 +383,7 @@ public class MagicTreeView extends FrameLayout {
         for (Node n : nodes) {
             if (n.label != null) placeLabel(n);
         }
-        buildTree(w, h, rootX, rootY, span, colW, columns);
+        buildTree(w, h, rootX, rootY, span, inset, colW, columns);
     }
 
     /** 가지 끝(가장 위 마법)의 잔가지 위에 계열 이름 */
@@ -381,7 +406,7 @@ public class MagicTreeView extends FrameLayout {
     }
 
     /** 뿌리 → 줄기 → 큰 가지 셋 → 계열 가지 → 마법 사이 토막 → 끝 잔가지 */
-    private void buildTree(int w, int h, float rootX, float rootY, float span, float colW, List<MagicSchool> columns) {
+    private void buildTree(int w, int h, float rootX, float rootY, float span, float inset, float colW, List<MagicSchool> columns) {
         branches.clear();
         Random rnd = new Random(7);
 
@@ -407,7 +432,7 @@ public class MagicTreeView extends FrameLayout {
         float[] boughX = new float[groups];
         for (int g = 0; g < groups; g++) {
             int last = Math.min(columns.size() - 1, 2 * g + 1);
-            boughX[g] = colW * ((2 * g + last) / 2f + 0.5f);
+            boughX[g] = inset + colW * ((2 * g + last) / 2f + 0.5f);
             Path p = new Path();
             p.moveTo(rootX, forkY);
             p.cubicTo(rootX, forkY - span * 0.06f, boughX[g], boughY + span * 0.06f, boughX[g], boughY);
@@ -433,13 +458,14 @@ public class MagicTreeView extends FrameLayout {
             }
         }
 
-        for (MagicSchool school : columns) {
-            Node tip = topOf(school);
-            if (tip == null) continue;
+        // 갈래마다 끝 마법 위에 잔가지 (갈라진 갈래는 바깥쪽으로 살짝 기운다)
+        for (Node tip : nodes) {
+            if (tip.depth == 0 || tip.hasChild) continue;
+            float lean = dp(4) * (tip.side < 0 ? -1 : 1);
             Path p = new Path();
             p.moveTo(tip.x, tip.y);
-            p.quadTo(tip.x - dp(2), tip.y - dp(TWIG_DP) * 0.6f, tip.x + dp(4), tip.y - dp(TWIG_DP));
-            addBranch(p, dp(6.5f), dp(2), school, tip, rnd);
+            p.quadTo(tip.x - lean / 2f, tip.y - dp(TWIG_DP) * 0.6f, tip.x + lean, tip.y - dp(TWIG_DP));
+            addBranch(p, dp(6.5f), dp(2), tip.magic.getSchool(), tip, rnd);
         }
     }
 

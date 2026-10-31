@@ -73,6 +73,8 @@ public class TemplateEventGenerator {
         String action;        // battle, escape, null
         String itemId;
         String itemName;
+        /** 시련의 신 결투에서 이기면 오르는 스탯. 양은 싸울 때의 스탯으로 정하므로 stats에는 넣지 않는다 (GodTrial) */
+        String trialStat;
         final List<RewardStat> stats = new ArrayList<>();
         /** 종류별로 층 상한의 몇 %로 정했는지. 프롬프트의 "크게/꽤/조금"을 고르는 데 쓴다 */
         final Map<String, Integer> percents = new java.util.HashMap<>();
@@ -111,8 +113,8 @@ public class TemplateEventGenerator {
      * @param nearItems        이 층대 아이템 (하급)
      * @param upperItems       지금보다 깊은 층의 장비 (중급)
      * @param deepItems        심층 장비 (상급)
-     * @param monsters         이 층대 몬스터 (투쟁의 신 상대 후보)
-     * @param rewardMultiplier 난이도 보상 배수, expMultiplier 특성 경험치 배수. 결과 묘사 끝의 실제 적용량 요약에 쓴다
+     * @param monsters         이 층대 몬스터 (투쟁의 신, 시련의 신 상대 후보)
+     * @param rewardMultiplier 던전 보상 배수, expMultiplier 특성 경험치 배수. 결과 묘사 끝의 실제 적용량 요약에 쓴다
      */
     public void generate(int floor, AiType god, List<Item> nearItems, List<Item> upperItems, List<Item> deepItems,
                          List<Monster> monsters, int rewardMultiplier, int expMultiplier, AiCallback callback) {
@@ -232,6 +234,24 @@ public class TemplateEventGenerator {
                     add(second, "경험치", between(lo / 2, hi / 2, rnd), p.floor);
                 }
                 break;
+            case MAGIC:
+            case THIEF:
+            case STRENGTH:
+            case TRAINING:
+                if (monsters != null && !monsters.isEmpty()) {
+                    // 신이 그 스탯을 시험하는 결투. 이벤트는 던전에 들어갈 때 만들어 두므로
+                    // 적의 세기와 오르는 양은 여기서 정하지 않고 싸울 때의 스탯으로 정한다 (GodTrial)
+                    p.type = "battle";
+                    p.enemy = monsters.get(rnd.nextInt(monsters.size()));
+                    first.action = "battle";
+                    first.trialStat = god.getTrialStat();
+                    second.action = "escape";
+                } else {
+                    // 몬스터가 없으면 결투 대신 수련 (나올 일은 거의 없다)
+                    add(first, god.getTrialStat(), between(lo, hi, rnd), p.floor);
+                    add(first, "데미지", between(40, 70, rnd), p.floor);
+                }
+                break;
             case TREASURE:
                 List<Item> pool = new ArrayList<>(items == null ? Collections.emptyList() : items);
                 pool.removeIf(i -> i == null || i.getId() == null);
@@ -325,7 +345,8 @@ public class TemplateEventGenerator {
     static String prompt(Plan p) {
         StringBuilder sb = new StringBuilder();
         // 신들의 이벤트는 꿈속 천상에서 신이 내리는 축복이다. 층 숫자를 주면 상황에 "21층"을 그대로 써서 주지 않는다
-        sb.append("[꿈속 천상에서 ").append(p.god.getGodName()).append("이 내리는 축복]\n");
+        sb.append("[꿈속 천상에서 ").append(p.god.getGodName()).append("이 내리는 ")
+                .append(p.god.isTrial() ? "시련" : "축복").append("]\n");
         sb.append("장소: 천상의 ").append(p.place).append("\n");
         sb.append("신의 성격: ").append(p.god.getTone()).append("\n");
         sb.append("신이 내미는 형상: ").append(p.form.name).append(" (").append(p.form.grade.label).append(")\n");
@@ -360,6 +381,7 @@ public class TemplateEventGenerator {
         List<String> gains = new ArrayList<>();
         List<String> losses = new ArrayList<>();
         if (o.itemName != null) gains.add("'" + o.itemName + "'을(를) 얻는다");
+        if (o.trialStat != null) gains.add(o.trialStat + "이(가) 오른다");
         for (RewardStat s : o.stats) {
             String type = s.getStatType();
             int v = s.getValue();
@@ -558,6 +580,7 @@ public class TemplateEventGenerator {
         JsonArray rewards = new JsonArray();
         for (int i = 0; i < p.outcomes.size(); i++) {
             Outcome o = p.outcomes.get(i);
+            if (o.trialStat != null) event.addProperty("trialStat", o.trialStat);
             choices.add(lines.get("선택지" + (i + 1)));
             String summary = new Reward(null, o.itemId, o.stats).summary(rewardMultiplier, expMultiplier, o.itemName);
             String description = lines.get("결과" + (i + 1)) + (summary.isEmpty() ? "" : " " + summary);

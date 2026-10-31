@@ -8,7 +8,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.textdungeon.ai.ChoiceDelta;
-import com.textdungeon.data.Difficulty;
 import com.textdungeon.data.EventGson;
 import com.textdungeon.event.BattleEvent;
 import com.textdungeon.event.GameEvent;
@@ -95,7 +94,7 @@ public class GsonRegressionTest {
         current.addChoiceWithReward("제단에 손을 얹는다",
                 new ChoiceDelta("제단에 손을 얹는다", "제단이 빛을 뿜는다.", null, stats).toReward());
 
-        return new GameSave(player, 12, Difficulty.HARD, aiEvents, current);
+        return new GameSave(player, 12, "dungeon_2", aiEvents, current);
     }
 
     @Test
@@ -136,7 +135,7 @@ public class GsonRegressionTest {
         GameSave loaded = GameSave.runLoad(context);
         assertNotNull(loaded);
         assertEquals(12, loaded.getCurrentFloor());
-        assertEquals(Difficulty.HARD, loaded.getDifficulty());
+        assertEquals("dungeon_2", loaded.getDungeonId());
         assertEquals(save.getPlayer().getStat().getGold(), loaded.getPlayer().getStat().getGold());
 
         assertTrue(loaded.getAiEvents().get(12) instanceof BattleEvent);
@@ -173,6 +172,21 @@ public class GsonRegressionTest {
         assertTrue(loaded.getAiEvents().get(15) instanceof ShopEvent);
         assertNotNull(((ShopEvent) loaded.getAiEvents().get(15)).getShopItemIds());
         assertEquals(GameEvent.class, loaded.getCurrentEvent().getClass());
+    }
+
+    @Test
+    public void 난이도로_저장한_예전_세이브는_던전_id_없이_읽힌다() throws Exception {
+        // 던전 전에는 "difficulty":"HARD"로 저장했다. 지금은 모르는 칸이라 버리고, 던전은 DataControlTower가 정한다
+        JsonObject root = JsonParser.parseString(eventGson.toJson(makeSave())).getAsJsonObject();
+        root.remove("dungeonId");
+        root.addProperty("difficulty", "HARD");
+        Files.write(new File(tmp.getRoot(), "run_save.json").toPath(),
+                root.toString().getBytes(StandardCharsets.UTF_8));
+
+        GameSave loaded = GameSave.runLoad(context);
+        assertNotNull(loaded);
+        assertNull(loaded.getDungeonId());
+        assertEquals(12, loaded.getCurrentFloor());
     }
 
     @Test

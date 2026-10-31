@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.textdungeon.data.Difficulty;
 import com.textdungeon.data.EventGson;
 import com.textdungeon.event.GameEvent;
 import com.textdungeon.model.ShopUpgrade;
@@ -27,23 +26,24 @@ public class GameSave {
     private static final String TAG = "GameSave";
     private int currentFloor;
     private final Player player;
-    private final Difficulty difficulty;
+    /** 이 판의 던전 id (dungeon_list.json). 던전이 없던 예전 세이브는 null */
+    private final String dungeonId;
     private Map<Integer, GameEvent> aiEvents;
     /** 지금 화면에 떠 있는 이벤트. 저장하지 않으면 이어하기 할 때 다른 이벤트로 바뀐다(리롤 가능). */
     private GameEvent currentEvent;
     /** 이 판의 시나리오(ScenarioPack.id). 시나리오가 없던 예전 세이브는 null = 기본 시나리오 */
     private String scenarioId;
 
-    public GameSave(Player player, int currentFloor, Difficulty difficulty,
+    public GameSave(Player player, int currentFloor, String dungeonId,
                     Map<Integer, GameEvent> aiEvents, GameEvent currentEvent) {
-        this(player, currentFloor, difficulty, aiEvents, currentEvent, null);
+        this(player, currentFloor, dungeonId, aiEvents, currentEvent, null);
     }
 
-    public GameSave(Player player, int currentFloor, Difficulty difficulty,
+    public GameSave(Player player, int currentFloor, String dungeonId,
                     Map<Integer, GameEvent> aiEvents, GameEvent currentEvent, String scenarioId) {
         this.player = player;
         this.currentFloor = currentFloor;
-        this.difficulty = difficulty;
+        this.dungeonId = dungeonId;
         this.aiEvents = aiEvents;
         this.currentEvent = currentEvent;
         this.scenarioId = scenarioId;
@@ -194,8 +194,8 @@ public class GameSave {
     public Player getPlayer() {
         return player;
     }
-    public Difficulty getDifficulty() {
-        return difficulty;
+    public String getDungeonId() {
+        return dungeonId;
     }
     public Map<Integer, GameEvent> getAiEvents() {
         return aiEvents;

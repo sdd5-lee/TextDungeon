@@ -10,7 +10,8 @@
     "isConsumable": false,
     "value": 60,
     "description": "초보 모험가들이 흔히 사용하는 평범한 나무 검입니다.\n\n[획득 방법] 떠돌이 상인에게서 구매",
-    "imgId": "item_img_1"
+    "imgId": "item_img_1",
+    "grade": "COMMON"
   },
   {
     "id": "item_2",
@@ -23,7 +24,8 @@
     "isConsumable": false,
     "value": 60,
     "description": "오래되어 시위가 느슨해진 낡은 활입니다.\n\n[획득 방법] 떠돌이 상인에게서 구매",
-    "imgId": "item_img_2"
+    "imgId": "item_img_2",
+    "grade": "COMMON"
   },
   {
     "id": "item_3",
@@ -36,7 +38,8 @@
     "isConsumable": false,
     "value": 50,
     "description": "가볍고 다루기 쉬운 나무 재질의 단검입니다.\n\n[획득 방법] 떠돌이 상인에게서 구매",
-    "imgId": "item_img_3"
+    "imgId": "item_img_3",
+    "grade": "COMMON"
   },
   {
     "id": "item_4",
@@ -49,7 +52,8 @@
     "isConsumable": false,
     "value": 40,
     "description": "모서리가 닳은 책입니다. 무기로 쓰기엔 적합하지 않아 보입니다.\n\n[획득 방법] 떠돌이 상인에게서 구매",
-    "imgId": "item_img_4"
+    "imgId": "item_img_4",
+    "grade": "COMMON"
   },
   {
     "id": "item_5",
@@ -62,7 +66,8 @@
     "isConsumable": false,
     "value": 0,
     "description": "슬라임의 점액이 묻어 불쾌하지만 탄성은 제법 좋습니다.\n\n[획득 방법] 전투: 슬라임 처치 시 획득",
-    "imgId": "item_img_5"
+    "imgId": "item_img_5",
+    "grade": "COMMON"
   },
   {
     "id": "item_6",
@@ -75,7 +80,8 @@
     "isConsumable": false,
     "value": 0,
     "description": "고블린들이 즐겨 쓰는 조잡하고 무식한 몽둥이입니다.\n\n[획득 방법] 전투: 고블린 처치 시 획득",
-    "imgId": "item_img_6"
+    "imgId": "item_img_6",
+    "grade": "COMMON"
   },
   {
     "id": "item_7",
@@ -88,7 +94,8 @@
     "isConsumable": false,
     "value": 0,
     "description": "사나운 늑대의 송곳니를 가공하여 만든 날카로운 무기입니다.\n\n[획득 방법] 전투: 늑대의 습격에서 승리 시 획득",
-    "imgId": "item_img_7"
+    "imgId": "item_img_7",
+    "grade": "COMMON"
   },
   {
     "id": "item_8",
@@ -101,7 +108,8 @@
     "isConsumable": false,
     "value": 0,
     "description": "거대 박쥐의 뼈로 장식된 불길한 느낌의 완드입니다.\n\n[획득 방법] 전투: 박쥐 처치 시 획득",
-    "imgId": "item_img_8"
+    "imgId": "item_img_8",
+    "grade": "COMMON"
   },
   {
     "id": "item_9",
@@ -114,7 +122,8 @@
     "isConsumable": false,
     "value": 150,
     "description": "녹이 슬었지만 옛 전사의 혼이 담겨 묵직한 검입니다.\n\n[획득 방법] 전투: 해골 전사 처치 / 대장간에서 구매",
-    "imgId": "item_img_9"
+    "imgId": "item_img_9",
+    "grade": "UNCOMMON"
   },
   {
     "id": "item_10",
@@ -127,7 +136,8 @@
     "isConsumable": false,
     "value": 150,
     "description": "해골들이 사용하던 낡은 활입니다.\n\n[획득 방법] 전투: 해골 궁수 처치 / 대장간에서 구매",
-    "imgId": "item_img_10"
+    "imgId": "item_img_10",
+    "grade": "UNCOMMON"
   },
   {
     "id": "item_11",
@@ -140,7 +150,8 @@
     "isConsumable": false,
     "value": 140,
     "description": "과거 기사단에서 사용했던 예리한 단검입니다.\n\n[획득 방법] 전투: 해골 기사 처치 / 대장간에서 구매",
-    "imgId": "item_img_11"
+    "imgId": "item_img_11",
+    "grade": "UNCOMMON"
   },
   {
     "id": "item_12",
@@ -153,7 +164,8 @@
     "isConsumable": false,
     "value": 120,
     "description": "위습의 사념과 마력이 깃든 해골 모양의 스태프입니다.\n\n[획득 방법] 전투: 위습 처치 / 대장간에서 구매",
-    "imgId": "item_img_12"
+    "imgId": "item_img_12",
+    "grade": "UNCOMMON"
   },
   {
     "id": "item_13",
@@ -166,7 +178,8 @@
     "isConsumable": false,
     "value": 0,
     "description": "오크 전사가 애용하던 투박하고 무거운 양손검입니다.\n\n[획득 방법] 전투: 오크 전사 처치 시 획득",
-    "imgId": "item_img_13"
+    "imgId": "item_img_13",
+    "grade": "RARE"
   },
   {
     "id": "item_14",
@@ -179,7 +192,8 @@
     "isConsumable": false,
     "value": 0,
     "description": "오크 마법사의 강력한 주술이 깃든 나무 지팡이입니다.\n\n[획득 방법] 전투: 오크 마법사 처치 시 획득",
-    "imgId": "item_img_14"
+    "imgId": "item_img_14",
+    "grade": "RARE"
   },
   {
     "id": "item_15",
@@ -192,7 +206,8 @@
     "isConsumable": false,
     "value": 0,
     "description": "가고일 석상이 쥐고 있던 단단한 돌 재질의 활입니다.\n\n[획득 방법] 전투: 가고일 처치 시 획득",
-    "imgId": "item_img_15"
+    "imgId": "item_img_15",
+    "grade": "RARE"
   },
   {
     "id": "item_16",
@@ -205,7 +220,8 @@
     "isConsumable": false,
     "value": 0,
     "description": "은빛 늑대의 이빨을 정교하게 깎아 만든 최상급 단검입니다.\n\n[획득 방법] 전투: 실버 울프 처치 시 획득",
-    "imgId": "item_img_16"
+    "imgId": "item_img_16",
+    "grade": "RARE"
   },
   {
     "id": "item_17",
@@ -218,7 +234,8 @@
     "isConsumable": false,
     "value": 300,
     "description": "리자드맨이 정교하게 다듬어 낸 살상력 높은 활입니다.\n\n[획득 방법] 전투: 리자드맨 처치 / 고대 유물 상점 구매",
-    "imgId": "item_img_17"
+    "imgId": "item_img_17",
+    "grade": "RARE"
   },
   {
     "id": "item_18",
@@ -231,7 +248,8 @@
     "isConsumable": false,
     "value": 250,
     "description": "샤먼 리자드의 의식이 치러진 신비로운 마력 스태프입니다.\n\n[획득 방법] 전투: 샤먼 리자드 처치 / 고대 유물 상점 구매",
-    "imgId": "item_img_18"
+    "imgId": "item_img_18",
+    "grade": "RARE"
   },
   {
     "id": "item_19",
@@ -244,7 +262,8 @@
     "isConsumable": false,
     "value": 280,
     "description": "트롤이 들고 다니던 통나무입니다. 엄청난 파괴력을 자랑합니다.\n\n[획득 방법] 전투: 트롤 처치 / 고대 유물 상점 구매",
-    "imgId": "item_img_19"
+    "imgId": "item_img_19",
+    "grade": "RARE"
   },
   {
     "id": "item_20",
@@ -257,7 +276,8 @@
     "isConsumable": false,
     "value": 290,
     "description": "키메라의 혈액이 묻어 기분 나쁜 오라를 뿜어내는 단검입니다.\n\n[획득 방법] 전투: 키메라 처치 / 고대 유물 상점 구매",
-    "imgId": "item_img_20"
+    "imgId": "item_img_20",
+    "grade": "RARE"
   },
   {
     "id": "item_21",
@@ -270,7 +290,8 @@
     "isConsumable": false,
     "value": 0,
     "description": "드래곤의 비늘마저 뚫어버린다는 전설 속의 활입니다.\n\n[획득 방법] 전투: 드래곤 처치 시 획득",
-    "imgId": "item_img_21"
+    "imgId": "item_img_21",
+    "grade": "EPIC"
   },
   {
     "id": "item_22",
@@ -283,7 +304,8 @@
     "isConsumable": false,
     "value": 0,
     "description": "리치의 절망적인 마력이 응축된 금단의 지팡이입니다.\n\n[획득 방법] 전투: 리치 처치 시 획득",
-    "imgId": "item_img_22"
+    "imgId": "item_img_22",
+    "grade": "EPIC"
   },
   {
     "id": "item_23",
@@ -296,7 +318,8 @@
     "isConsumable": false,
     "value": 0,
     "description": "미노타우로스가 숨기고 있던 고대 문명의 치명적인 단검입니다.\n\n[획득 방법] 전투: 미노타우로스 처치 시 획득",
-    "imgId": "item_img_23"
+    "imgId": "item_img_23",
+    "grade": "EPIC"
   },
   {
     "id": "item_24",
@@ -309,7 +332,8 @@
     "isConsumable": false,
     "value": 0,
     "description": "과거의 영웅이 쥐고 있던 빛바랜, 그러나 가장 강력한 성검입니다.\n\n[획득 방법] 전투: 타락한 용사 처치 시 획득",
-    "imgId": "item_img_24"
+    "imgId": "item_img_24",
+    "grade": "EPIC"
   },
   {
     "id": "item_25",
@@ -322,7 +346,8 @@
     "isConsumable": false,
     "value": 0,
     "description": "방어력은 약하지만 활동하기 편안한 가장 기초적인 갑옷입니다.\n\n[획득 방법] 기본 아이템",
-    "imgId": "item_img_25"
+    "imgId": "item_img_25",
+    "grade": "COMMON"
   },
   {
     "id": "item_26",
@@ -335,7 +360,8 @@
     "isConsumable": false,
     "value": 60,
     "description": "홉고블린들이 입는 질긴 가죽으로 만든 옷입니다.\n\n[획득 방법] 전투: 홉고블린 처치 / 대장간 구매",
-    "imgId": "item_img_26"
+    "imgId": "item_img_26",
+    "grade": "UNCOMMON"
   },
   {
     "id": "item_27",
@@ -348,7 +374,8 @@
     "isConsumable": false,
     "value": 0,
     "description": "고블린들의 지배자만이 입을 수 있는 단단한 갑옷입니다.\n\n[획득 방법] 보스 전투: 고블린 로드 처치 시 획득",
-    "imgId": "item_img_27"
+    "imgId": "item_img_27",
+    "grade": "RARE"
   },
   {
     "id": "item_28",
@@ -361,7 +388,8 @@
     "isConsumable": false,
     "value": 255,
     "description": "오크 로드의 거대한 체구를 덮고 있던 육중한 철갑옷입니다.\n\n[획득 방법] 전투: 오크 로드 처치 / 고대 유물 상점 구매",
-    "imgId": "item_img_28"
+    "imgId": "item_img_28",
+    "grade": "EPIC"
   },
   {
     "id": "item_29",
@@ -374,7 +402,8 @@
     "isConsumable": false,
     "value": 0,
     "description": "골렘의 단단한 외피를 가공하여 만든 엄청난 내구도의 갑옷입니다.\n\n[획득 방법] 보스 전투: 골렘 처치 시 획득",
-    "imgId": "item_img_29"
+    "imgId": "item_img_29",
+    "grade": "LEGENDARY"
   },
   {
     "id": "item_30",
@@ -387,7 +416,8 @@
     "isConsumable": false,
     "value": 0,
     "description": "검게 물든 용사의 피와 의지가 서려 있는 비운의 갑옷입니다.\n\n[획득 방법] 이벤트: 갑옷 전시대에서 선택",
-    "imgId": "item_img_30"
+    "imgId": "item_img_30",
+    "grade": "EPIC"
   },
   {
     "id": "item_31",
@@ -400,7 +430,8 @@
     "isConsumable": false,
     "value": 0,
     "description": "드래곤의 비늘을 엮어 만든, 그 어떤 마법도 튕겨내는 전설의 갑주입니다.\n\n[획득 방법] 이벤트: 갑옷 전시대에서 선택",
-    "imgId": "item_img_31"
+    "imgId": "item_img_31",
+    "grade": "EPIC"
   },
   {
     "id": "item_32",
@@ -413,7 +444,8 @@
     "isConsumable": false,
     "value": 0,
     "description": "리치의 어두운 마력이 직물 사이로 흘러내리는 저주받은 로브입니다.\n\n[획득 방법] 이벤트: 갑옷 전시대에서 선택",
-    "imgId": "item_img_32"
+    "imgId": "item_img_32",
+    "grade": "EPIC"
   },
   {
     "id": "item_33",
@@ -426,7 +458,8 @@
     "isConsumable": false,
     "value": 0,
     "description": "수천 년의 시간 동안 훼손되지 않은 신비로운 망토입니다.\n\n[획득 방법] 이벤트: 갑옷 전시대에서 선택",
-    "imgId": "item_img_33"
+    "imgId": "item_img_33",
+    "grade": "EPIC"
   },
   {
     "id": "item_34",
@@ -439,7 +472,8 @@
     "isConsumable": true,
     "value": 80,
     "description": "사용 시 체력을 소량(40) 회복시켜주는 물약입니다.\n\n[획득 방법] 상점 또는 수상한 상인에게서 구매",
-    "imgId": "item_img_34"
+    "imgId": "item_img_34",
+    "grade": "COMMON"
   },
   {
     "id": "item_35",
@@ -452,7 +486,8 @@
     "isConsumable": true,
     "value": 200,
     "description": "사용 시 체력을 제법(100) 회복시켜주는 쓸만한 물약입니다.\n\n[획득 방법] 수상한 상인 또는 대장간에서 구매",
-    "imgId": "item_img_35"
+    "imgId": "item_img_35",
+    "grade": "UNCOMMON"
   },
   {
     "id": "item_36",
@@ -465,7 +500,8 @@
     "isConsumable": true,
     "value": 300,
     "description": "사용 시 체력을 크게(150) 회복시켜주는 비싼 물약입니다.\n\n[획득 방법] 수상한 상인 또는 고대 유물 상점에서 구매",
-    "imgId": "item_img_36"
+    "imgId": "item_img_36",
+    "grade": "RARE"
   },
   {
     "id": "item_37",
@@ -478,7 +514,8 @@
     "isConsumable": true,
     "value": 440,
     "description": "사용 시 빈사 상태에서도 일어날 수 있게 해주는 기적의 물약입니다.\n\n[획득 방법] 심층의 수상한 상인 또는 고대 유물 상점에서 구매",
-    "imgId": "item_img_37"
+    "imgId": "item_img_37",
+    "grade": "RARE"
   },
   {
     "id": "item_38",
@@ -491,7 +528,8 @@
     "isConsumable": false,
     "value": 100,
     "description": "주머니에 넣고 있으면 이상하게 기운이 나는 정체불명의 돌입니다.\n\n[획득 방법] 이벤트: 버려진 도서관 탐색 시 획득",
-    "imgId": "item_img_38"
+    "imgId": "item_img_38",
+    "grade": "COMMON"
   },
   {
     "id": "item_39",
@@ -504,7 +542,8 @@
     "isConsumable": false,
     "value": 200,
     "description": "조잡하지만 기이한 마력이 느껴지는 고블린 모양의 인형입니다.\n\n[획득 방법] 이벤트: 빈 고블린 오두막 탐색 시 획득",
-    "imgId": "item_img_39"
+    "imgId": "item_img_39",
+    "grade": "UNCOMMON"
   },
   {
     "id": "item_40",
@@ -517,7 +556,8 @@
     "isConsumable": false,
     "value": 350,
     "description": "오크 주술사가 뼈와 가죽으로 엮어 만든 주술 목걸이입니다.\n\n[획득 방법] 이벤트: 오크 부족의 주술사에게서 획득",
-    "imgId": "item_img_40"
+    "imgId": "item_img_40",
+    "grade": "RARE"
   },
   {
     "id": "item_41",
@@ -530,7 +570,8 @@
     "isConsumable": false,
     "value": 500,
     "description": "가슴속에서 불타고 있는 동력원으로, 신비한 힘을 제공합니다.\n\n[획득 방법] 이벤트: 버려진 연구실 탐색 시 획득",
-    "imgId": "item_img_41"
+    "imgId": "item_img_41",
+    "grade": "RARE"
   },
   {
     "id": "item_42",
@@ -543,7 +584,8 @@
     "isConsumable": false,
     "value": 0,
     "description": "마왕이 소멸한 뒤 남겨진 어둠의 파편입니다.\n\n[획득 방법] 보스 전투: 마왕 처치 시 획득",
-    "imgId": "item_img_42"
+    "imgId": "item_img_42",
+    "grade": "LEGENDARY"
   },
   {
     "id": "item_43",
@@ -556,7 +598,8 @@
     "isConsumable": false,
     "value": 0,
     "description": "변이된 거대 박쥐의 질긴 가죽으로 만든 옷입니다.\n\n[획득 방법] 보스 전투: 거대 박쥐 처치 시 획득",
-    "imgId": "item_img_43"
+    "imgId": "item_img_43",
+    "grade": "UNCOMMON"
   },
   {
     "id": "item_44",
@@ -569,7 +612,8 @@
     "isConsumable": false,
     "value": 0,
     "description": "망령 기사단장이 휘두르던 저주받은 대검입니다.\n\n[획득 방법] 보스 전투: 망령 기사단장 처치 시 획득",
-    "imgId": "item_img_44"
+    "imgId": "item_img_44",
+    "grade": "RARE"
   },
   {
     "id": "item_45",
@@ -582,7 +626,8 @@
     "isConsumable": false,
     "value": 0,
     "description": "피에 물든 사신이 영혼을 수확할 때 쓰던 끔찍한 낫입니다.\n\n[획득 방법] 히든 보스 전투: 사신 처치 시 획득",
-    "imgId": "item_img_45"
+    "imgId": "item_img_45",
+    "grade": "RARE"
   },
   {
     "id": "item_46",
@@ -595,7 +640,8 @@
     "isConsumable": false,
     "value": 0,
     "description": "오크 워로드가 전장을 휩쓸던 거대한 양손 도끼입니다.\n\n[획득 방법] 보스 전투: 오크 워로드 처치 시 획득",
-    "imgId": "item_img_46"
+    "imgId": "item_img_46",
+    "grade": "EPIC"
   },
   {
     "id": "item_47",
@@ -608,7 +654,8 @@
     "isConsumable": false,
     "value": 0,
     "description": "늪지대 군주가 다루던 매서운 삼지창입니다.\n\n[획득 방법] 보스 전투: 늪지대 군주 처치 시 획득",
-    "imgId": "item_img_47"
+    "imgId": "item_img_47",
+    "grade": "LEGENDARY"
   },
   {
     "id": "item_48",
@@ -621,6 +668,679 @@
     "isConsumable": false,
     "value": 0,
     "description": "태초의 골렘을 움직이던 무한한 마력의 핵입니다.\n\n[획득 방법] 히든 보스 전투: 태초의 골렘 처치 시 획득",
-    "imgId": "item_img_48"
+    "imgId": "item_img_48",
+    "grade": "LEGENDARY"
+  },
+  {
+    "id": "item_49",
+    "name": "거미줄 채찍",
+    "type": "weapon",
+    "hp": 0,
+    "atk": 9,
+    "magicDamage": 0,
+    "crit": 10,
+    "isConsumable": false,
+    "value": 0,
+    "description": "질긴 거미줄을 꼬아 만든 채찍입니다. 휘두를 때마다 끈적한 실이 달라붙습니다.\n\n[획득 방법] 전투: 동굴 거미 처치 시 획득",
+    "imgId": "item_img_49",
+    "grade": "COMMON"
+  },
+  {
+    "id": "item_50",
+    "name": "버섯 지팡이",
+    "type": "weapon",
+    "hp": 0,
+    "atk": 7,
+    "magicDamage": 10,
+    "crit": 5,
+    "isConsumable": false,
+    "value": 0,
+    "description": "독버섯 괴물의 줄기를 말려 만든 지팡이입니다. 끝에서 희미한 포자가 피어오릅니다.\n\n[획득 방법] 전투: 독버섯 괴물 처치 시 획득",
+    "imgId": "item_img_50",
+    "grade": "COMMON"
+  },
+  {
+    "id": "item_51",
+    "name": "주술사의 해골 지팡이",
+    "type": "weapon",
+    "hp": 0,
+    "atk": 14,
+    "magicDamage": 18,
+    "crit": 6,
+    "isConsumable": false,
+    "value": 0,
+    "description": "고블린 주술사장이 쓰던 해골 지팡이입니다. 조잡하지만 마력이 제법 깃들어 있습니다.\n\n[획득 방법] 보스 전투: 고블린 주술사장 처치 시 획득",
+    "imgId": "item_img_51",
+    "grade": "UNCOMMON"
+  },
+  {
+    "id": "item_52",
+    "name": "구울의 갈퀴",
+    "type": "weapon",
+    "hp": 0,
+    "atk": 16,
+    "magicDamage": 0,
+    "crit": 12,
+    "isConsumable": false,
+    "value": 0,
+    "description": "구울의 손톱을 그대로 박아 넣은 갈퀴입니다. 한 번 긁히면 상처가 잘 아물지 않습니다.\n\n[획득 방법] 전투: 구울 처치 시 획득",
+    "imgId": "item_img_52",
+    "grade": "UNCOMMON"
+  },
+  {
+    "id": "item_53",
+    "name": "하피의 깃털 활",
+    "type": "weapon",
+    "hp": 0,
+    "atk": 22,
+    "magicDamage": 0,
+    "crit": 18,
+    "isConsumable": false,
+    "value": 0,
+    "description": "하피의 칼날 깃털로 만든 가벼운 활입니다. 화살이 바람을 가르며 날아갑니다.\n\n[획득 방법] 전투: 하피 처치 시 획득",
+    "imgId": "item_img_53",
+    "grade": "RARE"
+  },
+  {
+    "id": "item_54",
+    "name": "오우거의 통나무 곤봉",
+    "type": "weapon",
+    "hp": 0,
+    "atk": 24,
+    "magicDamage": 0,
+    "crit": 3,
+    "isConsumable": false,
+    "value": 0,
+    "description": "오우거가 휘두르던 통나무에 쇠를 박은 곤봉입니다. 무겁지만 한 방이 묵직합니다.\n\n[획득 방법] 전투: 오우거 처치 시 획득",
+    "imgId": "item_img_54",
+    "grade": "RARE"
+  },
+  {
+    "id": "item_55",
+    "name": "흑기사의 흑검",
+    "type": "weapon",
+    "hp": 0,
+    "atk": 34,
+    "magicDamage": 5,
+    "crit": 12,
+    "isConsumable": false,
+    "value": 0,
+    "description": "빛을 반사하지 않는 검은 검입니다. 흑기사의 이름 없는 맹세가 새겨져 있습니다.\n\n[획득 방법] 보스 전투: 흑기사 처치 시 획득",
+    "imgId": "item_img_55",
+    "grade": "EPIC"
+  },
+  {
+    "id": "item_56",
+    "name": "바실리스크 독니 단검",
+    "type": "weapon",
+    "hp": 0,
+    "atk": 30,
+    "magicDamage": 0,
+    "crit": 20,
+    "isConsumable": false,
+    "value": 650,
+    "description": "바실리스크의 독니를 날로 쓴 단검입니다. 스치기만 해도 독이 퍼집니다.\n\n[획득 방법] 전투: 바실리스크 처치 / 심연의 무기고에서 구매",
+    "imgId": "item_img_56",
+    "grade": "RARE"
+  },
+  {
+    "id": "item_57",
+    "name": "와이번 창",
+    "type": "weapon",
+    "hp": 0,
+    "atk": 32,
+    "magicDamage": 0,
+    "crit": 12,
+    "isConsumable": false,
+    "value": 680,
+    "description": "와이번의 독침을 창끝으로 단 긴 창입니다.\n\n[획득 방법] 전투: 와이번 처치 / 심연의 무기고에서 구매",
+    "imgId": "item_img_57",
+    "grade": "RARE"
+  },
+  {
+    "id": "item_58",
+    "name": "파수꾼의 석창",
+    "type": "weapon",
+    "hp": 0,
+    "atk": 40,
+    "magicDamage": 10,
+    "crit": 10,
+    "isConsumable": false,
+    "value": 0,
+    "description": "미궁의 파수꾼이 쥐고 있던 돌창입니다. 미궁의 문양이 희미하게 빛납니다.\n\n[획득 방법] 보스 전투: 미궁의 파수꾼 처치 시 획득",
+    "imgId": "item_img_58",
+    "grade": "EPIC"
+  },
+  {
+    "id": "item_59",
+    "name": "데스나이트의 마검",
+    "type": "weapon",
+    "hp": 0,
+    "atk": 44,
+    "magicDamage": 15,
+    "crit": 10,
+    "isConsumable": false,
+    "value": 900,
+    "description": "데스나이트의 냉기가 아직 남아 있는 마검입니다.\n\n[획득 방법] 전투: 데스나이트 처치 / 심연의 무기고에서 구매",
+    "imgId": "item_img_59",
+    "grade": "EPIC"
+  },
+  {
+    "id": "item_60",
+    "name": "혈마의 지팡이",
+    "type": "weapon",
+    "hp": 0,
+    "atk": 36,
+    "magicDamage": 45,
+    "crit": 10,
+    "isConsumable": false,
+    "value": 880,
+    "description": "뱀파이어가 피로 마력을 채운 지팡이입니다. 붉은 보석이 맥박처럼 뜁니다.\n\n[획득 방법] 전투: 뱀파이어 처치 / 심연의 무기고에서 구매",
+    "imgId": "item_img_60",
+    "grade": "EPIC"
+  },
+  {
+    "id": "item_61",
+    "name": "피의 군주의 장검",
+    "type": "weapon",
+    "hp": 0,
+    "atk": 52,
+    "magicDamage": 25,
+    "crit": 15,
+    "isConsumable": false,
+    "value": 0,
+    "description": "피의 군주가 천 년 동안 휘두른 장검입니다. 칼날에서 핏빛 안개가 피어오릅니다.\n\n[획득 방법] 보스 전투: 피의 군주 처치 시 획득",
+    "imgId": "item_img_61",
+    "grade": "LEGENDARY"
+  },
+  {
+    "id": "item_62",
+    "name": "지옥불 도끼",
+    "type": "weapon",
+    "hp": 0,
+    "atk": 50,
+    "magicDamage": 0,
+    "crit": 8,
+    "isConsumable": false,
+    "value": 1100,
+    "description": "지옥견의 불꽃으로 벼린 도끼입니다. 날이 식지 않습니다.\n\n[획득 방법] 전투: 지옥견 처치 / 용암 대장간에서 구매",
+    "imgId": "item_img_62",
+    "grade": "EPIC"
+  },
+  {
+    "id": "item_63",
+    "name": "불꽃 정령의 홀",
+    "type": "weapon",
+    "hp": 0,
+    "atk": 42,
+    "magicDamage": 55,
+    "crit": 10,
+    "isConsumable": false,
+    "value": 1150,
+    "description": "화염 정령의 핵을 박아 넣은 홀입니다. 쥐고 있으면 손끝이 따뜻해집니다.\n\n[획득 방법] 전투: 화염 정령 처치 / 용암 대장간에서 구매",
+    "imgId": "item_img_63",
+    "grade": "EPIC"
+  },
+  {
+    "id": "item_64",
+    "name": "용골 대궁",
+    "type": "weapon",
+    "hp": 0,
+    "atk": 52,
+    "magicDamage": 0,
+    "crit": 25,
+    "isConsumable": false,
+    "value": 1200,
+    "description": "해골 용의 갈비뼈를 깎아 만든 커다란 활입니다.\n\n[획득 방법] 전투: 해골 용 처치 / 용암 대장간에서 구매",
+    "imgId": "item_img_64",
+    "grade": "EPIC"
+  },
+  {
+    "id": "item_65",
+    "name": "그림자 쌍단검",
+    "type": "weapon",
+    "hp": 0,
+    "atk": 48,
+    "magicDamage": 0,
+    "crit": 30,
+    "isConsumable": false,
+    "value": 1180,
+    "description": "암흑 엘프 암살자가 쓰던 한 쌍의 단검입니다. 그림자 속에서 더 날카로워집니다.\n\n[획득 방법] 전투: 암흑 엘프 암살자 처치 / 용암 대장간에서 구매",
+    "imgId": "item_img_65",
+    "grade": "EPIC"
+  },
+  {
+    "id": "item_66",
+    "name": "서리 대검",
+    "type": "weapon",
+    "hp": 0,
+    "atk": 60,
+    "magicDamage": 0,
+    "crit": 8,
+    "isConsumable": false,
+    "value": 0,
+    "description": "서리 거인의 얼음을 녹이지 않고 벼린 대검입니다. 베인 곳이 그대로 얼어붙습니다.\n\n[획득 방법] 전투: 서리 거인 처치 시 획득",
+    "imgId": "item_img_66",
+    "grade": "EPIC"
+  },
+  {
+    "id": "item_67",
+    "name": "해신의 삼지창",
+    "type": "weapon",
+    "hp": 0,
+    "atk": 58,
+    "magicDamage": 20,
+    "crit": 15,
+    "isConsumable": false,
+    "value": 0,
+    "description": "크라켄이 삼키고 있던 고대 해신의 삼지창입니다.\n\n[획득 방법] 전투: 크라켄 처치 시 획득",
+    "imgId": "item_img_67",
+    "grade": "EPIC"
+  },
+  {
+    "id": "item_68",
+    "name": "드레이크 송곳 창",
+    "type": "weapon",
+    "hp": 0,
+    "atk": 62,
+    "magicDamage": 0,
+    "crit": 18,
+    "isConsumable": false,
+    "value": 0,
+    "description": "마그마 드레이크의 뿔을 창끝으로 쓴 창입니다. 용암처럼 붉게 달아 있습니다.\n\n[획득 방법] 전투: 마그마 드레이크 처치 시 획득",
+    "imgId": "item_img_68",
+    "grade": "EPIC"
+  },
+  {
+    "id": "item_69",
+    "name": "공허의 마도서",
+    "type": "weapon",
+    "hp": 0,
+    "atk": 50,
+    "magicDamage": 70,
+    "crit": 10,
+    "isConsumable": false,
+    "value": 0,
+    "description": "공허의 감시자가 지키던 마도서입니다. 읽을 때마다 글자가 바뀝니다.\n\n[획득 방법] 전투: 공허의 감시자 처치 시 획득",
+    "imgId": "item_img_69",
+    "grade": "EPIC"
+  },
+  {
+    "id": "item_70",
+    "name": "마왕군 근위 창",
+    "type": "weapon",
+    "hp": 0,
+    "atk": 70,
+    "magicDamage": 0,
+    "crit": 15,
+    "isConsumable": false,
+    "value": 0,
+    "description": "마왕군 근위병에게만 주어지는 검은 창입니다.\n\n[획득 방법] 전투: 마왕군 근위병 처치 시 획득",
+    "imgId": "item_img_70",
+    "grade": "LEGENDARY"
+  },
+  {
+    "id": "item_71",
+    "name": "대천사의 검",
+    "type": "weapon",
+    "hp": 0,
+    "atk": 74,
+    "magicDamage": 30,
+    "crit": 15,
+    "isConsumable": false,
+    "value": 0,
+    "description": "타락한 대천사가 버리지 못한 성검입니다. 검은 날 속에 아직 빛이 남아 있습니다.\n\n[획득 방법] 전투: 타락한 대천사 처치 시 획득",
+    "imgId": "item_img_71",
+    "grade": "LEGENDARY"
+  },
+  {
+    "id": "item_72",
+    "name": "처형인의 대도끼",
+    "type": "weapon",
+    "hp": 0,
+    "atk": 80,
+    "magicDamage": 0,
+    "crit": 10,
+    "isConsumable": false,
+    "value": 0,
+    "description": "마왕의 처형인이 수많은 목을 거둔 대도끼입니다.\n\n[획득 방법] 전투: 마왕의 처형인 처치 시 획득",
+    "imgId": "item_img_72",
+    "grade": "LEGENDARY"
+  },
+  {
+    "id": "item_73",
+    "name": "저주받은 흉갑",
+    "type": "armor",
+    "hp": 30,
+    "atk": 0,
+    "magicDamage": 0,
+    "crit": 0,
+    "isConsumable": false,
+    "value": 0,
+    "description": "저주받은 갑옷에서 떼어 낸 흉갑입니다. 저주는 풀렸지만 여전히 차갑습니다.\n\n[획득 방법] 전투: 저주받은 갑옷 처치 시 획득",
+    "imgId": "item_img_73",
+    "grade": "UNCOMMON"
+  },
+  {
+    "id": "item_74",
+    "name": "용암석 갑옷",
+    "type": "armor",
+    "hp": 200,
+    "atk": 0,
+    "magicDamage": 0,
+    "crit": 0,
+    "isConsumable": false,
+    "value": 0,
+    "description": "용암 골렘의 식은 몸으로 만든 돌 갑옷입니다. 불길에도 끄떡없습니다.\n\n[획득 방법] 전투: 용암 골렘 처치 시 획득",
+    "imgId": "item_img_74",
+    "grade": "EPIC"
+  },
+  {
+    "id": "item_75",
+    "name": "서리 늑대 모피",
+    "type": "armor",
+    "hp": 230,
+    "atk": 0,
+    "magicDamage": 0,
+    "crit": 5,
+    "isConsumable": false,
+    "value": 0,
+    "description": "서리 늑대 우두머리의 모피입니다. 몸이 가벼워지고 눈이 밝아집니다.\n\n[획득 방법] 전투: 서리 늑대 처치 시 획득",
+    "imgId": "item_img_75",
+    "grade": "EPIC"
+  },
+  {
+    "id": "item_76",
+    "name": "악마 기사의 판금갑옷",
+    "type": "armor",
+    "hp": 270,
+    "atk": 0,
+    "magicDamage": 0,
+    "crit": 0,
+    "isConsumable": false,
+    "value": 0,
+    "description": "지옥의 쇠로 만든 판금갑옷입니다. 무겁지만 무엇이든 막아 냅니다.\n\n[획득 방법] 전투: 악마 기사 처치 시 획득",
+    "imgId": "item_img_76",
+    "grade": "EPIC"
+  },
+  {
+    "id": "item_77",
+    "name": "용비늘 흉갑",
+    "type": "armor",
+    "hp": 220,
+    "atk": 0,
+    "magicDamage": 0,
+    "crit": 0,
+    "isConsumable": false,
+    "value": 0,
+    "description": "용의 비늘을 겹겹이 엮은 흉갑입니다.\n\n[획득 방법] 이벤트: 용의 보물고에서 선택",
+    "imgId": "item_img_77",
+    "grade": "EPIC"
+  },
+  {
+    "id": "item_78",
+    "name": "화염 정령의 로브",
+    "type": "armor",
+    "hp": 200,
+    "atk": 0,
+    "magicDamage": 30,
+    "crit": 0,
+    "isConsumable": false,
+    "value": 0,
+    "description": "화염 정령의 불꽃으로 짠 로브입니다. 마법이 더 뜨겁게 타오릅니다.\n\n[획득 방법] 이벤트: 용의 보물고에서 선택",
+    "imgId": "item_img_78",
+    "grade": "EPIC"
+  },
+  {
+    "id": "item_79",
+    "name": "그림자 경갑",
+    "type": "armor",
+    "hp": 200,
+    "atk": 0,
+    "magicDamage": 0,
+    "crit": 10,
+    "isConsumable": false,
+    "value": 0,
+    "description": "소리 없이 움직일 수 있는 얇은 경갑입니다.\n\n[획득 방법] 이벤트: 용의 보물고에서 선택",
+    "imgId": "item_img_79",
+    "grade": "EPIC"
+  },
+  {
+    "id": "item_80",
+    "name": "서리 왕의 갑주",
+    "type": "armor",
+    "hp": 300,
+    "atk": 0,
+    "magicDamage": 0,
+    "crit": 0,
+    "isConsumable": false,
+    "value": 0,
+    "description": "얼어붙은 왕이 잠들 때 입고 있던 갑주입니다.\n\n[획득 방법] 이벤트: 얼어붙은 왕의 무덤에서 선택",
+    "imgId": "item_img_80",
+    "grade": "LEGENDARY"
+  },
+  {
+    "id": "item_81",
+    "name": "별빛 로브",
+    "type": "armor",
+    "hp": 270,
+    "atk": 0,
+    "magicDamage": 40,
+    "crit": 0,
+    "isConsumable": false,
+    "value": 0,
+    "description": "왕의 궁정 마법사가 입던 로브입니다. 밤하늘처럼 별이 반짝입니다.\n\n[획득 방법] 이벤트: 얼어붙은 왕의 무덤에서 선택",
+    "imgId": "item_img_81",
+    "grade": "LEGENDARY"
+  },
+  {
+    "id": "item_82",
+    "name": "왕가의 사냥꾼 망토",
+    "type": "armor",
+    "hp": 270,
+    "atk": 0,
+    "magicDamage": 0,
+    "crit": 12,
+    "isConsumable": false,
+    "value": 0,
+    "description": "왕의 사냥꾼에게 내려진 망토입니다. 걸치면 사냥감의 빈틈이 보입니다.\n\n[획득 방법] 이벤트: 얼어붙은 왕의 무덤에서 선택",
+    "imgId": "item_img_82",
+    "grade": "LEGENDARY"
+  },
+  {
+    "id": "item_83",
+    "name": "모험가의 부적",
+    "type": "artifact",
+    "hp": 8,
+    "atk": 8,
+    "magicDamage": 3,
+    "crit": 3,
+    "isConsumable": false,
+    "value": 0,
+    "description": "먼저 쓰러진 모험가가 남긴 낡은 부적입니다. 작은 행운이 깃들어 있습니다.\n\n[획득 방법] 이벤트: 버려진 모험가의 배낭에서 획득",
+    "imgId": "item_img_83",
+    "grade": "COMMON"
+  },
+  {
+    "id": "item_84",
+    "name": "해골 대군주의 왕관",
+    "type": "artifact",
+    "hp": 40,
+    "atk": 40,
+    "magicDamage": 20,
+    "crit": 8,
+    "isConsumable": false,
+    "value": 0,
+    "description": "해골 대군주가 쓰고 있던 뼈 왕관입니다. 망자들이 고개를 숙입니다.\n\n[획득 방법] 보스 전투: 해골 대군주 처치 시 획득",
+    "imgId": "item_img_84",
+    "grade": "LEGENDARY"
+  },
+  {
+    "id": "item_85",
+    "name": "이프리트의 불씨",
+    "type": "artifact",
+    "hp": 35,
+    "atk": 45,
+    "magicDamage": 25,
+    "crit": 8,
+    "isConsumable": false,
+    "value": 0,
+    "description": "이프리트가 쓰러지며 남긴 꺼지지 않는 불씨입니다.\n\n[획득 방법] 보스 전투: 화염의 군주 이프리트 처치 시 획득",
+    "imgId": "item_img_85",
+    "grade": "LEGENDARY"
+  },
+  {
+    "id": "item_86",
+    "name": "공허의 핵",
+    "type": "artifact",
+    "hp": 50,
+    "atk": 55,
+    "magicDamage": 30,
+    "crit": 10,
+    "isConsumable": false,
+    "value": 0,
+    "description": "공허의 군주의 중심에 있던 검은 구슬입니다. 들여다보면 끝이 보이지 않습니다.\n\n[획득 방법] 보스 전투: 공허의 군주 처치 시 획득",
+    "imgId": "item_img_86",
+    "grade": "LEGENDARY"
+  },
+  {
+    "id": "item_87",
+    "name": "흑룡의 심장",
+    "type": "artifact",
+    "hp": 60,
+    "atk": 50,
+    "magicDamage": 25,
+    "crit": 12,
+    "isConsumable": false,
+    "value": 0,
+    "description": "아직도 뛰고 있는 고대 흑룡의 심장입니다.\n\n[획득 방법] 보스 전투: 고대 흑룡 처치 시 획득",
+    "imgId": "item_img_87",
+    "grade": "LEGENDARY"
+  },
+  {
+    "id": "item_88",
+    "name": "피의 성배",
+    "type": "artifact",
+    "hp": 40,
+    "atk": 35,
+    "magicDamage": 25,
+    "crit": 8,
+    "isConsumable": false,
+    "value": 0,
+    "description": "피의 제단에 놓여 있던 성배입니다. 마르지 않는 피가 고여 있습니다.\n\n[획득 방법] 이벤트: 피의 제단에서 획득",
+    "imgId": "item_img_88",
+    "grade": "EPIC"
+  },
+  {
+    "id": "item_89",
+    "name": "고급 포션",
+    "type": "consumables",
+    "hp": 300,
+    "atk": 0,
+    "magicDamage": 0,
+    "crit": 0,
+    "isConsumable": true,
+    "value": 600,
+    "description": "마왕성의 마력에도 버티도록 진하게 달인 회복약입니다.\n\n[획득 방법] 51층 이후의 상점에서 구매",
+    "imgId": "item_img_89",
+    "grade": "EPIC"
+  },
+  {
+    "id": "item_90",
+    "name": "영웅의 포션",
+    "type": "consumables",
+    "hp": 400,
+    "atk": 0,
+    "magicDamage": 0,
+    "crit": 0,
+    "isConsumable": true,
+    "value": 800,
+    "description": "전설 속 영웅들이 마셨다는 회복약입니다.\n\n[획득 방법] 51층 이후의 상점에서 구매",
+    "imgId": "item_img_90",
+    "grade": "EPIC"
+  },
+  {
+    "id": "item_91",
+    "name": "전설의 포션",
+    "type": "consumables",
+    "hp": 550,
+    "atk": 0,
+    "magicDamage": 0,
+    "crit": 0,
+    "isConsumable": true,
+    "value": 1100,
+    "description": "한 방울로 쓰러진 기사를 일으켜 세운다는 회복약입니다.\n\n[획득 방법] 61층 이후의 상점에서 구매",
+    "imgId": "item_img_91",
+    "grade": "LEGENDARY"
+  },
+  {
+    "id": "item_92",
+    "name": "엘릭서",
+    "type": "consumables",
+    "hp": 800,
+    "atk": 0,
+    "magicDamage": 0,
+    "crit": 0,
+    "isConsumable": true,
+    "value": 1600,
+    "description": "연금술의 끝에 도달한 자만 만들 수 있다는 만병통치약입니다.\n\n[획득 방법] 71층 이후의 상점에서 구매",
+    "imgId": "item_img_92",
+    "grade": "LEGENDARY"
+  },
+  {
+    "id": "item_93",
+    "name": "약초",
+    "type": "consumables",
+    "hp": 25,
+    "atk": 0,
+    "magicDamage": 0,
+    "crit": 0,
+    "isConsumable": true,
+    "value": 40,
+    "description": "던전 입구 근처에서 흔히 자라는 약초입니다. 씹으면 쓴맛과 함께 상처가 아뭅니다.\n\n[획득 방법] 1층 ~ 9층 던전 상점에서 구매",
+    "imgId": "item_img_93",
+    "grade": "COMMON"
+  },
+  {
+    "id": "item_94",
+    "name": "치유의 물약",
+    "type": "consumables",
+    "hp": 70,
+    "atk": 0,
+    "magicDamage": 0,
+    "crit": 0,
+    "isConsumable": true,
+    "value": 140,
+    "description": "약초를 달여 만든 묽은 물약입니다.\n\n[획득 방법] 11층 ~ 19층 던전 상점에서 구매",
+    "imgId": "item_img_94",
+    "grade": "COMMON"
+  },
+  {
+    "id": "item_95",
+    "name": "진한 회복약",
+    "type": "consumables",
+    "hp": 130,
+    "atk": 0,
+    "magicDamage": 0,
+    "crit": 0,
+    "isConsumable": true,
+    "value": 260,
+    "description": "여러 약초를 섞어 진하게 달인 회복약입니다.\n\n[획득 방법] 21층 ~ 39층 던전 상점에서 구매",
+    "imgId": "item_img_95",
+    "grade": "UNCOMMON"
+  },
+  {
+    "id": "item_96",
+    "name": "신성한 물약",
+    "type": "consumables",
+    "hp": 190,
+    "atk": 0,
+    "magicDamage": 0,
+    "crit": 0,
+    "isConsumable": true,
+    "value": 380,
+    "description": "신전의 성수로 만든 물약입니다.\n\n[획득 방법] 41층 ~ 49층 던전 상점에서 구매",
+    "imgId": "item_img_96",
+    "grade": "RARE"
   }
 ]

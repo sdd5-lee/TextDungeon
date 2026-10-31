@@ -233,6 +233,50 @@ public class TemplateEventGeneratorTest {
     }
 
     @Test
+    public void 시련의_신은_그_스탯을_시험하는_결투이고_수치는_비워_둔다() throws Exception {
+        for (AiType god : new AiType[]{AiType.MAGIC, AiType.THIEF, AiType.STRENGTH, AiType.TRAINING}) {
+            TemplateEventGenerator.Plan p = plan(god);
+            assertEquals(god.name(), "battle", p.type);
+            assertEquals("mon_1", p.enemy.getId());
+            TemplateEventGenerator.Outcome win = p.outcomes.get(0);
+            assertEquals("battle", win.action);
+            assertEquals(god.getTrialStat(), win.trialStat);
+            // 보상은 그 스탯뿐이고, 양은 싸울 때 정한다
+            assertTrue(win.stats.isEmpty());
+            assertNull(win.itemId);
+            assertEquals("escape", p.outcomes.get(1).action);
+            assertTrue(p.outcomes.get(1).stats.isEmpty());
+
+            String prompt = TemplateEventGenerator.prompt(p);
+            assertTrue(prompt, prompt.startsWith("[꿈속 천상에서 " + god.getGodName() + "이 내리는 시련]"));
+            assertTrue(prompt, prompt.contains("이기면 " + god.getTrialStat() + "이(가) 오른다"));
+
+            GameEvent e = new TemplateEventGenerator(null).toEvent(ANSWER, p, 2, 1);
+            assertTrue(e instanceof BattleEvent);
+            assertEquals(god.getTrialStat(), e.getTrialStat());
+            // 묘사 끝에 수치를 붙이지 않는다 (이길 때 GameEvent.execute가 붙인다)
+            assertTrue(e.getRewards().get(0).getDescription().endsWith("솟구친다."));
+        }
+    }
+
+    @Test
+    public void 다른_신의_이벤트는_시련이_아니다() throws Exception {
+        GameEvent e = new TemplateEventGenerator(null).toEvent(ANSWER, plan(AiType.STRUGGLE), 1, 1);
+        assertNull(e.getTrialStat());
+        assertTrue(TemplateEventGenerator.prompt(plan(AiType.DEATH)).contains("이 내리는 축복]"));
+    }
+
+    @Test
+    public void 시련의_신도_몬스터가_없으면_그_스탯을_주는_수련() {
+        TemplateEventGenerator.Plan p = TemplateEventGenerator.plan(AiType.THIEF, 21, form(GodForms.Grade.LOW),
+                items("d1"), new ArrayList<>(), new Random(1));
+        assertEquals("normal", p.type);
+        assertTrue(stat(p.outcomes.get(0), "민첩") > 0);
+        assertTrue(stat(p.outcomes.get(0), "데미지") > 0);
+        assertNull(p.outcomes.get(0).trialStat);
+    }
+
+    @Test
     public void 보물_이벤트는_아이템을_보상에_넣는다() throws Exception {
         TemplateEventGenerator.Plan p = plan(AiType.TREASURE);
         GameEvent e = new TemplateEventGenerator(null).toEvent(ANSWER, p, 1, 1);

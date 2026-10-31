@@ -34,7 +34,7 @@
             android:name="com.textdungeon.activity_control.SystemSettingActivity"
             android:exported="true" />
         <activity
-            android:name="com.textdungeon.activity_control.DifficultyActivity"
+            android:name="com.textdungeon.activity_control.DungeonActivity"
             android:exported="true" />
         <activity
             android:name="com.textdungeon.activity_control.MainActivity"

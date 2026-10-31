@@ -11,12 +11,12 @@ import com.google.gson.JsonParser;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class DataControl<D> {
-    private final Map<String, String> dataList = new HashMap<>();
+    private final Map<String, String> dataList = new LinkedHashMap<>(); // getAll()이 json에 적힌 순서를 따르게
     private final Class<D> clazz;
     private final Gson gson;
 

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.example.textdungeon.R;
 import com.google.android.material.snackbar.Snackbar;
 import com.textdungeon.activity_control.GameImages;
+import com.textdungeon.activity_control.ItemFrames;
 import com.textdungeon.data.DataControl;
 import com.textdungeon.model.Item;
 import com.textdungeon.player.Equipment;
@@ -112,7 +113,8 @@ public class InventoryDialog extends Dialog {
             ImageView actionIcon = itemSlot.findViewById(R.id.action_icon);
 
             Item item = itemLibrary.spawn(itemId);
-            GameImages.set(actionIcon, item.getImgId(), 0);
+            ItemFrames.setIcon(actionIcon, item);
+            itemSlot.setBackground(ItemFrames.frame(getContext(), item.getGrade()));
 
             itemSlot.setOnClickListener(v -> showItemActionDialog(item, itemMap.get(itemId)));
 
@@ -146,6 +148,7 @@ public class InventoryDialog extends Dialog {
         TextView btnMainAction = itemDialog.findViewById(R.id.btn_main_action);
 
         name.setText(item.getName() + " :  "+ count +"개");
+        showGrade(itemDialog, item, name);
 
         StringBuilder sb = new StringBuilder();
         sb.append(item.getDescription());
@@ -171,9 +174,9 @@ public class InventoryDialog extends Dialog {
         if (hasStats) {
             sb.append("\n\n").append(stats.toString());
         }
-        desc.setText(sb.toString());
+        desc.setText(ItemFrames.withLabel(item, sb));
 
-        getItemIcon(item, icon);
+        ItemFrames.setIcon(icon, item);
 
         if (item.getType().equalsIgnoreCase("consumables")) {
             btnMainAction.setText("사용하기");
@@ -234,8 +237,9 @@ public class InventoryDialog extends Dialog {
         TextView btnMainAction = itemDialog.findViewById(R.id.btn_main_action);
 
         name.setText(item.getName() + " (장착 중)");
-        desc.setText(item.getDescription());
-        getItemIcon(item, icon);
+        showGrade(itemDialog, item, name);
+        desc.setText(ItemFrames.withLabel(item, item.getDescription()));
+        ItemFrames.setIcon(icon, item);
 
         btnDiscard.setVisibility(View.GONE);
 
@@ -265,11 +269,12 @@ public class InventoryDialog extends Dialog {
         ImageView slotIcon = slotLayout.findViewById(iconId);
 
         if (item != null) {
-            getItemIcon(item, slotIcon);
+            ItemFrames.setIcon(slotIcon, item);
             slotIcon.setAlpha(1.0f);
-            slotLayout.setBackgroundColor(Color.parseColor("#44E9C176"));
+            slotLayout.setBackground(ItemFrames.frame(getContext(), item.getGrade()));
         } else {
             GameImages.set(slotIcon, defaultIconName, 0);
+            slotIcon.clearColorFilter();
 
             slotIcon.setAlpha(0.3f);
             slotLayout.setBackgroundResource(R.drawable.bg_event_panel);
@@ -307,21 +312,10 @@ public class InventoryDialog extends Dialog {
             snackbar.show();
         }
     }
-    private void getItemIcon(Item item,ImageView icon){
-        String imgName = item.getImgId();
-        if (imgName == null || imgName.trim().isEmpty()) {
-            imgName = getIconNameByType(item.getType());
-        }
-        GameImages.set(icon, imgName, 0);
-    }
-    private String getIconNameByType(String type) {
-        switch (type.toLowerCase()) {
-            case "weapon": return "ic_weapon";
-            case "armor": return "ic_armor";
-            case "consumables": return "ic_potion";
-            case "artifact": return "ic_artifact";
-            default: return "ic_default";
-        }
+    /** 아이템 창의 그림 칸 틀과 이름 색을 등급에 맞춘다 */
+    private void showGrade(Dialog itemDialog, Item item, TextView name) {
+        itemDialog.findViewById(R.id.icon_container).setBackground(ItemFrames.frame(getContext(), item.getGrade()));
+        name.setTextColor(item.getGrade().color);
     }
 
 

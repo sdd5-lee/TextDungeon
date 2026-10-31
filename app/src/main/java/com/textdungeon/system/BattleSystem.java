@@ -3,12 +3,13 @@ package com.textdungeon.system;
 import android.content.Context;
 
 import com.textdungeon.data.DataControlTower;
-import com.textdungeon.data.Difficulty;
 import com.textdungeon.model.Magic;
 import com.textdungeon.model.Monster;
+import com.textdungeon.model.MonsterPattern;
 import com.textdungeon.model.Trait;
 import com.textdungeon.player.Player;
 import com.textdungeon.model.LearnedMagic;
+import java.util.List;
 import java.util.Random;
 
 public class BattleSystem {
@@ -19,16 +20,24 @@ public class BattleSystem {
 
     private String enemyName;
     private int enemyHp;
+    private final int enemyMaxHp;
     private int enemyAttack;
+    /** 기운을 모으는 중인 기술 (다음 적 턴에 쓴다) */
+    private MonsterPattern charging;
+    /** 보스가 체력 절반 이하가 되어 두 번째 기술을 꺼냈는지 */
+    private boolean enraged;
 
     private int battleTurn;
     private boolean isPlayerTurn = true;
     private boolean isBattleOver = false;
     private boolean escapeState = false;
     private int lastDamageTaken; // 이번 행동에서 플레이어가 받은 피해 (화면 흔들기용)
+    private boolean playerDefending; // 내 턴에 방어했는지 (적의 턴에 쓴다)
+    private final MagicCooldowns cooldowns = new MagicCooldowns();
     private Random random = new Random();
 
-    public BattleSystem(Player player, Monster monster, Context context, Difficulty difficulty) {
+    /** @param statMultiplier 던전의 몬스터 세기 배수 (체력·공격력에 곱한다) */
+    public BattleSystem(Player player, Monster monster, Context context, int statMultiplier) {
         this.player = player;
         this.monster = monster;
         this.context = context;
@@ -37,12 +46,14 @@ public class BattleSystem {
         battleTurn = 0;
 
         this.enemyName = monster.getName();
-        this.enemyHp = monster.getMaxHp() * difficulty.statMultiplier;
-        this.enemyAttack = monster.getAttack() * difficulty.statMultiplier;
+        this.enemyMaxHp = monster.getMaxHp() * statMultiplier;
+        this.enemyHp = enemyMaxHp;
+        this.enemyAttack = monster.getAttack() * statMultiplier;
     }
     // =========================
     // 플레이어 액션 (1: 공격, 2: 방어, 3: 도망, 4: 마법)
     // =========================
+    // 적의 턴은 바로 이어서 하지 않는다. 화면이 잠깐 기다렸다가 enemyAction()을 부른다
     public String playerAction(int choice, String magicId) {
         lastDamageTaken = 0;
         if (escapeState) return "당신은 도망쳤습니다!";
@@ -50,6 +61,19 @@ public class BattleSystem {
         if (!isPlayerTurn) return "적의 턴을 기다려주세요.";
         StringBuilder log = new StringBuilder();
         boolean isDefending = false;
+
+        Magic magic = null;
+        if (choice == 4) {
+            LearnedMagic lm = magicId != null ? player.getMagicScroll().getMagic(magicId) : null;
+            magic = lm != null ? DataControlTower.getInstance(context).getMagicManager().spawn(lm.getMagicId()) : null;
+            if (magic == null) return "아직 깨우치지 못한 마법입니다.";
+            if (!cooldowns.isReady(magicId)) {
+                // 턴을 쓰지 않는다
+                return "「" + magic.getName() + "」은(는) 아직 숨을 고르고 있습니다. ("
+                        + cooldowns.left(magicId) + "턴 뒤)";
+            }
+        }
+        cooldowns.passTurn();
 
         switch (choice) {
             case 1: // 일반 공격
@@ -93,28 +117,21 @@ public class BattleSystem {
                 }
                 break;
 
-            case 4: // 마법 사용
-                if (magicId != null) {
-                    LearnedMagic lm = player.getMagicScroll().getMagic(magicId);
-                    if (lm == null || lm.getCurrentCount() <= 0) {
-                        log.append("마법 사용 횟수가 부족합니다!\n");
-                        return log.toString();
-                    }
-                    Magic magic = DataControlTower.getInstance(context).getMagicManager().spawn(lm.getMagicId());
-                    int magicDamage = player.castMagic(magic);
-                    int finalDamage = magicDamage + ((magicDamage/10) * battleTurn);
-                    
-                    if (random.nextInt(100) < player.getTotalCrit()) {
-                        finalDamage = applyTraitCritDamage(finalDamage);
-                        log.append("크리티컬!   \n");
-                    }
-                    enemyHp -= finalDamage;
-                    if (applyVampiricTouch()){
-                        player.heal(finalDamage/10);
-                    }
-                    log.append(magic.getName()).append(" 발동! ").append(enemyName).append("에게 ").append(finalDamage).append("의 데미지!\n");
-                    break;
+            case 4: // 마법 사용 (위에서 배웠는지·쿨타임을 봤다)
+                cooldowns.use(magicId, magic.getCooldown());
+                int magicDamage = player.castMagic(magic);
+                int finalDamage = magicDamage + ((magicDamage/10) * battleTurn);
+
+                if (random.nextInt(100) < player.getTotalCrit()) {
+                    finalDamage = applyTraitCritDamage(finalDamage);
+                    log.append("크리티컬!   \n");
                 }
+                enemyHp -= finalDamage;
+                if (applyVampiricTouch()){
+                    player.heal(finalDamage/10);
+                }
+                log.append(magic.getName()).append(" 발동! ").append(enemyName).append("에게 ").append(finalDamage).append("의 데미지!\n");
+                break;
         }
 
         // 몬스터 사망 체크
@@ -129,15 +146,49 @@ public class BattleSystem {
             battleTurn++;
         }
         isPlayerTurn = false;
-        return log + "\n" + enemyTurn(isDefending);
+        playerDefending = isDefending;
+        return log.toString().trim();
     }
 
     // =========================
-    // 적의 턴
+    // 적의 턴 (playerAction 뒤에 화면이 부른다)
     // =========================
+    public String enemyAction() {
+        lastDamageTaken = 0;
+        if (!isEnemyTurn()) return "";
+        return enemyTurn(playerDefending);
+    }
+
+    /** 내 행동이 끝나고 적이 공격할 차례인지 */
+    public boolean isEnemyTurn() {
+        return !isPlayerTurn && !isBattleOver && !escapeState;
+    }
+
     private String enemyTurn(boolean playerDefending) {
-        int damage = enemyAttack + random.nextInt(3);
         String log = "";
+        List<MonsterPattern> patterns = monster.getPatterns();
+        // 보스는 체력이 절반 이하로 떨어지면 두 번째 기술을 꺼낸다 (한 번만 알린다)
+        if (monster.isBoss() && !enraged && EnemyAi.isEnraged(enemyHp, enemyMaxHp)) {
+            enraged = true;
+            log += enemyName + "이(가) 분노합니다! 숨겨 둔 기술 「" + patterns.get(1).getName() + "」이(가) 깨어납니다.\n";
+        }
+
+        MonsterPattern pattern;
+        if (charging != null) {
+            pattern = charging;
+            charging = null;
+        } else {
+            pattern = EnemyAi.choose(patterns, enemyHp, enemyMaxHp, random);
+            if (pattern != null && pattern.isCharge()) {
+                // 이번 턴엔 기운만 모은다. 다음 턴에 쓰니 그때 방어하면 된다
+                charging = pattern;
+                isPlayerTurn = true;
+                return log + enemyName + "이(가) 「" + pattern.getName() + "」의 기운을 모읍니다! (다음 턴에 방어하면 피해 절반)";
+            }
+        }
+
+        int damage = enemyAttack + random.nextInt(3);
+        if (pattern != null) damage = damage * pattern.getPower() / 100 * pattern.getHits();
 
         if (playerDefending) {
             damage /= 2;
@@ -151,7 +202,13 @@ public class BattleSystem {
         damage = applyTraitIncomingDamage(damage);
         player.takeDamage(damage);
         lastDamageTaken = damage;
-        log += enemyName + "의 공격! 플레이어에게 " + damage + "의 피해.";
+        if (pattern == null) {
+            log += enemyName + "의 공격! 플레이어에게 " + damage + "의 피해.";
+        } else {
+            log += enemyName + "의 「" + pattern.getName() + "」! "
+                    + (pattern.getHits() > 1 ? pattern.getHits() + "연타로 " : "")
+                    + "플레이어에게 " + damage + "의 피해.";
+        }
 
         // 반격 사망 체크
         if (enemyHp <= 0) {
@@ -222,4 +279,6 @@ public class BattleSystem {
     public int getLastDamageTaken(){return lastDamageTaken;}
     public String getEnemyName() { return enemyName; }
     public int getEnemyHp() { return enemyHp; }
+    /** 마법을 다시 쓰기까지 남은 내 턴 수 (0이면 준비) */
+    public int getCooldownLeft(String magicId) { return cooldowns.left(magicId); }
 }

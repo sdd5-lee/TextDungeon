@@ -51,7 +51,6 @@ public class Reward {
             player.pickUpItem(itemManager.spawn(itemId));
         }
         if (statRewards != null) {
-            int wisdomBefore = player.getStat().getWisdom();
             for (RewardStat statReward : statRewards) {
                 String type = statReward.getStatType();
                 int value = statReward.getValue();
@@ -67,8 +66,8 @@ public class Reward {
                     }
                 }
             }
-            // 스탯 보상이 공격력/최대HP/치명타/마법 횟수에 바로 반영되도록 재계산 (예전엔 레벨업할 때만 반영됨)
-            player.recalculateStats(wisdomBefore);
+            // 스탯 보상이 공격력/최대HP/치명타/마법 코어에 바로 반영되도록 재계산 (예전엔 레벨업할 때만 반영됨)
+            player.recalculateStats();
             player.levelUp();
         }
     }
@@ -81,9 +80,9 @@ public class Reward {
 
     /**
      * 실제로 적용되는 양으로 보상 요약을 만든다. 예: "(힘 +6, 경험치 +90, 낡은 활 ×2)". 적용할 것이 없으면 빈 문자열.
-     * GameEvent.execute()가 보상 전체를 난이도 배수만큼 반복 적용하고, apply()가 경험치에 특성 배수를 곱하는 규칙을 따른다.
+     * GameEvent.execute()가 보상 전체를 던전 보상 배수만큼 반복 적용하고, apply()가 경험치에 특성 배수를 곱하는 규칙을 따른다.
      *
-     * @param rewardMultiplier 난이도 배수 (Difficulty.rewardMultiplier)
+     * @param rewardMultiplier 던전 보상 배수 (Dungeon.getRewardMultiplier())
      * @param expMultiplier    특성 경험치 배수 (expMultiplier(player))
      * @param itemName         itemId 아이템의 이름. null이면 아이템은 요약에서 뺀다
      */

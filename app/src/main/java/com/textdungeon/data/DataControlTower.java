@@ -9,6 +9,7 @@ import com.textdungeon.billing.BillingManager;
 import com.textdungeon.billing.Entitlements;
 import com.textdungeon.billing.UserRecordEntitlementStore;
 import com.textdungeon.event.GameEvent;
+import com.textdungeon.model.Dungeon;
 import com.textdungeon.model.Item;
 import com.textdungeon.model.Monster;
 import com.textdungeon.model.Job;
@@ -25,6 +26,8 @@ import java.util.Map;
 
 public class DataControlTower {
     private static DataControlTower instance;
+    /** 던전을 고르기 전 세이브(50층에서 끝나던 판)가 이어 가는 던전 */
+    private static final String LEGACY_DUNGEON_ID = "dungeon_3";
     private final Context appContext;
     private DataControl<Monster> monsterManager;
     private DataControl<Item> itemManager;
@@ -35,7 +38,9 @@ public class DataControlTower {
     private UserRecord userRecord;
     private DungeonControl dungeonControl;
     private AiManager aiManager;
-    private Difficulty difficulty;
+    private DataControl<Dungeon> dungeonManager;
+    /** 이 판의 던전 id */
+    private String dungeonId;
     private Map<Integer, GameEvent> aiEvents;
     private AchievementManager achievementManager;
     private final BillingManager billingManager;
@@ -86,6 +91,8 @@ public class DataControlTower {
 
         eventManager = new DataControl<>(GameEvent.class, EventGson.create());
         eventManager.init(appContext, scenarioRepository.assetPath(pack, ScenarioRepository.EVENTS));
+        dungeonManager = new DataControl<>(Dungeon.class);
+        dungeonManager.init(appContext, scenarioRepository.assetPath(pack, ScenarioRepository.DUNGEONS));
         chaosTable = ChaosTable.load(appContext, scenarioRepository.assetPath(pack, ScenarioRepository.CHAOS));
         this.scenario = pack;
 
@@ -110,7 +117,8 @@ public class DataControlTower {
         GameSave save = GameSave.runLoad(appContext);
         if (save != null){
             this.player = save.getPlayer();
-            this.difficulty = save.getDifficulty();
+            // 던전이 없던 예전 세이브는 50층에서 끝나던 판이라 50층 던전으로 이어 간다
+            this.dungeonId = save.getDungeonId() != null ? save.getDungeonId() : LEGACY_DUNGEON_ID;
             this.dungeonControl.setCurrentFloor(save.getCurrentFloor());
             // 예전엔 저장만 하고 불러오지 않아서 이어하기 하면 AI 이벤트가 사라졌다
             if (save.getAiEvents() != null) {
@@ -120,7 +128,6 @@ public class DataControlTower {
             this.scenario = ScenarioPack.fromId(save.getScenarioId());
         } else {
             this.player = null;
-            this.difficulty = Difficulty.NORMAL;
             this.dungeonControl.setCurrentFloor(1);
         }
     }
@@ -158,7 +165,7 @@ public class DataControlTower {
             GameSave.saveUserRecord(appContext, this.userRecord);
         }
 
-        GameSave currentSave = new GameSave(this.player, dungeonControl.getCurrentFloor(), difficulty,
+        GameSave currentSave = new GameSave(this.player, dungeonControl.getCurrentFloor(), dungeonId,
                 aiEvents, dungeonControl.getCurrentEvent(), scenario.id);
         currentSave.runSave(appContext);
     }
@@ -196,16 +203,27 @@ public class DataControlTower {
     public void setPlayer(Player player) { this.player = player; }
     public AiManager getAiManager() { return aiManager; }
     public void setUserRecord(UserRecord userRecord) { this.userRecord = userRecord; }
-    public void setDifficulty(String difficultyName) { difficulty = Difficulty.valueOf(difficultyName); }
-    public Difficulty getDifficulty() { return difficulty; }
+    public void setDungeon(String dungeonId) { this.dungeonId = dungeonId; }
+
+    /** 이 판의 던전. 데이터에서 사라진 id면 첫 던전 */
+    public Dungeon getDungeon() {
+        Dungeon d = dungeonId != null ? dungeonManager.spawn(dungeonId) : null;
+        if (d != null) return d;
+        java.util.List<Dungeon> all = dungeonManager.getAll();
+        return all.isEmpty() ? null : all.get(0);
+    }
+
+    /** 지금 시나리오의 던전 목록 (json 순서) */
+    public java.util.List<Dungeon> getDungeons() { return dungeonManager.getAll(); }
+    public DataControl<Dungeon> getDungeonManager() { return dungeonManager; }
     public Map<Integer, GameEvent> getAiEvents() { return aiEvents; }
 
     /**
-     * 40층 이상 이벤트(보상, 상점)에서 나오는 장비 목록. 보물의 신 이벤트에서 보상 후보로 쓴다.
+     * 이 던전의 마지막 10층 이벤트(보상, 상점)에서 나오는 장비 목록. 보물의 신 이벤트에서 보상 후보로 쓴다.
      * 포션 같은 소모품은 제외.
      */
     public java.util.List<Item> getDeepFloorGear() {
-        return getEventItems(e -> e.getMinFloor() >= 40,
+        return getEventItems(e -> e.getMinFloor() >= lastFloor() - 10,
                 item -> !"consumables".equals(item.getType()));
     }
 
@@ -219,14 +237,20 @@ public class DataControlTower {
 
     /**
      * 혼돈의 주사위 특별 선택지의 장비 후보: 지금보다 6~15층 깊은 이벤트의 보상 장비 (상점·소모품 제외).
-     * 깊은 층에서는 41~50층 장비에서 고른다.
+     * 깊은 층에서는 이 던전의 마지막 10층 장비에서 고른다.
      */
     public java.util.List<Item> getUpperGear(int floor) {
-        int from = Math.min(floor + 6, 41);
-        int to = Math.min(floor + 15, 50);
+        int to = Math.min(floor + 15, lastFloor());
+        int from = Math.min(floor + 6, to - 9);
         return getEventItems(e -> !(e instanceof com.textdungeon.event.ShopEvent)
                         && e.getMinFloor() <= to && e.getMaxFloor() >= from,
                 item -> !"consumables".equals(item.getType()));
+    }
+
+    /** 이 판 던전의 마지막 층 (던전이 없으면 50) */
+    private int lastFloor() {
+        Dungeon d = getDungeon();
+        return d != null ? d.getClearFloor() : 50;
     }
 
     /** 지금 시나리오의 혼돈의 주사위 결과표 */
@@ -243,7 +267,7 @@ public class DataControlTower {
                                                java.util.function.Predicate<Item> itemFilter) {
         java.util.LinkedHashSet<String> ids = new java.util.LinkedHashSet<>();
         for (GameEvent e : eventManager.getAll()) {
-            if (!eventFilter.test(e)) continue;
+            if (!eventFilter.test(e) || !e.appearsIn(dungeonId)) continue;
             if (e.getRewards() != null) {
                 for (com.textdungeon.model.Reward r : e.getRewards()) {
                     if (r != null && r.getItemId() != null) ids.add(r.getItemId());
@@ -270,7 +294,7 @@ public class DataControlTower {
     public java.util.List<Monster> getMonstersForFloor(int fromFloor, int toFloor) {
         java.util.LinkedHashSet<String> ids = new java.util.LinkedHashSet<>();
         for (GameEvent e : eventManager.getAll()) {
-            if (!(e instanceof com.textdungeon.event.BattleEvent)) continue;
+            if (!(e instanceof com.textdungeon.event.BattleEvent) || !e.appearsIn(dungeonId)) continue;
             String enemyId = ((com.textdungeon.event.BattleEvent) e).getEnemyId();
             boolean overlaps = e.getMinFloor() <= toFloor && e.getMaxFloor() >= fromFloor;
             if (overlaps && enemyId != null) ids.add(enemyId);

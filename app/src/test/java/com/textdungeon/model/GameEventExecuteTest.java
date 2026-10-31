@@ -1,7 +1,6 @@
 package com.textdungeon.model;
 
 import com.textdungeon.data.DataControl;
-import com.textdungeon.data.Difficulty;
 import com.textdungeon.event.GameEvent;
 import com.textdungeon.player.Player;
 import org.junit.Before;
@@ -44,52 +43,52 @@ public class GameEventExecuteTest {
                 "\"rewards\":null}";
         GameEvent event = new com.google.gson.Gson().fromJson(json, GameEvent.class);
 
-        String result = event.execute(player, 0, itemManager, Difficulty.NORMAL);
+        String result = event.execute(player, 0, itemManager, 2);
         assertEquals("보상은 없습니다", result);
     }
 
     @Test
     public void execute_choice가_범위초과면_보상없음_반환() {
         GameEvent event = makeEvent(null, "경험치", 10);
-        String result = event.execute(player, 99, itemManager, Difficulty.NORMAL);
+        String result = event.execute(player, 99, itemManager, 2);
         assertEquals("보상은 없습니다", result);
     }
 
     @Test
-    public void execute_EASY_rewardMultiplier1_스탯_1회만_적용() {
+    public void execute_보상배수1_스탯_1회만_적용() {
         GameEvent event = makeEvent(null, "경험치", 50);
-        event.execute(player, 0, itemManager, Difficulty.EASY);
-        // EASY rewardMultiplier=1 → 경험치 50 × 1 = 50
+        event.execute(player, 0, itemManager, 1);
+        // 보상 배수 1 → 경험치 50 × 1 = 50
         assertEquals(50, player.getStat().getExp());
     }
 
     @Test
-    public void execute_NORMAL_rewardMultiplier2_스탯_2회_적용() {
+    public void execute_보상배수2_스탯_2회_적용() {
         GameEvent event = makeEvent(null, "골드", 100);
         int goldBefore = player.getStat().getGold();
-        event.execute(player, 0, itemManager, Difficulty.NORMAL);
-        // NORMAL rewardMultiplier=2 → 골드 100 × 2 = 200
+        event.execute(player, 0, itemManager, 2);
+        // 보상 배수 2 → 골드 100 × 2 = 200
         assertEquals(goldBefore + 200, player.getStat().getGold());
     }
 
     @Test
-    public void execute_HARD_rewardMultiplier3_스탯_3회_적용() {
+    public void execute_보상배수3_스탯_3회_적용() {
         GameEvent event = makeEvent(null, "골드", 100);
         int goldBefore = player.getStat().getGold();
-        event.execute(player, 0, itemManager, Difficulty.HARD);
-        // HARD rewardMultiplier=3 → 골드 100 × 3 = 300
+        event.execute(player, 0, itemManager, 3);
+        // 보상 배수 3 → 골드 100 × 3 = 300
         assertEquals(goldBefore + 300, player.getStat().getGold());
     }
 
     @Test
-    public void execute_difficulty_null이면_1회만_적용() {
+    public void execute_보상배수가_0이하면_1회만_적용() {
         GameEvent event = makeEvent(null, "경험치", 50);
-        event.execute(player, 0, itemManager, null);
+        event.execute(player, 0, itemManager, 0);
         assertEquals(50, player.getStat().getExp());
     }
 
     @Test
-    public void execute_아이템보상_NORMAL난이도_아이템_2번_지급() {
+    public void execute_아이템보상_보상배수2_아이템_2번_지급() {
         // rewardMultiplier=2 → pickUpItem 2회 호출
         Item potion = Item.createFromJson(
             "{\"id\":\"potion_01\",\"name\":\"포션\",\"type\":\"consumables\"," +
@@ -97,7 +96,7 @@ public class GameEventExecuteTest {
         when(itemManager.spawn("potion_01")).thenReturn(potion);
 
         GameEvent event = makeEvent("potion_01", "경험치", 0);
-        event.execute(player, 0, itemManager, Difficulty.NORMAL);
+        event.execute(player, 0, itemManager, 2);
 
         // 같은 아이템 2번 지급 → 수량 2
         assertEquals(2, (int) player.getInventory().getItemMap().get("potion_01"));

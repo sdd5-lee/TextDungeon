@@ -1001,8 +1001,8 @@
     "name": "운명의 결전, 마왕 강림",
     "description": "당신은 결의를 다집니다.",
     "imgId": "mon_demon_king",
-    "minFloor": 50,
-    "maxFloor": 50,
+    "minFloor": 75,
+    "maxFloor": 75,
     "enemyId": "monster_25",
     "choices": ["모든 것을 걸고 마왕의 목을 친다", "회피한다"],
     "rewards": [
@@ -1477,7 +1477,7 @@
     "minFloor": 1,
     "maxFloor": 9,
     "enemyId": null,
-    "shopItems": ["item_34", "item_35", "item_36", "item_37"],
+    "shopItems": ["item_34", "item_35", "item_36", "item_37", "item_93"],
     "choices": ["상점 둘러보기"],
     "rewards": [
       {
@@ -1497,7 +1497,7 @@
     "minFloor": 11,
     "maxFloor": 19,
     "enemyId": null,
-    "shopItems": ["item_34", "item_35", "item_36", "item_37"],
+    "shopItems": ["item_34", "item_35", "item_36", "item_37", "item_94"],
     "choices": ["상점 둘러보기"],
     "rewards": [
       {
@@ -1517,7 +1517,7 @@
     "minFloor": 21,
     "maxFloor": 29,
     "enemyId": null,
-    "shopItems": ["item_34", "item_35", "item_36", "item_37"],
+    "shopItems": ["item_34", "item_35", "item_36", "item_37", "item_95"],
     "choices": ["상점 둘러보기"],
     "rewards": [
       {
@@ -1537,7 +1537,7 @@
     "minFloor": 31,
     "maxFloor": 39,
     "enemyId": null,
-    "shopItems": ["item_34", "item_35", "item_36", "item_37"],
+    "shopItems": ["item_34", "item_35", "item_36", "item_37", "item_95"],
     "choices": ["상점 둘러보기"],
     "rewards": [
       {
@@ -1557,7 +1557,7 @@
     "minFloor": 41,
     "maxFloor": 49,
     "enemyId": null,
-    "shopItems": ["item_34", "item_35", "item_36", "item_37"],
+    "shopItems": ["item_34", "item_35", "item_36", "item_37", "item_96"],
     "choices": ["상점 둘러보기"],
     "rewards": [
       {
@@ -1684,6 +1684,1753 @@
         "action": "shop",
         "itemId": null,
         "description": "고대 유물들을 구경했습니다.",
+        "statRewards": []
+      }
+    ]
+  },
+  {
+    "id": "event_51",
+    "name": "천장에서 내려오는 동굴 거미",
+    "description": "머리 위에서 바스락 소리가 납니다. 커다란 거미가 실을 타고 천천히 내려옵니다.",
+    "imgId": "mon_cave_spider",
+    "minFloor": 1,
+    "maxFloor": 9,
+    "enemyId": "monster_37",
+    "choices": ["거미줄을 끊고 맞선다", "거미줄 사이로 빠져나간다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": "item_49",
+        "description": "거미가 뒤집힌 채 다리를 오므립니다. (경험치 +55, 골드 +14)",
+        "statRewards": [
+          { "type": "경험치", "value": 55 },
+          { "type": "골드", "value": 14 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "무사히 빠져나왔습니다. (경험치 +28)",
+        "statRewards": [
+          { "type": "경험치", "value": 28 }
+        ]
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_52",
+    "name": "걸어 다니는 독버섯",
+    "description": "바닥의 버섯 하나가 뿌리를 뽑고 일어섭니다. 갓 아래로 독 포자가 흩날립니다.",
+    "imgId": "mon_poison_mushroom",
+    "minFloor": 1,
+    "maxFloor": 9,
+    "enemyId": "monster_38",
+    "choices": ["숨을 참고 베어 낸다", "포자가 퍼지기 전에 물러난다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": "item_50",
+        "description": "버섯이 시들며 쓰러집니다. (경험치 +50, 골드 +12)",
+        "statRewards": [
+          { "type": "경험치", "value": 50 },
+          { "type": "골드", "value": 12 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "무사히 빠져나왔습니다. (경험치 +25)",
+        "statRewards": [
+          { "type": "경험치", "value": 25 }
+        ]
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_53",
+    "name": "고블린 주술사장의 의식",
+    "description": "불타는 해골 지팡이를 든 늙은 고블린이 주문을 외우고 있습니다. 바닥의 마법진이 붉게 달아오릅니다.",
+    "imgId": "mon_goblin_shaman",
+    "minFloor": 10,
+    "maxFloor": 10,
+    "enemyId": "monster_39",
+    "choices": ["의식을 깨뜨리고 주술사장을 친다", "회피한다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": "item_51",
+        "description": "주술사장의 지팡이가 부러지며 불씨가 꺼집니다. (경험치 +90, 골드 +120)",
+        "statRewards": [
+          { "type": "경험치", "value": 90 },
+          { "type": "골드", "value": 120 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "고블린 주술사장이(가) 길을 막고 있어 도망칠 수 없습니다.",
+        "statRewards": [],
+        "retry": true
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_54",
+    "name": "시체를 뜯는 구울",
+    "description": "어둠 속에서 무언가를 씹는 소리가 들립니다. 구울이 피 묻은 얼굴을 들어 당신을 바라봅니다.",
+    "imgId": "mon_ghoul",
+    "minFloor": 11,
+    "maxFloor": 19,
+    "enemyId": "monster_40",
+    "choices": ["구울의 목을 노린다", "구울이 식사에 정신이 팔린 사이 지나간다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": "item_52",
+        "description": "구울이 마지막 비명을 지르며 쓰러집니다. (경험치 +120, 골드 +35)",
+        "statRewards": [
+          { "type": "경험치", "value": 120 },
+          { "type": "골드", "value": 35 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "무사히 빠져나왔습니다. (경험치 +60)",
+        "statRewards": [
+          { "type": "경험치", "value": 60 }
+        ]
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_55",
+    "name": "홀로 걷는 저주받은 갑옷",
+    "description": "텅 빈 갑옷이 쇳소리를 내며 다가옵니다. 투구 속은 새까맣게 비어 있습니다.",
+    "imgId": "mon_cursed_armor",
+    "minFloor": 11,
+    "maxFloor": 19,
+    "enemyId": "monster_41",
+    "choices": ["갑옷의 이음새를 노린다", "무거운 갑옷이 따라오지 못하게 달아난다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": "item_73",
+        "description": "갑옷이 산산이 흩어지며 저주가 풀립니다. (경험치 +130, 골드 +40)",
+        "statRewards": [
+          { "type": "경험치", "value": 130 },
+          { "type": "골드", "value": 40 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "무사히 빠져나왔습니다. (경험치 +65)",
+        "statRewards": [
+          { "type": "경험치", "value": 65 }
+        ]
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_56",
+    "name": "하늘을 가르는 하피",
+    "description": "날카로운 웃음소리와 함께 하피가 천장 아래를 맴돕니다. 칼날 같은 깃털이 바닥에 꽂힙니다.",
+    "imgId": "mon_harpy",
+    "minFloor": 21,
+    "maxFloor": 29,
+    "enemyId": "monster_42",
+    "choices": ["떨어지는 순간을 노려 벤다", "기둥 뒤에 숨어 지나간다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": "item_53",
+        "description": "하피가 날개를 접고 추락합니다. (경험치 +175, 골드 +90)",
+        "statRewards": [
+          { "type": "경험치", "value": 175 },
+          { "type": "골드", "value": 90 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "무사히 빠져나왔습니다. (경험치 +88)",
+        "statRewards": [
+          { "type": "경험치", "value": 88 }
+        ]
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_57",
+    "name": "굶주린 오우거",
+    "description": "거대한 오우거가 통나무를 질질 끌며 냄새를 맡고 있습니다. 당신을 발견하고 침을 흘립니다.",
+    "imgId": "mon_ogre",
+    "minFloor": 21,
+    "maxFloor": 29,
+    "enemyId": "monster_43",
+    "choices": ["오우거의 다리를 노린다", "오우거가 둔한 틈에 달아난다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": "item_54",
+        "description": "오우거가 땅을 울리며 쓰러집니다. (경험치 +190, 골드 +100)",
+        "statRewards": [
+          { "type": "경험치", "value": 190 },
+          { "type": "골드", "value": 100 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "무사히 빠져나왔습니다. (경험치 +95)",
+        "statRewards": [
+          { "type": "경험치", "value": 95 }
+        ]
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_58",
+    "name": "이름 없는 흑기사",
+    "description": "오크들의 시체 위에 검은 갑옷의 기사가 서 있습니다. 그는 말없이 검을 겨눕니다.",
+    "imgId": "mon_black_knight",
+    "minFloor": 30,
+    "maxFloor": 30,
+    "enemyId": "monster_44",
+    "choices": ["흑기사와 검을 맞댄다", "회피한다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": "item_55",
+        "description": "흑기사가 무릎을 꿇고 처음으로 입을 엽니다. \"드디어... 쉴 수 있겠군.\" (경험치 +320, 골드 +500)",
+        "statRewards": [
+          { "type": "경험치", "value": 320 },
+          { "type": "골드", "value": 500 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "흑기사이(가) 길을 막고 있어 도망칠 수 없습니다.",
+        "statRewards": [],
+        "retry": true
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_59",
+    "name": "뱀의 왕 바실리스크",
+    "description": "풀이 말라 죽은 길이 이어집니다. 그 끝에서 거대한 뱀이 똬리를 틀고 혀를 날름거립니다.",
+    "imgId": "mon_basilisk",
+    "minFloor": 31,
+    "maxFloor": 39,
+    "enemyId": "monster_45",
+    "choices": ["독니를 피해 머리를 노린다", "숨을 죽이고 돌아간다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": "item_56",
+        "description": "바실리스크가 몸을 비틀며 숨을 거둡니다. (경험치 +245, 골드 +215)",
+        "statRewards": [
+          { "type": "경험치", "value": 245 },
+          { "type": "골드", "value": 215 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "무사히 빠져나왔습니다. (경험치 +123)",
+        "statRewards": [
+          { "type": "경험치", "value": 123 }
+        ]
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_60",
+    "name": "독침을 세운 와이번",
+    "description": "날개 치는 소리와 함께 와이번이 내려앉습니다. 꼬리 끝의 독침이 번들거립니다.",
+    "imgId": "mon_wyvern",
+    "minFloor": 31,
+    "maxFloor": 39,
+    "enemyId": "monster_46",
+    "choices": ["날개를 찢어 땅에 묶는다", "와이번이 날아오르기 전에 달아난다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": "item_57",
+        "description": "와이번이 날개를 늘어뜨리고 쓰러집니다. (경험치 +255, 골드 +225)",
+        "statRewards": [
+          { "type": "경험치", "value": 255 },
+          { "type": "골드", "value": 225 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "무사히 빠져나왔습니다. (경험치 +128)",
+        "statRewards": [
+          { "type": "경험치", "value": 128 }
+        ]
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_61",
+    "name": "잊힌 미궁의 파수꾼",
+    "description": "미궁의 벽이 갈라지며 거대한 석조 거인이 걸어 나옵니다. 거인의 눈에 미궁의 문양이 떠오릅니다.",
+    "imgId": "mon_labyrinth_warden",
+    "minFloor": 35,
+    "maxFloor": 35,
+    "enemyId": "monster_47",
+    "choices": ["파수꾼의 문양을 부순다", "회피한다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": "item_58",
+        "description": "파수꾼이 무너지며 미궁의 문양이 하나둘 꺼집니다. (경험치 +450, 골드 +900)",
+        "statRewards": [
+          { "type": "경험치", "value": 450 },
+          { "type": "골드", "value": 900 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "미궁의 파수꾼이(가) 길을 막고 있어 도망칠 수 없습니다.",
+        "statRewards": [],
+        "retry": true
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_62",
+    "name": "전장을 떠나지 못한 데스나이트",
+    "description": "얼어붙은 안개 속에서 해골 말을 탄 기사가 나타납니다. 검에서 냉기가 흘러내립니다.",
+    "imgId": "mon_death_knight",
+    "minFloor": 41,
+    "maxFloor": 49,
+    "enemyId": "monster_48",
+    "choices": ["냉기를 뚫고 돌진한다", "안개 속으로 몸을 숨긴다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": "item_59",
+        "description": "데스나이트가 안개처럼 흩어집니다. (경험치 +340, 골드 +470)",
+        "statRewards": [
+          { "type": "경험치", "value": 340 },
+          { "type": "골드", "value": 470 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "무사히 빠져나왔습니다. (경험치 +170)",
+        "statRewards": [
+          { "type": "경험치", "value": 170 }
+        ]
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_63",
+    "name": "피의 성채의 뱀파이어",
+    "description": "촛불이 하나씩 꺼지더니 창백한 귀족이 미소를 지으며 나타납니다. \"손님이군. 마침 목이 말랐는데.\"",
+    "imgId": "mon_vampire",
+    "minFloor": 41,
+    "maxFloor": 49,
+    "enemyId": "monster_49",
+    "choices": ["송곳니가 닿기 전에 심장을 노린다", "촛불이 다 꺼지기 전에 달아난다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": "item_60",
+        "description": "뱀파이어가 재가 되어 흩어집니다. (경험치 +335, 골드 +480)",
+        "statRewards": [
+          { "type": "경험치", "value": 335 },
+          { "type": "골드", "value": 480 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "무사히 빠져나왔습니다. (경험치 +168)",
+        "statRewards": [
+          { "type": "경험치", "value": 168 }
+        ]
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_64",
+    "name": "피의 성채의 주인",
+    "description": "핏빛 옥좌에서 피의 군주가 천천히 일어납니다. 성채의 모든 피가 그를 향해 흐르기 시작합니다.",
+    "imgId": "mon_blood_lord",
+    "minFloor": 50,
+    "maxFloor": 50,
+    "enemyId": "monster_50",
+    "choices": ["피의 군주의 심장을 꿰뚫는다", "회피한다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": "item_61",
+        "description": "피의 군주가 쓰러지며 성채를 물들이던 핏빛이 걷힙니다. (경험치 +700, 골드 +1500)",
+        "statRewards": [
+          { "type": "경험치", "value": 700 },
+          { "type": "골드", "value": 1500 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "피의 군주이(가) 길을 막고 있어 도망칠 수 없습니다.",
+        "statRewards": [],
+        "retry": true
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_65",
+    "name": "마왕성의 지옥견",
+    "description": "불꽃을 흘리는 사냥개가 낮게 으르렁거립니다. 그 뒤로 마왕성의 첫 번째 문이 보입니다.",
+    "imgId": "mon_hellhound",
+    "minFloor": 51,
+    "maxFloor": 59,
+    "enemyId": "monster_51",
+    "choices": ["불꽃을 뚫고 목을 벤다", "불길이 약한 쪽으로 돌아간다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": "item_62",
+        "description": "지옥견의 불꽃이 사그라듭니다. (경험치 +420, 골드 +550)",
+        "statRewards": [
+          { "type": "경험치", "value": 420 },
+          { "type": "골드", "value": 550 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "무사히 빠져나왔습니다. (경험치 +210)",
+        "statRewards": [
+          { "type": "경험치", "value": 210 }
+        ]
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_66",
+    "name": "타오르는 화염 정령",
+    "description": "용암 웅덩이가 끓어오르더니 불꽃이 사람의 모습으로 일어섭니다.",
+    "imgId": "mon_fire_elemental",
+    "minFloor": 51,
+    "maxFloor": 59,
+    "enemyId": "monster_52",
+    "choices": ["불꽃의 핵을 노린다", "열기를 피해 물러난다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": "item_63",
+        "description": "화염 정령이 연기가 되어 사라집니다. (경험치 +410, 골드 +540)",
+        "statRewards": [
+          { "type": "경험치", "value": 410 },
+          { "type": "골드", "value": 540 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "무사히 빠져나왔습니다. (경험치 +205)",
+        "statRewards": [
+          { "type": "경험치", "value": 205 }
+        ]
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_67",
+    "name": "되살아난 해골 용",
+    "description": "거대한 뼈 무더기가 덜그럭거리며 맞춰집니다. 텅 빈 눈구멍에 푸른 불이 켜집니다.",
+    "imgId": "mon_bone_dragon",
+    "minFloor": 51,
+    "maxFloor": 59,
+    "enemyId": "monster_53",
+    "choices": ["척추를 부수러 달려든다", "해골 용이 다 일어나기 전에 지나간다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": "item_64",
+        "description": "해골 용의 뼈가 다시 무너져 내립니다. (경험치 +440, 골드 +560)",
+        "statRewards": [
+          { "type": "경험치", "value": 440 },
+          { "type": "골드", "value": 560 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "무사히 빠져나왔습니다. (경험치 +220)",
+        "statRewards": [
+          { "type": "경험치", "value": 220 }
+        ]
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_68",
+    "name": "그림자 속의 암살자",
+    "description": "등 뒤에서 차가운 기척이 느껴집니다. 돌아보니 쌍검을 든 암흑 엘프가 서 있습니다.",
+    "imgId": "mon_dark_elf_assassin",
+    "minFloor": 51,
+    "maxFloor": 59,
+    "enemyId": "monster_54",
+    "choices": ["그림자를 밟아 붙잡는다", "빛이 있는 쪽으로 달아난다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": "item_65",
+        "description": "암살자가 그림자 속으로 녹아 사라집니다. (경험치 +430, 골드 +570)",
+        "statRewards": [
+          { "type": "경험치", "value": 430 },
+          { "type": "골드", "value": 570 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "무사히 빠져나왔습니다. (경험치 +215)",
+        "statRewards": [
+          { "type": "경험치", "value": 215 }
+        ]
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_69",
+    "name": "녹아내리는 용암 골렘",
+    "description": "용암 강에서 거대한 골렘이 기어 나옵니다. 발걸음마다 바닥이 녹아내립니다.",
+    "imgId": "mon_lava_golem",
+    "minFloor": 51,
+    "maxFloor": 59,
+    "enemyId": "monster_55",
+    "choices": ["굳은 부분을 골라 내리친다", "골렘이 식기 전에 멀리 돌아간다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": "item_74",
+        "description": "용암 골렘이 식어 돌덩이가 됩니다. (경험치 +430, 골드 +520)",
+        "statRewards": [
+          { "type": "경험치", "value": 430 },
+          { "type": "골드", "value": 520 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "무사히 빠져나왔습니다. (경험치 +215)",
+        "statRewards": [
+          { "type": "경험치", "value": 215 }
+        ]
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_70",
+    "name": "늪을 지배하는 히드라",
+    "description": "독 늪 위로 다섯 개의 머리가 솟아오릅니다. 머리마다 다른 눈빛으로 당신을 노려봅니다.",
+    "imgId": "mon_hydra",
+    "minFloor": 51,
+    "maxFloor": 59,
+    "enemyId": "monster_56",
+    "choices": ["머리를 하나씩 베어 낸다", "늪을 건너지 않고 돌아간다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": null,
+        "description": "마지막 머리가 늪 속으로 가라앉습니다. (경험치 +440, 골드 +530)",
+        "statRewards": [
+          { "type": "경험치", "value": 440 },
+          { "type": "골드", "value": 530 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "무사히 빠져나왔습니다. (경험치 +220)",
+        "statRewards": [
+          { "type": "경험치", "value": 220 }
+        ]
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_71",
+    "name": "화염의 군주 이프리트",
+    "description": "불꽃의 층 끝에서 거대한 화염 마신이 팔짱을 끼고 서 있습니다. 머리 위에 작은 태양이 떠오릅니다.",
+    "imgId": "mon_ifrit",
+    "minFloor": 60,
+    "maxFloor": 60,
+    "enemyId": "monster_57",
+    "choices": ["태양이 떨어지기 전에 친다", "회피한다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": "item_85",
+        "description": "이프리트가 무너지며 층 전체의 불길이 잦아듭니다. (경험치 +900, 골드 +1200)",
+        "statRewards": [
+          { "type": "경험치", "value": 900 },
+          { "type": "골드", "value": 1200 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "화염의 군주 이프리트이(가) 길을 막고 있어 도망칠 수 없습니다.",
+        "statRewards": [],
+        "retry": true
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_72",
+    "name": "해골 대군주의 행진",
+    "description": "수천의 해골 병사가 길을 열자 뼈 왕관을 쓴 대군주가 걸어 나옵니다.",
+    "imgId": "mon_skeleton_overlord",
+    "minFloor": 60,
+    "maxFloor": 60,
+    "enemyId": "monster_58",
+    "choices": ["군단을 뚫고 대군주에게 간다", "회피한다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": "item_84",
+        "description": "대군주가 쓰러지자 해골 병사들이 일제히 무너집니다. (경험치 +900, 골드 +1250)",
+        "statRewards": [
+          { "type": "경험치", "value": 900 },
+          { "type": "골드", "value": 1250 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "해골 대군주이(가) 길을 막고 있어 도망칠 수 없습니다.",
+        "statRewards": [],
+        "retry": true
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_73",
+    "name": "빙하를 든 서리 거인",
+    "description": "눈보라 속에서 거인이 빙하를 머리 위로 들어 올립니다.",
+    "imgId": "mon_frost_giant",
+    "minFloor": 61,
+    "maxFloor": 69,
+    "enemyId": "monster_59",
+    "choices": ["빙하가 떨어지기 전에 다리를 벤다", "눈보라 속으로 몸을 숨긴다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": "item_66",
+        "description": "서리 거인이 얼음 조각이 되어 부서집니다. (경험치 +520, 골드 +650)",
+        "statRewards": [
+          { "type": "경험치", "value": 520 },
+          { "type": "골드", "value": 650 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "무사히 빠져나왔습니다. (경험치 +260)",
+        "statRewards": [
+          { "type": "경험치", "value": 260 }
+        ]
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_74",
+    "name": "눈보라 속의 서리 늑대",
+    "description": "눈보라 너머에서 푸른 눈빛이 하나둘 켜집니다. 서리 늑대의 우두머리가 앞으로 나섭니다.",
+    "imgId": "mon_frost_wolf",
+    "minFloor": 61,
+    "maxFloor": 69,
+    "enemyId": "monster_60",
+    "choices": ["우두머리를 먼저 쓰러뜨린다", "바람을 등지고 달아난다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": "item_75",
+        "description": "우두머리가 쓰러지자 무리가 흩어집니다. (경험치 +510, 골드 +640)",
+        "statRewards": [
+          { "type": "경험치", "value": 510 },
+          { "type": "골드", "value": 640 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "무사히 빠져나왔습니다. (경험치 +255)",
+        "statRewards": [
+          { "type": "경험치", "value": 255 }
+        ]
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_75",
+    "name": "지하 호수의 크라켄",
+    "description": "고요하던 호수가 끓어오르더니 거대한 촉수들이 솟구칩니다.",
+    "imgId": "mon_kraken",
+    "minFloor": 61,
+    "maxFloor": 69,
+    "enemyId": "monster_61",
+    "choices": ["촉수를 베며 본체로 다가간다", "호숫가에서 멀리 물러난다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": "item_67",
+        "description": "크라켄이 호수 깊이 가라앉으며 무언가를 토해 냅니다. (경험치 +530, 골드 +660)",
+        "statRewards": [
+          { "type": "경험치", "value": 530 },
+          { "type": "골드", "value": 660 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "무사히 빠져나왔습니다. (경험치 +265)",
+        "statRewards": [
+          { "type": "경험치", "value": 265 }
+        ]
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_76",
+    "name": "용암을 헤엄치는 마그마 드레이크",
+    "description": "용암 강 위로 붉은 드레이크가 고개를 내밉니다. 입가에 녹은 바위가 끓고 있습니다.",
+    "imgId": "mon_magma_drake",
+    "minFloor": 61,
+    "maxFloor": 69,
+    "enemyId": "monster_62",
+    "choices": ["숨결을 피해 뿔을 노린다", "용암 강을 건너지 않는다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": "item_68",
+        "description": "드레이크가 용암 속으로 가라앉습니다. (경험치 +540, 골드 +680)",
+        "statRewards": [
+          { "type": "경험치", "value": 540 },
+          { "type": "골드", "value": 680 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "무사히 빠져나왔습니다. (경험치 +270)",
+        "statRewards": [
+          { "type": "경험치", "value": 270 }
+        ]
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_77",
+    "name": "공허의 감시자",
+    "description": "허공에 거대한 눈 하나가 떠 있습니다. 눈동자가 천천히 당신 쪽으로 돌아갑니다.",
+    "imgId": "mon_void_watcher",
+    "minFloor": 61,
+    "maxFloor": 69,
+    "enemyId": "monster_63",
+    "choices": ["눈을 감고 감각으로 벤다", "시선이 닿기 전에 몸을 숨긴다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": "item_69",
+        "description": "감시자의 눈이 감기며 공허로 사라집니다. (경험치 +525, 골드 +670)",
+        "statRewards": [
+          { "type": "경험치", "value": 525 },
+          { "type": "골드", "value": 670 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "무사히 빠져나왔습니다. (경험치 +263)",
+        "statRewards": [
+          { "type": "경험치", "value": 263 }
+        ]
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_78",
+    "name": "마왕군 선봉, 악마 기사",
+    "description": "검은 깃발 아래 악마 기사가 쌍검을 뽑아 듭니다. \"마왕님의 길을 더럽히는 자, 여기서 끝이다.\"",
+    "imgId": "mon_demon_knight",
+    "minFloor": 61,
+    "maxFloor": 69,
+    "enemyId": "monster_64",
+    "choices": ["쌍검의 틈을 파고든다", "깃발 뒤로 돌아간다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": "item_76",
+        "description": "악마 기사가 쌍검을 떨어뜨리고 쓰러집니다. (경험치 +545, 골드 +700)",
+        "statRewards": [
+          { "type": "경험치", "value": 545 },
+          { "type": "골드", "value": 700 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "무사히 빠져나왔습니다. (경험치 +273)",
+        "statRewards": [
+          { "type": "경험치", "value": 273 }
+        ]
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_79",
+    "name": "공허의 군주",
+    "description": "빛도 소리도 없는 방 한가운데 공허의 군주가 떠 있습니다. 그가 손을 들자 주위의 벽이 사라집니다.",
+    "imgId": "mon_void_lord",
+    "minFloor": 70,
+    "maxFloor": 70,
+    "enemyId": "monster_65",
+    "choices": ["공허를 가르고 군주를 친다", "회피한다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": "item_86",
+        "description": "공허의 군주가 쓰러지며 사라졌던 벽과 빛이 돌아옵니다. (경험치 +1100, 골드 +1500)",
+        "statRewards": [
+          { "type": "경험치", "value": 1100 },
+          { "type": "골드", "value": 1500 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "공허의 군주이(가) 길을 막고 있어 도망칠 수 없습니다.",
+        "statRewards": [],
+        "retry": true
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_80",
+    "name": "깨어난 고대 흑룡",
+    "description": "거대한 검은 날개가 펼쳐집니다. 수천 년을 잠들어 있던 흑룡이 눈을 뜹니다.",
+    "imgId": "mon_black_dragon",
+    "minFloor": 70,
+    "maxFloor": 70,
+    "enemyId": "monster_66",
+    "choices": ["흑룡의 역린을 노린다", "회피한다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": "item_87",
+        "description": "고대 흑룡이 마지막 숨을 내쉬며 잠들 듯 쓰러집니다. (경험치 +1100, 골드 +1600)",
+        "statRewards": [
+          { "type": "경험치", "value": 1100 },
+          { "type": "골드", "value": 1600 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "고대 흑룡이(가) 길을 막고 있어 도망칠 수 없습니다.",
+        "statRewards": [],
+        "retry": true
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_81",
+    "name": "옥좌로 가는 길의 근위병",
+    "description": "검은 창을 든 근위병들이 길을 막아섭니다. 그중 하나가 앞으로 나섭니다.",
+    "imgId": "mon_royal_guard",
+    "minFloor": 71,
+    "maxFloor": 74,
+    "enemyId": "monster_67",
+    "choices": ["창을 쳐내고 파고든다", "근위병이 자리를 비운 틈에 지나간다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": "item_70",
+        "description": "근위병이 창을 놓치며 쓰러집니다. (경험치 +620, 골드 +750)",
+        "statRewards": [
+          { "type": "경험치", "value": 620 },
+          { "type": "골드", "value": 750 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "무사히 빠져나왔습니다. (경험치 +310)",
+        "statRewards": [
+          { "type": "경험치", "value": 310 }
+        ]
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_82",
+    "name": "지옥에서 온 대악마",
+    "description": "바닥의 마법진에서 거대한 악마가 솟아오릅니다. 손바닥 위에 지옥의 불꽃이 타오릅니다.",
+    "imgId": "mon_archdemon",
+    "minFloor": 71,
+    "maxFloor": 74,
+    "enemyId": "monster_68",
+    "choices": ["불꽃이 커지기 전에 친다", "마법진 밖으로 달아난다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": null,
+        "description": "대악마가 마법진 속으로 끌려 들어갑니다. (경험치 +630, 골드 +760)",
+        "statRewards": [
+          { "type": "경험치", "value": 630 },
+          { "type": "골드", "value": 760 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "무사히 빠져나왔습니다. (경험치 +315)",
+        "statRewards": [
+          { "type": "경험치", "value": 315 }
+        ]
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_83",
+    "name": "타락한 대천사",
+    "description": "검은 날개가 천장을 덮습니다. 타락한 대천사가 슬픈 얼굴로 검을 겨눕니다.",
+    "imgId": "mon_fallen_archangel",
+    "minFloor": 71,
+    "maxFloor": 74,
+    "enemyId": "monster_69",
+    "choices": ["심판의 빛이 모이기 전에 벤다", "날개의 그림자를 따라 달아난다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": "item_71",
+        "description": "대천사가 쓰러지며 검은 깃털이 흩날립니다. (경험치 +640, 골드 +780)",
+        "statRewards": [
+          { "type": "경험치", "value": 640 },
+          { "type": "골드", "value": 780 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "무사히 빠져나왔습니다. (경험치 +320)",
+        "statRewards": [
+          { "type": "경험치", "value": 320 }
+        ]
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_84",
+    "name": "혼돈의 키메라",
+    "description": "여러 짐승의 울음소리가 한꺼번에 들립니다. 마왕이 만든 키메라가 우리를 부수고 나옵니다.",
+    "imgId": "mon_chaos_chimera",
+    "minFloor": 71,
+    "maxFloor": 74,
+    "enemyId": "monster_70",
+    "choices": ["머리가 엉킨 틈을 노린다", "키메라가 서로 싸우는 틈에 지나간다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": null,
+        "description": "키메라가 몸부림치다 조용해집니다. (경험치 +630, 골드 +770)",
+        "statRewards": [
+          { "type": "경험치", "value": 630 },
+          { "type": "골드", "value": 770 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "무사히 빠져나왔습니다. (경험치 +315)",
+        "statRewards": [
+          { "type": "경험치", "value": 315 }
+        ]
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_85",
+    "name": "그림자 마도사의 시험",
+    "description": "그림자가 부풀어 오르더니 로브를 입은 마도사가 나타납니다. \"마왕님께 가고 싶다면 나를 넘어라.\"",
+    "imgId": "mon_shadow_sorcerer",
+    "minFloor": 71,
+    "maxFloor": 74,
+    "enemyId": "monster_71",
+    "choices": ["그림자가 터지기 전에 마도사를 친다", "그림자가 닿지 않는 곳으로 달아난다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": null,
+        "description": "마도사가 그림자와 함께 흩어집니다. (경험치 +635, 골드 +790)",
+        "statRewards": [
+          { "type": "경험치", "value": 635 },
+          { "type": "골드", "value": 790 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "무사히 빠져나왔습니다. (경험치 +318)",
+        "statRewards": [
+          { "type": "경험치", "value": 318 }
+        ]
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_86",
+    "name": "마왕의 처형인",
+    "description": "거대한 도끼를 든 처형인이 단두대 옆에 서 있습니다. 그가 도끼를 천천히 들어 올립니다.",
+    "imgId": "mon_executioner",
+    "minFloor": 71,
+    "maxFloor": 74,
+    "enemyId": "monster_72",
+    "choices": ["도끼가 내려오기 전에 파고든다", "단두대 뒤로 숨어 지나간다"],
+    "rewards": [
+      {
+        "action": "battle",
+        "itemId": "item_72",
+        "description": "처형인이 자신의 도끼에 깔려 쓰러집니다. (경험치 +650, 골드 +800)",
+        "statRewards": [
+          { "type": "경험치", "value": 650 },
+          { "type": "골드", "value": 800 }
+        ]
+      },
+      {
+        "action": "escape",
+        "itemId": null,
+        "description": "무사히 빠져나왔습니다. (경험치 +325)",
+        "statRewards": [
+          { "type": "경험치", "value": 325 }
+        ]
+      }
+    ],
+    "type": "battle"
+  },
+  {
+    "id": "event_87",
+    "name": "버려진 모험가의 배낭",
+    "description": "벽에 기대어 쓰러진 해골 옆에 낡은 배낭이 놓여 있습니다.",
+    "imgId": "abandoned_backpack",
+    "minFloor": 1,
+    "maxFloor": 9,
+    "enemyId": null,
+    "choices": ["배낭을 뒤진다", "명복을 빌고 지나간다"],
+    "rewards": [
+      {
+        "itemId": "item_83",
+        "description": "배낭 바닥에서 낡은 부적을 찾았습니다. (경험치 +30)",
+        "statRewards": [
+          { "type": "경험치", "value": 30 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "해골에게 짧게 기도를 올렸습니다. 마음이 차분해집니다. (지혜 +2, 경험치 +40)",
+        "statRewards": [
+          { "type": "지혜", "value": 2 },
+          { "type": "경험치", "value": 40 }
+        ]
+      }
+    ],
+    "type": "normal"
+  },
+  {
+    "id": "event_88",
+    "name": "갈림길의 이정표",
+    "description": "두 갈래 길 앞에 글씨가 지워진 이정표가 서 있습니다.",
+    "imgId": "crossroad_sign",
+    "minFloor": 1,
+    "maxFloor": 9,
+    "enemyId": null,
+    "choices": ["왼쪽 길로 간다", "오른쪽 길로 간다"],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "험한 길이었지만 많은 것을 배웠습니다. (데미지 10, 경험치 +60)",
+        "statRewards": [
+          { "type": "데미지", "value": 10 },
+          { "type": "경험치", "value": 60 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "조용한 샛길에서 잠시 쉬었습니다. (회복 +15, 경험치 +40)",
+        "statRewards": [
+          { "type": "회복", "value": 15 },
+          { "type": "경험치", "value": 40 }
+        ]
+      }
+    ],
+    "type": "normal"
+  },
+  {
+    "id": "event_89",
+    "name": "무너진 기사의 무덤",
+    "description": "이끼 낀 묘비 아래 기사의 무덤이 있습니다. 녹슨 검 한 자루가 꽂혀 있습니다.",
+    "imgId": "knight_grave",
+    "minFloor": 11,
+    "maxFloor": 19,
+    "enemyId": null,
+    "choices": ["묘비에 기도한다", "무덤을 파헤친다"],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "기사의 혼이 당신의 어깨를 두드립니다. (체력 +3, 경험치 +100)",
+        "statRewards": [
+          { "type": "체력", "value": 3 },
+          { "type": "경험치", "value": 100 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "금화를 찾았지만 무덤의 저주에 몸이 아픕니다. (데미지 30, 골드 +150, 경험치 +80)",
+        "statRewards": [
+          { "type": "데미지", "value": 30 },
+          { "type": "골드", "value": 150 },
+          { "type": "경험치", "value": 80 }
+        ]
+      }
+    ],
+    "type": "normal"
+  },
+  {
+    "id": "event_90",
+    "name": "약초꾼의 오두막",
+    "description": "던전 안에 작은 오두막이 있습니다. 늙은 약초꾼이 차를 끓이고 있습니다.",
+    "imgId": "herbalist_hut",
+    "minFloor": 11,
+    "maxFloor": 19,
+    "enemyId": null,
+    "choices": ["약초차를 마신다", "약초 다듬기를 돕는다"],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "쓴 차가 온몸에 퍼지며 상처가 아뭅니다. (회복 +50, 경험치 +80)",
+        "statRewards": [
+          { "type": "회복", "value": 50 },
+          { "type": "경험치", "value": 80 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "약초꾼에게 약초에 대해 배웠습니다. (지혜 +3, 경험치 +120)",
+        "statRewards": [
+          { "type": "지혜", "value": 3 },
+          { "type": "경험치", "value": 120 }
+        ]
+      }
+    ],
+    "type": "normal"
+  },
+  {
+    "id": "event_91",
+    "name": "울부짖는 석상",
+    "description": "입을 벌린 석상이 바람 소리처럼 울고 있습니다. 입 안에서 무언가 반짝입니다.",
+    "imgId": "howling_statue",
+    "minFloor": 21,
+    "maxFloor": 29,
+    "enemyId": null,
+    "choices": ["석상의 입에 손을 넣는다", "귀를 막고 지나간다"],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "석상이 입을 다물었지만 힘으로 빼냈습니다. (힘 +4, 데미지 35, 경험치 +150)",
+        "statRewards": [
+          { "type": "힘", "value": 4 },
+          { "type": "데미지", "value": 35 },
+          { "type": "경험치", "value": 150 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "울음소리를 견디며 지나갔습니다. (경험치 +120)",
+        "statRewards": [
+          { "type": "경험치", "value": 120 }
+        ]
+      }
+    ],
+    "type": "normal"
+  },
+  {
+    "id": "event_92",
+    "name": "오크 부족의 훈련장",
+    "description": "오크들이 쓰던 훈련장이 비어 있습니다. 허수아비와 보급품 상자가 남아 있습니다.",
+    "imgId": "orc_training_ground",
+    "minFloor": 21,
+    "maxFloor": 29,
+    "enemyId": null,
+    "choices": ["허수아비를 베며 수련한다", "버려진 보급품을 챙긴다"],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "땀을 흘린 만큼 몸이 단단해졌습니다. (힘 +3, 민첩 +2, 경험치 +120)",
+        "statRewards": [
+          { "type": "힘", "value": 3 },
+          { "type": "민첩", "value": 2 },
+          { "type": "경험치", "value": 120 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "상자 안에 금화가 들어 있었습니다. (골드 +200, 경험치 +100)",
+        "statRewards": [
+          { "type": "골드", "value": 200 },
+          { "type": "경험치", "value": 100 }
+        ]
+      }
+    ],
+    "type": "normal"
+  },
+  {
+    "id": "event_93",
+    "name": "별빛이 새는 천장",
+    "description": "무너진 천장 틈으로 별빛이 새어 들어옵니다. 던전 안에서 하늘을 보는 것은 오랜만입니다.",
+    "imgId": "starlight_ceiling",
+    "minFloor": 31,
+    "maxFloor": 39,
+    "enemyId": null,
+    "choices": ["별빛 아래서 명상한다", "천장 틈을 타고 오른다"],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "머릿속이 맑아집니다. (지혜 +5, 경험치 +200)",
+        "statRewards": [
+          { "type": "지혜", "value": 5 },
+          { "type": "경험치", "value": 200 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "미끄러져 다쳤지만 몸이 가벼워졌습니다. (민첩 +5, 데미지 40, 경험치 +220)",
+        "statRewards": [
+          { "type": "민첩", "value": 5 },
+          { "type": "데미지", "value": 40 },
+          { "type": "경험치", "value": 220 }
+        ]
+      }
+    ],
+    "type": "normal"
+  },
+  {
+    "id": "event_94",
+    "name": "미궁의 수수께끼 문",
+    "description": "문 위에 수수께끼가 새겨져 있습니다. \"아침에는 네 발, 점심에는 두 발, 저녁에는 세 발...\"",
+    "imgId": "riddle_door",
+    "minFloor": 31,
+    "maxFloor": 39,
+    "enemyId": null,
+    "choices": ["수수께끼를 푼다", "문을 부순다"],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "\"사람.\" 문이 소리 없이 열립니다. (지혜 +4, 경험치 +250)",
+        "statRewards": [
+          { "type": "지혜", "value": 4 },
+          { "type": "경험치", "value": 250 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "문은 부서졌지만 파편에 다쳤습니다. (힘 +4, 데미지 50, 경험치 +200)",
+        "statRewards": [
+          { "type": "힘", "value": 4 },
+          { "type": "데미지", "value": 50 },
+          { "type": "경험치", "value": 200 }
+        ]
+      }
+    ],
+    "type": "normal"
+  },
+  {
+    "id": "event_95",
+    "name": "타락한 신전의 제단",
+    "description": "검게 물든 제단 위에 핏자국이 말라붙어 있습니다. 제단이 무언가를 요구하는 듯합니다.",
+    "imgId": "corrupted_altar",
+    "minFloor": 41,
+    "maxFloor": 49,
+    "enemyId": null,
+    "choices": ["피를 바친다", "기도만 올린다"],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "제단이 피를 마시고 힘을 돌려줍니다. (데미지 80, 힘 +8, 경험치 +280)",
+        "statRewards": [
+          { "type": "데미지", "value": 80 },
+          { "type": "힘", "value": 8 },
+          { "type": "경험치", "value": 280 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "제단이 잠잠해지고 따뜻한 빛이 감쌉니다. (회복 +100, 경험치 +250)",
+        "statRewards": [
+          { "type": "회복", "value": 100 },
+          { "type": "경험치", "value": 250 }
+        ]
+      }
+    ],
+    "type": "normal"
+  },
+  {
+    "id": "event_96",
+    "name": "죽은 용의 둥지",
+    "description": "거대한 둥지에 깨진 알껍데기와 금화가 흩어져 있습니다. 어미 용은 오래전에 죽은 듯합니다.",
+    "imgId": "dragon_nest",
+    "minFloor": 41,
+    "maxFloor": 49,
+    "enemyId": null,
+    "choices": ["둥지를 뒤진다", "알껍데기를 갈아 마신다"],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "용이 모아 둔 금화를 챙겼습니다. (골드 +600, 경험치 +250)",
+        "statRewards": [
+          { "type": "골드", "value": 600 },
+          { "type": "경험치", "value": 250 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "용의 생명력이 몸에 스며듭니다. (체력 +6, 경험치 +260)",
+        "statRewards": [
+          { "type": "체력", "value": 6 },
+          { "type": "경험치", "value": 260 }
+        ]
+      }
+    ],
+    "type": "normal"
+  },
+  {
+    "id": "event_97",
+    "name": "피의 제단",
+    "description": "마왕성 입구에 피가 마르지 않는 제단이 있습니다. 세 개의 그릇이 놓여 있습니다.",
+    "imgId": "dark_cavern",
+    "minFloor": 52,
+    "maxFloor": 52,
+    "enemyId": null,
+    "choices": ["붉은 그릇의 피를 마신다", "검은 그릇의 피를 마신다", "제단의 성배를 가져간다"],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "근육이 터질 듯 부풀어 오릅니다. (힘 +40, 체력 +40)",
+        "statRewards": [
+          { "type": "힘", "value": 40 },
+          { "type": "체력", "value": 40 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "감각이 날카로워지고 생각이 빨라집니다. (지혜 +40, 민첩 +40)",
+        "statRewards": [
+          { "type": "지혜", "value": 40 },
+          { "type": "민첩", "value": 40 }
+        ]
+      },
+      {
+        "itemId": "item_88",
+        "description": "마르지 않는 피가 고인 성배를 손에 넣었습니다.",
+        "statRewards": []
+      }
+    ],
+    "type": "normal"
+  },
+  {
+    "id": "event_98",
+    "name": "용의 보물고",
+    "description": "용들이 모아 둔 보물고입니다. 그중 세 벌의 갑옷이 유난히 빛납니다. 무엇을 고르시겠습니까?",
+    "imgId": "treasure_chest",
+    "minFloor": 56,
+    "maxFloor": 56,
+    "enemyId": null,
+    "choices": ["'용비늘 흉갑'", "'화염 정령의 로브'", "'그림자 경갑'"],
+    "rewards": [
+      {
+        "itemId": "item_77",
+        "description": "용비늘 흉갑을 선택하였습니다. (경험치 +420)",
+        "statRewards": [
+          { "type": "경험치", "value": 420 }
+        ]
+      },
+      {
+        "itemId": "item_78",
+        "description": "화염 정령의 로브를 선택하였습니다. (경험치 +420)",
+        "statRewards": [
+          { "type": "경험치", "value": 420 }
+        ]
+      },
+      {
+        "itemId": "item_79",
+        "description": "그림자 경갑을 선택하였습니다. (경험치 +420)",
+        "statRewards": [
+          { "type": "경험치", "value": 420 }
+        ]
+      }
+    ],
+    "type": "normal"
+  },
+  {
+    "id": "event_99",
+    "name": "끓어오르는 용암 온천",
+    "description": "용암 옆에 김이 오르는 온천이 있습니다. 물이 지나치게 뜨거워 보입니다.",
+    "imgId": "lava_cavern",
+    "minFloor": 51,
+    "maxFloor": 59,
+    "enemyId": null,
+    "choices": ["몸을 푹 담근다", "손발만 담그고 쉰다"],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "살이 익는 듯했지만 몸이 단련되었습니다. (데미지 60, 체력 +8, 경험치 +400)",
+        "statRewards": [
+          { "type": "데미지", "value": 60 },
+          { "type": "체력", "value": 8 },
+          { "type": "경험치", "value": 400 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "피로가 풀립니다. (회복 +150, 경험치 +350)",
+        "statRewards": [
+          { "type": "회복", "value": 150 },
+          { "type": "경험치", "value": 350 }
+        ]
+      }
+    ],
+    "type": "normal"
+  },
+  {
+    "id": "event_100",
+    "name": "얼어붙은 왕의 무덤",
+    "description": "얼음 속에 잠든 왕의 무덤입니다. 왕과 함께 묻힌 세 가지 유품이 얼음 위에 놓여 있습니다. 무엇을 고르시겠습니까?",
+    "imgId": "frozen_throne",
+    "minFloor": 66,
+    "maxFloor": 66,
+    "enemyId": null,
+    "choices": ["'서리 왕의 갑주'", "'별빛 로브'", "'왕가의 사냥꾼 망토'"],
+    "rewards": [
+      {
+        "itemId": "item_80",
+        "description": "서리 왕의 갑주를 선택하였습니다. (경험치 +520)",
+        "statRewards": [
+          { "type": "경험치", "value": 520 }
+        ]
+      },
+      {
+        "itemId": "item_81",
+        "description": "별빛 로브를 선택하였습니다. (경험치 +520)",
+        "statRewards": [
+          { "type": "경험치", "value": 520 }
+        ]
+      },
+      {
+        "itemId": "item_82",
+        "description": "왕가의 사냥꾼 망토를 선택하였습니다. (경험치 +520)",
+        "statRewards": [
+          { "type": "경험치", "value": 520 }
+        ]
+      }
+    ],
+    "type": "normal"
+  },
+  {
+    "id": "event_101",
+    "name": "얼음 속에 갇힌 모험가",
+    "description": "투명한 얼음 속에 모험가가 갇혀 있습니다. 아직 숨이 붙어 있는 것 같습니다.",
+    "imgId": "frozen_skeleton",
+    "minFloor": 61,
+    "maxFloor": 69,
+    "enemyId": null,
+    "choices": ["얼음을 깨 구해 준다", "그대로 지나간다"],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "얼음 파편에 다쳤지만 모험가가 감사의 표시로 금화를 건넵니다. (데미지 70, 골드 +900, 경험치 +500)",
+        "statRewards": [
+          { "type": "데미지", "value": 70 },
+          { "type": "골드", "value": 900 },
+          { "type": "경험치", "value": 500 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "모험가의 눈이 당신을 따라오는 것 같습니다. (경험치 +450)",
+        "statRewards": [
+          { "type": "경험치", "value": 450 }
+        ]
+      }
+    ],
+    "type": "normal"
+  },
+  {
+    "id": "event_102",
+    "name": "시간이 멈춘 서재",
+    "description": "먼지 한 톨 움직이지 않는 서재입니다. 책장 사이로 비밀 통로가 보입니다.",
+    "imgId": "library",
+    "minFloor": 61,
+    "maxFloor": 69,
+    "enemyId": null,
+    "choices": ["고대 마도서를 읽는다", "비밀 통로로 빠져나간다"],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "멈춘 시간 속에서 오래도록 책을 읽었습니다. (지혜 +10, 경험치 +500)",
+        "statRewards": [
+          { "type": "지혜", "value": 10 },
+          { "type": "경험치", "value": 500 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "좁은 통로를 기어 나오느라 상처투성이가 되었습니다. (민첩 +10, 데미지 80, 경험치 +520)",
+        "statRewards": [
+          { "type": "민첩", "value": 10 },
+          { "type": "데미지", "value": 80 },
+          { "type": "경험치", "value": 520 }
+        ]
+      }
+    ],
+    "type": "normal"
+  },
+  {
+    "id": "event_103",
+    "name": "마왕성의 연회장",
+    "description": "마왕을 위해 차려진 연회장이 비어 있습니다. 식탁 위의 음식에서 아직 김이 오릅니다.",
+    "imgId": "banquet_hall",
+    "minFloor": 71,
+    "maxFloor": 74,
+    "enemyId": null,
+    "choices": ["차려진 음식을 먹는다", "연회장을 불태운다"],
+    "rewards": [
+      {
+        "itemId": null,
+        "description": "마왕의 음식이 온몸에 힘을 불어넣습니다. (회복 +250, 경험치 +600)",
+        "statRewards": [
+          { "type": "회복", "value": 250 },
+          { "type": "경험치", "value": 600 }
+        ]
+      },
+      {
+        "itemId": null,
+        "description": "불길 속에서 분노가 힘이 됩니다. (힘 +10, 데미지 100, 경험치 +650)",
+        "statRewards": [
+          { "type": "힘", "value": 10 },
+          { "type": "데미지", "value": 100 },
+          { "type": "경험치", "value": 650 }
+        ]
+      }
+    ],
+    "type": "normal"
+  },
+  {
+    "id": "event_42_6",
+    "type": "shop",
+    "name": "휴식처, 던전 상점",
+    "description": "여러 물건을 파는 상점입니다.",
+    "imgId": "suspicious_merchant",
+    "minFloor": 51,
+    "maxFloor": 59,
+    "enemyId": null,
+    "shopItems": ["item_36", "item_37", "item_89", "item_90"],
+    "choices": ["상점 둘러보기"],
+    "rewards": [
+      {
+        "action": "shop",
+        "itemId": null,
+        "description": "포션들을 구경했습니다.",
+        "statRewards": []
+      }
+    ]
+  },
+  {
+    "id": "event_42_7",
+    "type": "shop",
+    "name": "휴식처, 던전 상점",
+    "description": "여러 물건을 파는 상점입니다.",
+    "imgId": "suspicious_merchant",
+    "minFloor": 61,
+    "maxFloor": 69,
+    "enemyId": null,
+    "shopItems": ["item_37", "item_89", "item_90", "item_91"],
+    "choices": ["상점 둘러보기"],
+    "rewards": [
+      {
+        "action": "shop",
+        "itemId": null,
+        "description": "포션들을 구경했습니다.",
+        "statRewards": []
+      }
+    ]
+  },
+  {
+    "id": "event_42_8",
+    "type": "shop",
+    "name": "휴식처, 던전 상점",
+    "description": "마왕성 안에 숨어 장사를 하는 간 큰 상인입니다.",
+    "imgId": "suspicious_merchant",
+    "minFloor": 71,
+    "maxFloor": 74,
+    "enemyId": null,
+    "shopItems": ["item_89", "item_90", "item_91", "item_92"],
+    "choices": ["상점 둘러보기"],
+    "rewards": [
+      {
+        "action": "shop",
+        "itemId": null,
+        "description": "포션들을 구경했습니다.",
+        "statRewards": []
+      }
+    ]
+  },
+  {
+    "id": "event_104",
+    "type": "shop",
+    "name": "어둠 속의 수상한 상인",
+    "description": "마왕성 문 앞에서 상인을 만났습니다. 이런 곳까지 물건을 팔러 온 모양입니다.",
+    "imgId": "suspicious_merchant",
+    "minFloor": 51,
+    "maxFloor": 51,
+    "enemyId": null,
+    "shopItems": ["item_37", "item_89"],
+    "choices": ["상점 둘러보기"],
+    "rewards": [
+      {
+        "action": "shop",
+        "itemId": null,
+        "description": "포션을 구경했습니다.",
+        "statRewards": []
+      }
+    ]
+  },
+  {
+    "id": "event_105",
+    "type": "shop",
+    "name": "어둠 속의 수상한 상인",
+    "description": "얼음 동굴 입구에서 상인이 손을 비비며 기다리고 있습니다.",
+    "imgId": "suspicious_merchant",
+    "minFloor": 61,
+    "maxFloor": 61,
+    "enemyId": null,
+    "shopItems": ["item_89", "item_90"],
+    "choices": ["상점 둘러보기"],
+    "rewards": [
+      {
+        "action": "shop",
+        "itemId": null,
+        "description": "포션을 구경했습니다.",
+        "statRewards": []
+      }
+    ]
+  },
+  {
+    "id": "event_106",
+    "type": "shop",
+    "name": "어둠 속의 수상한 상인",
+    "description": "옥좌로 가는 길목에 상인이 앉아 있습니다. \"마지막 쇼핑이 될지도 모르겠군요.\"",
+    "imgId": "suspicious_merchant",
+    "minFloor": 71,
+    "maxFloor": 71,
+    "enemyId": null,
+    "shopItems": ["item_90", "item_91", "item_92"],
+    "choices": ["상점 둘러보기"],
+    "rewards": [
+      {
+        "action": "shop",
+        "itemId": null,
+        "description": "포션을 구경했습니다.",
+        "statRewards": []
+      }
+    ]
+  },
+  {
+    "id": "event_shop_4_a",
+    "type": "shop",
+    "name": "심연의 무기고",
+    "description": "마왕성 입구의 버려진 무기고입니다. 해골 상인이 녹슬지 않은 무기들을 지키고 있습니다.",
+    "imgId": "ancient_shop",
+    "minFloor": 51,
+    "maxFloor": 59,
+    "enemyId": null,
+    "shopItems": ["item_56", "item_57", "item_59", "item_60", "item_37", "item_89"],
+    "choices": ["상점 둘러보기"],
+    "rewards": [
+      {
+        "action": "shop",
+        "itemId": null,
+        "description": "무기들을 구경했습니다.",
+        "statRewards": []
+      }
+    ]
+  },
+  {
+    "id": "event_shop_4_b",
+    "type": "shop",
+    "name": "용암 대장간",
+    "description": "용암을 풀무 삼아 쇠를 두드리는 대장간입니다. 불꽃 속에서 대장장이가 고개를 듭니다.",
+    "imgId": "smithy",
+    "minFloor": 61,
+    "maxFloor": 69,
+    "enemyId": null,
+    "shopItems": ["item_62", "item_63", "item_64", "item_65", "item_89", "item_90"],
+    "choices": ["상점 둘러보기"],
+    "rewards": [
+      {
+        "action": "shop",
+        "itemId": null,
+        "description": "대장간의 무기들을 구경했습니다.",
         "statRewards": []
       }
     ]

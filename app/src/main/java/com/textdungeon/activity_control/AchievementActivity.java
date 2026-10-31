@@ -172,8 +172,10 @@ public class AchievementActivity extends BaseActivity {
         if (category.equals("아이템")) {
             for (Item item : dt.getItemManager().getAll()) {
                 boolean discovered = disItems.contains(item.getId());
-                currentCollectionList.add(new CollectionData(item.getName(), item.getDescription(),
-                        imageOrDefault(item.getImgId(), "ic_weapon"), discovered));
+                currentCollectionList.add(new CollectionData(item.getName(),
+                        ItemFrames.withLabel(item, item.getDescription()),
+                        imageOrDefault(item.getImgId(), ItemFrames.typeIcon(item.getType())), discovered,
+                        item.getGrade()));
             }
         } else if (category.equals("몬스터")) {
             for (Monster mon : dt.getMonsterManager().getAll()) {
@@ -215,6 +217,13 @@ public class AchievementActivity extends BaseActivity {
             unlockStatus.setText("닫기");
             unlockStatus.setTextColor(Color.parseColor("#E9C176"));
             GameImages.set(charImage, data.getImgName(), 0);
+            if (data.getGrade() != null) {
+                ItemFrames.tintTypeIcon(charImage, data.getImgName(), data.getGrade());
+                charName.setTextColor(data.getGrade().color);
+                charImage.setBackground(ItemFrames.frame(this, data.getGrade()));
+                int pad = Math.round(10 * getResources().getDisplayMetrics().density);
+                charImage.setPadding(pad, pad, pad, pad);
+            }
         } else {
             charName.setText("???");
             charName.setTextColor(Color.parseColor("#A0A0A0"));

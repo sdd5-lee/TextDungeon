@@ -17,26 +17,26 @@ import android.widget.TextView;
 
 import com.example.textdungeon.R;
 import com.textdungeon.activity_control.GameImages;
-import com.textdungeon.model.LearnedMagic;
 import com.textdungeon.model.Magic;
 
 /**
  * 전투 창 마법 카드. 마법 그림이 버튼 전체를 채우고, 테두리는 계열 색,
- * 오른쪽 위에 남은 횟수, 아래 띠에 이름. 다 쓰면 흑백이 된다.
+ * 오른쪽 위에 쿨타임, 아래 띠에 이름. 숨을 고르는 동안(쿨타임)은 흑백이 된다.
  */
 public class MagicCardButton extends FrameLayout {
 
     private static final int TEXT = 0xFFF0E2C0;
-    private static final int TEXT_EMPTY = 0xFFA8A296;
-    private static final int BORDER_EMPTY = 0xFF5F5A52;
+    private static final int TEXT_RESTING = 0xFFA8A296;
+    private static final int BORDER_RESTING = 0xFF5F5A52;
 
     private final float density;
 
-    public MagicCardButton(Context context, Magic magic, LearnedMagic learned) {
+    /** @param cooldownLeft 다시 쓰기까지 남은 내 턴 수 (0이면 준비) */
+    public MagicCardButton(Context context, Magic magic, int cooldownLeft) {
         super(context);
         density = getResources().getDisplayMetrics().density;
-        boolean empty = learned.getCurrentCount() <= 0;
-        String countText = learned.getCurrentCount() + "/" + learned.getMaxCount();
+        boolean resting = cooldownLeft > 0;
+        String countText = resting ? cooldownLeft + "턴 뒤" : "준비";
 
         // 둥근 모서리 밖으로 그림·띠가 나오지 않게 바탕 모양대로 자른다
         setBackground(rounded(0xFF1A1612));
@@ -45,7 +45,7 @@ public class MagicCardButton extends FrameLayout {
         ImageView image = new ImageView(context);
         image.setScaleType(ImageView.ScaleType.CENTER_CROP);
         GameImages.set(image, magic.getImg(), R.drawable.magic_default_icon);
-        if (empty) {
+        if (resting) {
             ColorMatrix gray = new ColorMatrix();
             gray.setSaturation(0f);
             image.setColorFilter(new ColorMatrixColorFilter(gray));
@@ -57,7 +57,7 @@ public class MagicCardButton extends FrameLayout {
         name.setText(magic.getName());
         name.setTextSize(12f);
         name.setTypeface(Typeface.SERIF, Typeface.BOLD);
-        name.setTextColor(empty ? TEXT_EMPTY : TEXT);
+        name.setTextColor(resting ? TEXT_RESTING : TEXT);
         name.setSingleLine(true);
         name.setEllipsize(TextUtils.TruncateAt.END);
         name.setBackgroundColor(0x99000000);
@@ -68,7 +68,7 @@ public class MagicCardButton extends FrameLayout {
         count.setText(countText);
         count.setTextSize(11f);
         count.setTypeface(Typeface.SERIF, Typeface.BOLD);
-        count.setTextColor(empty ? TEXT_EMPTY : TEXT);
+        count.setTextColor(resting ? TEXT_RESTING : TEXT);
         GradientDrawable badge = new GradientDrawable();
         badge.setCornerRadius(dp(8));
         badge.setColor(0xA6000000);
@@ -80,7 +80,7 @@ public class MagicCardButton extends FrameLayout {
 
         // 테두리와 누를 때 번쩍임은 그림 위에 겹쳐 그린다
         GradientDrawable border = rounded(0x00000000);
-        border.setStroke(dp(2), empty ? BORDER_EMPTY : magic.getSchool().color);
+        border.setStroke(dp(2), resting ? BORDER_RESTING : magic.getSchool().color);
         RippleDrawable ripple = new RippleDrawable(ColorStateList.valueOf(0x40FFFFFF), null, rounded(0xFFFFFFFF));
         setForeground(new LayerDrawable(new Drawable[]{ripple, border}));
 

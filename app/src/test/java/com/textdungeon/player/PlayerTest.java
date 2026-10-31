@@ -48,11 +48,10 @@ public class PlayerTest {
 
     @Test
     public void 스탯_분배로_지혜20을_넘기면_코어가_생긴다() {
-        int before = player.getStat().getWisdom();
         player.getStat().setWisdom(20);
-        player.recalculateStats(before);
+        player.recalculateStats();
         player.getStat().setWisdom(10); // 이벤트로 깎여도
-        player.recalculateStats(20);
+        player.recalculateStats();
         assertEquals(1, player.getMagicScroll().getTotalCores(player.getStat().getWisdom()));
     }
 

@@ -76,7 +76,7 @@ public class ChaosDice {
         /**
          * @param nearItems        이 층대 아이템. AI 후보(5개를 고른다)와 결과표의 "floor" 아이템
          * @param upperItems       더 깊은 층의 장비. 결과표의 "upper" 아이템 (특별 선택지)
-         * @param rewardMultiplier 난이도 보상 배수, expMultiplier 특성 경험치 배수.
+         * @param rewardMultiplier 던전 보상 배수, expMultiplier 특성 경험치 배수.
          *                         보상설명 끝에 붙이는 요약을 실제 적용량으로 만드는 데 쓴다 (Reward.summary)
          */
         public Request(int floor, Stat stat, List<Item> nearItems, List<Item> upperItems, GameEvent event,
@@ -251,7 +251,7 @@ public class ChaosDice {
 
     /**
      * 첫 굴림이면 선택지를 붙이고, 다시 굴리기면 결과표 자리를 새 결과로 바꾼 뒤 이벤트의 주사위 상태를 남긴다.
-     * 모델·결과표는 수치 없이 상황만 묘사하고, 실제로 적용되는 양(상한, 난이도·특성 배수 반영)은 코드가 붙인다.
+     * 모델·결과표는 수치 없이 상황만 묘사하고, 실제로 적용되는 양(상한, 던전·특성 배수 반영)은 코드가 붙인다.
      * 메인 스레드에서만 부른다.
      */
     private void place(Request request, ChoiceDelta delta, Source source, Callback callback) {

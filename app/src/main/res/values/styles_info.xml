@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 스탯 창(dialog_player_info)에서 되풀이되는 글자·칸 모양 -->
+<resources>
+
+    <!-- "능력치", "특성", "가방" 같은 칸 제목 (캐릭터 선택의 "특성" 제목과 같은 모양) -->
+    <style name="InfoSectionLabel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">20dp</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:fontFamily">serif</item>
+        <item name="android:textColor">#9A948C</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <!-- 공격력·크리티컬·골드·남은 스탯 포인트 한 칸 -->
+    <style name="InfoTile">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/bg_trait_card</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:paddingHorizontal">14dp</item>
+        <item name="android:paddingVertical">10dp</item>
+    </style>
+
+    <style name="InfoTileLabel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">serif</item>
+        <item name="android:textColor">#9A948C</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="InfoTileValue">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:fontFamily">serif</item>
+        <item name="android:textColor">#E9C176</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+</resources>

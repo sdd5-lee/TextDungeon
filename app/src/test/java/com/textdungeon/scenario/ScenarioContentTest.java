@@ -19,16 +19,16 @@ import java.util.Map;
 // ══════════════════════════════════════════════
 //  시나리오 콘텐츠 검사 (assets 파일을 직접 읽는다)
 //  - 시나리오끼리 아이템·몬스터·이벤트 ID가 겹치면 도감(발견 목록)이 섞이므로 막는다
-//  - ScenarioPack에 적힌 DLC 폴더에 세 파일이 다 있는지
+//  - ScenarioPack에 적힌 DLC 폴더에 네 파일(이벤트·몬스터·아이템·던전)이 다 있는지
 // ══════════════════════════════════════════════
 public class ScenarioContentTest {
 
     private static final File ASSETS = new File("src/main/assets");
     private static final String[] FILES = {
-            ScenarioRepository.EVENTS, ScenarioRepository.MONSTERS, ScenarioRepository.ITEMS};
+            ScenarioRepository.EVENTS, ScenarioRepository.MONSTERS, ScenarioRepository.ITEMS, ScenarioRepository.DUNGEONS};
 
     @Test
-    public void DLC_폴더에_세_파일이_다_있다() {
+    public void DLC_폴더에_네_파일이_다_있다() {
         for (ScenarioPack p : ScenarioPack.values()) {
             if (p.assetDir.isEmpty()) continue;
             for (String f : FILES) {

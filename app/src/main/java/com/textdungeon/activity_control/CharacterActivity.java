@@ -76,9 +76,11 @@ public class CharacterActivity extends BaseActivity {
         btnTraitChange = findViewById(R.id.btn_trait_change);
         btnStart = findViewById(R.id.btn_start);
 
-        tvTraitBadge.setBackground(badgeBack(0xBF14100C));
+        View btnBack = findViewById(R.id.btn_back);
+
         fitPortrait();
-        setSfx(btnStart, btnTraitChange);
+        setSfx(btnStart, btnTraitChange, btnBack);
+        btnBack.setOnClickListener(v -> finish());
         btnTraitChange.setOnClickListener(SingleClickListener.wrap(this::openTraitPicker));
         buildJobStrip();
         // 처음에는 해금된 첫 직업을 골라 둔다
@@ -187,43 +189,7 @@ public class CharacterActivity extends BaseActivity {
     }
 
     private void showStats(Job job) {
-        statBars.removeAllViews();
-        addStatRow("힘", R.drawable.ic_strength, job.strength, 0xFFD9534F);
-        addStatRow("민첩", R.drawable.ic_dexterity, job.agility, 0xFF5CB85C);
-        addStatRow("체력", R.drawable.ic_health, job.health, 0xFFC9A24A);
-        addStatRow("지혜", R.drawable.ic_wisdom, job.wisdom, 0xFF6B8FD6);
-    }
-
-    private void addStatRow(String label, int icon, int value, int color) {
-        LinearLayout row = new LinearLayout(this);
-        row.setOrientation(LinearLayout.HORIZONTAL);
-        row.setGravity(Gravity.CENTER_VERTICAL);
-        row.setPadding(0, dp(3), 0, dp(3));
-
-        ImageView iv = new ImageView(this);
-        iv.setImageResource(icon);
-        iv.setColorFilter(0xFFB8B0A6);
-        row.addView(iv, new LinearLayout.LayoutParams(dp(14), dp(14)));
-
-        LinearLayout.LayoutParams nameLp = new LinearLayout.LayoutParams(dp(38), LinearLayout.LayoutParams.WRAP_CONTENT);
-        nameLp.setMarginStart(dp(6));
-        row.addView(text(label, 12, 0xFFB8B0A6), nameLp);
-
-        // 막대: 전체를 STAT_MAX로 보고 채운 부분만 weight를 준다
-        LinearLayout track = new LinearLayout(this);
-        track.setBackground(round(0xFF2A2622));
-        track.setClipToOutline(true);
-        track.setWeightSum(STAT_MAX);
-        View fill = new View(this);
-        fill.setBackground(round(color));
-        track.addView(fill, new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT,
-                Math.min(value, STAT_MAX)));
-        row.addView(track, new LinearLayout.LayoutParams(0, dp(7), 1f));
-
-        TextView num = text(String.valueOf(value), 13, TEXT);
-        num.setGravity(Gravity.END);
-        row.addView(num, new LinearLayout.LayoutParams(dp(30), LinearLayout.LayoutParams.WRAP_CONTENT));
-        statBars.addView(row);
+        StatBars.show(statBars, job.strength, job.agility, job.health, job.wisdom, STAT_MAX);
     }
 
     // ── 특성 ────────────────────────────────────────────
@@ -285,7 +251,7 @@ public class CharacterActivity extends BaseActivity {
     private void beginRun(String playerName, ScenarioPack pack) {
         dt.startNewGame(playerName, playerJob, selectedTrait.name(), pack);
 
-        Intent intent = new Intent(this, DifficultyActivity.class);
+        Intent intent = new Intent(this, DungeonActivity.class);
         startActivity(intent);
     }
 
@@ -337,22 +303,6 @@ public class CharacterActivity extends BaseActivity {
         d.setCornerRadius(dp(8));
         d.setColor(0);
         d.setStroke(dp(selected ? 2 : 1.5f), selected ? GOLD : 0xFF3A342E);
-        return d;
-    }
-
-    /** 초상화 위 "특성 · X" 배지: 금색 테두리 알약 */
-    private GradientDrawable badgeBack(int fill) {
-        GradientDrawable d = new GradientDrawable();
-        d.setCornerRadius(dp(20));
-        d.setColor(fill);
-        d.setStroke(dp(1), GOLD);
-        return d;
-    }
-
-    private GradientDrawable round(int color) {
-        GradientDrawable d = new GradientDrawable();
-        d.setCornerRadius(dp(4));
-        d.setColor(color);
         return d;
     }
 

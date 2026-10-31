@@ -26,10 +26,12 @@ import com.textdungeon.dialog_control.StatDialog;
 import com.textdungeon.event.BattleEvent;
 import com.textdungeon.event.GameEvent;
 import com.textdungeon.model.Achievement;
+import com.textdungeon.model.Dungeon;
 import com.textdungeon.model.Monster;
 import com.textdungeon.model.Reward;
 import com.textdungeon.player.Player;
 import com.textdungeon.system.EventManager;
+import com.textdungeon.system.GodTrial;
 
 import java.util.List;
 
@@ -76,7 +78,7 @@ public class EventActivity extends BaseActivity {
             return;
         }
 
-        if (eventManager.getCurrentFloor() > 50) {
+        if (eventManager.getCurrentFloor() > dt.getDungeon().getClearFloor()) {
             Intent intent = new Intent(this, ClearActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
@@ -164,6 +166,12 @@ public class EventActivity extends BaseActivity {
 
         appendDesc(currentEvent.getName());
         appendDesc(currentEvent.getDescription());
+        String trialStat = currentEvent.getTrialStat();
+        if (trialStat != null) {
+            // 싸우기 전에 지금 스탯으로 정해지는 세기와 보상을 보여 준다
+            appendDesc(GodTrial.preview(trialStat, GodTrial.statOf(player, trialStat), currentEvent.getMinFloor(),
+                    dt.getDungeon().getRewardMultiplier()));
+        }
 
         updatePlayerHeader();
         renderEventImage();
@@ -390,6 +398,14 @@ public class EventActivity extends BaseActivity {
     }
 
     private void applyEscapeResult() {
+        if (eventManager.getCurrentFloor() >= dt.getDungeon().getClearFloor()) {
+            // 마지막 층의 주인에게서 도망치면 다음 층(= 클리어)으로 넘어가 버리므로 다시 싸우게 한다
+            appendDesc("결과 : 몸을 피했지만 이 층의 주인이 길을 막고 있습니다. 쓰러뜨려야 지나갈 수 있습니다.");
+            updatePlayerHeader();
+            renderRetryButtons();
+            startTypingAnimation();
+            return;
+        }
         int levelSnapshot = eventManager.snapshotLevel();
 
         appendDesc("결과 : 당신은 전투를 피해 도망쳤습니다");
@@ -439,8 +455,8 @@ public class EventActivity extends BaseActivity {
                 dt.getUpperGear(floor),                     // 특별 선택지의 장비 후보
                 rolledEvent,
                 dt.getChaosTable(),
-                // 보상 요약을 실제 적용량으로 쓰기 위해 (GameEvent.execute: difficulty가 없으면 한 번만 적용)
-                dt.getDifficulty() != null ? dt.getDifficulty().rewardMultiplier : 1,
+                // 보상 요약을 실제 적용량으로 쓰기 위해 (GameEvent.execute가 던전 보상 배수만큼 반복 적용)
+                dt.getDungeon().getRewardMultiplier(),
                 com.textdungeon.model.Reward.expMultiplier(player));
         dt.getAiManager().requestChaosChoice(request, new ChaosDice.Callback() {
             @Override
@@ -503,8 +519,13 @@ public class EventActivity extends BaseActivity {
             startTypingAnimation();
             return;
         }
+        String trialStat = currentEvent.getTrialStat();
+        if (trialStat != null) {
+            // 시련의 신 결투: 그 스탯이 높을수록 적이 세다 (던전 배수 위에 곱한다)
+            monster = monster.scaled(GodTrial.enemyPercent(GodTrial.statOf(player, trialStat)));
+        }
         final boolean[] escapeState = {false};
-        BattleDialog battleDialog = new BattleDialog(this, player, monster, dt.getDifficulty(),
+        BattleDialog battleDialog = new BattleDialog(this, player, monster, dt.getDungeon().getStatMultiplier(),
                 () -> escapeState[0] = true);
         battleDialog.setOnDismissListener(dialog -> {
             if (eventManager.isPlayerDead()) {
@@ -559,9 +580,9 @@ public class EventActivity extends BaseActivity {
         int fresh = player.getMagicScroll().takeNewCores(player.getStat().getWisdom());
         if (fresh <= 0) return;
         new android.app.AlertDialog.Builder(this)
-                .setTitle("마법 코어 획득")
-                .setMessage("코어 포인트를 " + fresh + "개 얻었습니다.\n세피로트의 나무에서 새 마법 계열을 열 수 있습니다.")
-                .setPositiveButton("세피로트 열기", (d, w) -> openMagicBook())
+                .setTitle("마법 코어가 깃들었습니다")
+                .setMessage("몸 안에 새 코어 " + fresh + "개가 깃들었습니다.\n세피로트의 나무에서 잠든 가지를 깨울 수 있습니다.")
+                .setPositiveButton("세피로트의 나무로", (d, w) -> openMagicBook())
                 .setNegativeButton("닫기", null)
                 .show();
     }
@@ -575,8 +596,10 @@ public class EventActivity extends BaseActivity {
         showAchievementNotification(unlocked);
         notifyNewCores();
 
-        if (eventManager.getCurrentFloor() > 50){
-            appendDesc("던전안에 숨어있던 마왕을 쓰러트렸습니다.\n더 이상의 적은 없다.");
+        Dungeon dungeon = dt.getDungeon();
+        if (eventManager.getCurrentFloor() > dungeon.getClearFloor()){
+            appendDesc(dungeon.getClearText() != null ? dungeon.getClearText()
+                    : dungeon.getName() + "의 끝에 다다랐습니다.\n더 이상의 적은 없다.");
             ChoiceButton button = new ChoiceButton(this);
 
             setSfx(button);

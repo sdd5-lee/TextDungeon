@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.example.textdungeon.R;
 import com.textdungeon.buttons.SingleClickListener;
 import com.textdungeon.data.DataControlTower;
+import com.textdungeon.model.Dungeon;
 import com.textdungeon.player.Player;
 import com.textdungeon.system.GameSave;
 import com.textdungeon.system.GemFormula;
@@ -47,7 +48,13 @@ public class ClearActivity extends BaseActivity {
 
         // 정산(클리어 횟수 증가) 뒤에 읽어야 첫 클리어가 '0번'으로 표시되지 않는다
         int count = dt.getUserRecord().getClearCount();
-        tvClearDesc.setText(String.format("당신은 신들의 축복을 받으며 던전 최심부에 도달하고\n 최종적으로 마왕을 쓰러트렸습니다 수고하셨습니다.\n\n당신은 지금까지 %d번 던전을 클리어했습니다.", count));
+        Dungeon dungeon = dt.getDungeon();
+        String desc = String.format("당신은 신들의 축복을 받으며 %s의 최심부에 도달했습니다.\n수고하셨습니다.\n\n당신은 지금까지 %d번 던전을 클리어했습니다.",
+                dungeon.getName(), count);
+        for (Dungeon next : dt.getDungeons()) {
+            if (dungeon.getId().equals(next.getRequires())) desc += "\n\n새 던전 「" + next.getName() + "」이(가) 열렸습니다.";
+        }
+        tvClearDesc.setText(desc);
         tvScoreValue.setText(String.valueOf(earnedGems));
 
         setSfx(btnExit);
@@ -71,13 +78,15 @@ public class ClearActivity extends BaseActivity {
         Player player = dt.getPlayer();
         if (player == null) return 0; // 이미 정산됨
 
-        // (클리어 1000 * 난이도 + 기본 정산) × 젬 부스터. 광고 ×2는 버튼을 눌렀을 때 따로 준다
-        int baseWithBonus = 1000 * dt.getDifficulty().rewardMultiplier + RunSettlement.baseGems(dt, player);
+        // (던전 클리어 보상 + 기본 정산) × 젬 부스터. 광고 ×2는 버튼을 눌렀을 때 따로 준다
+        Dungeon dungeon = dt.getDungeon();
+        int baseWithBonus = dungeon.getClearGems() + RunSettlement.baseGems(dt, player);
         int boost = dt.getEntitlements().gemBoostMultiplier();
         int gems = GemFormula.finalGems(baseWithBonus, boost, false);
         adBonus.settled(baseWithBonus, boost);
 
         dt.getUserRecord().addClearCount();
+        dt.getUserRecord().addClearedDungeon(dungeon.getId()); // 다음 던전이 열린다
         dt.getUserRecord().addGem(gems);
         GameSave.saveUserRecord(this, dt.getUserRecord());
         dt.resetRun();

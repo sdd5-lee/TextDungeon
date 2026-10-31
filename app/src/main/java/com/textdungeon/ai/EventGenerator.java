@@ -120,6 +120,8 @@ public class EventGenerator {
 
             if ("battle".equals(jsonObject.get("type").getAsString())) {
                 fixBattleEvent(jsonObject, monsterList);
+                // 시련의 신: 오르는 양과 적의 세기는 싸울 때의 스탯으로 게임이 정한다 (GodTrial)
+                if (aiType.isTrial()) jsonObject.addProperty("trialStat", aiType.getTrialStat());
             }
             // 코드가 보정한 뒤 실제로 게임에 들어가는 형태 (AI 원문과 비교용)
             com.textdungeon.ai.backend.GeminiBackend.logRaw("보정 후 이벤트", jsonObject.toString());
@@ -217,7 +219,7 @@ public class EventGenerator {
     /**
      * 보물의 신 이벤트 보정: 상점/전투 요소를 지우고, 선택지마다 서로 다른 보물이 하나씩 붙도록 한다.
      * AI가 itemId를 빠뜨리거나, 목록에 없는 id를 주거나, 같은 보물을 두 번 넣으면 남은 보물로 채운다.
-     * itemList에는 DifficultyActivity가 넘긴 심층 장비만 들어 있다.
+     * itemList에는 DungeonActivity가 넘긴 심층 장비만 들어 있다.
      */
     private void fixTreasureEvent(JsonObject event, List<Item> itemList) {
         event.add("shopItems", com.google.gson.JsonNull.INSTANCE);

@@ -6,6 +6,7 @@ import com.textdungeon.data.DataControl;
 import com.textdungeon.data.DataControlTower;
 import com.textdungeon.data.DungeonControl;
 import com.textdungeon.event.GameEvent;
+import com.textdungeon.model.Dungeon;
 import com.textdungeon.model.Monster;
 import com.textdungeon.player.Player;
 
@@ -17,13 +18,11 @@ public class EventManager {
     private final DataControlTower dt;
     private final Player player;
     private final DungeonControl dungeonControl;
-    private int aiCount;
 
     public EventManager(DataControlTower dt) {
         this.dt = dt;
         this.player = dt.getPlayer();
         this.dungeonControl = dt.getDungeonControl();
-        this.aiCount = dt.getDifficulty().eventCount;
     }
 
     // ─────────────────────────────────────────
@@ -39,8 +38,17 @@ public class EventManager {
             return aiEvent;
         }
 
+        // 던전의 마지막 층에는 그 던전의 보스가 반드시 나온다
+        Dungeon dungeon = dt.getDungeon();
+        if (dungeon != null && currentFloor == dungeon.getClearFloor() && dungeon.getBossEventId() != null) {
+            GameEvent boss = eventList.spawn(dungeon.getBossEventId());
+            if (boss != null) return boss;
+        }
+        String dungeonId = dungeon != null ? dungeon.getId() : null;
+
         List<GameEvent> possibleEvents = eventList.getAll().stream()
                 .filter(e -> currentFloor >= e.getMinFloor() && currentFloor <= e.getMaxFloor())
+                .filter(e -> e.appearsIn(dungeonId))
                 .collect(Collectors.toList());
 
         if (possibleEvents.isEmpty()) {
@@ -71,7 +79,7 @@ public class EventManager {
         if (noRoom && !giveUpItemIfFull) {
             return "full";
         }
-        String result = event.execute(player, choiceIndex, dt.getItemManager(),dt.getDifficulty());
+        String result = event.execute(player, choiceIndex, dt.getItemManager(), dt.getDungeon().getRewardMultiplier());
 
         if (player.getInventory() != null && player.getInventory().getItemMap() != null) {
             for (String itemId : player.getInventory().getItemMap().keySet()) {

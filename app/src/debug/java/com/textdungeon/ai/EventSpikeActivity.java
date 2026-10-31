@@ -59,7 +59,7 @@ public class EventSpikeActivity extends AppCompatActivity {
     private static final long DEVICE_TIMEOUT_SEC = 180;
     private static final long CLOUD_TIMEOUT_SEC = 150;
     private static final long LOAD_TIMEOUT_MS = 5 * 60_000;
-    // 보통 난이도(보상 2배), 경험치 특성 없음
+    // 보상 2배 던전, 경험치 특성 없음
     private static final int REWARD_MULTIPLIER = 2;
 
     private final Handler mainHandler = new Handler(Looper.getMainLooper());
@@ -356,10 +356,10 @@ public class EventSpikeActivity extends AppCompatActivity {
         return cases;
     }
 
-    /** 지금 게임과 같은 입력 (DifficultyActivity.generateWithRetry) */
+    /** 지금 게임과 같은 입력 (DungeonActivity.generateNext) */
     private static Result runJson(LlmBackend backend, DataControlTower dt, Case c, long timeoutSec) throws InterruptedException {
         List<Item> items = c.god == AiType.TREASURE ? dt.getDeepFloorGear() : dt.getItemManager().getAll();
-        String type = c.god == AiType.STRUGGLE ? "battle" : "normal";
+        String type = c.god == AiType.STRUGGLE || c.god.isTrial() ? "battle" : "normal";
         Result r = new Result();
         CountDownLatch latch = new CountDownLatch(1);
         long start = SystemClock.elapsedRealtime();
@@ -430,7 +430,7 @@ public class EventSpikeActivity extends AppCompatActivity {
                 if (ch.length() > TemplateEventGenerator.MAX_CHOICE_LENGTH) r.problems.add("긴 선택지");
             }
         }
-        if (c.god == AiType.STRUGGLE) {
+        if (c.god == AiType.STRUGGLE || c.god.isTrial()) {
             if (!(e instanceof BattleEvent)) r.problems.add("전투가 아님");
             else if (!c.monsterIds.contains(((BattleEvent) e).getEnemyId())) r.problems.add("층에 없는 몬스터");
         }

@@ -46,6 +46,21 @@ public class UserRecordCompatTest {
     }
 
     @Test
+    public void 예전_기록은_클리어한_던전이_없고_클리어하면_저장된다() {
+        String old = "{\"gem\":0,\"unlockJobName\":[\"전사\"],\"clearCount\":2}";
+        UserRecord r = new Gson().fromJson(old, UserRecord.class);
+        assertTrue(r.getClearedDungeons().isEmpty());
+
+        r.addClearedDungeon("dungeon_1");
+        r.addClearedDungeon(null);
+        UserRecord back = new Gson().fromJson(new Gson().toJson(r), UserRecord.class);
+        assertEquals(new HashSet<>(Arrays.asList("dungeon_1")), back.getClearedDungeons());
+
+        back.clearAll();
+        assertTrue(back.getClearedDungeons().isEmpty());
+    }
+
+    @Test
     public void 최근_이름은_최신이_앞이고_3개까지_겹치지_않게() {
         String old = "{\"gem\":0,\"unlockJobName\":[\"전사\"]}";
         UserRecord r = new Gson().fromJson(old, UserRecord.class);

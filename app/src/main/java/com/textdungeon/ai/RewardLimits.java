@@ -11,7 +11,7 @@ import java.util.List;
  *
  * 기준은 event_list.json의 기존 이벤트 수치 (예: 31~40층 경험치 최대 900, 골드 최대 1500, 기본 스탯 +30).
  * 기존 이벤트보다 조금 넉넉하게 잡되, 젬 정산이나 스탯을 한 번에 망가뜨릴 수준(9999 등)은 막는다.
- * 난이도 보상 배수는 이 값에 곱해서 적용된다.
+ * 던전 보상 배수는 이 값에 곱해서 적용된다.
  */
 public final class RewardLimits {
     private RewardLimits() {}

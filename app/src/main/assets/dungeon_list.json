@@ -1,0 +1,58 @@
+[
+  {
+    "id": "dungeon_1",
+    "name": "어둠의 입구",
+    "imgId": "dungeon_img_1",
+    "clearFloor": 20,
+    "requires": null,
+    "aiEvents": 1,
+    "statMultiplier": 1,
+    "rewardMultiplier": 1,
+    "clearGems": 1000,
+    "bossEventId": "event_11",
+    "description": "모든 모험가가 처음 내려가는 던전의 얕은 곳입니다. 슬라임과 고블린, 해골들이 들끓는 스무 층을 지나 고블린 무리의 지배자, 고블린 로드를 쓰러뜨리십시오.",
+    "clearText": "고블린 로드가 쓰러지자 고블린들이 뿔뿔이 흩어집니다.\n던전의 입구를 정복했습니다."
+  },
+  {
+    "id": "dungeon_2",
+    "name": "잊힌 미궁",
+    "imgId": "dungeon_img_2",
+    "clearFloor": 35,
+    "requires": "dungeon_1",
+    "aiEvents": 2,
+    "statMultiplier": 2,
+    "rewardMultiplier": 2,
+    "clearGems": 2000,
+    "bossEventId": "event_61",
+    "description": "입구보다 깊이 이어진 오래된 미궁입니다. 오크와 리자드맨이 길목을 지키고, 서른다섯 번째 층에는 미궁을 지키는 석조 거인이 잠들어 있습니다. 몬스터가 두 배로 강해지는 대신 보상도 두 배입니다.",
+    "clearText": "미궁의 파수꾼이 무너지며 잊힌 미궁의 문양이 모두 꺼집니다.\n더 이상 길을 막는 자는 없다."
+  },
+  {
+    "id": "dungeon_3",
+    "name": "피의 성채",
+    "imgId": "dungeon_img_3",
+    "clearFloor": 50,
+    "requires": "dungeon_2",
+    "aiEvents": 3,
+    "statMultiplier": 2,
+    "rewardMultiplier": 2,
+    "clearGems": 3000,
+    "bossEventId": "event_64",
+    "description": "미궁 아래 묻힌 고대의 성채입니다. 용과 리치, 타락한 용사가 배회하는 쉰 층의 끝에서 흡혈귀들의 왕, 피의 군주가 침입자를 기다립니다.",
+    "clearText": "피의 군주가 쓰러지자 성채를 물들이던 핏빛이 걷힙니다.\n더 이상의 적은 없다."
+  },
+  {
+    "id": "dungeon_4",
+    "name": "마왕성",
+    "imgId": "dungeon_img_4",
+    "clearFloor": 75,
+    "requires": "dungeon_3",
+    "aiEvents": 4,
+    "statMultiplier": 2,
+    "rewardMultiplier": 2,
+    "clearGems": 5000,
+    "bossEventId": "event_34",
+    "description": "세상을 어둠으로 물들인 마왕의 거처입니다. 피의 성채를 지나 불꽃과 얼음, 공허의 층을 건너 일흔다섯 번째 층의 옥좌에 앉은 마왕을 쓰러뜨리십시오.",
+    "clearText": "던전안에 숨어있던 마왕을 쓰러트렸습니다.\n더 이상의 적은 없다."
+  }
+]

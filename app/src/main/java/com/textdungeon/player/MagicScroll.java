@@ -81,9 +81,9 @@ public class MagicScroll {
         if (wisdom < magic.getValue()) return LearnState.NEED_WISDOM;
         return LearnState.CAN_LEARN;
     }
-    public void addMagic(String magicId, int maxCount) {
+    public void addMagic(String magicId) {
         if (!hasMagic(magicId)) {
-            learnedMagicList.add(new LearnedMagic(magicId, maxCount));
+            learnedMagicList.add(new LearnedMagic(magicId));
         }
     }
     public boolean hasMagic(String magicId) {
@@ -94,31 +94,6 @@ public class MagicScroll {
             if (lm.getMagicId().equals(magicId)) return lm;
         }
         return null;
-    }
-    public void restoreAll() {
-        for (LearnedMagic lm : learnedMagicList) lm.restore();
-    }
-
-    public void updateCounts(int wisdom) {
-        int addCount = 1 + (wisdom / 2);
-        for (LearnedMagic lm : learnedMagicList) {
-            lm.setCurrentCount(addCount);
-            lm.setMaxCount(addCount);
-        }
-    }
-    /**
-     * 지혜가 레벨업 없이 바뀌었을 때, 그 변화량만큼만 마법 최대 횟수를 조정한다.
-     * updateCounts()와 달리 이미 쓴 횟수를 다시 채우지 않고, 마법마다 다른 기본 횟수도 유지한다.
-     */
-    public void adjustForWisdomChange(int oldWisdom, int newWisdom) {
-        int delta = (1 + newWisdom / 2) - (1 + oldWisdom / 2);
-        if (delta == 0) return;
-        for (LearnedMagic lm : learnedMagicList) {
-            int newMax = Math.max(1, lm.getMaxCount() + delta);
-            int newCurrent = lm.getCurrentCount() + Math.max(0, delta);
-            lm.setMaxCount(newMax);
-            lm.setCurrentCount(Math.max(0, Math.min(newMax, newCurrent)));
-        }
     }
     public void removeMagic(String magicId){
         learnedMagicList.removeIf(l -> l.getMagicId().equals(magicId));

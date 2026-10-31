@@ -5,7 +5,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.textdungeon.data.DataControl;
-import com.textdungeon.data.Difficulty;
 import com.textdungeon.event.GameEvent;
 import com.textdungeon.player.Player;
 
@@ -38,27 +37,27 @@ public class RewardSummaryTest {
     }
 
     @Test
-    public void 모험의_축복과_어려움에서_경험치_요약이_실제_증가량과_같다() {
+    public void 모험의_축복과_보상3배_던전에서_경험치_요약이_실제_증가량과_같다() {
         player.setTraitId(Trait.BLESSING_OF_ADVENTURE.name());
         Reward reward = new Reward("묘사", null, Collections.singletonList(new RewardStat("경험치", 10)));
 
-        String summary = reward.summary(Difficulty.HARD.rewardMultiplier, Reward.expMultiplier(player), null);
+        String summary = reward.summary(3, Reward.expMultiplier(player), null);
         int expBefore = player.getStat().getExp();
-        eventWith(reward).execute(player, 0, itemManager, Difficulty.HARD);
+        eventWith(reward).execute(player, 0, itemManager, 3);
 
-        // 10 × 난이도 3 × 특성 2 = 60 (최대 경험치 100보다 작아서 레벨업으로 깎이지 않음)
+        // 10 × 보상 배수 3 × 특성 2 = 60 (최대 경험치 100보다 작아서 레벨업으로 깎이지 않음)
         assertEquals("(경험치 +60)", summary);
         assertEquals(60, player.getStat().getExp() - expBefore);
     }
 
     @Test
-    public void 보통_난이도_아이템은_두_개로_표시되고_실제로_두_개_받는다() {
+    public void 보상2배_던전의_아이템은_두_개로_표시되고_실제로_두_개_받는다() {
         Item sword = Item.createFromJson("{\"id\":\"item_1\",\"name\":\"나무 검\",\"type\":\"weapon\"}");
         when(itemManager.spawn("item_1")).thenReturn(sword);
         Reward reward = new Reward("묘사", "item_1", Collections.emptyList());
 
-        String summary = reward.summary(Difficulty.NORMAL.rewardMultiplier, Reward.expMultiplier(player), "나무 검");
-        eventWith(reward).execute(player, 0, itemManager, Difficulty.NORMAL);
+        String summary = reward.summary(2, Reward.expMultiplier(player), "나무 검");
+        eventWith(reward).execute(player, 0, itemManager, 2);
 
         assertEquals("(나무 검 ×2)", summary);
         assertEquals(2, player.getInventory().getCount("item_1"));

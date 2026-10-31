@@ -28,10 +28,16 @@ import java.util.Set;
 //  - 나머지는 같은 계열이나 기초 마법을 앞 마법으로 가진다
 //  - 갈래 깊이는 MagicTreeView가 그릴 수 있는 3단계까지
 //  - 뒤 마법일수록 요구 지혜가 높다
+//  - 단계마다 요구 지혜와 쿨타임이 정해져 있다 (기초 5·1턴, 1단계 15·2턴, 2단계 30·3턴, 3단계 40·5턴)
+//  - 계열마다 첫 마법 하나에서 두 갈래로 갈라져 2·3단계는 두 개씩
+//  - 마법사류(시작 코어가 있는 직업)는 시작하자마자 매직 미사일을 배울 수 있다
 // ══════════════════════════════════════════════
 public class MagicListContentTest {
 
     private static final int MAX_DEPTH = 3;
+    /** 기초 마법에서 몇 단계 위인지(0 = 매직 미사일)에 따른 요구 지혜와 쿨타임 */
+    private static final int[] WISDOM_BY_DEPTH = {5, 15, 30, 40};
+    private static final int[] COOLDOWN_BY_DEPTH = {1, 2, 3, 5};
     private static final Map<String, JsonObject> magics = new HashMap<>();
 
     @BeforeClass
@@ -96,6 +102,57 @@ public class MagicListContentTest {
             if (req == null) continue;
             assertTrue(o.get("id").getAsString() + " 요구 지혜가 앞 마법보다 낮다",
                     o.get("value").getAsInt() > magics.get(req).get("value").getAsInt());
+        }
+    }
+
+    private static int depth(JsonObject o) {
+        int depth = 0;
+        for (String req = requires(o); req != null; req = requires(magics.get(req))) depth++;
+        return depth;
+    }
+
+    @Test
+    public void 단계마다_요구_지혜와_쿨타임이_정해져_있다() {
+        for (JsonObject o : magics.values()) {
+            String id = o.get("id").getAsString();
+            int depth = depth(o);
+            assertEquals(id + " 요구 지혜", WISDOM_BY_DEPTH[depth], o.get("value").getAsInt());
+            assertEquals(id + " 쿨타임", COOLDOWN_BY_DEPTH[depth], o.get("cooldown").getAsInt());
+            assertTrue(id + " 지혜 비율이 없다", o.get("wisdomPercent").getAsInt() > 0);
+        }
+    }
+
+    @Test
+    public void 계열마다_첫_마법_하나에서_두_갈래로_갈라진다() {
+        for (MagicSchool school : MagicSchool.values()) {
+            if (!school.needsCore()) continue;
+            int[] perDepth = new int[MAX_DEPTH + 1];
+            for (JsonObject o : magics.values()) {
+                if (school(o) == school) perDepth[depth(o)]++;
+            }
+            assertEquals(school + " 1단계", 1, perDepth[1]);
+            assertEquals(school + " 2단계", 2, perDepth[2]);
+            assertEquals(school + " 3단계", 2, perDepth[3]);
+        }
+        // 3단계는 2단계마다 하나씩 (한 2단계 아래에 둘이 몰리지 않게)
+        Map<String, Integer> children = new HashMap<>();
+        for (JsonObject o : magics.values()) {
+            if (depth(o) == 3) children.merge(requires(o), 1, Integer::sum);
+        }
+        for (Map.Entry<String, Integer> e : children.entrySet()) {
+            assertEquals(e.getKey() + " 아래 3단계 수", 1, (int) e.getValue());
+        }
+    }
+
+    @Test
+    public void 마법사류는_시작_지혜로_매직_미사일을_배운다() {
+        for (Job job : Job.values()) {
+            if (!job.startsWithMagicCore()) continue;
+            for (JsonObject o : magics.values()) {
+                if (requires(o) != null) continue;
+                assertTrue(job.name + "이(가) 시작 지혜로 " + o.get("name").getAsString() + "을(를) 못 배운다",
+                        job.wisdom >= o.get("value").getAsInt());
+            }
         }
     }
 

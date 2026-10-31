@@ -14,6 +14,7 @@ public class Item {
     private int value;
     private int crit;
     private int magicDamage;
+    private ItemGrade grade;
     private Item() {}
     public static Item createFromJson(String json) {
         return new Gson().fromJson(json, Item.class);
@@ -58,5 +59,10 @@ public class Item {
 
     public String getImgId() {
         return imgId;
+    }
+
+    /** 보이는 등급 (테두리·이름 색). 적혀 있지 않으면 일반 */
+    public ItemGrade getGrade() {
+        return grade != null ? grade : ItemGrade.COMMON;
     }
 }

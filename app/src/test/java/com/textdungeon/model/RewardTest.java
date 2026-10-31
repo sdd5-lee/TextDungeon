@@ -84,4 +84,34 @@ public class RewardTest {
 
         assertEquals(2, player.getLevel());
     }
+
+    @Test
+    public void 이벤트로_지혜_100을_한번에_받으면_코어_5개() {
+        // 전사는 지혜 2, 시작 코어 0. 지혜 102가 되면 20·40·60·80·100에서 코어 5개
+        String json = "{\"id\":\"r1\",\"description\":\"깨달음\",\"itemId\":null," +
+                "\"statRewards\":[{\"type\":\"지혜\",\"value\":100}]}";
+        Reward reward = new com.google.gson.Gson().fromJson(json, Reward.class);
+
+        reward.apply(player, itemManager);
+
+        int wisdom = player.getStat().getWisdom();
+        assertEquals(102, wisdom);
+        assertEquals(5, player.getMagicScroll().getTotalCores(wisdom));
+        assertEquals(5, player.getMagicScroll().getAvailableCores(wisdom));
+        // 다음 층 버튼이 나올 때 알림은 5개를 한 번에, 두 번 알리지 않는다
+        assertEquals(5, player.getMagicScroll().takeNewCores(wisdom));
+        assertEquals(0, player.getMagicScroll().takeNewCores(wisdom));
+    }
+
+    @Test
+    public void 마법사가_지혜_100을_받으면_시작_코어에_5개가_더해진다() {
+        Player mage = new Player("테스터", Job.MAGE); // 지혜 12, 시작 코어 1
+        String json = "{\"id\":\"r1\",\"description\":\"깨달음\",\"itemId\":null," +
+                "\"statRewards\":[{\"type\":\"지혜\",\"value\":100}]}";
+        new com.google.gson.Gson().fromJson(json, Reward.class).apply(mage, itemManager);
+
+        int wisdom = mage.getStat().getWisdom();
+        assertEquals(6, mage.getMagicScroll().getTotalCores(wisdom));
+        assertEquals(5, mage.getMagicScroll().takeNewCores(wisdom));
+    }
 }

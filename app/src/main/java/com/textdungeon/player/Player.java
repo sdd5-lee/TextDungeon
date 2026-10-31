@@ -2,7 +2,6 @@ package com.textdungeon.player;
 
 import com.textdungeon.model.Item;
 import com.textdungeon.model.Job;
-import com.textdungeon.model.LearnedMagic;
 import com.textdungeon.model.Magic;
 import com.textdungeon.model.Stat;
 import com.textdungeon.model.Trait;
@@ -50,7 +49,6 @@ public class Player {
             stat.addStatPoint(5);
 
             updateBattleStatKeepingHp();
-            magicScroll.updateCounts(stat.getWisdom());
         }
         refreshHp();
     }
@@ -78,15 +76,11 @@ public class Player {
 
     /**
      * 힘/민첩/체력/지혜가 레벨업 없이 바뀌었을 때(이벤트 보상, 스탯 포인트 분배) 호출.
-     * 공격력·최대HP·치명타·마법 최대 횟수를 다시 계산한다.
-     * levelUp()과 달리 남은 마법 횟수를 다시 채우지 않는다.
-     *
-     * @param previousWisdom 스탯이 바뀌기 전의 지혜 (마법 횟수를 변화량만큼만 조정하기 위해 필요)
+     * 공격력·최대HP·치명타를 다시 계산하고, 오른 지혜만큼 마법 코어를 기록한다.
      */
-    public void recalculateStats(int previousWisdom) {
+    public void recalculateStats() {
         updateBattleStatKeepingHp();
 
-        magicScroll.adjustForWisdomChange(previousWisdom, stat.getWisdom());
         magicScroll.recordWisdom(stat.getWisdom());
         refreshHp();
     }
@@ -206,9 +200,9 @@ public class Player {
             stat.setHp(maxHp);
         }
     }
+    /** 배운 마법의 피해 (지혜·장비·특성 포함). 배우지 않았으면 0. 쿨타임은 BattleSystem이 본다 */
     public int castMagic(Magic magic) {
-        LearnedMagic lm = magicScroll.getMagic(magic.getId());
-        if (lm != null && lm.use()) {
+        if (magicScroll.hasMagic(magic.getId())) {
             int baseMagicDamage = magic.getMagicDamage(stat.getWisdom()) + equipment.getTotalMagicDamage();
 
             if (getTrait() != null) {

@@ -2,10 +2,11 @@ package com.textdungeon.event;
 
 import com.google.gson.annotations.SerializedName;
 import com.textdungeon.data.DataControl;
-import com.textdungeon.data.Difficulty;
 import com.textdungeon.model.Item;
 import com.textdungeon.model.Reward;
+import com.textdungeon.model.RewardStat;
 import com.textdungeon.player.Player;
+import com.textdungeon.system.GodTrial;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,13 @@ public class GameEvent {
     @SerializedName("rewards") protected List<Reward> rewards;
     @SerializedName("choices") protected List<String> choices;
     @SerializedName("type") protected String type;
+    /** 이 던전들에서만 나온다 (dungeon_list.json의 id). 없으면 모든 던전에서 나온다 */
+    protected List<String> dungeons;
+    /**
+     * 시련의 신 결투 (힘, 민첩, 체력, 지혜). 이 스탯이 높을수록 적이 세지고, 이기면 이 스탯이 오른다 (GodTrial).
+     * 없으면 보통 이벤트
+     */
+    protected String trialStat;
 
     // 혼돈의 주사위 상태. 판 저장 파일(GameSave)에 이벤트와 같이 저장돼서 이어하기에도 남는다
     /** 다시 굴릴 수 있는 결과표 선택지의 자리. 없으면 null */
@@ -52,27 +60,49 @@ public class GameEvent {
     public String getImgId() {
         return imgId;
     }
+
+    public String getTrialStat() {
+        return trialStat;
+    }
+
+    /** 이 던전에서 나올 수 있는지 */
+    public boolean appearsIn(String dungeonId) {
+        return dungeons == null || dungeons.isEmpty() || dungeons.contains(dungeonId);
+    }
     public String getItemId(int choice){
         Reward reward = getRewards().get(choice);
         return reward.getItemId();
     }
 
-    public String execute(Player player, int choice, DataControl<Item> itemManager, Difficulty difficulty) {
+    /** @param rewardMultiplier 던전의 보상 배수. 보상 전체를 이만큼 반복 적용한다 (1 미만이면 한 번) */
+    public String execute(Player player, int choice, DataControl<Item> itemManager, int rewardMultiplier) {
         if (rewards == null || rewards.isEmpty() || choice >= rewards.size()) {
             return "보상은 없습니다";
         }
         Reward reward = rewards.get(choice);
-        if (difficulty != null) {
-            for (int i = 0; i < difficulty.rewardMultiplier; i++){
-                reward.apply(player, itemManager);
-            }
-        }else{
+        // 시련에서 이기면 그 스탯이 오른다. 양은 싸운 그때의 스탯으로 정하므로 올리기 전에 잰다
+        String trialGain = null;
+        if (trialStat != null && "battle".equals(reward.getAction())) {
+            int amount = GodTrial.reward(trialStat, GodTrial.statOf(player, trialStat), minFloor);
+            reward = withTrialGain(reward, amount);
+            trialGain = "(" + trialStat + " +" + amount * Math.max(1, rewardMultiplier) + ")";
+        }
+        for (int i = 0; i < Math.max(1, rewardMultiplier); i++) {
             reward.apply(player, itemManager);
         }
-        if (reward.getDescription() == null || reward.getDescription().isEmpty()) {
-            return "신비로운 힘이 당신의 몸을 감싸다 지나갔습니다.";
+        String description = reward.getDescription();
+        if (description == null || description.isEmpty()) {
+            description = "신비로운 힘이 당신의 몸을 감싸다 지나갔습니다.";
         }
-        return reward.getDescription();
+        return trialGain != null ? description + " " + trialGain : description;
+    }
+
+    /** 원래 보상(아이템·스탯)에 시련의 스탯을 더한 새 보상. 이벤트에 저장된 보상은 바꾸지 않는다 */
+    private Reward withTrialGain(Reward reward, int amount) {
+        List<RewardStat> stats = new ArrayList<>();
+        if (reward.getStatRewards() != null) stats.addAll(reward.getStatRewards());
+        stats.add(new RewardStat(trialStat, amount));
+        return new Reward(reward.getDescription(), reward.getItemId(), stats);
     }
     /**
      * 선택지와 그에 대응하는 보상을 한 쌍으로 추가한다.

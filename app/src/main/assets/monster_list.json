@@ -5,8 +5,11 @@
     "hp": 34,
     "maxHp": 34,
     "attack": 8,
+    "patterns": [
+      { "name": "점액 덮치기", "power": 150, "hits": 1, "charge": false }
+    ],
     "imgId": "mon_slime",
-    "description": "던전 입구에서 흔히 볼 수 있는 끈적이는 형태의 생명체입니다. 물리 공격에 내성이 있을 것 같지만 사실 아주 약합니다.\n\n[나오는 층수] 1층 ~ 3층"
+    "description": "던전 입구에서 흔히 볼 수 있는 끈적이는 형태의 생명체입니다. 물리 공격에 내성이 있을 것 같지만 사실 아주 약합니다.\n\n[나오는 층수] 1층 ~ 9층"
   },
   {
     "id": "monster_2",
@@ -14,8 +17,11 @@
     "hp": 42,
     "maxHp": 42,
     "attack": 10,
+    "patterns": [
+      { "name": "몽둥이 난타", "power": 70, "hits": 2, "charge": false }
+    ],
     "imgId": "mon_goblin",
-    "description": "작고 교활한 인간형 몬스터입니다. 무리를 지어 다니며 초보 모험가들의 장비와 식량을 노립니다.\n\n[나오는 층수] 2층 ~ 5층"
+    "description": "작고 교활한 인간형 몬스터입니다. 무리를 지어 다니며 초보 모험가들의 장비와 식량을 노립니다.\n\n[나오는 층수] 1층 ~ 9층"
   },
   {
     "id": "monster_3",
@@ -23,8 +29,11 @@
     "hp": 50,
     "maxHp": 50,
     "attack": 13,
+    "patterns": [
+      { "name": "목덜미 물기", "power": 160, "hits": 1, "charge": false }
+    ],
     "imgId": "mon_wolf",
-    "description": "날카로운 송곳니를 가진 야생 늑대입니다. 민첩한 움직임으로 사냥감을 추적하고 빈틈을 노립니다.\n\n[나오는 층수] 3층 ~ 6층"
+    "description": "날카로운 송곳니를 가진 야생 늑대입니다. 민첩한 움직임으로 사냥감을 추적하고 빈틈을 노립니다.\n\n[나오는 층수] 1층 ~ 9층"
   },
   {
     "id": "monster_4",
@@ -32,8 +41,11 @@
     "hp": 40,
     "maxHp": 40,
     "attack": 12,
+    "patterns": [
+      { "name": "초음파 할퀴기", "power": 50, "hits": 3, "charge": false }
+    ],
     "imgId": "mon_bat",
-    "description": "어두운 동굴 천장에 매달려 있다가 기습하는 박쥐입니다. 방심한 모험가의 피를 노립니다.\n\n[나오는 층수] 2층 ~ 4층"
+    "description": "어두운 동굴 천장에 매달려 있다가 기습하는 박쥐입니다. 방심한 모험가의 피를 노립니다.\n\n[나오는 층수] 1층 ~ 9층"
   },
   {
     "id": "monster_5",
@@ -41,8 +53,12 @@
     "hp": 180,
     "maxHp": 180,
     "attack": 20,
+    "patterns": [
+      { "name": "독 묻은 단검", "power": 150, "hits": 1, "charge": false },
+      { "name": "교활한 함정", "power": 250, "hits": 1, "charge": true }
+    ],
     "imgId": "mon_hobgoblin",
-    "description": "일반 고블린보다 훨씬 거대하고 잔인한 변종입니다. 무거운 둔기를 휘두르며 뼈를 부숩니다.\n\n[나오는 층수] 16층 ~ 20층"
+    "description": "일반 고블린보다 훨씬 거대하고 잔인한 변종입니다. 무거운 둔기를 휘두르며 뼈를 부숩니다.\n\n[나오는 층수] 10층 (보스)"
   },
   {
     "id": "monster_6",
@@ -50,8 +66,11 @@
     "hp": 100,
     "maxHp": 100,
     "attack": 18,
+    "patterns": [
+      { "name": "뼈 검 내려치기", "power": 160, "hits": 1, "charge": false }
+    ],
     "imgId": "mon_skeleton_warrior",
-    "description": "흑마법으로 되살아난 언데드 전사입니다. 녹슨 검을 들고 살아있는 모든 생명체를 증오하며 공격합니다.\n\n[나오는 층수] 7층 ~ 10층"
+    "description": "흑마법으로 되살아난 언데드 전사입니다. 녹슨 검을 들고 살아있는 모든 생명체를 증오하며 공격합니다.\n\n[나오는 층수] 11층 ~ 19층"
   },
   {
     "id": "monster_7",
@@ -59,8 +78,11 @@
     "hp": 85,
     "maxHp": 85,
     "attack": 24,
+    "patterns": [
+      { "name": "연속 사격", "power": 55, "hits": 3, "charge": false }
+    ],
     "imgId": "mon_skeleton_archer",
-    "description": "어둠 속에서 뼈로 만든 화살을 쏘아대는 언데드입니다. 체력은 약하지만 원거리 공격이 까다롭습니다.\n\n[나오는 층수] 6층 ~ 9층"
+    "description": "어둠 속에서 뼈로 만든 화살을 쏘아대는 언데드입니다. 체력은 약하지만 원거리 공격이 까다롭습니다.\n\n[나오는 층수] 11층 ~ 19층"
   },
   {
     "id": "monster_8",
@@ -68,8 +90,11 @@
     "hp": 130,
     "maxHp": 130,
     "attack": 22,
+    "patterns": [
+      { "name": "돌격 찌르기", "power": 260, "hits": 1, "charge": true }
+    ],
     "imgId": "mon_skeleton_knight",
-    "description": "생전에 기사였던 자의 뼈에 낡은 갑옷을 입힌 몬스터입니다. 여전히 날카로운 검술의 기억을 가지고 있습니다.\n\n[나오는 층수] 11층 ~ 15층"
+    "description": "생전에 기사였던 자의 뼈에 낡은 갑옷을 입힌 몬스터입니다. 여전히 날카로운 검술의 기억을 가지고 있습니다.\n\n[나오는 층수] 11층 ~ 19층"
   },
   {
     "id": "monster_9",
@@ -77,8 +102,11 @@
     "hp": 90,
     "maxHp": 90,
     "attack": 24,
+    "patterns": [
+      { "name": "혼 불꽃", "power": 150, "hits": 1, "charge": false }
+    ],
     "imgId": "mon_wisp",
-    "description": "공중에 떠다니는 푸른 빛의 영체입니다. 마법 공격을 주로 사용하며 물리적인 타격을 피하는 데 능숙합니다.\n\n[나오는 층수] 8층 ~ 12층"
+    "description": "공중에 떠다니는 푸른 빛의 영체입니다. 마법 공격을 주로 사용하며 물리적인 타격을 피하는 데 능숙합니다.\n\n[나오는 층수] 11층 ~ 19층"
   },
   {
     "id": "monster_10",
@@ -86,8 +114,12 @@
     "hp": 300,
     "maxHp": 300,
     "attack": 32,
+    "patterns": [
+      { "name": "지휘관의 일격", "power": 150, "hits": 1, "charge": false },
+      { "name": "고블린 군단 돌격", "power": 45, "hits": 5, "charge": false }
+    ],
     "imgId": "mon_goblin_lord",
-    "description": "수많은 고블린을 거느리는 우두머리입니다. 약탈한 화려한 장식과 강력한 무기로 무장하고 있습니다.\n\n[나오는 층수] 30층 (보스)"
+    "description": "수많은 고블린을 거느리는 우두머리입니다. 약탈한 화려한 장식과 강력한 무기로 무장하고 있습니다.\n\n[나오는 층수] 20층 (어둠의 입구의 마지막 보스)"
   },
   {
     "id": "monster_11",
@@ -95,8 +127,11 @@
     "hp": 190,
     "maxHp": 190,
     "attack": 28,
+    "patterns": [
+      { "name": "광폭한 베기", "power": 165, "hits": 1, "charge": false }
+    ],
     "imgId": "mon_orc_warrior",
-    "description": "근육질의 거대한 몸집을 가진 호전적인 종족입니다. 무식하지만 파괴적인 힘과 강인한 체력을 자랑합니다.\n\n[나오는 층수] 18층 ~ 23층"
+    "description": "근육질의 거대한 몸집을 가진 호전적인 종족입니다. 무식하지만 파괴적인 힘과 강인한 체력을 자랑합니다.\n\n[나오는 층수] 21층 ~ 29층"
   },
   {
     "id": "monster_12",
@@ -104,8 +139,11 @@
     "hp": 165,
     "maxHp": 165,
     "attack": 35,
+    "patterns": [
+      { "name": "화염 주문", "power": 250, "hits": 1, "charge": true }
+    ],
     "imgId": "mon_orc_mage",
-    "description": "오크 중에서도 드물게 마법을 다루는 개체입니다. 파괴적인 화염 주문을 외워 다수의 적을 불태웁니다.\n\n[나오는 층수] 15층 ~ 20층"
+    "description": "오크 중에서도 드물게 마법을 다루는 개체입니다. 파괴적인 화염 주문을 외워 다수의 적을 불태웁니다.\n\n[나오는 층수] 21층 ~ 29층"
   },
   {
     "id": "monster_13",
@@ -113,8 +151,11 @@
     "hp": 240,
     "maxHp": 240,
     "attack": 25,
+    "patterns": [
+      { "name": "석화 발톱", "power": 70, "hits": 2, "charge": false }
+    ],
     "imgId": "mon_gargoyle",
-    "description": "평소에는 석상처럼 굳어 있다가 침입자가 나타나면 깨어나는 마수입니다. 피부가 돌처럼 단단해 공격하기 까다롭습니다.\n\n[나오는 층수] 26층 ~ 30층"
+    "description": "평소에는 석상처럼 굳어 있다가 침입자가 나타나면 깨어나는 마수입니다. 피부가 돌처럼 단단해 공격하기 까다롭습니다.\n\n[나오는 층수] 21층 ~ 29층"
   },
   {
     "id": "monster_14",
@@ -122,8 +163,11 @@
     "hp": 170,
     "maxHp": 170,
     "attack": 32,
+    "patterns": [
+      { "name": "은빛 송곳니", "power": 55, "hits": 3, "charge": false }
+    ],
     "imgId": "mon_silver_wolf",
-    "description": "은빛 털을 휘날리며 달리는 마수 늑대입니다. 바람처럼 빠른 속도로 다가와 적의 목을 노립니다.\n\n[나오는 층수] 16층 ~ 22층"
+    "description": "은빛 털을 휘날리며 달리는 마수 늑대입니다. 바람처럼 빠른 속도로 다가와 적의 목을 노립니다.\n\n[나오는 층수] 21층 ~ 29층"
   },
   {
     "id": "monster_15",
@@ -131,8 +175,12 @@
     "hp": 430,
     "maxHp": 430,
     "attack": 45,
+    "patterns": [
+      { "name": "무자비한 돌진", "power": 150, "hits": 1, "charge": false },
+      { "name": "대지 가르기", "power": 280, "hits": 1, "charge": true }
+    ],
     "imgId": "mon_orc_lord",
-    "description": "오크 부족 전체를 통치하는 거대한 폭군입니다. 웬만한 공격에는 끄떡도 하지 않는 엄청난 맷집을 지녔습니다.\n\n[나오는 층수] 60층 (보스)"
+    "description": "오크 부족 전체를 통치하는 거대한 폭군입니다. 웬만한 공격에는 끄떡도 하지 않는 엄청난 맷집을 지녔습니다.\n\n[나오는 층수] 30층 (보스)"
   },
   {
     "id": "monster_16",
@@ -140,8 +188,11 @@
     "hp": 260,
     "maxHp": 260,
     "attack": 38,
+    "patterns": [
+      { "name": "꼬리 후려치기", "power": 155, "hits": 1, "charge": false }
+    ],
     "imgId": "mon_lizardman",
-    "description": "늪지대에 서식하는 파충류 인간입니다. 창술에 능하며 신체의 상처가 매우 빠르게 회복되는 특징이 있습니다.\n\n[나오는 층수] 28층 ~ 33층"
+    "description": "늪지대에 서식하는 파충류 인간입니다. 창술에 능하며 신체의 상처가 매우 빠르게 회복되는 특징이 있습니다.\n\n[나오는 층수] 31층 ~ 39층"
   },
   {
     "id": "monster_17",
@@ -149,8 +200,11 @@
     "hp": 230,
     "maxHp": 230,
     "attack": 48,
+    "patterns": [
+      { "name": "독안개 주문", "power": 75, "hits": 2, "charge": false }
+    ],
     "imgId": "mon_shaman_lizard",
-    "description": "자연의 힘을 빌려 저주와 독 마법을 사용하는 리자드맨 주술사입니다. 교묘한 마법으로 적을 서서히 말려 죽입니다.\n\n[나오는 층수] 24층 ~ 29층"
+    "description": "자연의 힘을 빌려 저주와 독 마법을 사용하는 리자드맨 주술사입니다. 교묘한 마법으로 적을 서서히 말려 죽입니다.\n\n[나오는 층수] 31층 ~ 39층"
   },
   {
     "id": "monster_18",
@@ -158,8 +212,11 @@
     "hp": 330,
     "maxHp": 330,
     "attack": 40,
+    "patterns": [
+      { "name": "바위 내리찍기", "power": 270, "hits": 1, "charge": true }
+    ],
     "imgId": "mon_troll",
-    "description": "가공할 만한 재생력을 가진 거인 몬스터입니다. 불이나 산성 공격으로 피부를 태우지 않으면 죽이기 매우 어렵습니다.\n\n[나오는 층수] 41층 ~ 48층"
+    "description": "가공할 만한 재생력을 가진 거인 몬스터입니다. 불이나 산성 공격으로 피부를 태우지 않으면 죽이기 매우 어렵습니다.\n\n[나오는 층수] 31층 ~ 39층"
   },
   {
     "id": "monster_19",
@@ -167,8 +224,11 @@
     "hp": 280,
     "maxHp": 280,
     "attack": 50,
+    "patterns": [
+      { "name": "세 머리 물어뜯기", "power": 50, "hits": 3, "charge": false }
+    ],
     "imgId": "mon_chimera",
-    "description": "사자, 염소, 뱀 등 여러 맹수의 특징이 기괴하게 섞인 마법의 혼종 생명체입니다. 예측할 수 없는 다중 공격을 퍼붓습니다.\n\n[나오는 층수] 35층 ~ 42층"
+    "description": "사자, 염소, 뱀 등 여러 맹수의 특징이 기괴하게 섞인 마법의 혼종 생명체입니다. 예측할 수 없는 다중 공격을 퍼붓습니다.\n\n[나오는 층수] 31층 ~ 39층"
   },
   {
     "id": "monster_20",
@@ -176,8 +236,12 @@
     "hp": 600,
     "maxHp": 600,
     "attack": 65,
+    "patterns": [
+      { "name": "강철 주먹", "power": 150, "hits": 1, "charge": false },
+      { "name": "폭주 연타", "power": 50, "hits": 4, "charge": false }
+    ],
     "imgId": "mon_golem",
-    "description": "마법사의 명령에 따라 움직이는 거대한 흙과 돌의 덩어리입니다. 행동은 둔하지만 묵직한 공격력과 압도적인 내구력을 지녔습니다.\n\n[나오는 층수] 81층 ~ 89층"
+    "description": "마법사의 명령에 따라 움직이는 거대한 흙과 돌의 덩어리입니다. 행동은 둔하지만 묵직한 공격력과 압도적인 내구력을 지녔습니다.\n\n[나오는 층수] 40층 (보스)"
   },
   {
     "id": "monster_21",
@@ -185,8 +249,11 @@
     "hp": 420,
     "maxHp": 420,
     "attack": 70,
+    "patterns": [
+      { "name": "화염 브레스", "power": 260, "hits": 1, "charge": true }
+    ],
     "imgId": "mon_dragon",
-    "description": "전설 속에서나 등장할 법한 거대한 고대의 파충류입니다. 입에서 뿜어내는 강력한 브레스는 모든 것을 잿더미로 만듭니다.\n\n[나오는 층수] 61층 ~ 70층"
+    "description": "전설 속에서나 등장할 법한 거대한 고대의 파충류입니다. 입에서 뿜어내는 강력한 브레스는 모든 것을 잿더미로 만듭니다.\n\n[나오는 층수] 41층 ~ 49층"
   },
   {
     "id": "monster_22",
@@ -194,8 +261,11 @@
     "hp": 360,
     "maxHp": 360,
     "attack": 85,
+    "patterns": [
+      { "name": "죽음의 화살", "power": 55, "hits": 3, "charge": false }
+    ],
     "imgId": "mon_lich",
-    "description": "마법의 극의와 영생을 위해 스스로 언데드가 된 대마법사입니다. 뼈만 남은 손끝에서 상상을 초월하는 고위 마법을 구사합니다.\n\n[나오는 층수] 51층 ~ 60층"
+    "description": "마법의 극의와 영생을 위해 스스로 언데드가 된 대마법사입니다. 뼈만 남은 손끝에서 상상을 초월하는 고위 마법을 구사합니다.\n\n[나오는 층수] 41층 ~ 49층"
   },
   {
     "id": "monster_23",
@@ -203,8 +273,11 @@
     "hp": 480,
     "maxHp": 480,
     "attack": 60,
+    "patterns": [
+      { "name": "대도끼 회전베기", "power": 75, "hits": 2, "charge": false }
+    ],
     "imgId": "mon_minotaur",
-    "description": "황소의 머리와 거인의 몸을 한 반인반수입니다. 거대한 도끼를 휘두르며 미궁의 침입자를 무자비하게 찢어발깁니다.\n\n[나오는 층수] 71층 ~ 80층"
+    "description": "황소의 머리와 거인의 몸을 한 반인반수입니다. 거대한 도끼를 휘두르며 미궁의 침입자를 무자비하게 찢어발깁니다.\n\n[나오는 층수] 41층 ~ 49층"
   },
   {
     "id": "monster_24",
@@ -212,17 +285,24 @@
     "hp": 450,
     "maxHp": 450,
     "attack": 80,
+    "patterns": [
+      { "name": "타락한 성검술", "power": 165, "hits": 1, "charge": false }
+    ],
     "imgId": "mon_fallen_hero",
-    "description": "한때 세상을 구하려 했으나 끝내 어둠의 유혹에 굴복한 비운의 전사입니다. 아직도 영웅 시절의 강력한 검술을 잊지 않았습니다.\n\n[나오는 층수] 75층 ~ 85층"
+    "description": "한때 세상을 구하려 했으나 끝내 어둠의 유혹에 굴복한 비운의 전사입니다. 아직도 영웅 시절의 강력한 검술을 잊지 않았습니다.\n\n[나오는 층수] 41층 ~ 49층"
   },
   {
     "id": "monster_25",
     "name": "마왕",
-    "hp": 1000,
-    "maxHp": 1000,
-    "attack": 95,
+    "hp": 2200,
+    "maxHp": 2200,
+    "attack": 150,
+    "patterns": [
+      { "name": "마검 일섬", "power": 160, "hits": 1, "charge": false },
+      { "name": "종말의 어둠", "power": 320, "hits": 1, "charge": true }
+    ],
     "imgId": "mon_demon_king",
-    "description": "세상을 어둠으로 물들이려 하는 절대적인 악의 군주입니다. 모든 마족들의 정점에 서 있으며, 범접할 수 없는 어둠의 마기를 뿜어냅니다.\n\n[나오는 층수] 100층 (최종 보스)"
+    "description": "세상을 어둠으로 물들이려 하는 절대적인 악의 군주입니다. 모든 마족들의 정점에 서 있으며, 범접할 수 없는 어둠의 마기를 뿜어냅니다.\n\n[나오는 층수] 75층 (마왕성의 마지막 보스)"
   },
   {
     "id": "monster_26",
@@ -230,8 +310,11 @@
     "hp": 30,
     "maxHp": 30,
     "attack": 7,
+    "patterns": [
+      { "name": "앞니 갉기", "power": 70, "hits": 2, "charge": false }
+    ],
     "imgId": "mon_giant_rat",
-    "description": "하수구나 어두운 지하실의 마기를 먹고 비정상적으로 커진 쥐입니다. 치명적인 질병을 옮길 수 있으니 주의해야 합니다.\n\n[나오는 층수] 1층 ~ 2층"
+    "description": "하수구나 어두운 지하실의 마기를 먹고 비정상적으로 커진 쥐입니다. 치명적인 질병을 옮길 수 있으니 주의해야 합니다.\n\n[나오는 층수] 1층 ~ 9층"
   },
   {
     "id": "monster_27",
@@ -239,8 +322,11 @@
     "hp": 115,
     "maxHp": 115,
     "attack": 15,
+    "patterns": [
+      { "name": "썩은 손아귀", "power": 145, "hits": 1, "charge": false }
+    ],
     "imgId": "mon_zombie",
-    "description": "부패가 진행 중인 시체들이 원한을 품고 움직이는 형태입니다. 이동 속도는 끔찍하게 느리지만 고통을 느끼지 못해 끈질깁니다.\n\n[나오는 층수] 9층 ~ 14층"
+    "description": "부패가 진행 중인 시체들이 원한을 품고 움직이는 형태입니다. 이동 속도는 끔찍하게 느리지만 고통을 느끼지 못해 끈질깁니다.\n\n[나오는 층수] 11층 ~ 19층"
   },
   {
     "id": "monster_28",
@@ -248,8 +334,11 @@
     "hp": 210,
     "maxHp": 210,
     "attack": 30,
+    "patterns": [
+      { "name": "급강하", "power": 260, "hits": 1, "charge": true }
+    ],
     "imgId": "mon_griffin",
-    "description": "독수리의 머리와 날개, 사자의 몸통을 가진 긍지 높은 맹수입니다. 높은 하늘에서 날카로운 발톱을 세우고 급강하하며 사냥감을 낚아챕니다.\n\n[나오는 층수] 21층 ~ 25층"
+    "description": "독수리의 머리와 날개, 사자의 몸통을 가진 긍지 높은 맹수입니다. 높은 하늘에서 날카로운 발톱을 세우고 급강하하며 사냥감을 낚아챕니다.\n\n[나오는 층수] 21층 ~ 29층"
   },
   {
     "id": "monster_29",
@@ -257,8 +346,11 @@
     "hp": 290,
     "maxHp": 290,
     "attack": 45,
+    "patterns": [
+      { "name": "석화의 시선", "power": 160, "hits": 1, "charge": false }
+    ],
     "imgId": "mon_medusa",
-    "description": "수많은 뱀으로 이루어진 머리카락을 가진 마물입니다. 그녀의 섬뜩한 눈동자와 정면으로 마주치는 순간 몸이 돌로 굳어버릴 수 있습니다.\n\n[나오는 층수] 38층 ~ 45층"
+    "description": "수많은 뱀으로 이루어진 머리카락을 가진 마물입니다. 그녀의 섬뜩한 눈동자와 정면으로 마주치는 순간 몸이 돌로 굳어버릴 수 있습니다.\n\n[나오는 층수] 31층 ~ 39층"
   },
   {
     "id": "monster_30",
@@ -266,8 +358,11 @@
     "hp": 380,
     "maxHp": 380,
     "attack": 75,
+    "patterns": [
+      { "name": "매혹의 입맞춤", "power": 150, "hits": 1, "charge": false }
+    ],
     "imgId": "mon_succubus",
-    "description": "치명적으로 아름다운 외모와 환술로 모험가들을 유혹하는 고위 악마입니다. 황홀한 꿈속에서 생명력과 영혼을 모두 빨아먹습니다.\n\n[나오는 층수] 48층 ~ 55층"
+    "description": "치명적으로 아름다운 외모와 환술로 모험가들을 유혹하는 고위 악마입니다. 황홀한 꿈속에서 생명력과 영혼을 모두 빨아먹습니다.\n\n[나오는 층수] 41층 ~ 49층"
   },
   {
     "id": "monster_31",
@@ -275,8 +370,12 @@
     "hp": 100,
     "maxHp": 100,
     "attack": 25,
+    "patterns": [
+      { "name": "날개 후려치기", "power": 70, "hits": 2, "charge": false },
+      { "name": "광란의 흡혈", "power": 50, "hits": 4, "charge": false }
+    ],
     "imgId": "mon_mutant_bat",
-    "description": "짙은 마기에 오랜 시간 노출되어 끔찍한 모습으로 변이된 거대 박쥐입니다. 귀를 찢는 듯한 초음파로 적의 정신을 어지럽히고 마비시킵니다.\n\n[나오는 층수] 8층 ~ 13층"
+    "description": "짙은 마기에 오랜 시간 노출되어 끔찍한 모습으로 변이된 거대 박쥐입니다. 귀를 찢는 듯한 초음파로 적의 정신을 어지럽히고 마비시킵니다.\n\n[나오는 층수] 10층 (보스)"
   },
   {
     "id": "monster_32",
@@ -284,8 +383,12 @@
     "hp": 260,
     "maxHp": 260,
     "attack": 45,
+    "patterns": [
+      { "name": "망령 검격", "power": 70, "hits": 2, "charge": false },
+      { "name": "망자의 행진", "power": 280, "hits": 1, "charge": true }
+    ],
     "imgId": "mon_wraith_commander",
-    "description": "과거 전장을 호령하며 무수한 적을 베었던 기사단장의 원혼입니다. 죽어서도 멸망한 제국을 지키겠다는 일념 하나로 폐허를 맴돌고 있습니다.\n\n[나오는 층수] 31층 ~ 38층"
+    "description": "과거 전장을 호령하며 무수한 적을 베었던 기사단장의 원혼입니다. 죽어서도 멸망한 제국을 지키겠다는 일념 하나로 폐허를 맴돌고 있습니다.\n\n[나오는 층수] 20층 (보스)"
   },
   {
     "id": "monster_33",
@@ -293,8 +396,12 @@
     "hp": 520,
     "maxHp": 520,
     "attack": 90,
+    "patterns": [
+      { "name": "피의 낫", "power": 160, "hits": 1, "charge": false },
+      { "name": "영혼 수확", "power": 300, "hits": 1, "charge": true }
+    ],
     "imgId": "mon_bloody_reaper",
-    "description": "생명체의 영혼을 거두는 거대한 낫을 든 죽음의 화신입니다. 공중에 떠다니는 그가 지나간 자리에는 서늘한 냉기와 핏빛 흔적만이 남습니다.\n\n[나오는 층수] 85층 ~ 95층"
+    "description": "생명체의 영혼을 거두는 거대한 낫을 든 죽음의 화신입니다. 공중에 떠다니는 그가 지나간 자리에는 서늘한 냉기와 핏빛 흔적만이 남습니다.\n\n[나오는 층수] 20층 (보스)"
   },
   {
     "id": "monster_34",
@@ -302,8 +409,12 @@
     "hp": 380,
     "maxHp": 380,
     "attack": 60,
+    "patterns": [
+      { "name": "전쟁 도끼 난무", "power": 60, "hits": 3, "charge": false },
+      { "name": "피의 함성", "power": 210, "hits": 1, "charge": false }
+    ],
     "imgId": "mon_orc_warlord",
-    "description": "수많은 피비린내 나는 전쟁에서 살아남아 증명된 오크들의 영웅입니다. 그의 우렁찬 포효는 아군을 광분하게 만들고 적을 얼어붙게 합니다.\n\n[나오는 층수] 50층 (보스)"
+    "description": "수많은 피비린내 나는 전쟁에서 살아남아 증명된 오크들의 영웅입니다. 그의 우렁찬 포효는 아군을 광분하게 만들고 적을 얼어붙게 합니다.\n\n[나오는 층수] 30층 (보스)"
   },
   {
     "id": "monster_35",
@@ -311,8 +422,12 @@
     "hp": 600,
     "maxHp": 600,
     "attack": 90,
+    "patterns": [
+      { "name": "삼지창 찌르기", "power": 70, "hits": 2, "charge": false },
+      { "name": "늪의 해일", "power": 280, "hits": 1, "charge": true }
+    ],
     "imgId": "mon_swamp_lord",
-    "description": "맹독과 악취가 진동하는 거대한 늪지대 그 자체를 지배하는 마수입니다. 뿜어내는 독기둥에 스치기만 해도 살점이 검게 녹아내립니다.\n\n[나오는 층수] 90층 (보스)"
+    "description": "맹독과 악취가 진동하는 거대한 늪지대 그 자체를 지배하는 마수입니다. 뿜어내는 독기둥에 스치기만 해도 살점이 검게 녹아내립니다.\n\n[나오는 층수] 40층 (보스)"
   },
   {
     "id": "monster_36",
@@ -320,7 +435,451 @@
     "hp": 1200,
     "maxHp": 1200,
     "attack": 180,
+    "patterns": [
+      { "name": "태초의 주먹", "power": 140, "hits": 1, "charge": false },
+      { "name": "창세의 파동", "power": 300, "hits": 1, "charge": true }
+    ],
     "imgId": "mon_primordial_golem",
-    "description": "세상이 만들어질 때부터 존재했다고 전해지는 잊혀진 고대의 거대 병기입니다. 자연의 힘이 깃든 압도적인 크기와 재앙 수준의 파괴력을 가졌습니다.\n\n[나오는 층수] 99층 (히든 보스)"
+    "description": "세상이 만들어질 때부터 존재했다고 전해지는 잊혀진 고대의 거대 병기입니다. 자연의 힘이 깃든 압도적인 크기와 재앙 수준의 파괴력을 가졌습니다.\n\n[나오는 층수] 40층 (보스)"
+  },
+  {
+    "id": "monster_37",
+    "name": "동굴 거미",
+    "hp": 45,
+    "maxHp": 45,
+    "attack": 11,
+    "patterns": [
+      { "name": "거미줄 휘감기", "power": 70, "hits": 2, "charge": false }
+    ],
+    "imgId": "mon_cave_spider",
+    "description": "동굴 천장에 거미줄을 치고 숨어 있다가 지나가는 모험가를 덮치는 커다란 거미입니다.\n\n[나오는 층수] 1층 ~ 9층"
+  },
+  {
+    "id": "monster_38",
+    "name": "독버섯 괴물",
+    "hp": 38,
+    "maxHp": 38,
+    "attack": 10,
+    "patterns": [
+      { "name": "포자 터뜨리기", "power": 150, "hits": 1, "charge": false }
+    ],
+    "imgId": "mon_poison_mushroom",
+    "description": "습한 바닥에서 자라난 걸어 다니는 버섯입니다. 건드리면 독 포자를 터뜨립니다.\n\n[나오는 층수] 1층 ~ 9층"
+  },
+  {
+    "id": "monster_39",
+    "name": "고블린 주술사장",
+    "hp": 170,
+    "maxHp": 170,
+    "attack": 22,
+    "patterns": [
+      { "name": "저주의 불씨", "power": 150, "hits": 1, "charge": false },
+      { "name": "불기둥 소환", "power": 260, "hits": 1, "charge": true }
+    ],
+    "imgId": "mon_goblin_shaman",
+    "description": "고블린 무리의 주술을 도맡는 늙은 고블린입니다. 해골 지팡이로 불씨를 다룹니다.\n\n[나오는 층수] 10층 (보스)"
+  },
+  {
+    "id": "monster_40",
+    "name": "구울",
+    "hp": 120,
+    "maxHp": 120,
+    "attack": 22,
+    "patterns": [
+      { "name": "시체 뜯기", "power": 70, "hits": 2, "charge": false }
+    ],
+    "imgId": "mon_ghoul",
+    "description": "죽은 자의 살을 탐하는 굶주린 언데드입니다. 날카로운 손톱으로 먹잇감을 찢습니다.\n\n[나오는 층수] 11층 ~ 19층"
+  },
+  {
+    "id": "monster_41",
+    "name": "저주받은 갑옷",
+    "hp": 150,
+    "maxHp": 150,
+    "attack": 20,
+    "patterns": [
+      { "name": "무거운 강타", "power": 250, "hits": 1, "charge": true }
+    ],
+    "imgId": "mon_cursed_armor",
+    "description": "주인을 잃고도 홀로 움직이는 빈 갑옷입니다. 녹슨 쇳소리를 내며 침입자를 내리칩니다.\n\n[나오는 층수] 11층 ~ 19층"
+  },
+  {
+    "id": "monster_42",
+    "name": "하피",
+    "hp": 195,
+    "maxHp": 195,
+    "attack": 33,
+    "patterns": [
+      { "name": "칼날 깃털", "power": 55, "hits": 3, "charge": false }
+    ],
+    "imgId": "mon_harpy",
+    "description": "여인의 얼굴과 새의 몸을 가진 마물입니다. 칼날 같은 깃털을 흩뿌리며 하늘에서 공격합니다.\n\n[나오는 층수] 21층 ~ 29층"
+  },
+  {
+    "id": "monster_43",
+    "name": "오우거",
+    "hp": 280,
+    "maxHp": 280,
+    "attack": 30,
+    "patterns": [
+      { "name": "통나무 휘두르기", "power": 160, "hits": 1, "charge": false }
+    ],
+    "imgId": "mon_ogre",
+    "description": "사람보다 세 배는 큰 식인 거인입니다. 뿌리째 뽑은 통나무를 몽둥이처럼 휘두릅니다.\n\n[나오는 층수] 21층 ~ 29층"
+  },
+  {
+    "id": "monster_44",
+    "name": "흑기사",
+    "hp": 440,
+    "maxHp": 440,
+    "attack": 50,
+    "patterns": [
+      { "name": "흑검 베기", "power": 150, "hits": 1, "charge": false },
+      { "name": "암흑 돌격", "power": 280, "hits": 1, "charge": true }
+    ],
+    "imgId": "mon_black_knight",
+    "description": "이름도 얼굴도 알려지지 않은 검은 갑옷의 기사입니다. 오크 부족마저 그의 길을 비켜 갑니다.\n\n[나오는 층수] 30층 (보스)"
+  },
+  {
+    "id": "monster_45",
+    "name": "바실리스크",
+    "hp": 300,
+    "maxHp": 300,
+    "attack": 46,
+    "patterns": [
+      { "name": "독니", "power": 155, "hits": 1, "charge": false }
+    ],
+    "imgId": "mon_basilisk",
+    "description": "독니와 독기를 품은 거대한 뱀의 왕입니다. 지나간 자리의 풀이 모두 말라 죽습니다.\n\n[나오는 층수] 31층 ~ 39층"
+  },
+  {
+    "id": "monster_46",
+    "name": "와이번",
+    "hp": 285,
+    "maxHp": 285,
+    "attack": 52,
+    "patterns": [
+      { "name": "독침 꼬리", "power": 70, "hits": 2, "charge": false }
+    ],
+    "imgId": "mon_wyvern",
+    "description": "두 다리와 날개를 가진 작은 용입니다. 꼬리 끝의 독침으로 연달아 찌릅니다.\n\n[나오는 층수] 31층 ~ 39층"
+  },
+  {
+    "id": "monster_47",
+    "name": "미궁의 파수꾼",
+    "hp": 700,
+    "maxHp": 700,
+    "attack": 56,
+    "patterns": [
+      { "name": "돌벽 밀치기", "power": 150, "hits": 1, "charge": false },
+      { "name": "미궁 붕괴", "power": 290, "hits": 1, "charge": true }
+    ],
+    "imgId": "mon_labyrinth_warden",
+    "description": "잊힌 미궁의 가장 깊은 곳을 지키는 석조 거인입니다. 미궁을 만든 자의 명령을 아직도 따르고 있습니다.\n\n[나오는 층수] 35층 (잊힌 미궁의 마지막 보스)"
+  },
+  {
+    "id": "monster_48",
+    "name": "데스나이트",
+    "hp": 470,
+    "maxHp": 470,
+    "attack": 78,
+    "patterns": [
+      { "name": "죽음의 검", "power": 160, "hits": 1, "charge": false }
+    ],
+    "imgId": "mon_death_knight",
+    "description": "죽어서도 전장을 떠나지 못한 기사의 망령입니다. 검에 서린 냉기가 생명을 얼립니다.\n\n[나오는 층수] 41층 ~ 49층"
+  },
+  {
+    "id": "monster_49",
+    "name": "뱀파이어",
+    "hp": 430,
+    "maxHp": 430,
+    "attack": 82,
+    "patterns": [
+      { "name": "피의 갈증", "power": 55, "hits": 3, "charge": false }
+    ],
+    "imgId": "mon_vampire",
+    "description": "피의 성채에 사는 귀족 흡혈귀입니다. 눈 깜짝할 사이에 다가와 연달아 송곳니를 박습니다.\n\n[나오는 층수] 41층 ~ 49층"
+  },
+  {
+    "id": "monster_50",
+    "name": "피의 군주",
+    "hp": 1100,
+    "maxHp": 1100,
+    "attack": 100,
+    "patterns": [
+      { "name": "핏빛 송곳", "power": 70, "hits": 2, "charge": false },
+      { "name": "피의 폭풍", "power": 300, "hits": 1, "charge": true }
+    ],
+    "imgId": "mon_blood_lord",
+    "description": "피의 성채를 다스리는 흡혈귀들의 왕입니다. 천 년 동안 모은 피로 성채 전체를 붉게 물들였습니다.\n\n[나오는 층수] 50층 (피의 성채의 마지막 보스)"
+  },
+  {
+    "id": "monster_51",
+    "name": "지옥견",
+    "hp": 480,
+    "maxHp": 480,
+    "attack": 85,
+    "patterns": [
+      { "name": "지옥불 물기", "power": 160, "hits": 1, "charge": false }
+    ],
+    "imgId": "mon_hellhound",
+    "description": "마왕성의 문을 지키는 불꽃의 사냥개입니다. 숨결에서 지옥불이 새어 나옵니다.\n\n[나오는 층수] 51층 ~ 59층"
+  },
+  {
+    "id": "monster_52",
+    "name": "화염 정령",
+    "hp": 440,
+    "maxHp": 440,
+    "attack": 95,
+    "patterns": [
+      { "name": "불꽃 소용돌이", "power": 55, "hits": 3, "charge": false }
+    ],
+    "imgId": "mon_fire_elemental",
+    "description": "용암에서 태어난 불꽃 덩어리입니다. 몸을 회오리처럼 돌려 주위를 불태웁니다.\n\n[나오는 층수] 51층 ~ 59층"
+  },
+  {
+    "id": "monster_53",
+    "name": "해골 용",
+    "hp": 560,
+    "maxHp": 560,
+    "attack": 88,
+    "patterns": [
+      { "name": "뼈 브레스", "power": 260, "hits": 1, "charge": true }
+    ],
+    "imgId": "mon_bone_dragon",
+    "description": "죽은 용의 뼈에 사령술을 불어넣은 괴물입니다. 텅 빈 가슴에서 저주받은 숨결을 모읍니다.\n\n[나오는 층수] 51층 ~ 59층"
+  },
+  {
+    "id": "monster_54",
+    "name": "암흑 엘프 암살자",
+    "hp": 420,
+    "maxHp": 420,
+    "attack": 100,
+    "patterns": [
+      { "name": "그림자 연격", "power": 50, "hits": 3, "charge": false }
+    ],
+    "imgId": "mon_dark_elf_assassin",
+    "description": "마왕에게 충성을 맹세한 암흑 엘프입니다. 그림자에 녹아들었다가 쌍검으로 급소를 노립니다.\n\n[나오는 층수] 51층 ~ 59층"
+  },
+  {
+    "id": "monster_55",
+    "name": "용암 골렘",
+    "hp": 620,
+    "maxHp": 620,
+    "attack": 84,
+    "patterns": [
+      { "name": "용암 주먹", "power": 160, "hits": 1, "charge": false }
+    ],
+    "imgId": "mon_lava_golem",
+    "description": "식지 않는 용암으로 빚어진 골렘입니다. 주먹이 닿은 곳은 녹아내립니다.\n\n[나오는 층수] 51층 ~ 59층"
+  },
+  {
+    "id": "monster_56",
+    "name": "히드라",
+    "hp": 590,
+    "maxHp": 590,
+    "attack": 92,
+    "patterns": [
+      { "name": "다섯 머리 물기", "power": 35, "hits": 5, "charge": false }
+    ],
+    "imgId": "mon_hydra",
+    "description": "머리 다섯 개를 가진 늪의 괴물입니다. 머리 하나를 베면 둘이 자란다는 소문이 있습니다.\n\n[나오는 층수] 51층 ~ 59층"
+  },
+  {
+    "id": "monster_57",
+    "name": "화염의 군주 이프리트",
+    "hp": 1000,
+    "maxHp": 1000,
+    "attack": 112,
+    "patterns": [
+      { "name": "화염 채찍", "power": 70, "hits": 2, "charge": false },
+      { "name": "태양 낙하", "power": 300, "hits": 1, "charge": true }
+    ],
+    "imgId": "mon_ifrit",
+    "description": "불꽃의 층을 다스리는 거대한 화염 마신입니다. 하늘에서 작은 태양을 떨어뜨립니다.\n\n[나오는 층수] 60층 (보스)"
+  },
+  {
+    "id": "monster_58",
+    "name": "해골 대군주",
+    "hp": 1100,
+    "maxHp": 1100,
+    "attack": 105,
+    "patterns": [
+      { "name": "뼈의 창", "power": 150, "hits": 1, "charge": false },
+      { "name": "망자 군단 소환", "power": 45, "hits": 5, "charge": false }
+    ],
+    "imgId": "mon_skeleton_overlord",
+    "description": "수천 해골 병사를 거느린 언데드의 지휘관입니다. 왕관 아래 눈구멍에서 푸른 불이 타오릅니다.\n\n[나오는 층수] 60층 (보스)"
+  },
+  {
+    "id": "monster_59",
+    "name": "서리 거인",
+    "hp": 760,
+    "maxHp": 760,
+    "attack": 108,
+    "patterns": [
+      { "name": "빙하 내려찍기", "power": 260, "hits": 1, "charge": true }
+    ],
+    "imgId": "mon_frost_giant",
+    "description": "얼음의 층에 사는 거인입니다. 빙하를 통째로 들어 내려찍습니다.\n\n[나오는 층수] 61층 ~ 69층"
+  },
+  {
+    "id": "monster_60",
+    "name": "서리 늑대",
+    "hp": 620,
+    "maxHp": 620,
+    "attack": 116,
+    "patterns": [
+      { "name": "얼음 송곳니", "power": 70, "hits": 2, "charge": false }
+    ],
+    "imgId": "mon_frost_wolf",
+    "description": "눈보라 속을 무리 지어 달리는 늑대입니다. 얼음 송곳니에 물리면 상처가 얼어붙습니다.\n\n[나오는 층수] 61층 ~ 69층"
+  },
+  {
+    "id": "monster_61",
+    "name": "크라켄",
+    "hp": 700,
+    "maxHp": 700,
+    "attack": 112,
+    "patterns": [
+      { "name": "촉수 휘감기", "power": 40, "hits": 4, "charge": false }
+    ],
+    "imgId": "mon_kraken",
+    "description": "지하 호수 깊은 곳에 사는 거대한 두족류입니다. 수많은 촉수로 먹잇감을 휘감습니다.\n\n[나오는 층수] 61층 ~ 69층"
+  },
+  {
+    "id": "monster_62",
+    "name": "마그마 드레이크",
+    "hp": 680,
+    "maxHp": 680,
+    "attack": 120,
+    "patterns": [
+      { "name": "마그마 브레스", "power": 160, "hits": 1, "charge": false }
+    ],
+    "imgId": "mon_magma_drake",
+    "description": "용암 속을 헤엄치는 드레이크입니다. 녹은 바위를 그대로 뿜어냅니다.\n\n[나오는 층수] 61층 ~ 69층"
+  },
+  {
+    "id": "monster_63",
+    "name": "공허의 감시자",
+    "hp": 640,
+    "maxHp": 640,
+    "attack": 124,
+    "patterns": [
+      { "name": "공허의 눈빛", "power": 150, "hits": 1, "charge": false }
+    ],
+    "imgId": "mon_void_watcher",
+    "description": "거대한 눈 하나만 떠 있는 공허의 존재입니다. 그 시선이 닿으면 몸이 안쪽부터 무너집니다.\n\n[나오는 층수] 61층 ~ 69층"
+  },
+  {
+    "id": "monster_64",
+    "name": "악마 기사",
+    "hp": 780,
+    "maxHp": 780,
+    "attack": 114,
+    "patterns": [
+      { "name": "지옥검 베기", "power": 75, "hits": 2, "charge": false }
+    ],
+    "imgId": "mon_demon_knight",
+    "description": "마왕군의 선봉을 맡는 악마 기사입니다. 지옥에서 벼린 검을 쌍으로 휘두릅니다.\n\n[나오는 층수] 61층 ~ 69층"
+  },
+  {
+    "id": "monster_65",
+    "name": "공허의 군주",
+    "hp": 1400,
+    "maxHp": 1400,
+    "attack": 132,
+    "patterns": [
+      { "name": "공허 가르기", "power": 150, "hits": 1, "charge": false },
+      { "name": "존재 소멸", "power": 300, "hits": 1, "charge": true }
+    ],
+    "imgId": "mon_void_lord",
+    "description": "빛도 소리도 삼키는 공허의 층의 지배자입니다. 손짓 한 번에 존재 자체를 지워 버립니다.\n\n[나오는 층수] 70층 (보스)"
+  },
+  {
+    "id": "monster_66",
+    "name": "고대 흑룡",
+    "hp": 1500,
+    "maxHp": 1500,
+    "attack": 128,
+    "patterns": [
+      { "name": "흑염 발톱", "power": 70, "hits": 2, "charge": false },
+      { "name": "멸망의 브레스", "power": 310, "hits": 1, "charge": true }
+    ],
+    "imgId": "mon_black_dragon",
+    "description": "마왕이 깨우기 전까지 수천 년을 잠들어 있던 검은 용입니다. 그 숨결은 대지를 잿더미로 만듭니다.\n\n[나오는 층수] 70층 (보스)"
+  },
+  {
+    "id": "monster_67",
+    "name": "마왕군 근위병",
+    "hp": 900,
+    "maxHp": 900,
+    "attack": 128,
+    "patterns": [
+      { "name": "근위 창술", "power": 70, "hits": 2, "charge": false }
+    ],
+    "imgId": "mon_royal_guard",
+    "description": "마왕의 옥좌로 가는 길을 지키는 정예 근위병입니다. 두 번 찌르고 한 번도 물러서지 않습니다.\n\n[나오는 층수] 71층 ~ 74층"
+  },
+  {
+    "id": "monster_68",
+    "name": "대악마",
+    "hp": 950,
+    "maxHp": 950,
+    "attack": 136,
+    "patterns": [
+      { "name": "지옥의 불꽃", "power": 160, "hits": 1, "charge": false }
+    ],
+    "imgId": "mon_archdemon",
+    "description": "지옥에서 불려 온 거대한 악마입니다. 손바닥에서 지옥의 불꽃을 피워 올립니다.\n\n[나오는 층수] 71층 ~ 74층"
+  },
+  {
+    "id": "monster_69",
+    "name": "타락한 대천사",
+    "hp": 880,
+    "maxHp": 880,
+    "attack": 142,
+    "patterns": [
+      { "name": "검은 심판", "power": 260, "hits": 1, "charge": true }
+    ],
+    "imgId": "mon_fallen_archangel",
+    "description": "신을 등지고 마왕의 편에 선 대천사입니다. 검은 날개를 펼쳐 심판의 빛을 모읍니다.\n\n[나오는 층수] 71층 ~ 74층"
+  },
+  {
+    "id": "monster_70",
+    "name": "혼돈의 키메라",
+    "hp": 1000,
+    "maxHp": 1000,
+    "attack": 132,
+    "patterns": [
+      { "name": "혼돈의 송곳니", "power": 50, "hits": 3, "charge": false }
+    ],
+    "imgId": "mon_chaos_chimera",
+    "description": "마왕의 실험으로 태어난 키메라입니다. 머리마다 다른 짐승의 이빨이 돋아 있습니다.\n\n[나오는 층수] 71층 ~ 74층"
+  },
+  {
+    "id": "monster_71",
+    "name": "그림자 마도사",
+    "hp": 840,
+    "maxHp": 840,
+    "attack": 148,
+    "patterns": [
+      { "name": "그림자 폭발", "power": 155, "hits": 1, "charge": false }
+    ],
+    "imgId": "mon_shadow_sorcerer",
+    "description": "마왕에게 마법을 가르쳤다는 그림자 마도사입니다. 그림자를 부풀려 터뜨립니다.\n\n[나오는 층수] 71층 ~ 74층"
+  },
+  {
+    "id": "monster_72",
+    "name": "마왕의 처형인",
+    "hp": 1020,
+    "maxHp": 1020,
+    "attack": 134,
+    "patterns": [
+      { "name": "단두 도끼", "power": 270, "hits": 1, "charge": true }
+    ],
+    "imgId": "mon_executioner",
+    "description": "마왕의 명을 받아 침입자의 목을 거두는 처형인입니다. 거대한 도끼를 천천히 들어 올립니다.\n\n[나오는 층수] 71층 ~ 74층"
   }
 ]

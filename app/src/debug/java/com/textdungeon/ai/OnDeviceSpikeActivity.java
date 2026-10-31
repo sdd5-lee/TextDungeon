@@ -306,7 +306,7 @@ public class OnDeviceSpikeActivity extends AppCompatActivity {
             CountDownLatch latch = new CountDownLatch(1);
             String[] outcome = new String[1];
             long t0 = SystemClock.elapsedRealtime();
-            // 보통 난이도(보상 2배), 경험치 특성 없음
+            // 보상 2배 던전, 경험치 특성 없음
             ChaosDice.Request request = new ChaosDice.Request(c.floor, statForFloor(c.floor),
                     dt.getItemsForFloor(c.floor - 5, c.floor + 5), dt.getUpperGear(c.floor),
                     c.event, dt.getChaosTable(), 2, 1);

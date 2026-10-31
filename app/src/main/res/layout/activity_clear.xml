@@ -51,7 +51,6 @@
         android:text="던전의 최심부에 도달했습니다"
         android:textColor="#E0BFBA"
         android:textSize="18sp"
-        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/bottom_line" />

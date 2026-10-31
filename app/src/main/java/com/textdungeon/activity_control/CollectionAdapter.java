@@ -43,6 +43,15 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         CollectionData data = collectionList.get(position);
 
+        // 칸은 다시 쓰이므로 틀은 매번 정한다 (아이템만 등급 틀, 나머지는 원래 바탕)
+        if (data.isDiscovered() && data.getGrade() != null) {
+            holder.image.setBackground(ItemFrames.frame(context, data.getGrade()));
+        } else {
+            holder.image.setBackgroundColor(0xFF222222);
+        }
+
+        ItemFrames.tintTypeIcon(holder.image, data.isDiscovered() ? data.getImgName() : null, data.getGrade());
+
         if (data.isDiscovered()) {
             GameImages.glide(context, data.getImgName())
                     .into(holder.image);

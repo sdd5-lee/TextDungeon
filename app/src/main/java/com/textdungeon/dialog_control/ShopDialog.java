@@ -9,11 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.textdungeon.R;
 import com.google.android.material.snackbar.Snackbar;
+import com.textdungeon.activity_control.ItemFrames;
 import com.textdungeon.data.DataControl;
 import com.textdungeon.model.Item;
 import com.textdungeon.player.Player;
@@ -78,13 +80,17 @@ public class ShopDialog extends Dialog {
             if (item != null) {
                 View rowView = inflater.inflate(R.layout.row_item_shop, itemContainer, false);
 
+                ImageView ivIcon = rowView.findViewById(R.id.iv_item_icon);
                 TextView tvName = rowView.findViewById(R.id.tv_item_name);
                 TextView tvPrice = rowView.findViewById(R.id.tv_item_price);
                 Button btnBuy = rowView.findViewById(R.id.btn_buy);
 
                 int price = item.getValue();
+                ItemFrames.setIcon(ivIcon, item);
+                ivIcon.setBackground(ItemFrames.frame(getContext(), item.getGrade()));
                 tvName.setText(item.getName());
-                tvPrice.setText("💰 " + price + " G");
+                tvName.setTextColor(item.getGrade().color);
+                tvPrice.setText(ItemFrames.label(item) + "   💰 " + price + " G");
 
                 btnBuy.setOnClickListener(v -> onBuyItem(item, price));
 

@@ -5,10 +5,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
@@ -20,7 +22,6 @@ import com.textdungeon.activity_control.GameImages;
 import com.textdungeon.buttons.BattleButton;
 import com.textdungeon.buttons.MagicCardButton;
 import com.textdungeon.data.DataControlTower;
-import com.textdungeon.data.Difficulty;
 import com.textdungeon.model.Item;
 import com.textdungeon.model.LearnedMagic;
 import com.textdungeon.model.Magic;
@@ -35,6 +36,18 @@ import java.util.Objects;
 
 public class BattleDialog extends Dialog {
 
+    /** 내 행동 뒤 적이 공격하기까지, 적이 공격한 뒤 내 차례가 돌아오기까지 기다리는 시간 */
+    private static final long ENEMY_DELAY_MS = 900;
+    private static final long MY_TURN_DELAY_MS = 500;
+    /** 적의 턴에 잠긴 버튼 위에 덮는 어두운 푸른 회색 */
+    private static final int LOCKED_TINT = 0x991B2333;
+    private static final int[] ACTION_BUTTONS = {R.id.battle_btn_attack, R.id.battle_btn_guard,
+            R.id.battle_btn_escape, R.id.battle_btn_magic, R.id.battle_btn_items};
+
+    private final Handler handler = new Handler(Looper.getMainLooper());
+    /** 적의 턴이라 버튼이 잠겨 있는지 */
+    private boolean locked;
+
     private BattleSystem battleSystem;
     private final Player player;
     private final Monster monster;
@@ -47,15 +60,15 @@ public class BattleDialog extends Dialog {
     private TextView logView;
     private View playerHpBar, monsterHpBar;
     private ScrollView magicScrollView, itemsScrollView;
-    private Difficulty difficulty;
+    private final int statMultiplier; // 던전의 몬스터 세기 배수
     private Runnable onUpdateCallback;
 
-    public BattleDialog(Context context, Player player, Monster monster, Difficulty difficulty,Runnable onUpdateCallback) {
+    public BattleDialog(Context context, Player player, Monster monster, int statMultiplier, Runnable onUpdateCallback) {
         super(context);
         this.context = context;
         this.player = player;
         this.monster = monster;
-        this.difficulty = difficulty;
+        this.statMultiplier = statMultiplier;
         this.onUpdateCallback = onUpdateCallback;
     }
 
@@ -73,10 +86,10 @@ public class BattleDialog extends Dialog {
 
         // 최대 체력 기록
         playerMaxHp = player.getMaxHp();
-        monsterMaxHp = monster.getMaxHp() * difficulty.statMultiplier;
+        monsterMaxHp = monster.getMaxHp() * statMultiplier;
 
         // 전투 시스템 초기화
-        battleSystem = new BattleSystem(player, monster, context,difficulty);
+        battleSystem = new BattleSystem(player, monster, context, statMultiplier);
 
         initViews();
         setupListeners();
@@ -118,7 +131,7 @@ public class BattleDialog extends Dialog {
         monsterName.setText(battleSystem.getEnemyName());
 
         // 몬스터 그림 (없으면 빈 칸 그대로)
-        GameImages.set(findViewById(R.id.battle_monster_image), monster.getImgId(), 0);
+        GameImages.set(findViewById(R.id.battle_monster_image), monster.getImgId(), R.drawable.mon_god); // 그림이 아직 없으면 이벤트 화면과 같은 그림
     }
 
     private void setupListeners() {
@@ -167,12 +180,9 @@ public class BattleDialog extends Dialog {
             if (magic == null){{
                 continue;
             }}
-            MagicCardButton card = new MagicCardButton(getContext(), magic, lm);
-            card.setOnClickListener(v -> {
-                executeAction(4, lm.getMagicId());
-                updateUI();
-                addMagic();
-            });
+            MagicCardButton card = new MagicCardButton(getContext(), magic,
+                    battleSystem.getCooldownLeft(lm.getMagicId()));
+            card.setOnClickListener(v -> executeAction(4, lm.getMagicId()));
             // 두 칸에 같은 너비로 나눠 채운다
             int margin = Math.round(4 * context.getResources().getDisplayMetrics().density);
             GridLayout.LayoutParams params = new GridLayout.LayoutParams(
@@ -206,6 +216,7 @@ public class BattleDialog extends Dialog {
             BattleButton button = new BattleButton(getContext(), "item_test_img", itemData.getName(), count, "사용하기");
 
             button.setOnClickListener(v -> {
+                if (locked) return;
                 if (player.getInventory().consumeItem(itemId) && itemData.itemUse(player)) {
                     appendLog("\n[" + itemData.getName() + "]을(를) 사용했습니다!");
                     updateUI();
@@ -219,24 +230,77 @@ public class BattleDialog extends Dialog {
         }
     }
 
-    // 전투 액션 실행 및 화면 갱신
+    // 전투 액션 실행 및 화면 갱신. 적은 바로 공격하지 않고 잠깐 뒤에 공격한다 (그동안 버튼은 잠긴다)
     private void executeAction(int choice, String magicId) {
+        if (locked) return;
         String resultLog = battleSystem.playerAction(choice, magicId);
         appendLog(resultLog);
         updateUI();
-        if (battleSystem.getLastDamageTaken() > 0) shake(battleSystem.getLastDamageTaken());
+        addMagic(); // 방금 쓴 마법의 쿨타임을 카드에 보인다
         if (battleSystem.isEscapeState()){
             appendLog("\n[도망에 성공하였습니다. 2초 뒤 돌아갑니다...]");
             findViewById(R.id.actions_area).setVisibility(View.GONE);
             onUpdateCallback.run();
-            new Handler(Looper.getMainLooper()).postDelayed(this::dismiss, 2000);
+            handler.postDelayed(this::dismiss, 2000);
         }
         else if (battleSystem.isBattleOver()) {
-            appendLog("\n[전투가 종료되었습니다. 2초 뒤 돌아갑니다...]");
-
-            findViewById(R.id.actions_area).setVisibility(View.GONE);
-            new Handler(Looper.getMainLooper()).postDelayed(this::dismiss, 2000);
+            endBattle();
         }
+        else if (battleSystem.isEnemyTurn()) {
+            setActionsLocked(true);
+            handler.postDelayed(this::enemyTurn, ENEMY_DELAY_MS);
+        }
+    }
+
+    private void enemyTurn() {
+        if (!isShowing()) return;
+        appendLog(battleSystem.enemyAction());
+        updateUI();
+        if (battleSystem.getLastDamageTaken() > 0) shake(battleSystem.getLastDamageTaken());
+        if (battleSystem.isBattleOver()) {
+            endBattle();
+            return;
+        }
+        handler.postDelayed(() -> setActionsLocked(false), MY_TURN_DELAY_MS);
+    }
+
+    private void endBattle() {
+        appendLog("\n[전투가 종료되었습니다. 2초 뒤 돌아갑니다...]");
+
+        findViewById(R.id.actions_area).setVisibility(View.GONE);
+        handler.postDelayed(this::dismiss, 2000);
+    }
+
+    /** 적의 턴에는 아래 버튼과 마법·가방 칸을 누를 수 없게 하고 어둡게 덮는다 */
+    private void setActionsLocked(boolean lock) {
+        locked = lock;
+        float radius = 6 * context.getResources().getDisplayMetrics().density;
+        for (int id : ACTION_BUTTONS) {
+            View button = findViewById(id);
+            button.setEnabled(!lock);
+            GradientDrawable tint = null;
+            if (lock) {
+                tint = new GradientDrawable();
+                tint.setCornerRadius(radius);
+                tint.setColor(LOCKED_TINT);
+            }
+            button.setForeground(tint);
+        }
+        // 마법 카드는 테두리를 전경에 그려서 덮지 않고 흐리게만 한다
+        for (int id : new int[]{R.id.magic_container, R.id.item_container}) {
+            ViewGroup list = findViewById(id);
+            for (int i = 0; i < list.getChildCount(); i++) {
+                View child = list.getChildAt(i);
+                child.setEnabled(!lock);
+                child.setAlpha(lock ? 0.45f : 1f);
+            }
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        handler.removeCallbacksAndMessages(null);
     }
 
     // 공격받으면 창을 좌우로 흔든다 (옵션에서 끌 수 있다)
